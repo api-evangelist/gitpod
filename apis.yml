@@ -1,0 +1,125 @@
+---
+aid: gitpod
+name: Gitpod
+description: >-
+  Gitpod is a cloud development environment platform that provides on-demand,
+  ephemeral workspaces spun up from git repositories, enabling developers to
+  write, review, and ship code from any device without local setup. Originally
+  focused on browser-based IDEs, the platform evolved into Gitpod Flex, offering
+  REST APIs and SDKs for workspace lifecycle management, environment automation,
+  and organization administration. The Gitpod API supports TypeScript, Python,
+  and Go SDKs and uses bearer token authentication via API keys. In September
+  2025 Gitpod rebranded to Ona, shifting focus to AI software engineering agents
+  built on top of its secure, isolated environment infrastructure.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Developer Tools
+  - Cloud Development Environments
+  - Workspaces
+  - AI Agents
+  - DevOps
+url: https://raw.githubusercontent.com/api-evangelist/gitpod/refs/heads/main/apis.yml
+created: '2026-06-12'
+modified: '2026-06-12'
+specificationVersion: '0.19'
+apis:
+  - aid: gitpod:environments-api
+    name: Gitpod Environments API
+    description: >-
+      REST API for creating, starting, stopping, and deleting cloud development
+      environments (workspaces). Supports environment classes, automation
+      services and tasks, secrets, variables, prebuilds, and editors. Access is
+      authenticated via bearer tokens using the GITPOD_API_KEY environment
+      variable.
+    humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
+    baseURL: https://api.gitpod.io
+    tags:
+      - Environments
+      - Workspaces
+      - Developer Tools
+    properties:
+      - type: Documentation
+        url: https://www.gitpod.io/docs/references/gitpod-public-api
+  - aid: gitpod:organizations-api
+    name: Gitpod Organizations API
+    description: >-
+      REST API for managing organizations, groups, members, role assignments,
+      permissions, and organization-level policies. Supports SSO login
+      providers, secrets scoped to organizations, and audit trails for
+      enterprise compliance.
+    humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
+    baseURL: https://api.gitpod.io
+    tags:
+      - Organizations
+      - Access Control
+      - Administration
+    properties:
+      - type: Documentation
+        url: https://www.gitpod.io/docs/references/gitpod-public-api
+  - aid: gitpod:projects-api
+    name: Gitpod Projects API
+    description: >-
+      REST API for managing projects and repositories within a Gitpod
+      organization. Supports creating and listing projects, associating
+      repositories, and configuring project-level policies for environment
+      automation and access control.
+    humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
+    baseURL: https://api.gitpod.io
+    tags:
+      - Projects
+      - Repositories
+      - Configuration
+    properties:
+      - type: Documentation
+        url: https://www.gitpod.io/docs/references/gitpod-public-api
+  - aid: gitpod:accounts-billing-api
+    name: Gitpod Accounts and Billing API
+    description: >-
+      REST API for managing user accounts, SSO login sessions, and billing
+      information including invoices and spending data. Supports listing joinable
+      organizations, deleting accounts, and retrieving billing usage metrics for
+      FinOps visibility.
+    humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
+    baseURL: https://api.gitpod.io
+    tags:
+      - Accounts
+      - Billing
+      - Identity
+    properties:
+      - type: Documentation
+        url: https://www.gitpod.io/docs/references/gitpod-public-api
+common:
+  - type: Website
+    url: https://www.gitpod.io
+  - type: Documentation
+    url: https://www.gitpod.io/docs/references/gitpod-public-api
+  - type: GitHubOrganization
+    url: https://github.com/gitpod-io
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/gitpod/
+  - type: Blog
+    url: https://www.gitpod.io/blog
+  - type: Pricing
+    url: https://www.gitpod.io/pricing
+  - type: StatusPage
+    url: https://status.gitpod.io/
+  - type: X
+    url: https://x.com/gitpod
+  - type: Changelog
+    url: https://www.gitpod.io/changelog
+  - type: SDKTypeScript
+    url: https://github.com/gitpod-io/gitpod-sdk-typescript
+  - type: SDKPython
+    url: https://github.com/gitpod-io/gitpod-sdk-python
+  - type: SDKGo
+    url: https://github.com/gitpod-io/gitpod-sdk-go
+  - type: Plans
+    url: plans/gitpod-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/gitpod-rate-limits.yml
+  - type: FinOps
+    url: finops/gitpod-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

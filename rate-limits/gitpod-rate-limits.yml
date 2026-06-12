@@ -1,0 +1,29 @@
+---
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Gitpod
+providerId: gitpod
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - Rate Limiting
+description: >-
+  The Gitpod REST API returns HTTP 429 on rate limit violations and the SDK
+  automatically retries up to 2 times on 429 responses. Specific numeric rate
+  limits are not publicly documented; limits are applied per authenticated API
+  key at the request level.
+sources:
+  - https://www.gitpod.io/docs/references/gitpod-public-api
+  - https://github.com/gitpod-io/gitpod-sdk-python
+headers:
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+limits:
+  - name: Gitpod REST API
+    scope: key
+    metric: requests_per_minute
+    limit: -1
+    timeFrame: minute

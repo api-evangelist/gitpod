@@ -1,0 +1,178 @@
+---
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Gitpod
+providerId: gitpod
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - Developer Tools
+  - Cloud Development Environments
+  - Workspaces
+description: >-
+  Gitpod (now Ona) offers a Core plan starting at $20/month with OCU-based
+  metered usage and an Enterprise plan with custom pricing for dedicated VPC
+  deployment and advanced compliance controls.
+sources:
+  - https://www.gitpod.io/pricing
+plans:
+  - id: gitpod-core
+    name: Core
+    type: paid
+    description: >-
+      Cloud-hosted multi-tenant development environments for individuals and
+      teams of up to 100 members. Includes up to 32 cores, 128 GB RAM, 200 GB
+      disk per environment, 50 total automations, and 10 parallel actions.
+      Environments auto-delete after 7 days of inactivity.
+    entries:
+      - label: Monthly Base Price
+        name: base-price
+        type: metered
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$20'
+        userMultiplied: false
+      - label: Included OCUs
+        name: included-ocus
+        type: quota
+        metric: OCU
+        limit: 80
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Additional OCUs
+        name: additional-ocus
+        type: metered
+        metric: OCU
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 40
+        price: '$10'
+        userMultiplied: false
+      - label: Team Members
+        name: team-members
+        type: quota
+        metric: users
+        limit: 100
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Max CPU Cores per Environment
+        name: max-cores
+        type: quota
+        metric: cores
+        limit: 32
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Max RAM per Environment
+        name: max-ram
+        type: quota
+        metric: GB
+        limit: 128
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Max Disk per Environment
+        name: max-disk
+        type: quota
+        metric: GB
+        limit: 200
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Total Automations
+        name: total-automations
+        type: quota
+        metric: automations
+        limit: 50
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Parallel Actions
+        name: parallel-actions
+        type: quota
+        metric: actions
+        limit: 10
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+  - id: gitpod-enterprise
+    name: Enterprise
+    type: enterprise
+    description: >-
+      Dedicated VPC deployment with complete network control over load balancer,
+      domain, and certificates. Includes SSO/OIDC identity controls, unlimited
+      automations, 25 parallel actions, org-wide secrets, audit trails, warm
+      pools for instant starts, SLAs, and a dedicated account manager.
+    entries:
+      - label: Monthly Price
+        name: monthly-price
+        type: metered
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'custom'
+        userMultiplied: false
+      - label: Parallel Actions
+        name: parallel-actions
+        type: quota
+        metric: actions
+        limit: 25
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Total Automations
+        name: total-automations
+        type: quota
+        metric: automations
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: VPC Deployment
+        name: vpc-deployment
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: SSO/OIDC
+        name: sso-oidc
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
