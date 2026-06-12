@@ -1,0 +1,93 @@
+vocabulary:
+  name: Gitpod API Vocabulary
+  description: Core terms and concepts from the Gitpod cloud development environment API
+  version: v1.0.0
+  provider: Gitpod (Ona)
+  base_url: https://api.gitpod.io
+  terms:
+  - name: Account
+    description: Gitpod Account entity
+  - name: AccountMembership
+    description: Gitpod AccountMembership entity
+  - name: ActionableErrorDetails
+    description: "ActionableErrorDetails provides structured error information that can be\n attached to any Connect RPC error\
+      \ via err.AddDetail(). The frontend uses\n this to render actionable UI (buttons, links, guidan"
+  - name: AdditionalScopesUpdate
+    description: "AdditionalScopesUpdate wraps a list of OIDC scopes so that the update request\n can distinguish \"not changing\
+      \ scopes\" (field absent) from \"clearing all scopes\"\n (field present, empty list)."
+  - name: AdmissionLevel
+    description: Admission level describes who can access an environment instance and its ports.
+  - name: Agent
+    description: Gitpod Agent entity
+  - name: AgentCodeContext
+    description: Gitpod AgentCodeContext entity
+  - name: AgentExecution
+    description: Gitpod AgentExecution entity
+  - name: AgentExecutionFailureReason
+    description: AgentExecutionFailureReason represents the reason why an agent execution failed
+  - name: AgentExecutionRole
+    description: AgentExecutionRole represents the role of an agent execution
+  - name: AgentMessage
+    description: "AgentMessage is a message sent between agents (e.g. from a parent agent to a\n child agent execution, or\
+      \ vice versa)."
+  - name: AgentMetadata
+    description: Gitpod AgentMetadata entity
+  - name: AgentMode
+    description: AgentMode defines the operational mode of an agent
+  - name: AgentPolicy
+    description: AgentPolicy contains agent-specific policy settings for an organization
+  - name: AgentTraceModelBreakdown
+    description: AgentTraceModelBreakdown contains stats for a single LLM model.
+  - name: AgentTraceSummary
+    description: AgentTraceSummary contains aggregate totals for a date range.
+  - name: AgentTraceTimeBucket
+    description: AgentTraceTimeBucket contains stats for a single time period.
+  - name: AnnouncementBanner
+    description: Gitpod AnnouncementBanner entity
+  - name: AutoTopupSettings
+    description: AutoTopupSettings configures automatic credit top-ups for an organization.
+  - name: AutomationTrigger
+    description: "An AutomationTrigger represents a trigger for an automation action.\n The `manual` field shows a start button\
+      \ in the UI for manually triggering the automation.\n The `post_machine_start` field indicates"
+  - name: AutomationsFile
+    description: "WARN: Do not remove any field here, as it will break reading automation yaml files. We error if there are\
+      \ any\n unknown fields in the yaml (to ensure the yaml is correct), but would break if we removed"
+  - name: AvailableRunnerManager
+    description: Gitpod AvailableRunnerManager entity
+  - name: BPFDebugLevel
+    description: "BPFDebugLevel controls the verbosity of BPF trace_pipe output (bpf_printk).\n Applies to all BPF-based agents\
+      \ (veto exec, future agents)."
+  - name: BillingAddress
+    description: BillingAddress represents a billing address for an organization
+  - name: BillingPlanKind
+    description: Gitpod BillingPlanKind entity
+  - name: BillingPlanSpec
+    description: Gitpod BillingPlanSpec entity
+  - name: BillingPlanStatus
+    description: Gitpod BillingPlanStatus entity
+  - name: BillingRealm
+    description: Gitpod BillingRealm entity
+  - name: BillingRecord
+    description: Gitpod BillingRecord entity
+  - name: BillingRecordMetadata
+    description: Gitpod BillingRecordMetadata entity
+  - name: BillingRecordSpec
+    description: Gitpod BillingRecordSpec entity
+  - name: BillingRecordStatus
+    description: Gitpod BillingRecordStatus entity
+  - name: Breadcrumb
+    description: Breadcrumb information (Sentry-compatible)
+  - name: CallCheckAuthenticationForHost
+    description: Gitpod CallCheckAuthenticationForHost entity
+  - name: CallCheckRepositoryAccess
+    description: Gitpod CallCheckRepositoryAccess entity
+  - name: CallImprovePromptForAgent
+    description: Gitpod CallImprovePromptForAgent entity
+  - name: CallListSCMOrganizations
+    description: Gitpod CallListSCMOrganizations entity
+  - name: CallParseContext
+    description: Gitpod CallParseContext entity
+  - name: CallPing
+    description: Gitpod CallPing entity
+  - name: CallSearchRepositories
+    description: Gitpod CallSearchRepositories entity

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.gitpod.io/schemas/organization",
+  "title": "Organization",
+  "additionalProperties": false,
+  "properties": {
+    "createdAt": {
+      "$ref": "#/$defs/google.protobuf.Timestamp",
+      "title": "created_at"
+    },
+    "id": {
+      "format": "uuid",
+      "title": "id",
+      "type": "string"
+    },
+    "inviteDomains": {
+      "$ref": "#/$defs/gitpod.v1.InviteDomains",
+      "title": "invite_domains"
+    },
+    "name": {
+      "title": "name",
+      "type": "string"
+    },
+    "tier": {
+      "$ref": "#/$defs/gitpod.v1.OrganizationTier",
+      "description": "The tier of the organization - free, enterprise or core",
+      "title": "tier"
+    },
+    "updatedAt": {
+      "$ref": "#/$defs/google.protobuf.Timestamp",
+      "title": "updated_at"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "createdAt",
+    "updatedAt",
+    "tier"
+  ],
+  "type": "object"
+}

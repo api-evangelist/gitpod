@@ -41,6 +41,8 @@ apis:
     properties:
       - type: Documentation
         url: https://www.gitpod.io/docs/references/gitpod-public-api
+      - type: OpenAPI
+        url: openapi/gitpod-environments-openapi.yml
   - aid: gitpod:organizations-api
     name: Gitpod Organizations API
     description: >-
@@ -120,6 +122,12 @@ common:
     url: rate-limits/gitpod-rate-limits.yml
   - type: FinOps
     url: finops/gitpod-finops.yml
+  - type: Vocabulary
+    url: vocabulary/gitpod-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/gitpod-context.jsonld
+  - type: Blog
+    url: blogs/blogs.json
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

@@ -1,0 +1,26 @@
+{
+  "operation": "gitpod.v1.EnvironmentService.CreateEnvironment",
+  "description": "Creates a development environment from a context URL (e.g. Git repository) and starts it.\n\n The `class` field must be a valid environment class ID. You can find a list of\n available environment classe",
+  "request_example_name": "create_from_context_url",
+  "request_example": {
+    "spec": {
+      "content": {
+        "initializer": {
+          "specs": [
+            {
+              "contextUrl": {
+                "url": "https://github.com/gitpod-io/gitpod"
+              }
+            }
+          ]
+        }
+      },
+      "machine": {
+        "class": "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+      }
+    }
+  },
+  "request_schema": {
+    "$ref": "#/components/schemas/gitpod.v1.CreateEnvironmentRequest"
+  }
+}

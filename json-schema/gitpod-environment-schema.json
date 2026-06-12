@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.gitpod.io/schemas/environment",
+  "title": "Environment",
+  "additionalProperties": false,
+  "description": "+resource get environment",
+  "properties": {
+    "id": {
+      "description": "ID is a unique identifier of this environment. No other environment with the\n same name must be managed by this environment manager",
+      "title": "id",
+      "type": "string"
+    },
+    "metadata": {
+      "$ref": "#/$defs/gitpod.v1.EnvironmentMetadata",
+      "description": "Metadata is data associated with this environment that's required for other\n parts of Gitpod to function",
+      "title": "metadata"
+    },
+    "spec": {
+      "$ref": "#/$defs/gitpod.v1.EnvironmentSpec",
+      "description": "Spec is the configuration of the environment that's required for the\n runner to start the environment",
+      "title": "spec"
+    },
+    "status": {
+      "$ref": "#/$defs/gitpod.v1.EnvironmentStatus",
+      "description": "Status is the current status of the environment",
+      "title": "status"
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "type": "object"
+}

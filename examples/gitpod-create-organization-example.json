@@ -1,0 +1,12 @@
+{
+  "operation": "gitpod.v1.OrganizationService.CreateOrganization",
+  "description": "Creates a new organization with the specified name and settings.\n\n Use this method to:\n - Create a new organization for team collaboration\n - Set up automatic domain-based invites for team members\n - ",
+  "request_example_name": "create_a_basic_organization",
+  "request_example": {
+    "joinOrganization": true,
+    "name": "Acme Corp Engineering"
+  },
+  "request_schema": {
+    "$ref": "#/components/schemas/gitpod.v1.CreateOrganizationRequest"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "operation": "gitpod.v1.EnvironmentService.ListEnvironments",
+  "description": "Lists all environments matching the specified criteria.\n\n Use this method to find and monitor environments across your organization.\n Results are ordered by creation time with newest environments firs",
+  "request_example_name": "list_all_environments_for_a_specific_runner",
+  "request_example": {
+    "filter": {
+      "creatorIds": [
+        "f53d2330-3795-4c5d-a1f3-453121af9c60"
+      ],
+      "runnerIds": [
+        "e6aa9c54-89d3-42c1-ac31-bd8d8f1concentrate"
+      ]
+    }
+  },
+  "request_schema": {
+    "$ref": "#/components/schemas/gitpod.v1.ListEnvironmentsRequest"
+  }
+}

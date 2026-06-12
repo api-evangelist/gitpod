@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.gitpod.io/schemas/account",
+  "title": "Account",
+  "additionalProperties": false,
+  "properties": {
+    "avatarUrl": {
+      "title": "avatar_url",
+      "type": "string"
+    },
+    "createdAt": {
+      "$ref": "#/$defs/google.protobuf.Timestamp",
+      "title": "created_at"
+    },
+    "email": {
+      "title": "email",
+      "type": "string"
+    },
+    "id": {
+      "format": "uuid",
+      "title": "id",
+      "type": "string"
+    },
+    "joinables": {
+      "deprecated": true,
+      "description": "joinables is deprecated. Use ListJoinableOrganizations instead.",
+      "items": {
+        "$ref": "#/$defs/gitpod.v1.JoinableOrganization"
+      },
+      "title": "joinables",
+      "type": "array"
+    },
+    "memberships": {
+      "items": {
+        "$ref": "#/$defs/gitpod.v1.AccountMembership"
+      },
+      "title": "memberships",
+      "type": "array"
+    },
+    "name": {
+      "title": "name",
+      "type": "string"
+    },
+    "organizationId": {
+      "description": "organization_id is the ID of the organization the account is owned by if it's created through custom SSO",
+      "nullable": true,
+      "title": "organization_id",
+      "type": "string"
+    },
+    "publicEmailProvider": {
+      "description": "public_email_provider is true if the email for the Account matches a known public email provider",
+      "title": "public_email_provider",
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "$ref": "#/$defs/google.protobuf.Timestamp",
+      "title": "updated_at"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "email",
+    "createdAt",
+    "updatedAt"
+  ],
+  "type": "object"
+}

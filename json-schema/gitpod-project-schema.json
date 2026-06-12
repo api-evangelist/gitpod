@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.gitpod.io/schemas/project",
+  "title": "Project",
+  "additionalProperties": false,
+  "properties": {
+    "automationsFilePath": {
+      "description": "automations_file_path is the path to the automations file relative to the repo root",
+      "title": "automations_file_path",
+      "type": "string"
+    },
+    "desiredPhase": {
+      "$ref": "#/$defs/gitpod.v1.ProjectPhase",
+      "description": "desired_phase is the desired phase of the project\n When set to DELETED, the project is pending deletion",
+      "title": "desired_phase"
+    },
+    "devcontainerFilePath": {
+      "description": "devcontainer_file_path is the path to the devcontainer file relative to the repo root",
+      "title": "devcontainer_file_path",
+      "type": "string"
+    },
+    "environmentClass": {
+      "$ref": "#/$defs/gitpod.v1.ProjectEnvironmentClass",
+      "deprecated": true,
+      "description": "Use `environment_classes` instead.",
+      "title": "environment_class"
+    },
+    "environmentClasses": {
+      "description": "environment_classes is the list of environment classes for the project",
+      "items": {
+        "$ref": "#/$defs/gitpod.v1.ProjectEnvironmentClass"
+      },
+      "title": "environment_classes",
+      "type": "array"
+    },
+    "id": {
+      "description": "id is the unique identifier for the project",
+      "format": "uuid",
+      "title": "id",
+      "type": "string"
+    },
+    "initializer": {
+      "$ref": "#/$defs/gitpod.v1.EnvironmentInitializer",
+      "description": "initializer is the content initializer",
+      "title": "initializer"
+    },
+    "metadata": {
+      "$ref": "#/$defs/gitpod.v1.ProjectMetadata",
+      "title": "metadata"
+    },
+    "prebuildConfiguration": {
+      "$ref": "#/$defs/gitpod.v1.ProjectPrebuildConfiguration",
+      "description": "prebuild_configuration defines how prebuilds are created for this project.",
+      "title": "prebuild_configuration"
+    },
+    "recommendedEditors": {
+      "$ref": "#/$defs/gitpod.v1.RecommendedEditors",
+      "description": "recommended_editors specifies the editors recommended for this project.",
+      "title": "recommended_editors"
+    },
+    "technicalDescription": {
+      "description": "technical_description is a detailed technical description of the project\n This field is not returned by default in GetProject or ListProjects responses",
+      "title": "technical_description",
+      "type": "string"
+    },
+    "usedBy": {
+      "$ref": "#/$defs/gitpod.v1.Project.UsedBy",
+      "title": "used_by"
+    }
+  },
+  "required": [
+    "environmentClass"
+  ],
+  "type": "object"
+}

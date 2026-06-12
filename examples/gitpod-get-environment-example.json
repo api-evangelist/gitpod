@@ -1,0 +1,11 @@
+{
+  "operation": "gitpod.v1.EnvironmentService.GetEnvironment",
+  "description": "Gets details about a specific environment including its status, configuration, and context URL.\n\n Use this method to:\n - Check if an environment is ready to use\n - Get connection details for IDE and e",
+  "request_example_name": "get_environment_details",
+  "request_example": {
+    "environmentId": "07e03a28-65a5-4d98-b532-8ea67b188048"
+  },
+  "request_schema": {
+    "$ref": "#/components/schemas/gitpod.v1.GetEnvironmentRequest"
+  }
+}
