@@ -2,13 +2,14 @@
   "repo": "gitpod",
   "feeds": [
     {
-      "source": "https://www.gitpod.io/blog",
-      "feed_url": "https://www.gitpod.io/blog/rss.xml",
-      "title": "Gitpod Blog",
-      "saved": 0,
-      "method": "none"
+      "source": "https://www.gitpod.io/blog/rss.xml",
+      "error": "HTTPError"
+    },
+    {
+      "source": "https://www.linkedin.com/company/gitpod/",
+      "error": "HTTPError"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-12T00:00:00Z"
+  "fetched": "2026-06-14T20:42:17Z"
 }
