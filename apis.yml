@@ -92,6 +92,12 @@ apis:
       - type: Documentation
         url: https://www.gitpod.io/docs/references/gitpod-public-api
 common:
+  - type: TrustCenter
+    url: security/gitpod-trust-center.yml
+  - type: DomainSecurity
+    url: security/gitpod-domain-security.yml
+  - type: Authentication
+    url: authentication/gitpod-authentication.yml
   - type: Website
     url: https://www.gitpod.io
   - type: Documentation
