@@ -1,0 +1,2826 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.WorkflowService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.WorkflowService
+  x-displayName: gitpod.v1.WorkflowService
+paths:
+  /gitpod.v1.WorkflowService/CancelWorkflowExecution:
+    servers: []
+    post:
+      description: "Cancels a running workflow execution.\n\n Use this method to:\n - Stop long-running executions\n - Cancel failed executions\n - Manage resource usage\n\n ### Examples\n\n - Cancel execution:\n\n   Stops a running workflow execution.\n\n   ```yaml\n   workflowExecutionId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.CancelWorkflowExecution
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              cancel_execution:
+                description: Stops a running workflow execution.
+                value:
+                  workflowExecutionId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CancelWorkflowExecutionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CancelWorkflowExecutionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CancelWorkflowExecution
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/CancelWorkflowExecutionAction:
+    servers: []
+    post:
+      description: "Cancels a running workflow execution action.\n\n Use this method to:\n - Stop long-running actions\n - Cancel failed actions\n - Manage resource usage\n\n ### Examples\n\n - Cancel execution action:\n\n   Stops a running workflow execution action.\n\n   ```yaml\n   workflowExecutionActionId: \"a1b2c3d4-5e6f-7890-abcd-ef1234567890\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.CancelWorkflowExecutionAction
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              cancel_execution_action:
+                description: Stops a running workflow execution action.
+                value:
+                  workflowExecutionActionId: a1b2c3d4-5e6f-7890-abcd-ef1234567890
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CancelWorkflowExecutionActionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CancelWorkflowExecutionActionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CancelWorkflowExecutionAction
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/CreateWorkflow:
+    servers: []
+    post:
+      description: "Creates a new workflow with specified configuration.\n\n Use this method to:\n - Set up automated workflows\n - Configure workflow triggers\n - Define workflow actions and steps\n - Set execution limits and constraints"
+      operationId: gitpod.v1.WorkflowService.CreateWorkflow
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateWorkflowResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateWorkflow
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/DeleteWorkflow:
+    servers: []
+    post:
+      description: "Deletes a workflow permanently.\n\n Use this method to:\n - Remove unused workflows\n - Clean up test workflows\n - Delete obsolete configurations\n\n ### Examples\n\n - Delete workflow:\n\n   Permanently removes a workflow.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.DeleteWorkflow
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_workflow:
+                description: Permanently removes a workflow.
+                value:
+                  workflowId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteWorkflowResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteWorkflow
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/GetWorkflow:
+    servers: []
+    post:
+      description: "Gets details about a specific workflow.\n\n Use this method to:\n - View workflow configuration\n - Check workflow status\n - Get workflow metadata\n\n ### Examples\n\n - Get workflow details:\n\n   Retrieves information about a specific workflow.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.GetWorkflow
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_workflow_details:
+                description: Retrieves information about a specific workflow.
+                value:
+                  workflowId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetWorkflowResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetWorkflow
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/GetWorkflowExecution:
+    servers: []
+    post:
+      description: "Gets details about a specific workflow execution.\n\n Use this method to:\n - Check execution status\n - View execution results\n - Monitor execution progress\n\n ### Examples\n\n - Get execution details:\n\n   Retrieves information about a specific execution.\n\n   ```yaml\n   workflowExecutionId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.GetWorkflowExecution
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_execution_details:
+                description: Retrieves information about a specific execution.
+                value:
+                  workflowExecutionId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetWorkflowExecutionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetWorkflowExecutionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetWorkflowExecution
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/GetWorkflowExecutionAction:
+    servers: []
+    post:
+      description: "Gets details about a specific workflow execution action.\n\n Use this method to:\n - Check execution action status\n - View execution action results\n - Monitor execution action progress\n\n ### Examples\n\n - Get execution action details:\n\n   Retrieves information about a specific execution action.\n\n   ```yaml\n   workflowExecutionActionId: \"a1b2c3d4-5e6f-7890-abcd-ef1234567890\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.GetWorkflowExecutionAction
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_execution_action_details:
+                description: Retrieves information about a specific execution action.
+                value:
+                  workflowExecutionActionId: a1b2c3d4-5e6f-7890-abcd-ef1234567890
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetWorkflowExecutionActionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetWorkflowExecutionActionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetWorkflowExecutionAction
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/GetWorkflowExecutionSummary:
+    servers: []
+    post:
+      description: "Returns aggregate counts of workflow executions within a time range.\n\n Use this method to:\n - Get a summary of successful, failed, and total executions\n - Build dashboard views of automation activity\n\n ### Examples\n\n - Get execution summary for the last 7 days:\n\n   ```yaml\n   filter:\n     dateRange:\n       startTime: \"2026-03-05T00:00:00Z\"\n       endTime: \"2026-03-12T00:00:00Z\"\n   ```\n\n - Get execution summary for specific workflows:\n\n   ```yaml\n   filter:\n     dateRange:\n       startTime: \"2026-03-01T00:00:00Z\"\n       endTime: \"2026-03-12T00:00:00Z\"\n     workflowIds: [\"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"]\n   ```"
+      operationId: gitpod.v1.WorkflowService.GetWorkflowExecutionSummary
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_execution_summary_for_specific_workflows:
+                description: "filter:\n  dateRange:\n    startTime: \"2026-03-01T00:00:00Z\"\n    endTime: \"2026-03-12T00:00:00Z\"\n  workflowIds: [\"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"]\n"
+                value:
+                  filter:
+                    dateRange:
+                      endTime: '2026-03-12T00:00:00Z'
+                      startTime: '2026-03-01T00:00:00Z'
+                    workflowIds:
+                    - b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              get_execution_summary_for_the_last_7_days:
+                description: "filter:\n  dateRange:\n    startTime: \"2026-03-05T00:00:00Z\"\n    endTime: \"2026-03-12T00:00:00Z\"\n"
+                value:
+                  filter:
+                    dateRange:
+                      endTime: '2026-03-12T00:00:00Z'
+                      startTime: '2026-03-05T00:00:00Z'
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetWorkflowExecutionSummaryRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetWorkflowExecutionSummaryResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetWorkflowExecutionSummary
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/GetWorkflowWebhookSecret:
+    servers: []
+    post:
+      description: "Gets the webhook secret for a workflow.\n\n This operation is audited for security purposes.\n\n Use this method to:\n - Retrieve webhook secret for configuration\n - Set up webhook integrations\n - Verify webhook signatures\n\n ### Examples\n\n - Get webhook secret:\n\n   Retrieves the webhook secret for a workflow.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.GetWorkflowWebhookSecret
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_webhook_secret:
+                description: Retrieves the webhook secret for a workflow.
+                value:
+                  workflowId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetWorkflowWebhookSecretRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetWorkflowWebhookSecretResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetWorkflowWebhookSecret
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/ListWorkflowExecutionActions:
+    servers: []
+    post:
+      description: "Lists workflow execution actions with optional filtering.\n\n Use this method to:\n - Monitor individual action execution status\n - Debug action failures\n - Track resource usage per action\n\n ### Examples\n\n - List execution actions for workflow execution:\n\n   Shows all execution actions for a specific workflow execution.\n\n   ```yaml\n   filter:\n     workflowExecutionIds: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.WorkflowService.ListWorkflowExecutionActions
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_execution_actions_for_workflow_execution:
+                description: Shows all execution actions for a specific workflow execution.
+                value:
+                  filter:
+                    workflowExecutionIds:
+                    - d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionActionsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionActionsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListWorkflowExecutionActions
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/ListWorkflowExecutionOutputs:
+    servers: []
+    post:
+      description: "Lists outputs produced by workflow execution actions.\n\n Use this method to:\n - Retrieve test results, coverage metrics, or other structured data from executions\n - Aggregate outputs across multiple workflow executions\n - Build dashboards or reports from execution data\n\n ### Examples\n\n - List outputs for a workflow execution:\n\n   Retrieves all outputs produced by actions in the specified execution.\n\n   ```yaml\n   filter:\n     workflowExecutionIds: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n   pagination:\n     pageSize: 50\n   ```"
+      operationId: gitpod.v1.WorkflowService.ListWorkflowExecutionOutputs
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_outputs_for_a_workflow_execution:
+                description: Retrieves all outputs produced by actions in the specified execution.
+                value:
+                  filter:
+                    workflowExecutionIds:
+                    - d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  pagination:
+                    pageSize: 50
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionOutputsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionOutputsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListWorkflowExecutionOutputs
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/ListWorkflowExecutions:
+    servers: []
+    post:
+      description: "Lists workflow executions with optional filtering.\n\n Use this method to:\n - Monitor workflow execution history\n - Track execution status\n - Debug workflow issues\n\n ### Examples\n\n - List executions for workflow:\n\n   Shows all executions for a specific workflow.\n\n   ```yaml\n   filter:\n     workflowIds: [\"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"]\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.WorkflowService.ListWorkflowExecutions
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_executions_for_workflow:
+                description: Shows all executions for a specific workflow.
+                value:
+                  filter:
+                    workflowIds:
+                    - b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListWorkflowExecutions
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/ListWorkflows:
+    servers: []
+    post:
+      operationId: gitpod.v1.WorkflowService.ListWorkflows
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListWorkflowsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListWorkflowsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListWorkflows
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/RotateWorkflowWebhookSecret:
+    servers: []
+    post:
+      description: "Rotates the webhook secret for a workflow.\n\n Use this method to:\n - Generate a new webhook secret\n - Invalidate the old webhook secret\n\n ### Examples\n\n - Rotate webhook secret:\n\n   Generates a new webhook secret for the workflow.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.RotateWorkflowWebhookSecret
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              rotate_webhook_secret:
+                description: Generates a new webhook secret for the workflow.
+                value:
+                  workflowId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.RotateWorkflowWebhookSecretRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.RotateWorkflowWebhookSecretResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: RotateWorkflowWebhookSecret
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/StartWorkflow:
+    servers: []
+    post:
+      description: "Starts a workflow execution.\n\n Use this method to:\n - Start workflow execution on demand\n - Test workflow configurations\n - Run workflows outside of automatic triggers\n\n ### Examples\n\n - Start workflow:\n\n   Starts a workflow execution manually.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.StartWorkflow
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              start_workflow:
+                description: Starts a workflow execution manually.
+                value:
+                  workflowId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.StartWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.StartWorkflowResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: StartWorkflow
+      tags:
+      - gitpod.v1.WorkflowService
+  /gitpod.v1.WorkflowService/UpdateWorkflow:
+    servers: []
+    post:
+      description: "Updates a workflow's configuration using full replacement semantics.\n\n Update Behavior:\n - All provided fields completely replace existing values\n - Optional fields that are not provided remain unchanged\n - Complex fields (triggers, action) are replaced entirely, not merged\n - To remove optional fields, explicitly set them to empty/default values\n\n Use this method to:\n - Modify workflow settings\n - Update triggers and actions\n - Change execution limits\n - Update workflow steps\n\n ### Examples\n\n - Update workflow name:\n\n   Changes the workflow's display name.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"Updated Workflow Name\"\n   ```\n\n - Replace all triggers:\n\n   Completely replaces the workflow's trigger configuration.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   triggers:\n     - manual: {}\n       context:\n         projects:\n           projectIds: [\"new-project-id\"]\n   ```\n\n - Update execution limits:\n\n   Completely replaces the workflow's action configuration.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   action:\n     limits:\n       maxParallel: 10\n       maxTotal: 100\n     steps:\n       - task:\n           command: \"npm test\"\n   ```"
+      operationId: gitpod.v1.WorkflowService.UpdateWorkflow
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              replace_all_triggers:
+                description: Completely replaces the workflow's trigger configuration.
+                value:
+                  triggers:
+                  - context:
+                      projects:
+                        projectIds:
+                        - new-project-id
+                    manual: {}
+                  workflowId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              update_execution_limits:
+                description: Completely replaces the workflow's action configuration.
+                value:
+                  action:
+                    limits:
+                      maxParallel: 10
+                      maxTotal: 100
+                    steps:
+                    - task:
+                        command: npm test
+                  workflowId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              update_workflow_name:
+                description: Changes the workflow's display name.
+                value:
+                  name: Updated Workflow Name
+                  workflowId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateWorkflowRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateWorkflowResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateWorkflow
+      tags:
+      - gitpod.v1.WorkflowService
+components:
+  schemas:
+    gitpod.v1.WorkflowErrorCode:
+      description: "WorkflowErrorCode defines error codes specific to workflows.\n These codes help distinguish retriable vs non-retriable errors and provide actionable information\n to both the reconciler and the frontend.\n\n Error code ranges:\n - 0: Unspecified\n - 1-999: Reserved for future use\n - 1000-1999: Environment-related errors\n - 2000-2999: Agent-related errors\n - 3000-3999: Resource-related errors"
+      enum:
+      - WORKFLOW_ERROR_CODE_UNSPECIFIED
+      - WORKFLOW_ERROR_CODE_ENVIRONMENT_ERROR
+      - WORKFLOW_ERROR_CODE_AGENT_ERROR
+      title: WorkflowErrorCode
+      type: string
+    gitpod.v1.GetWorkflowWebhookSecretResponse:
+      additionalProperties: false
+      properties:
+        secret:
+          description: The decrypted webhook secret
+          title: secret
+          type: string
+      title: GetWorkflowWebhookSecretResponse
+      type: object
+    gitpod.v1.WorkflowExecutionAction.Metadata:
+      additionalProperties: false
+      description: WorkflowExecutionActionMetadata contains workflow execution action metadata.
+      properties:
+        actionName:
+          description: "Human-readable name for this action based on its context.\n Examples: \"gitpod-io/gitpod-next\" for repository context, \"My Project\" for project context.\n Will be empty string for actions created before this field was added."
+          title: action_name
+          type: string
+        finishedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: finished_at
+        startedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: started_at
+        workflowExecutionId:
+          format: uuid
+          title: workflow_execution_id
+          type: string
+        workflowId:
+          format: uuid
+          title: workflow_id
+          type: string
+      title: Metadata
+      type: object
+    gitpod.v1.UpdateWorkflowResponse:
+      additionalProperties: false
+      properties:
+        workflow:
+          $ref: '#/components/schemas/gitpod.v1.Workflow'
+          title: workflow
+      title: UpdateWorkflowResponse
+      type: object
+    gitpod.v1.WorkflowStep:
+      additionalProperties: false
+      description: WorkflowStep defines a single step in a workflow action.
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - pullRequest
+          - required:
+            - report
+          - required:
+            - task
+        required:
+        - agent
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - report
+          - required:
+            - task
+        required:
+        - pullRequest
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - pullRequest
+          - required:
+            - task
+        required:
+        - report
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - pullRequest
+          - required:
+            - report
+        required:
+        - task
+      properties:
+        agent:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Agent'
+          title: agent
+        pullRequest:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.PullRequest'
+          title: pull_request
+        report:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report'
+          title: report
+        task:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Task'
+          title: task
+      title: WorkflowStep
+      type: object
+    gitpod.v1.GetWorkflowExecutionActionResponse:
+      additionalProperties: false
+      properties:
+        workflowExecutionAction:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionAction'
+          title: workflow_execution_action
+      title: GetWorkflowExecutionActionResponse
+      type: object
+    gitpod.v1.WorkflowExecutionTrigger:
+      additionalProperties: false
+      description: WorkflowExecutionTrigger represents a workflow execution trigger instance.
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - pullRequest
+          - required:
+            - time
+        required:
+        - manual
+      - not:
+          anyOf:
+          - required:
+            - manual
+          - required:
+            - time
+        required:
+        - pullRequest
+      - not:
+          anyOf:
+          - required:
+            - manual
+          - required:
+            - pullRequest
+        required:
+        - time
+      properties:
+        context:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext'
+          description: "Context from the workflow trigger - copied at execution time for immutability.\n This allows the reconciler to create actions without fetching the workflow definition."
+          title: context
+        manual:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionTrigger.Manual'
+          title: manual
+        pullRequest:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest'
+          title: pull_request
+        time:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionTrigger.Time'
+          title: time
+      required:
+      - context
+      title: WorkflowExecutionTrigger
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.WorkflowExecution.Metadata:
+      additionalProperties: false
+      description: WorkflowExecutionMetadata contains workflow execution metadata.
+      properties:
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: creator
+        executor:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: executor
+        finishedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: finished_at
+        startedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: started_at
+        workflowId:
+          format: uuid
+          title: workflow_id
+          type: string
+      title: Metadata
+      type: object
+    gitpod.v1.WorkflowExecution.Status:
+      additionalProperties: false
+      description: WorkflowExecutionStatus contains the current status of a workflow execution.
+      properties:
+        doneActionCount:
+          format: int32
+          title: done_action_count
+          type: integer
+        failedActionCount:
+          format: int32
+          title: failed_action_count
+          type: integer
+        failureMessage:
+          description: "FailureMessage summarises why the workflow execution failed to operate. If this is non-empty\n the workflow execution has failed to operate and will likely transition to a stopped state.\n Deprecated: Use errors field instead for structured error information."
+          title: failure_message
+          type: string
+          x-stainless-skip: true
+        failures:
+          description: "Structured failures that caused the workflow execution to fail.\n Provides detailed error codes, messages, and retry information."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowError'
+          title: failures
+          type: array
+        pendingActionCount:
+          format: int32
+          title: pending_action_count
+          type: integer
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionPhase'
+          title: phase
+        runningActionCount:
+          format: int32
+          title: running_action_count
+          type: integer
+        session:
+          title: session
+          type: string
+          x-stainless-skip: true
+        stoppedActionCount:
+          format: int32
+          title: stopped_action_count
+          type: integer
+        warningMessage:
+          description: "WarningMessage summarises why the workflow execution is in a warning state. If this is non-empty\n the workflow execution is in a warning state and likely does not match the users expectations.\n Deprecated: Use warnings field instead for structured warning information."
+          title: warning_message
+          type: string
+          x-stainless-skip: true
+        warnings:
+          description: "Structured warnings about the workflow execution.\n Provides detailed warning codes and messages."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowError'
+          title: warnings
+          type: array
+      title: Status
+      type: object
+    gitpod.v1.WorkflowTriggerContext.Projects:
+      additionalProperties: false
+      description: "Execute workflow in specific project environments.\n Creates environments for each specified project."
+      properties:
+        projectIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: project_ids
+          type: array
+      title: Projects
+      type: object
+    gitpod.v1.CountResponseRelation:
+      enum:
+      - COUNT_RESPONSE_RELATION_UNSPECIFIED
+      - COUNT_RESPONSE_RELATION_EQ
+      - COUNT_RESPONSE_RELATION_GTE
+      title: CountResponseRelation
+      type: string
+    gitpod.v1.WorkflowExecution:
+      additionalProperties: false
+      description: WorkflowExecution represents a workflow execution instance.
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecution.Metadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecution.Spec'
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecution.Status'
+          title: status
+      title: WorkflowExecution
+      type: object
+    gitpod.v1.WorkflowExecutionActionPhase:
+      description: WorkflowExecutionActionPhase defines the phases of workflow execution action.
+      enum:
+      - WORKFLOW_EXECUTION_ACTION_PHASE_UNSPECIFIED
+      - WORKFLOW_EXECUTION_ACTION_PHASE_PENDING
+      - WORKFLOW_EXECUTION_ACTION_PHASE_RUNNING
+      - WORKFLOW_EXECUTION_ACTION_PHASE_STOPPING
+      - WORKFLOW_EXECUTION_ACTION_PHASE_STOPPED
+      - WORKFLOW_EXECUTION_ACTION_PHASE_DELETING
+      - WORKFLOW_EXECUTION_ACTION_PHASE_DELETED
+      - WORKFLOW_EXECUTION_ACTION_PHASE_DONE
+      title: WorkflowExecutionActionPhase
+      type: string
+    google.protobuf.Duration:
+      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
+      format: regex
+      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
+      type: string
+    gitpod.v1.AgentCodeContext.ContextURL:
+      additionalProperties: false
+      properties:
+        environmentClassId:
+          format: uuid
+          title: environment_class_id
+          type: string
+        url:
+          format: uri
+          title: url
+          type: string
+      title: ContextURL
+      type: object
+    gitpod.v1.WorkflowStep.Report.FloatSchema:
+      additionalProperties: false
+      properties:
+        max:
+          format: float
+          nullable: true
+          title: max
+          type: number
+        min:
+          format: float
+          nullable: true
+          title: min
+          type: number
+      title: FloatSchema
+      type: object
+    gitpod.v1.WorkflowStep.Agent:
+      additionalProperties: false
+      description: WorkflowAgentStep represents an agent step that executes with a prompt.
+      properties:
+        prompt:
+          description: 'Prompt must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: prompt
+          type: string
+      title: Agent
+      type: object
+    gitpod.v1.GetWorkflowExecutionSummaryRequest:
+      additionalProperties: false
+      description: GetWorkflowExecutionSummaryRequest returns aggregate counts of workflow executions.
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.GetWorkflowExecutionSummaryRequest.Filter'
+          title: filter
+      required:
+      - filter
+      title: GetWorkflowExecutionSummaryRequest
+      type: object
+    gitpod.v1.PullRequest.Repository:
+      additionalProperties: false
+      description: Repository information
+      properties:
+        cloneUrl:
+          title: clone_url
+          type: string
+        host:
+          title: host
+          type: string
+        name:
+          title: name
+          type: string
+        owner:
+          title: owner
+          type: string
+      title: Repository
+      type: object
+    gitpod.v1.DateRange:
+      additionalProperties: false
+      description: DateRange specifies a time period for queries.
+      properties:
+        endTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: End time of the date range (exclusive).
+          title: end_time
+        startTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Start time of the date range (inclusive).
+          title: start_time
+      required:
+      - startTime
+      - endTime
+      title: DateRange
+      type: object
+    gitpod.v1.WorkflowAction.Limits.PerExecution:
+      additionalProperties: false
+      description: PerExecution defines limits per execution action.
+      properties:
+        maxTime:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "Maximum time allowed for a single execution action.\n Use standard duration format (e.g., \"30m\" for 30 minutes, \"2h\" for 2 hours)."
+          title: max_time
+      title: PerExecution
+      type: object
+    gitpod.v1.AgentCodeContext:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - environmentId
+          - required:
+            - projectId
+        required:
+        - contextUrl
+      - not:
+          anyOf:
+          - required:
+            - contextUrl
+          - required:
+            - projectId
+        required:
+        - environmentId
+      - not:
+          anyOf:
+          - required:
+            - contextUrl
+          - required:
+            - environmentId
+        required:
+        - projectId
+      properties:
+        contextUrl:
+          $ref: '#/components/schemas/gitpod.v1.AgentCodeContext.ContextURL'
+          title: context_url
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+        projectId:
+          format: uuid
+          title: project_id
+          type: string
+        pullRequest:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest'
+          description: "Pull request context - optional metadata about the PR being worked on\n This is populated when the agent execution is triggered by a PR workflow\n or when explicitly provided through the browser extension"
+          nullable: true
+          title: pull_request
+      title: AgentCodeContext
+      type: object
+    gitpod.v1.WorkflowAction:
+      additionalProperties: false
+      description: WorkflowAction defines the actions to be executed in a workflow.
+      properties:
+        limits:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction.Limits'
+          title: limits
+        steps:
+          description: 'Automation must have between 1 and 50 steps:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 50
+
+            ```
+
+
+            '
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowStep'
+          title: steps
+          type: array
+      required:
+      - limits
+      title: WorkflowAction
+      type: object
+    gitpod.v1.WorkflowTriggerContext.Repositories.RepositoryURLs:
+      additionalProperties: false
+      description: "RepositoryURLs contains a list of explicit repository URLs.\n Creates one action per repository URL."
+      properties:
+        repoUrls:
+          items:
+            maxItems: 100
+            minItems: 1
+            minLength: 1
+            type: string
+          maxItems: 100
+          minItems: 1
+          title: repo_urls
+          type: array
+      title: RepositoryURLs
+      type: object
+    gitpod.v1.WorkflowTrigger:
+      additionalProperties: false
+      description: "WorkflowTrigger defines when a workflow should be executed.\n\n Each trigger type defines a specific condition that will cause the workflow to execute:\n - Manual: Triggered explicitly by user action via StartWorkflow RPC\n - Time: Triggered automatically based on cron schedule\n - PullRequest: Triggered automatically when specified PR events occur\n\n Trigger Semantics:\n - Each trigger instance can create multiple workflow executions\n - Multiple triggers of the same workflow can fire simultaneously\n - Each trigger execution is independent and tracked separately\n - Triggers are evaluated in the context specified by WorkflowTriggerContext"
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - pullRequest
+          - required:
+            - time
+        required:
+        - manual
+      - not:
+          anyOf:
+          - required:
+            - manual
+          - required:
+            - time
+        required:
+        - pullRequest
+      - not:
+          anyOf:
+          - required:
+            - manual
+          - required:
+            - pullRequest
+        required:
+        - time
+      properties:
+        context:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext'
+          title: context
+        manual:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger.Manual'
+          title: manual
+        pullRequest:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger.PullRequest'
+          title: pull_request
+        time:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger.Time'
+          title: time
+      required:
+      - context
+      title: WorkflowTrigger
+      type: object
+    gitpod.v1.ListWorkflowsRequest:
+      additionalProperties: false
+      description: ListWorkflowsRequest lists workflows with optional filtering.
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountRequest'
+          description: count controls whether the response includes a bounded total count.
+          title: count
+          x-stainless-skip: true
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListWorkflowsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+        sort:
+          $ref: '#/components/schemas/gitpod.v1.ListWorkflowsRequest.Sort'
+          description: "sort specifies the order of results. When unspecified, results are sorted\n alphabetically by name ascending."
+          title: sort
+      title: ListWorkflowsRequest
+      type: object
+    gitpod.v1.WorkflowStep.Report.BooleanSchema:
+      additionalProperties: false
+      title: BooleanSchema
+      type: object
+    gitpod.v1.WorkflowExecutionAction.Status.StepStatus.StepPhase:
+      enum:
+      - STEP_PHASE_UNSPECIFIED
+      - STEP_PHASE_PENDING
+      - STEP_PHASE_RUNNING
+      - STEP_PHASE_DONE
+      - STEP_PHASE_FAILED
+      - STEP_PHASE_CANCELLED
+      title: StepPhase
+      type: string
+    gitpod.v1.WorkflowTriggerContext.Agent:
+      additionalProperties: false
+      description: "Execute workflow in agent-managed environments.\n Agent receives the specified prompt and manages execution context."
+      properties:
+        prompt:
+          description: 'Agent prompt must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: prompt
+          type: string
+      title: Agent
+      type: object
+    gitpod.v1.GetWorkflowExecutionSummaryRequest.Filter:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query executions within.
+          title: date_range
+        workflowIds:
+          description: Optional workflow IDs to scope the summary to specific workflows.
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: workflow_ids
+          type: array
+      required:
+      - dateRange
+      title: Filter
+      type: object
+    gitpod.v1.WorkflowError:
+      additionalProperties: false
+      description: "WorkflowError provides structured error information for workflow failures.\n This enables the reconciler to make informed retry decisions and the frontend\n to display actionable error messages."
+      properties:
+        code:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowErrorCode'
+          description: Error code identifying the type of error.
+          title: code
+        message:
+          description: Human-readable error message.
+          title: message
+          type: string
+        meta:
+          additionalProperties:
+            title: value
+            type: string
+          description: "Additional metadata about the error.\n Common keys include:\n - environment_id: ID of the environment\n - task_id: ID of the task\n - service_id: ID of the service\n - workflow_id: ID of the workflow\n - workflow_execution_id: ID of the workflow execution"
+          title: meta
+          type: object
+        reason:
+          description: "Reason explaining why the error occurred.\n Examples: \"not_found\", \"stopped\", \"deleted\", \"creation_failed\", \"start_failed\""
+          title: reason
+          type: string
+        retry:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowError.Retry'
+          description: Retry configuration. If not set, the error is considered non-retriable.
+          nullable: true
+          title: retry
+      title: WorkflowError
+      type: object
+    gitpod.v1.ListWorkflowExecutionOutputsResponse:
+      additionalProperties: false
+      properties:
+        outputs:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionOutputsResponse.ActionOutput'
+          title: outputs
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      title: ListWorkflowExecutionOutputsResponse
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.GetWorkflowExecutionResponse:
+      additionalProperties: false
+      properties:
+        workflowExecution:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecution'
+          title: workflow_execution
+      title: GetWorkflowExecutionResponse
+      type: object
+    gitpod.v1.PullRequest.State:
+      description: Current state of the pull request
+      enum:
+      - STATE_UNSPECIFIED
+      - STATE_OPEN
+      - STATE_CLOSED
+      - STATE_MERGED
+      title: State
+      type: string
+    gitpod.v1.WorkflowStep.Report.OutputSpec:
+      additionalProperties: false
+      allOf:
+      - anyOf:
+        - required:
+          - command
+        - required:
+          - prompt
+        - not:
+            anyOf:
+            - required:
+              - command
+            - required:
+              - prompt
+      - anyOf:
+        - required:
+          - boolean
+        - required:
+          - float
+        - required:
+          - integer
+        - required:
+          - string
+        - not:
+            anyOf:
+            - required:
+              - boolean
+            - required:
+              - float
+            - required:
+              - integer
+            - required:
+              - string
+      properties:
+        acceptanceCriteria:
+          description: "Optional CEL expression that decides if the value is acceptable,\n e.g. is the test coverage high enough. Has one variable (value), must eval to boolean."
+          nullable: true
+          title: acceptance_criteria
+          type: string
+        boolean:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.BooleanSchema'
+          title: boolean
+        command:
+          description: 'Extraction command must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: command
+          type: string
+        float:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.FloatSchema'
+          title: float
+        integer:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.IntegerSchema'
+          title: integer
+        key:
+          description: 'Output key must be between 1 and 50 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 50
+
+            ```
+
+
+            Output key must be snake_case (e.g., my_output_key):
+
+            ```
+
+            this.matches(''^[a-z]+(_[a-z]+)*$'')
+
+            ```
+
+
+            '
+          title: key
+          type: string
+        prompt:
+          description: 'Extraction prompt must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: prompt
+          type: string
+        string:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.StringSchema'
+          title: string
+        title:
+          description: 'Output title must be between 1 and 200 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 200
+
+            ```
+
+
+            '
+          title: title
+          type: string
+      title: OutputSpec
+      type: object
+    gitpod.v1.CancelWorkflowExecutionActionResponse:
+      additionalProperties: false
+      title: CancelWorkflowExecutionActionResponse
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.ListWorkflowsRequest.Filter:
+      additionalProperties: false
+      properties:
+        creatorIds:
+          description: creator_ids filters workflows by creator user IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: creator_ids
+          type: array
+        disabled:
+          description: "disabled filters workflows by their disabled state.\n When set to true, only disabled workflows are returned.\n When set to false, only enabled workflows are returned.\n When unset, all workflows are returned regardless of disabled state."
+          nullable: true
+          title: disabled
+          type: boolean
+          x-stainless-skip: true
+        hasFailedExecutionSince:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "has_failed_execution_since filters workflows that have at least one failed execution\n with create_time >= the specified timestamp. A failed execution is one that is COMPLETED\n with failed_action_count > 0, or STOPPED with failed_action_count > 0 or a non-empty\n failure_message. This filter is mutually exclusive with status_phases."
+          title: has_failed_execution_since
+        search:
+          description: search performs case-insensitive search across workflow name, description, and ID
+          maxLength: 256
+          title: search
+          type: string
+        statusPhases:
+          description: "status_phases filters workflows by the phase of their latest execution.\n Only workflows whose most recent execution matches one of the specified phases are returned."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionPhase'
+          maxItems: 10
+          title: status_phases
+          type: array
+        workflowIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: workflow_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.WorkflowTrigger.Time:
+      additionalProperties: false
+      description: "Time-based trigger - executed automatically based on cron schedule.\n Uses standard cron expression format (minute hour day month weekday)."
+      properties:
+        cronExpression:
+          description: 'Cron expression must be between 1 and 100 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 100
+
+            ```
+
+
+            '
+          title: cron_expression
+          type: string
+      title: Time
+      type: object
+    gitpod.v1.RotateWorkflowWebhookSecretRequest:
+      additionalProperties: false
+      properties:
+        workflowId:
+          format: uuid
+          title: workflow_id
+          type: string
+      title: RotateWorkflowWebhookSecretRequest
+      type: object
+    gitpod.v1.WorkflowExecutionAction.Status.StepStatus:
+      additionalProperties: false
+      description: WorkflowExecutionActionStepStatus represents the status of a single step execution.
+      properties:
+        error:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowError'
+          description: "Structured error that caused the step to fail.\n Provides detailed error code, message, and retry information."
+          title: error
+        failureMessage:
+          description: 'Deprecated: Use error field instead for structured error information.'
+          title: failure_message
+          type: string
+          x-stainless-skip: true
+        finishedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: finished_at
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionAction.Status.StepStatus.StepPhase'
+          title: phase
+        startedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: started_at
+        step:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep'
+          description: "The step definition captured at execution time for immutability.\n This ensures the UI shows the correct step even if the workflow definition changes."
+          title: step
+        stepIndex:
+          description: Index of the step in the workflow action steps array
+          format: int32
+          title: step_index
+          type: integer
+      title: StepStatus
+      type: object
+    gitpod.v1.WorkflowExecutionAction.Status:
+      additionalProperties: false
+      description: WorkflowExecutionActionStatus contains the current status of a workflow execution action.
+      properties:
+        agentExecutionId:
+          title: agent_execution_id
+          type: string
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+        failureMessage:
+          description: "FailureMessage summarises why the workflow execution action failed to operate. If this is non-empty\n the workflow execution action has failed to operate and will likely transition to a stopped state.\n Deprecated: Use errors field instead for structured error information."
+          title: failure_message
+          type: string
+          x-stainless-skip: true
+        failures:
+          description: "Structured failures that caused the workflow execution action to fail.\n Provides detailed error codes, messages, and retry information."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowError'
+          title: failures
+          type: array
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionActionPhase'
+          title: phase
+        session:
+          title: session
+          type: string
+          x-stainless-skip: true
+        stepStatuses:
+          description: Step-level progress tracking
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionAction.Status.StepStatus'
+          title: step_statuses
+          type: array
+        warningMessage:
+          description: "WarningMessage summarises why the workflow execution action is in a warning state. If this is non-empty\n the workflow execution action is in a warning state and likely does not match the users expectations.\n Deprecated: Use warnings field instead for structured warning information."
+          title: warning_message
+          type: string
+          x-stainless-skip: true
+        warnings:
+          description: "Structured warnings about the workflow execution action.\n Provides detailed warning codes and messages."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowError'
+          title: warnings
+          type: array
+      title: Status
+      type: object
+    gitpod.v1.WorkflowTriggerContext.FromTrigger:
+      additionalProperties: false
+      description: "Use context derived from the trigger event.\n Currently only supported for PullRequest triggers - uses PR repository context."
+      title: FromTrigger
+      type: object
+    gitpod.v1.CancelWorkflowExecutionRequest:
+      additionalProperties: false
+      description: CancelWorkflowExecutionRequest cancels a running workflow execution.
+      properties:
+        workflowExecutionId:
+          format: uuid
+          title: workflow_execution_id
+          type: string
+      title: CancelWorkflowExecutionRequest
+      type: object
+    gitpod.v1.ListWorkflowsRequest.Sort:
+      additionalProperties: false
+      properties:
+        field:
+          $ref: '#/components/schemas/gitpod.v1.ListWorkflowsRequest.SortField'
+          title: field
+        order:
+          $ref: '#/components/schemas/gitpod.v1.SortOrder'
+          title: order
+      title: Sort
+      type: object
+    gitpod.v1.Workflow.Metadata:
+      additionalProperties: false
+      description: WorkflowMetadata contains workflow metadata.
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: creator
+        description:
+          maxLength: 500
+          title: description
+          type: string
+        executor:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: executor
+        name:
+          maxLength: 80
+          minLength: 1
+          title: name
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+      title: Metadata
+      type: object
+    gitpod.v1.StartWorkflowRequest:
+      additionalProperties: false
+      description: StartWorkflowRequest starts a workflow execution.
+      properties:
+        contextOverride:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext'
+          description: "Optional context override for the execution.\n When provided, replaces the workflow's default trigger context.\n User must have appropriate permissions on the overridden resources.\n Supports Projects, Repositories, and Agent context types.\n FromTrigger context type is not supported for manual overrides."
+          nullable: true
+          title: context_override
+        parameters:
+          additionalProperties:
+            title: value
+            type: string
+          description: "Parameters to substitute into workflow steps using Go template syntax.\n Use {{ .Parameters.key_name }} in templatable fields (task.command, agent.prompt,\n pull_request.title/description/branch, trigger context agent.prompt).\n Keys must match pattern ^[a-zA-Z_][a-zA-Z0-9_]*$\n Maximum 10 parameters allowed.\n Empty map is treated as no parameters provided."
+          maxProperties: 10
+          title: parameters
+          type: object
+        workflowId:
+          format: uuid
+          title: workflow_id
+          type: string
+      title: StartWorkflowRequest
+      type: object
+    gitpod.v1.ListWorkflowExecutionsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        workflowExecutions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowExecution'
+          title: workflow_executions
+          type: array
+      title: ListWorkflowExecutionsResponse
+      type: object
+    gitpod.v1.CountResponse:
+      additionalProperties: false
+      description: "CountResponse represents a bounded count of matching records.\n When the actual count exceeds the counting limit, value is capped and\n relation is set to GREATER_THAN_OR_EQUAL."
+      properties:
+        relation:
+          $ref: '#/components/schemas/gitpod.v1.CountResponseRelation'
+          description: Indicates whether value is the exact total or a lower bound.
+          title: relation
+        value:
+          description: The count of matching records, capped at the server's counting limit.
+          format: int32
+          title: value
+          type: integer
+      title: CountResponse
+      type: object
+    gitpod.v1.AgentExecution.Status.OutputValue:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - floatValue
+          - required:
+            - intValue
+          - required:
+            - stringValue
+        required:
+        - boolValue
+      - not:
+          anyOf:
+          - required:
+            - boolValue
+          - required:
+            - intValue
+          - required:
+            - stringValue
+        required:
+        - floatValue
+      - not:
+          anyOf:
+          - required:
+            - boolValue
+          - required:
+            - floatValue
+          - required:
+            - stringValue
+        required:
+        - intValue
+      - not:
+          anyOf:
+          - required:
+            - boolValue
+          - required:
+            - floatValue
+          - required:
+            - intValue
+        required:
+        - stringValue
+      properties:
+        boolValue:
+          title: bool_value
+          type: boolean
+        floatValue:
+          format: double
+          title: float_value
+          type: number
+        intValue:
+          title: int_value
+          type: string
+        stringValue:
+          maxLength: 4096
+          title: string_value
+          type: string
+      title: OutputValue
+      type: object
+    gitpod.v1.CreateWorkflowRequest:
+      additionalProperties: false
+      description: CreateWorkflowRequest creates a new workflow.
+      properties:
+        action:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          title: action
+        description:
+          description: 'Description must be at most 500 characters:
+
+            ```
+
+            size(this) <= 500
+
+            ```
+
+
+            '
+          title: description
+          type: string
+        executor:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: "Optional executor for the workflow. If not provided, defaults to the creator.\n Must be either the caller themselves or a service account."
+          nullable: true
+          title: executor
+        name:
+          description: 'Name must be between 1 and 80 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 80
+
+            ```
+
+
+            '
+          title: name
+          type: string
+        report:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          title: report
+        triggers:
+          description: 'Automation must have between 1 and 10 triggers:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 10
+
+            ```
+
+
+            '
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger'
+          title: triggers
+          type: array
+      required:
+      - action
+      title: CreateWorkflowRequest
+      type: object
+    gitpod.v1.ListWorkflowExecutionOutputsRequest.Filter:
+      additionalProperties: false
+      properties:
+        workflowExecutionIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: workflow_execution_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.WorkflowAction.Limits:
+      additionalProperties: false
+      description: 'Limits defines execution limits for workflow actions.
+
+        Concurrent actions limit cannot exceed total actions limit:
+
+        ```
+
+        this.max_parallel <= this.max_total
+
+        ```
+
+
+        '
+      properties:
+        maxParallel:
+          description: 'Maximum parallel actions must be between 1 and 25:
+
+            ```
+
+            this >= 1 && this <= 25
+
+            ```
+
+
+            '
+          format: int32
+          title: max_parallel
+          type: integer
+        maxTotal:
+          description: 'Maximum total actions must be between 1 and 100:
+
+            ```
+
+            this >= 1 && this <= 100
+
+            ```
+
+
+            '
+          format: int32
+          title: max_total
+          type: integer
+        perExecution:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction.Limits.PerExecution'
+          title: per_execution
+      title: Limits
+      type: object
+    gitpod.v1.CancelWorkflowExecutionResponse:
+      additionalProperties: false
+      title: CancelWorkflowExecutionResponse
+      type: object
+    gitpod.v1.RotateWorkflowWebhookSecretResponse:
+      additionalProperties: false
+      properties:
+        secret:
+          description: The new webhook secret (decrypted)
+          title: secret
+          type: string
+      title: RotateWorkflowWebhookSecretResponse
+      type: object
+    gitpod.v1.DeleteWorkflowResponse:
+      additionalProperties: false
+      title: DeleteWorkflowResponse
+      type: object
+    gitpod.v1.GetWorkflowResponse:
+      additionalProperties: false
+      properties:
+        workflow:
+          $ref: '#/components/schemas/gitpod.v1.Workflow'
+          title: workflow
+      title: GetWorkflowResponse
+      type: object
+    gitpod.v1.ListWorkflowExecutionsRequest:
+      additionalProperties: false
+      description: ListWorkflowExecutionsRequest lists workflow executions with optional filtering.
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+        sort:
+          $ref: '#/components/schemas/gitpod.v1.Sort'
+          description: "sort specifies the order of results. When unspecified, results are sorted by\n operational priority (running first, then failed, then completed, then others).\n Supported sort fields: startedAt, finishedAt, createdAt."
+          title: sort
+      title: ListWorkflowExecutionsRequest
+      type: object
+    gitpod.v1.WorkflowTriggerContext.Repositories:
+      additionalProperties: false
+      description: "Execute workflow in environments created from repository URLs.\n Supports both explicit repository URLs and search patterns."
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - repositoryUrls
+        required:
+        - repoSelector
+      - not:
+          anyOf:
+          - required:
+            - repoSelector
+        required:
+        - repositoryUrls
+      properties:
+        environmentClassId:
+          format: uuid
+          title: environment_class_id
+          type: string
+        repoSelector:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Repositories.RepositorySelector'
+          title: repo_selector
+        repositoryUrls:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Repositories.RepositoryURLs'
+          title: repository_urls
+      title: Repositories
+      type: object
+    gitpod.v1.WorkflowStep.Report:
+      additionalProperties: false
+      properties:
+        outputs:
+          description: 'Report must have at least one output:
+
+            ```
+
+            size(this) >= 1
+
+            ```
+
+
+            '
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.OutputSpec'
+          title: outputs
+          type: array
+      title: Report
+      type: object
+    gitpod.v1.SortOrder:
+      enum:
+      - SORT_ORDER_UNSPECIFIED
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+      title: SortOrder
+      type: string
+    gitpod.v1.GetWorkflowWebhookSecretRequest:
+      additionalProperties: false
+      description: GetWorkflowWebhookSecretRequest retrieves the webhook secret for a workflow.
+      properties:
+        workflowId:
+          format: uuid
+          title: workflow_id
+          type: string
+      title: GetWorkflowWebhookSecretRequest
+      type: object
+    gitpod.v1.WorkflowStep.PullRequest:
+      additionalProperties: false
+      description: WorkflowPullRequestStep represents a pull request creation step.
+      properties:
+        branch:
+          description: 'Branch name must be between 1 and 255 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 255
+
+            ```
+
+
+            '
+          title: branch
+          type: string
+        description:
+          description: 'Description must be at most 20,000 characters:
+
+            ```
+
+            size(this) <= 20000
+
+            ```
+
+
+            '
+          title: description
+          type: string
+        draft:
+          title: draft
+          type: boolean
+        title:
+          description: 'Title must be between 1 and 500 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 500
+
+            ```
+
+
+            '
+          title: title
+          type: string
+      title: PullRequest
+      type: object
+    gitpod.v1.WorkflowTriggerContext.Repositories.RepositorySelector:
+      additionalProperties: false
+      description: "RepositorySelector defines how to select repositories for workflow execution.\n Combines a search string with an SCM host to identify repositories."
+      properties:
+        repoSearchString:
+          description: "Search string to match repositories using SCM-specific search patterns.\n For GitHub: supports GitHub search syntax (e.g., \"org:gitpod-io language:go\", \"user:octocat stars:>100\")\n For GitLab: supports GitLab search syntax\n See SCM provider documentation for supported search patterns."
+          minLength: 1
+          title: repo_search_string
+          type: string
+        scmHost:
+          description: SCM host where the search should be performed (e.g., "github.com", "gitlab.com")
+          minLength: 1
+          title: scm_host
+          type: string
+      title: RepositorySelector
+      type: object
+    gitpod.v1.WorkflowStep.Task:
+      additionalProperties: false
+      description: WorkflowTaskStep represents a task step that executes a command.
+      properties:
+        command:
+          description: 'Command must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: command
+          type: string
+      title: Task
+      type: object
+    gitpod.v1.CreateWorkflowResponse:
+      additionalProperties: false
+      properties:
+        workflow:
+          $ref: '#/components/schemas/gitpod.v1.Workflow'
+          title: workflow
+      title: CreateWorkflowResponse
+      type: object
+    gitpod.v1.CountRequest:
+      additionalProperties: false
+      description: "CountRequest controls whether the response should include a bounded\n count of matching records."
+      properties:
+        include:
+          description: "When true, the first page of results will include a CountResponse with\n the bounded total. Subsequent pages (requests with a pagination token)\n will not contain the count."
+          title: include
+          type: boolean
+      title: CountRequest
+      type: object
+    gitpod.v1.GetWorkflowExecutionRequest:
+      additionalProperties: false
+      description: GetWorkflowExecutionRequest gets details about a specific workflow execution.
+      properties:
+        workflowExecutionId:
+          format: uuid
+          title: workflow_execution_id
+          type: string
+      title: GetWorkflowExecutionRequest
+      type: object
+    gitpod.v1.WorkflowStep.Report.StringSchema:
+      additionalProperties: false
+      properties:
+        pattern:
+          title: pattern
+          type: string
+      title: StringSchema
+      type: object
+    gitpod.v1.ListWorkflowExecutionActionsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        workflowExecutionActions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionAction'
+          title: workflow_execution_actions
+          type: array
+      title: ListWorkflowExecutionActionsResponse
+      type: object
+    gitpod.v1.WorkflowTriggerContext:
+      additionalProperties: false
+      description: "WorkflowTriggerContext defines the context in which a workflow should run.\n\n Context determines where and how the workflow executes:\n - Projects: Execute in specific project environments\n - Repositories: Execute in environments created from repository URLs\n - Agent: Execute in agent-managed environments with custom prompts\n - FromTrigger: Use context derived from the trigger event (PR-specific)\n\n Context Usage by Trigger Type:\n - Manual: Can use any context type\n - Time: Typically uses Projects or Repositories context\n - PullRequest: Can use any context, FromTrigger uses PR repository context"
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - fromTrigger
+          - required:
+            - projects
+          - required:
+            - repositories
+        required:
+        - agent
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - projects
+          - required:
+            - repositories
+        required:
+        - fromTrigger
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - fromTrigger
+          - required:
+            - repositories
+        required:
+        - projects
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - fromTrigger
+          - required:
+            - projects
+        required:
+        - repositories
+      properties:
+        agent:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Agent'
+          title: agent
+        fromTrigger:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.FromTrigger'
+          title: from_trigger
+        projects:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Projects'
+          title: projects
+        repositories:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Repositories'
+          title: repositories
+      title: WorkflowTriggerContext
+      type: object
+    gitpod.v1.UpdateWorkflowRequest:
+      additionalProperties: false
+      description: UpdateWorkflowRequest updates a workflow's configuration.
+      properties:
+        action:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          nullable: true
+          title: action
+        description:
+          description: 'Description must be at most 500 characters:
+
+            ```
+
+            size(this) <= 500
+
+            ```
+
+
+            '
+          nullable: true
+          title: description
+          type: string
+        disabled:
+          description: "When set, enables or disables the workflow. A disabled workflow will not\n be triggered by any automatic trigger and manual starts are rejected."
+          nullable: true
+          title: disabled
+          type: boolean
+        executor:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          nullable: true
+          title: executor
+        name:
+          description: 'Name must be between 1 and 80 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 80
+
+            ```
+
+
+            '
+          nullable: true
+          title: name
+          type: string
+        report:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          nullable: true
+          title: report
+        triggers:
+          description: 'Automation can have at most 10 triggers:
+
+            ```
+
+            size(this) <= 10
+
+            ```
+
+
+            '
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger'
+          title: triggers
+          type: array
+        workflowId:
+          format: uuid
+          title: workflow_id
+          type: string
+      title: UpdateWorkflowRequest
+      type: object
+    gitpod.v1.WorkflowExecutionAction:
+      additionalProperties: false
+      description: WorkflowExecutionAction represents a workflow execution action instance.
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionAction.Metadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionAction.Spec'
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionAction.Status'
+          title: status
+      title: WorkflowExecutionAction
+      type: object
+    gitpod.v1.Workflow.Spec:
+      additionalProperties: false
+      properties:
+        action:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          title: action
+        deleting:
+          description: Marks workflow as pending deletion
+          title: deleting
+          type: boolean
+          x-stainless-skip: true
+        disabled:
+          description: "When true, the workflow will not be triggered by any automatic trigger\n (cron, webhook, pull request). Manual starts via StartWorkflow are also\n rejected while disabled."
+          title: disabled
+          type: boolean
+          x-stainless-skip: true
+        report:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          title: report
+        triggers:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger'
+          title: triggers
+          type: array
+      title: Spec
+      type: object
+    gitpod.v1.WorkflowExecutionPhase:
+      enum:
+      - WORKFLOW_EXECUTION_PHASE_UNSPECIFIED
+      - WORKFLOW_EXECUTION_PHASE_PENDING
+      - WORKFLOW_EXECUTION_PHASE_RUNNING
+      - WORKFLOW_EXECUTION_PHASE_STOPPING
+      - WORKFLOW_EXECUTION_PHASE_STOPPED
+      - WORKFLOW_EXECUTION_PHASE_DELETING
+      - WORKFLOW_EXECUTION_PHASE_DELETED
+      - WORKFLOW_EXECUTION_PHASE_COMPLETED
+      title: WorkflowExecutionPhase
+      type: string
+    gitpod.v1.ListWorkflowExecutionOutputsResponse.ActionOutput:
+      additionalProperties: false
+      properties:
+        actionId:
+          title: action_id
+          type: string
+        values:
+          additionalProperties:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status.OutputValue'
+            title: value
+          title: values
+          type: object
+      title: ActionOutput
+      type: object
+    gitpod.v1.StartWorkflowResponse:
+      additionalProperties: false
+      properties:
+        workflowExecution:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecution'
+          title: workflow_execution
+      title: StartWorkflowResponse
+      type: object
+    gitpod.v1.WorkflowExecutionTrigger.Time:
+      additionalProperties: false
+      description: Time trigger - just the timestamp when it was triggered
+      properties:
+        triggeredAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: triggered_at
+      title: Time
+      type: object
+    gitpod.v1.ListWorkflowsResponse:
+      additionalProperties: false
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountResponse'
+          description: "count is the bounded total count of matching workflows, present only when\n requested via CountRequest.include on the first page."
+          title: count
+          x-stainless-skip: true
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        workflows:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Workflow'
+          title: workflows
+          type: array
+      title: ListWorkflowsResponse
+      type: object
+    gitpod.v1.WorkflowTrigger.PullRequest:
+      additionalProperties: false
+      description: "Pull request trigger - executed when specified PR events occur.\n Only triggers for PRs in repositories matching the trigger context."
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger.PullRequestEvent'
+          title: events
+          type: array
+        webhookId:
+          description: "webhook_id is the optional ID of a webhook that this trigger is bound to.\n When set, the trigger will be activated when the webhook receives events.\n This allows multiple workflows to share a single webhook endpoint."
+          format: uuid
+          nullable: true
+          title: webhook_id
+          type: string
+      title: PullRequest
+      type: object
+    gitpod.v1.ListWorkflowExecutionsRequest.Filter:
+      additionalProperties: false
+      properties:
+        hasFailedActions:
+          nullable: true
+          title: has_failed_actions
+          type: boolean
+        search:
+          description: search performs case-insensitive search across workflow execution ID and trigger type
+          maxLength: 256
+          title: search
+          type: string
+        statusPhases:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionPhase'
+          maxItems: 10
+          title: status_phases
+          type: array
+        workflowExecutionIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: workflow_execution_ids
+          type: array
+        workflowIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: workflow_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.WorkflowExecutionAction.Spec:
+      additionalProperties: false
+      description: WorkflowExecutionActionSpec contains the specification for this execution action.
+      properties:
+        context:
+          $ref: '#/components/schemas/gitpod.v1.AgentCodeContext'
+          description: "Context for the execution action - specifies where and how the action executes.\n This is resolved from the workflow trigger context and contains the specific\n project, repository, or agent context for this execution instance."
+          title: context
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionActionPhase'
+          title: desired_phase
+          x-stainless-skip: true
+        limits:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction.Limits.PerExecution'
+          title: limits
+        session:
+          title: session
+          type: string
+          x-stainless-skip: true
+      title: Spec
+      type: object
+    gitpod.v1.WorkflowStep.Report.IntegerSchema:
+      additionalProperties: false
+      properties:
+        max:
+          format: int32
+          nullable: true
+          title: max
+          type: integer
+        min:
+          format: int32
+          nullable: true
+          title: min
+          type: integer
+      title: IntegerSchema
+      type: object
+    gitpod.v1.WorkflowExecution.Spec:
+      additionalProperties: false
+      description: WorkflowExecutionSpec contains the specification used for this execution.
+      properties:
+        action:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          title: action
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionPhase'
+          title: desired_phase
+          x-stainless-skip: true
+        report:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          title: report
+        session:
+          title: session
+          type: string
+          x-stainless-skip: true
+        trigger:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionTrigger'
+          title: trigger
+      title: Spec
+      type: object
+    gitpod.v1.GetWorkflowExecutionActionRequest:
+      additionalProperties: false
+      description: GetWorkflowExecutionActionRequest gets details about a specific workflow execution action.
+      properties:
+        workflowExecutionActionId:
+          format: uuid
+          title: workflow_execution_action_id
+          type: string
+      title: GetWorkflowExecutionActionRequest
+      type: object
+    gitpod.v1.ListWorkflowExecutionOutputsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionOutputsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListWorkflowExecutionOutputsRequest
+      type: object
+    gitpod.v1.WorkflowTrigger.Manual:
+      additionalProperties: false
+      description: "Manual trigger - executed when StartWorkflow RPC is called.\n No additional configuration needed."
+      title: Manual
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.GetWorkflowRequest:
+      additionalProperties: false
+      description: GetWorkflowRequest gets details about a specific workflow.
+      properties:
+        workflowId:
+          format: uuid
+          title: workflow_id
+          type: string
+      title: GetWorkflowRequest
+      type: object
+    gitpod.v1.CancelWorkflowExecutionActionRequest:
+      additionalProperties: false
+      description: CancelWorkflowExecutionActionRequest cancels a running workflow execution action.
+      properties:
+        workflowExecutionActionId:
+          format: uuid
+          title: workflow_execution_action_id
+          type: string
+      title: CancelWorkflowExecutionActionRequest
+      type: object
+    gitpod.v1.WorkflowError.Retry:
+      additionalProperties: false
+      description: Retry configuration for the error.
+      properties:
+        retriable:
+          description: Whether the error is retriable.
+          title: retriable
+          type: boolean
+        retryAfter:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "Suggested duration to wait before retrying.\n Only meaningful when retriable is true."
+          title: retry_after
+      title: Retry
+      type: object
+    gitpod.v1.Sort:
+      additionalProperties: false
+      properties:
+        field:
+          description: Field name to sort by, in camelCase.
+          title: field
+          type: string
+        order:
+          $ref: '#/components/schemas/gitpod.v1.SortOrder'
+          title: order
+      title: Sort
+      type: object
+    gitpod.v1.WorkflowExecutionTrigger.Manual:
+      additionalProperties: false
+      description: Manual trigger - empty message since no additional data needed
+      title: Manual
+      type: object
+    gitpod.v1.GetWorkflowExecutionSummaryResponse:
+      additionalProperties: false
+      properties:
+        failedCount:
+          description: "Number of failed executions: COMPLETED with failed_action_count > 0, or STOPPED with\n failed_action_count > 0 or a non-empty failure_message (matches dashboard \"Failed\" labeling)."
+          title: failed_count
+          type: string
+        successfulCount:
+          description: Number of executions in COMPLETED phase with no failed actions (failed_action_count == 0).
+          title: successful_count
+          type: string
+        totalCount:
+          description: Total number of executions in the time range, regardless of phase.
+          title: total_count
+          type: string
+        totalWorkflowsInOrganization:
+          description: "Total number of workflows that exist in the organization.\n This count is independent of the date range filter."
+          title: total_workflows_in_organization
+          type: string
+      title: GetWorkflowExecutionSummaryResponse
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.PullRequest:
+      additionalProperties: false
+      description: "PullRequest represents pull request metadata from source control systems.\n This message is used across workflow triggers, executions, and agent contexts\n to maintain consistent PR information throughout the system."
+      properties:
+        author:
+          description: Author name as provided by the SCM system
+          title: author
+          type: string
+        draft:
+          description: Whether this is a draft pull request
+          title: draft
+          type: boolean
+        fromBranch:
+          description: Source branch name (the branch being merged from)
+          title: from_branch
+          type: string
+        id:
+          description: 'Unique identifier from the source system (e.g., "123" for GitHub PR #123)'
+          title: id
+          type: string
+        repository:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest.Repository'
+          title: repository
+        state:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest.State'
+          title: state
+        title:
+          description: Pull request title
+          title: title
+          type: string
+        toBranch:
+          description: Target branch name (the branch being merged into)
+          title: to_branch
+          type: string
+        url:
+          description: Pull request URL (e.g., "https://github.com/owner/repo/pull/123")
+          title: url
+          type: string
+      title: PullRequest
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.Workflow:
+      additionalProperties: false
+      description: Workflow represents a workflow configuration.
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.Workflow.Metadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.Workflow.Spec'
+          title: spec
+        webhookUrl:
+          description: "Webhook URL for triggering this workflow via HTTP POST\n Format: {base_url}/workflows/{workflow_id}/webhooks"
+          title: webhook_url
+          type: string
+      title: Workflow
+      type: object
+    gitpod.v1.ListWorkflowExecutionActionsRequest:
+      additionalProperties: false
+      description: ListWorkflowExecutionActionsRequest lists workflow execution actions with optional filtering.
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListWorkflowExecutionActionsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListWorkflowExecutionActionsRequest
+      type: object
+    gitpod.v1.DeleteWorkflowRequest:
+      additionalProperties: false
+      description: DeleteWorkflowRequest deletes a workflow permanently.
+      properties:
+        force:
+          description: "force indicates whether to immediately delete the workflow and all related resources.\n When true, performs cascading deletion of:\n - All workflow executions\n - All workflow execution actions\n - All environments created by workflow actions\n - All agent executions created by workflow actions\n - The workflow itself\n When false (default), marks workflow executions for deletion and relies on\n background reconciliation to clean up resources."
+          title: force
+          type: boolean
+        workflowId:
+          format: uuid
+          title: workflow_id
+          type: string
+      title: DeleteWorkflowRequest
+      type: object
+    gitpod.v1.ListWorkflowExecutionActionsRequest.Filter:
+      additionalProperties: false
+      properties:
+        phases:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowExecutionActionPhase'
+          maxItems: 10
+          title: phases
+          type: array
+        workflowExecutionActionIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: workflow_execution_action_ids
+          type: array
+        workflowExecutionIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: workflow_execution_ids
+          type: array
+        workflowIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: workflow_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.ListWorkflowsRequest.SortField:
+      enum:
+      - SORT_FIELD_UNSPECIFIED
+      - SORT_FIELD_NAME
+      - SORT_FIELD_RECENTLY_COMPLETED
+      title: SortField
+      type: string
+    gitpod.v1.WorkflowTrigger.PullRequestEvent:
+      description: WorkflowPREvent defines pull request events that can trigger workflows.
+      enum:
+      - PULL_REQUEST_EVENT_UNSPECIFIED
+      - PULL_REQUEST_EVENT_OPENED
+      - PULL_REQUEST_EVENT_UPDATED
+      - PULL_REQUEST_EVENT_APPROVED
+      - PULL_REQUEST_EVENT_MERGED
+      - PULL_REQUEST_EVENT_CLOSED
+      - PULL_REQUEST_EVENT_READY_FOR_REVIEW
+      title: PullRequestEvent
+      type: string
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

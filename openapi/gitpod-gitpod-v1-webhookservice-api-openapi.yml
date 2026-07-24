@@ -1,0 +1,1616 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.WebhookService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.WebhookService
+  x-displayName: gitpod.v1.WebhookService
+paths:
+  /gitpod.v1.WebhookService/CreateWebhook:
+    servers: []
+    post:
+      description: "Creates a new webhook for receiving SCM events.\n\n Use this method to:\n - Set up webhooks for repository or organization events\n - Configure webhook scopes and provider\n\n ### Examples\n\n - Create repository webhook with multiple scopes:\n\n   Creates a webhook scoped to specific repositories.\n\n   ```yaml\n   name: \"My Repo Webhook\"\n   type: WEBHOOK_TYPE_SCM_REPOSITORY\n   scopes:\n     - host: \"github.com\"\n       owner: \"gitpod-io\"\n       name: \"gitpod\"\n     - host: \"github.com\"\n       owner: \"gitpod-io\"\n       name: \"gitpod-next\"\n   provider: WEBHOOK_PROVIDER_GITHUB\n   ```\n\n - Create organization webhook:\n\n   Creates a webhook scoped to all repositories in an organization.\n\n   ```yaml\n   name: \"Org Webhook\"\n   type: WEBHOOK_TYPE_SCM_ORGANIZATION\n   organizationScope:\n     host: \"github.com\"\n     name: \"gitpod-io\"\n   provider: WEBHOOK_PROVIDER_GITHUB\n   ```"
+      operationId: gitpod.v1.WebhookService.CreateWebhook
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_organization_webhook:
+                description: Creates a webhook scoped to all repositories in an organization.
+                value:
+                  name: Org Webhook
+                  organizationScope:
+                    host: github.com
+                    name: gitpod-io
+                  provider: WEBHOOK_PROVIDER_GITHUB
+                  type: WEBHOOK_TYPE_SCM_ORGANIZATION
+              create_repository_webhook_with_multiple_scopes:
+                description: Creates a webhook scoped to specific repositories.
+                value:
+                  name: My Repo Webhook
+                  provider: WEBHOOK_PROVIDER_GITHUB
+                  scopes:
+                  - host: github.com
+                    name: gitpod
+                    owner: gitpod-io
+                  - host: github.com
+                    name: gitpod-next
+                    owner: gitpod-io
+                  type: WEBHOOK_TYPE_SCM_REPOSITORY
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateWebhookRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateWebhookResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateWebhook
+      tags:
+      - gitpod.v1.WebhookService
+  /gitpod.v1.WebhookService/DeleteWebhook:
+    servers: []
+    post:
+      description: "Deletes a webhook permanently.\n\n Use this method to:\n - Remove unused webhooks\n - Clean up webhook configurations\n\n ### Examples\n\n - Delete webhook:\n\n   Permanently removes a webhook.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.WebhookService.DeleteWebhook
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_webhook:
+                description: Permanently removes a webhook.
+                value:
+                  webhookId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteWebhookRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteWebhookResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteWebhook
+      tags:
+      - gitpod.v1.WebhookService
+  /gitpod.v1.WebhookService/GetWebhook:
+    servers: []
+    post:
+      description: "Gets details about a specific webhook.\n\n Use this method to:\n - View webhook configuration\n - Check webhook URL\n - See bound workflow count\n\n ### Examples\n\n - Get webhook details:\n\n   Retrieves information about a specific webhook.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.WebhookService.GetWebhook
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_webhook_details:
+                description: Retrieves information about a specific webhook.
+                value:
+                  webhookId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetWebhookRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetWebhookResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetWebhook
+      tags:
+      - gitpod.v1.WebhookService
+  /gitpod.v1.WebhookService/GetWebhookSecret:
+    servers: []
+    post:
+      description: "Gets the webhook secret for signature validation.\n\n This operation is audited for security purposes.\n\n Use this method to:\n - Retrieve webhook secret for SCM configuration\n - Verify webhook signatures\n\n ### Examples\n\n - Get webhook secret:\n\n   Retrieves the webhook secret.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.WebhookService.GetWebhookSecret
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_webhook_secret:
+                description: Retrieves the webhook secret.
+                value:
+                  webhookId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetWebhookSecretRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetWebhookSecretResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetWebhookSecret
+      tags:
+      - gitpod.v1.WebhookService
+  /gitpod.v1.WebhookService/ListWebhookWorkflows:
+    servers: []
+    post:
+      description: "Lists workflows bound to a webhook.\n\n Use this method to:\n - View all workflows triggered by a webhook\n - Check workflow bindings\n\n ### Examples\n\n - List webhook workflows:\n\n   Shows all workflows bound to a webhook.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.WebhookService.ListWebhookWorkflows
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_webhook_workflows:
+                description: Shows all workflows bound to a webhook.
+                value:
+                  pagination:
+                    pageSize: 20
+                  webhookId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListWebhookWorkflowsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListWebhookWorkflowsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListWebhookWorkflows
+      tags:
+      - gitpod.v1.WebhookService
+  /gitpod.v1.WebhookService/ListWebhooks:
+    servers: []
+    post:
+      description: "Lists webhooks with optional filtering.\n\n Use this method to:\n - View all webhooks in an organization\n - Filter webhooks by type or provider\n\n ### Examples\n\n - List all webhooks:\n\n   Shows all webhooks with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.WebhookService.ListWebhooks
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_webhooks:
+                description: Shows all webhooks with pagination.
+                value:
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListWebhooksRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListWebhooksResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListWebhooks
+      tags:
+      - gitpod.v1.WebhookService
+  /gitpod.v1.WebhookService/RotateWebhookSecret:
+    servers: []
+    post:
+      description: "Rotates the webhook secret.\n\n Use this method to:\n - Generate a new webhook secret\n - Invalidate the old webhook secret\n\n ### Examples\n\n - Rotate webhook secret:\n\n   Generates a new webhook secret.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.WebhookService.RotateWebhookSecret
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              rotate_webhook_secret:
+                description: Generates a new webhook secret.
+                value:
+                  webhookId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.RotateWebhookSecretRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.RotateWebhookSecretResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: RotateWebhookSecret
+      tags:
+      - gitpod.v1.WebhookService
+  /gitpod.v1.WebhookService/UpdateWebhook:
+    servers: []
+    post:
+      description: "Updates a webhook's configuration.\n\n Use this method to:\n - Change webhook name or description\n - Change webhook scopes (the target repositories or organization)\n\n Note: The webhook type and provider cannot be changed after creation.\n\n ### Examples\n\n - Update webhook name:\n\n   Changes the webhook's display name.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"Updated Webhook Name\"\n   ```\n\n - Update webhook scopes:\n\n   Changes the webhook's target repositories.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   scopes:\n     - host: \"github.com\"\n       owner: \"gitpod-io\"\n       name: \"new-repo\"\n   ```"
+      operationId: gitpod.v1.WebhookService.UpdateWebhook
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_webhook_name:
+                description: Changes the webhook's display name.
+                value:
+                  name: Updated Webhook Name
+                  webhookId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              update_webhook_scopes:
+                description: Changes the webhook's target repositories.
+                value:
+                  scopes:
+                  - host: github.com
+                    name: new-repo
+                    owner: gitpod-io
+                  webhookId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateWebhookRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateWebhookResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateWebhook
+      tags:
+      - gitpod.v1.WebhookService
+components:
+  schemas:
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.WorkflowTrigger.PullRequest:
+      additionalProperties: false
+      description: "Pull request trigger - executed when specified PR events occur.\n Only triggers for PRs in repositories matching the trigger context."
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger.PullRequestEvent'
+          title: events
+          type: array
+        webhookId:
+          description: "webhook_id is the optional ID of a webhook that this trigger is bound to.\n When set, the trigger will be activated when the webhook receives events.\n This allows multiple workflows to share a single webhook endpoint."
+          format: uuid
+          nullable: true
+          title: webhook_id
+          type: string
+      title: PullRequest
+      type: object
+    gitpod.v1.ListWebhookWorkflowsRequest:
+      additionalProperties: false
+      description: ListWebhookWorkflowsRequest lists workflows bound to a webhook.
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+        webhookId:
+          format: uuid
+          title: webhook_id
+          type: string
+      title: ListWebhookWorkflowsRequest
+      type: object
+    gitpod.v1.WebhookOrganizationScope:
+      additionalProperties: false
+      description: WebhookOrganizationScope represents an SCM organization in the webhook's scope.
+      properties:
+        host:
+          description: host is the SCM host (e.g., "github.com", "gitlab.com")
+          minLength: 1
+          title: host
+          type: string
+        name:
+          description: name is the organization or group name (e.g., "gitpod-io")
+          minLength: 1
+          title: name
+          type: string
+      title: WebhookOrganizationScope
+      type: object
+    gitpod.v1.WorkflowStep.Report.OutputSpec:
+      additionalProperties: false
+      allOf:
+      - anyOf:
+        - required:
+          - command
+        - required:
+          - prompt
+        - not:
+            anyOf:
+            - required:
+              - command
+            - required:
+              - prompt
+      - anyOf:
+        - required:
+          - boolean
+        - required:
+          - float
+        - required:
+          - integer
+        - required:
+          - string
+        - not:
+            anyOf:
+            - required:
+              - boolean
+            - required:
+              - float
+            - required:
+              - integer
+            - required:
+              - string
+      properties:
+        acceptanceCriteria:
+          description: "Optional CEL expression that decides if the value is acceptable,\n e.g. is the test coverage high enough. Has one variable (value), must eval to boolean."
+          nullable: true
+          title: acceptance_criteria
+          type: string
+        boolean:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.BooleanSchema'
+          title: boolean
+        command:
+          description: 'Extraction command must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: command
+          type: string
+        float:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.FloatSchema'
+          title: float
+        integer:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.IntegerSchema'
+          title: integer
+        key:
+          description: 'Output key must be between 1 and 50 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 50
+
+            ```
+
+
+            Output key must be snake_case (e.g., my_output_key):
+
+            ```
+
+            this.matches(''^[a-z]+(_[a-z]+)*$'')
+
+            ```
+
+
+            '
+          title: key
+          type: string
+        prompt:
+          description: 'Extraction prompt must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: prompt
+          type: string
+        string:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.StringSchema'
+          title: string
+        title:
+          description: 'Output title must be between 1 and 200 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 200
+
+            ```
+
+
+            '
+          title: title
+          type: string
+      title: OutputSpec
+      type: object
+    gitpod.v1.RotateWebhookSecretRequest:
+      additionalProperties: false
+      description: RotateWebhookSecretRequest rotates the webhook secret.
+      properties:
+        webhookId:
+          format: uuid
+          title: webhook_id
+          type: string
+      title: RotateWebhookSecretRequest
+      type: object
+    gitpod.v1.RotateWebhookSecretResponse:
+      additionalProperties: false
+      properties:
+        secret:
+          description: The new webhook secret (decrypted)
+          title: secret
+          type: string
+      title: RotateWebhookSecretResponse
+      type: object
+    gitpod.v1.WorkflowStep:
+      additionalProperties: false
+      description: WorkflowStep defines a single step in a workflow action.
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - pullRequest
+          - required:
+            - report
+          - required:
+            - task
+        required:
+        - agent
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - report
+          - required:
+            - task
+        required:
+        - pullRequest
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - pullRequest
+          - required:
+            - task
+        required:
+        - report
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - pullRequest
+          - required:
+            - report
+        required:
+        - task
+      properties:
+        agent:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Agent'
+          title: agent
+        pullRequest:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.PullRequest'
+          title: pull_request
+        report:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report'
+          title: report
+        task:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Task'
+          title: task
+      title: WorkflowStep
+      type: object
+    gitpod.v1.DeleteWebhookRequest:
+      additionalProperties: false
+      description: DeleteWebhookRequest deletes a webhook permanently.
+      properties:
+        webhookId:
+          format: uuid
+          title: webhook_id
+          type: string
+      title: DeleteWebhookRequest
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.WorkflowStep.Report.IntegerSchema:
+      additionalProperties: false
+      properties:
+        max:
+          format: int32
+          nullable: true
+          title: max
+          type: integer
+        min:
+          format: int32
+          nullable: true
+          title: min
+          type: integer
+      title: IntegerSchema
+      type: object
+    gitpod.v1.WorkflowTriggerContext.Projects:
+      additionalProperties: false
+      description: "Execute workflow in specific project environments.\n Creates environments for each specified project."
+      properties:
+        projectIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: project_ids
+          type: array
+      title: Projects
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.WorkflowTriggerContext.Repositories:
+      additionalProperties: false
+      description: "Execute workflow in environments created from repository URLs.\n Supports both explicit repository URLs and search patterns."
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - repositoryUrls
+        required:
+        - repoSelector
+      - not:
+          anyOf:
+          - required:
+            - repoSelector
+        required:
+        - repositoryUrls
+      properties:
+        environmentClassId:
+          format: uuid
+          title: environment_class_id
+          type: string
+        repoSelector:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Repositories.RepositorySelector'
+          title: repo_selector
+        repositoryUrls:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Repositories.RepositoryURLs'
+          title: repository_urls
+      title: Repositories
+      type: object
+    gitpod.v1.WorkflowTrigger.Time:
+      additionalProperties: false
+      description: "Time-based trigger - executed automatically based on cron schedule.\n Uses standard cron expression format (minute hour day month weekday)."
+      properties:
+        cronExpression:
+          description: 'Cron expression must be between 1 and 100 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 100
+
+            ```
+
+
+            '
+          title: cron_expression
+          type: string
+      title: Time
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.WorkflowStep.Report:
+      additionalProperties: false
+      properties:
+        outputs:
+          description: 'Report must have at least one output:
+
+            ```
+
+            size(this) >= 1
+
+            ```
+
+
+            '
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowStep.Report.OutputSpec'
+          title: outputs
+          type: array
+      title: Report
+      type: object
+    gitpod.v1.WebhookProvider:
+      description: WebhookProvider identifies the Git provider.
+      enum:
+      - WEBHOOK_PROVIDER_UNSPECIFIED
+      - WEBHOOK_PROVIDER_GITHUB
+      - WEBHOOK_PROVIDER_GITLAB
+      title: WebhookProvider
+      type: string
+    gitpod.v1.WorkflowTrigger.Manual:
+      additionalProperties: false
+      description: "Manual trigger - executed when StartWorkflow RPC is called.\n No additional configuration needed."
+      title: Manual
+      type: object
+    gitpod.v1.Webhook:
+      additionalProperties: false
+      description: Webhook represents a webhook endpoint for receiving SCM events.
+      properties:
+        boundWorkflowCount:
+          description: "bound_workflow_count is the number of workflows bound to this webhook\n Read-only, computed from workflow_webhook_bindings"
+          format: int32
+          title: bound_workflow_count
+          type: integer
+        id:
+          description: id is the unique identifier of the webhook
+          format: uuid
+          title: id
+          type: string
+        lastTriggeredAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "last_triggered_at is when the webhook was last triggered by an incoming event\n Read-only, updated automatically when the webhook receives an event"
+          title: last_triggered_at
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.Webhook.Metadata'
+          description: metadata contains organizational and ownership information
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.Webhook.Spec'
+          description: spec contains the webhook configuration
+          title: spec
+        url:
+          description: "url is the generated webhook endpoint URL\n Format: https://{domain}/webhooks/{id}\n Read-only, computed from id"
+          title: url
+          type: string
+      title: Webhook
+      type: object
+    google.protobuf.Duration:
+      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
+      format: regex
+      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
+      type: string
+    gitpod.v1.WorkflowStep.PullRequest:
+      additionalProperties: false
+      description: WorkflowPullRequestStep represents a pull request creation step.
+      properties:
+        branch:
+          description: 'Branch name must be between 1 and 255 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 255
+
+            ```
+
+
+            '
+          title: branch
+          type: string
+        description:
+          description: 'Description must be at most 20,000 characters:
+
+            ```
+
+            size(this) <= 20000
+
+            ```
+
+
+            '
+          title: description
+          type: string
+        draft:
+          title: draft
+          type: boolean
+        title:
+          description: 'Title must be between 1 and 500 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 500
+
+            ```
+
+
+            '
+          title: title
+          type: string
+      title: PullRequest
+      type: object
+    gitpod.v1.WorkflowStep.Report.FloatSchema:
+      additionalProperties: false
+      properties:
+        max:
+          format: float
+          nullable: true
+          title: max
+          type: number
+        min:
+          format: float
+          nullable: true
+          title: min
+          type: number
+      title: FloatSchema
+      type: object
+    gitpod.v1.WorkflowTriggerContext.FromTrigger:
+      additionalProperties: false
+      description: "Use context derived from the trigger event.\n Currently only supported for PullRequest triggers - uses PR repository context."
+      title: FromTrigger
+      type: object
+    gitpod.v1.Webhook.Metadata:
+      additionalProperties: false
+      description: Metadata contains organizational and ownership information.
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is when the webhook was created
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: creator is the identity of who created the webhook
+          title: creator
+        description:
+          description: description is an optional description of the webhook's purpose
+          title: description
+          type: string
+        name:
+          description: name is the display name of the webhook
+          title: name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization that owns this webhook
+          format: uuid
+          title: organization_id
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: updated_at is when the webhook was last updated
+          title: updated_at
+      title: Metadata
+      type: object
+    gitpod.v1.GetWebhookSecretResponse:
+      additionalProperties: false
+      properties:
+        secret:
+          description: The decrypted webhook secret
+          title: secret
+          type: string
+      title: GetWebhookSecretResponse
+      type: object
+    gitpod.v1.WorkflowTriggerContext.Repositories.RepositorySelector:
+      additionalProperties: false
+      description: "RepositorySelector defines how to select repositories for workflow execution.\n Combines a search string with an SCM host to identify repositories."
+      properties:
+        repoSearchString:
+          description: "Search string to match repositories using SCM-specific search patterns.\n For GitHub: supports GitHub search syntax (e.g., \"org:gitpod-io language:go\", \"user:octocat stars:>100\")\n For GitLab: supports GitLab search syntax\n See SCM provider documentation for supported search patterns."
+          minLength: 1
+          title: repo_search_string
+          type: string
+        scmHost:
+          description: SCM host where the search should be performed (e.g., "github.com", "gitlab.com")
+          minLength: 1
+          title: scm_host
+          type: string
+      title: RepositorySelector
+      type: object
+    gitpod.v1.WorkflowStep.Agent:
+      additionalProperties: false
+      description: WorkflowAgentStep represents an agent step that executes with a prompt.
+      properties:
+        prompt:
+          description: 'Prompt must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: prompt
+          type: string
+      title: Agent
+      type: object
+    gitpod.v1.CreateWebhookResponse:
+      additionalProperties: false
+      properties:
+        webhook:
+          $ref: '#/components/schemas/gitpod.v1.Webhook'
+          title: webhook
+      title: CreateWebhookResponse
+      type: object
+    gitpod.v1.GetWebhookResponse:
+      additionalProperties: false
+      properties:
+        webhook:
+          $ref: '#/components/schemas/gitpod.v1.Webhook'
+          title: webhook
+      title: GetWebhookResponse
+      type: object
+    gitpod.v1.WorkflowStep.Task:
+      additionalProperties: false
+      description: WorkflowTaskStep represents a task step that executes a command.
+      properties:
+        command:
+          description: 'Command must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: command
+          type: string
+      title: Task
+      type: object
+    gitpod.v1.CreateWebhookRequest:
+      additionalProperties: false
+      description: CreateWebhookRequest creates a new webhook.
+      properties:
+        description:
+          description: description is an optional description of the webhook's purpose
+          maxLength: 500
+          title: description
+          type: string
+        name:
+          description: name is the display name of the webhook
+          maxLength: 80
+          minLength: 1
+          title: name
+          type: string
+        organizationScope:
+          $ref: '#/components/schemas/gitpod.v1.WebhookOrganizationScope'
+          description: "organization_scope is the SCM organization scope for this webhook.\n For ORGANIZATION type: identifies the organization and its SCM host.\n When provided, takes precedence over the deprecated scope field."
+          title: organization_scope
+        provider:
+          $ref: '#/components/schemas/gitpod.v1.WebhookProvider'
+          description: provider is the Git provider
+          not:
+            enum:
+            - 0
+          title: provider
+        scope:
+          deprecated: true
+          description: "Deprecated: Use scopes instead.\n scope is the target of the webhook:\n - For REPOSITORY type: \"owner/repo\" (e.g., \"gitpod-io/gitpod\")\n - For ORGANIZATION type: \"owner\" (e.g., \"gitpod-io\")\n - Empty string is allowed for webhooks that don't require scope filtering"
+          maxLength: 255
+          title: scope
+          type: string
+        scopes:
+          description: "scopes is the list of repository scopes for this webhook.\n For REPOSITORY type: each entry represents a specific repository with full SCM data.\n When provided, takes precedence over the deprecated scope field."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WebhookRepositoryScope'
+          maxItems: 100
+          title: scopes
+          type: array
+        type:
+          $ref: '#/components/schemas/gitpod.v1.WebhookType'
+          description: type determines the scope level of the webhook
+          not:
+            enum:
+            - 0
+          title: type
+      title: CreateWebhookRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.WorkflowAction.Limits.PerExecution:
+      additionalProperties: false
+      description: PerExecution defines limits per execution action.
+      properties:
+        maxTime:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "Maximum time allowed for a single execution action.\n Use standard duration format (e.g., \"30m\" for 30 minutes, \"2h\" for 2 hours)."
+          title: max_time
+      title: PerExecution
+      type: object
+    gitpod.v1.UpdateWebhookResponse:
+      additionalProperties: false
+      properties:
+        webhook:
+          $ref: '#/components/schemas/gitpod.v1.Webhook'
+          title: webhook
+      title: UpdateWebhookResponse
+      type: object
+    gitpod.v1.UpdateWebhookRequest:
+      additionalProperties: false
+      description: UpdateWebhookRequest updates a webhook's configuration.
+      properties:
+        description:
+          description: description is an optional description of the webhook's purpose
+          maxLength: 500
+          nullable: true
+          title: description
+          type: string
+        name:
+          description: name is the display name of the webhook
+          maxLength: 80
+          minLength: 1
+          nullable: true
+          title: name
+          type: string
+        organizationScope:
+          $ref: '#/components/schemas/gitpod.v1.WebhookOrganizationScope'
+          description: "organization_scope replaces the webhook's organization scope.\n For ORGANIZATION type: identifies the organization and its SCM host.\n When provided, takes precedence over the deprecated scope field.\n Note: The webhook type and provider cannot be changed after creation."
+          title: organization_scope
+        scope:
+          deprecated: true
+          description: "Deprecated: Use scopes instead.\n scope is the target of the webhook:\n - For REPOSITORY type: \"owner/repo\" (e.g., \"gitpod-io/gitpod\")\n - For ORGANIZATION type: \"owner\" (e.g., \"gitpod-io\")\n Note: The webhook type and provider cannot be changed after creation."
+          maxLength: 255
+          nullable: true
+          title: scope
+          type: string
+        scopes:
+          description: "scopes replaces the webhook's repository scopes.\n For REPOSITORY type: each entry represents a specific repository with full SCM data.\n When provided, takes precedence over the deprecated scope field.\n Note: The webhook type and provider cannot be changed after creation."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WebhookRepositoryScope'
+          maxItems: 100
+          title: scopes
+          type: array
+        webhookId:
+          format: uuid
+          title: webhook_id
+          type: string
+      title: UpdateWebhookRequest
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.WorkflowAction:
+      additionalProperties: false
+      description: WorkflowAction defines the actions to be executed in a workflow.
+      properties:
+        limits:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction.Limits'
+          title: limits
+        steps:
+          description: 'Automation must have between 1 and 50 steps:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 50
+
+            ```
+
+
+            '
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowStep'
+          title: steps
+          type: array
+      required:
+      - limits
+      title: WorkflowAction
+      type: object
+    gitpod.v1.WebhookRepositoryScope:
+      additionalProperties: false
+      description: "WebhookRepositoryScope represents a repository in the webhook's scope.\n Contains SCM repository information needed to generate execution contexts.\n The clone URL can be derived as https://{host}/{owner}/{name}.git"
+      properties:
+        host:
+          description: host is the SCM host (e.g., "github.com", "gitlab.com")
+          minLength: 1
+          title: host
+          type: string
+        name:
+          description: name is the repository name (e.g., "gitpod")
+          minLength: 1
+          title: name
+          type: string
+        owner:
+          description: owner is the repository owner or organization (e.g., "gitpod-io")
+          minLength: 1
+          title: owner
+          type: string
+      title: WebhookRepositoryScope
+      type: object
+    gitpod.v1.Workflow:
+      additionalProperties: false
+      description: Workflow represents a workflow configuration.
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.Workflow.Metadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.Workflow.Spec'
+          title: spec
+        webhookUrl:
+          description: "Webhook URL for triggering this workflow via HTTP POST\n Format: {base_url}/workflows/{workflow_id}/webhooks"
+          title: webhook_url
+          type: string
+      title: Workflow
+      type: object
+    gitpod.v1.WorkflowTriggerContext.Repositories.RepositoryURLs:
+      additionalProperties: false
+      description: "RepositoryURLs contains a list of explicit repository URLs.\n Creates one action per repository URL."
+      properties:
+        repoUrls:
+          items:
+            maxItems: 100
+            minItems: 1
+            minLength: 1
+            type: string
+          maxItems: 100
+          minItems: 1
+          title: repo_urls
+          type: array
+      title: RepositoryURLs
+      type: object
+    gitpod.v1.WorkflowStep.Report.StringSchema:
+      additionalProperties: false
+      properties:
+        pattern:
+          title: pattern
+          type: string
+      title: StringSchema
+      type: object
+    gitpod.v1.Webhook.Spec:
+      additionalProperties: false
+      description: Spec contains the webhook configuration.
+      properties:
+        organizationScope:
+          $ref: '#/components/schemas/gitpod.v1.WebhookOrganizationScope'
+          description: "organization_scope is the SCM organization scope for this webhook.\n For ORGANIZATION type: identifies the organization and its SCM host.\n When set, takes precedence over the deprecated scope field."
+          title: organization_scope
+        provider:
+          $ref: '#/components/schemas/gitpod.v1.WebhookProvider'
+          description: provider is the Git provider (github, gitlab)
+          title: provider
+        scope:
+          deprecated: true
+          description: "Deprecated: Use scopes instead. Kept for backward compatibility.\n scope is the target of the webhook:\n - For REPOSITORY type: \"owner/repo\" (e.g., \"gitpod-io/gitpod\")\n - For ORGANIZATION type: \"owner\" (e.g., \"gitpod-io\")"
+          title: scope
+          type: string
+        scopes:
+          description: "scopes is the list of repository scopes for this webhook.\n For REPOSITORY type: each entry represents a specific repository.\n When scopes is non-empty, it takes precedence over the deprecated scope field."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WebhookRepositoryScope'
+          maxItems: 100
+          title: scopes
+          type: array
+        type:
+          $ref: '#/components/schemas/gitpod.v1.WebhookType'
+          description: type determines the scope level of the webhook
+          title: type
+      title: Spec
+      type: object
+    gitpod.v1.WebhookType:
+      description: WebhookType determines the scope level of the webhook.
+      enum:
+      - WEBHOOK_TYPE_UNSPECIFIED
+      - WEBHOOK_TYPE_SCM_REPOSITORY
+      - WEBHOOK_TYPE_SCM_ORGANIZATION
+      title: WebhookType
+      type: string
+    gitpod.v1.WorkflowTrigger:
+      additionalProperties: false
+      description: "WorkflowTrigger defines when a workflow should be executed.\n\n Each trigger type defines a specific condition that will cause the workflow to execute:\n - Manual: Triggered explicitly by user action via StartWorkflow RPC\n - Time: Triggered automatically based on cron schedule\n - PullRequest: Triggered automatically when specified PR events occur\n\n Trigger Semantics:\n - Each trigger instance can create multiple workflow executions\n - Multiple triggers of the same workflow can fire simultaneously\n - Each trigger execution is independent and tracked separately\n - Triggers are evaluated in the context specified by WorkflowTriggerContext"
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - pullRequest
+          - required:
+            - time
+        required:
+        - manual
+      - not:
+          anyOf:
+          - required:
+            - manual
+          - required:
+            - time
+        required:
+        - pullRequest
+      - not:
+          anyOf:
+          - required:
+            - manual
+          - required:
+            - pullRequest
+        required:
+        - time
+      properties:
+        context:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext'
+          title: context
+        manual:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger.Manual'
+          title: manual
+        pullRequest:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger.PullRequest'
+          title: pull_request
+        time:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger.Time'
+          title: time
+      required:
+      - context
+      title: WorkflowTrigger
+      type: object
+    gitpod.v1.Workflow.Metadata:
+      additionalProperties: false
+      description: WorkflowMetadata contains workflow metadata.
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: creator
+        description:
+          maxLength: 500
+          title: description
+          type: string
+        executor:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: executor
+        name:
+          maxLength: 80
+          minLength: 1
+          title: name
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+      title: Metadata
+      type: object
+    gitpod.v1.WorkflowStep.Report.BooleanSchema:
+      additionalProperties: false
+      title: BooleanSchema
+      type: object
+    gitpod.v1.ListWebhooksResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        webhooks:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Webhook'
+          title: webhooks
+          type: array
+      title: ListWebhooksResponse
+      type: object
+    gitpod.v1.GetWebhookSecretRequest:
+      additionalProperties: false
+      description: GetWebhookSecretRequest retrieves the webhook secret.
+      properties:
+        webhookId:
+          format: uuid
+          title: webhook_id
+          type: string
+      title: GetWebhookSecretRequest
+      type: object
+    gitpod.v1.WorkflowTriggerContext:
+      additionalProperties: false
+      description: "WorkflowTriggerContext defines the context in which a workflow should run.\n\n Context determines where and how the workflow executes:\n - Projects: Execute in specific project environments\n - Repositories: Execute in environments created from repository URLs\n - Agent: Execute in agent-managed environments with custom prompts\n - FromTrigger: Use context derived from the trigger event (PR-specific)\n\n Context Usage by Trigger Type:\n - Manual: Can use any context type\n - Time: Typically uses Projects or Repositories context\n - PullRequest: Can use any context, FromTrigger uses PR repository context"
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - fromTrigger
+          - required:
+            - projects
+          - required:
+            - repositories
+        required:
+        - agent
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - projects
+          - required:
+            - repositories
+        required:
+        - fromTrigger
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - fromTrigger
+          - required:
+            - repositories
+        required:
+        - projects
+      - not:
+          anyOf:
+          - required:
+            - agent
+          - required:
+            - fromTrigger
+          - required:
+            - projects
+        required:
+        - repositories
+      properties:
+        agent:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Agent'
+          title: agent
+        fromTrigger:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.FromTrigger'
+          title: from_trigger
+        projects:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Projects'
+          title: projects
+        repositories:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowTriggerContext.Repositories'
+          title: repositories
+      title: WorkflowTriggerContext
+      type: object
+    gitpod.v1.ListWebhookWorkflowsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        workflows:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Workflow'
+          title: workflows
+          type: array
+      title: ListWebhookWorkflowsResponse
+      type: object
+    gitpod.v1.ListWebhooksRequest:
+      additionalProperties: false
+      description: ListWebhooksRequest lists webhooks with optional filtering.
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListWebhooksRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListWebhooksRequest
+      type: object
+    gitpod.v1.Workflow.Spec:
+      additionalProperties: false
+      properties:
+        action:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          title: action
+        deleting:
+          description: Marks workflow as pending deletion
+          title: deleting
+          type: boolean
+          x-stainless-skip: true
+        disabled:
+          description: "When true, the workflow will not be triggered by any automatic trigger\n (cron, webhook, pull request). Manual starts via StartWorkflow are also\n rejected while disabled."
+          title: disabled
+          type: boolean
+          x-stainless-skip: true
+        report:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction'
+          title: report
+        triggers:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WorkflowTrigger'
+          title: triggers
+          type: array
+      title: Spec
+      type: object
+    gitpod.v1.WorkflowTriggerContext.Agent:
+      additionalProperties: false
+      description: "Execute workflow in agent-managed environments.\n Agent receives the specified prompt and manages execution context."
+      properties:
+        prompt:
+          description: 'Agent prompt must be between 1 and 20,000 characters:
+
+            ```
+
+            size(this) >= 1 && size(this) <= 20000
+
+            ```
+
+
+            '
+          title: prompt
+          type: string
+      title: Agent
+      type: object
+    gitpod.v1.ListWebhooksRequest.Filter:
+      additionalProperties: false
+      properties:
+        providers:
+          description: providers filters by webhook provider
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WebhookProvider'
+          maxItems: 5
+          title: providers
+          type: array
+        types:
+          description: types filters by webhook type
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WebhookType'
+          maxItems: 5
+          title: types
+          type: array
+        webhookIds:
+          description: webhook_ids filters by specific webhook IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: webhook_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.DeleteWebhookResponse:
+      additionalProperties: false
+      properties:
+        affectedWorkflowIds:
+          description: "IDs of workflows that had their triggers converted to manual type\n because they referenced the deleted webhook."
+          items:
+            type: string
+          title: affected_workflow_ids
+          type: array
+      title: DeleteWebhookResponse
+      type: object
+    gitpod.v1.GetWebhookRequest:
+      additionalProperties: false
+      description: GetWebhookRequest gets details about a specific webhook.
+      properties:
+        webhookId:
+          format: uuid
+          title: webhook_id
+          type: string
+      title: GetWebhookRequest
+      type: object
+    gitpod.v1.WorkflowAction.Limits:
+      additionalProperties: false
+      description: 'Limits defines execution limits for workflow actions.
+
+        Concurrent actions limit cannot exceed total actions limit:
+
+        ```
+
+        this.max_parallel <= this.max_total
+
+        ```
+
+
+        '
+      properties:
+        maxParallel:
+          description: 'Maximum parallel actions must be between 1 and 25:
+
+            ```
+
+            this >= 1 && this <= 25
+
+            ```
+
+
+            '
+          format: int32
+          title: max_parallel
+          type: integer
+        maxTotal:
+          description: 'Maximum total actions must be between 1 and 100:
+
+            ```
+
+            this >= 1 && this <= 100
+
+            ```
+
+
+            '
+          format: int32
+          title: max_total
+          type: integer
+        perExecution:
+          $ref: '#/components/schemas/gitpod.v1.WorkflowAction.Limits.PerExecution'
+          title: per_execution
+      title: Limits
+      type: object
+    gitpod.v1.WorkflowTrigger.PullRequestEvent:
+      description: WorkflowPREvent defines pull request events that can trigger workflows.
+      enum:
+      - PULL_REQUEST_EVENT_UNSPECIFIED
+      - PULL_REQUEST_EVENT_OPENED
+      - PULL_REQUEST_EVENT_UPDATED
+      - PULL_REQUEST_EVENT_APPROVED
+      - PULL_REQUEST_EVENT_MERGED
+      - PULL_REQUEST_EVENT_CLOSED
+      - PULL_REQUEST_EVENT_READY_FOR_REVIEW
+      title: PullRequestEvent
+      type: string
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

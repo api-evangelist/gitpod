@@ -1,0 +1,697 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.SessionService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.SessionService
+  x-displayName: gitpod.v1.SessionService
+paths:
+  /gitpod.v1.SessionService/AddSessionResource:
+    servers: []
+    post:
+      operationId: gitpod.v1.SessionService.AddSessionResource
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.AddSessionResourceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.AddSessionResourceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: AddSessionResource
+      tags:
+      - gitpod.v1.SessionService
+  /gitpod.v1.SessionService/CreateSession:
+    servers: []
+    post:
+      operationId: gitpod.v1.SessionService.CreateSession
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateSessionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateSessionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateSession
+      tags:
+      - gitpod.v1.SessionService
+  /gitpod.v1.SessionService/DeleteSession:
+    servers: []
+    post:
+      operationId: gitpod.v1.SessionService.DeleteSession
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteSessionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteSessionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteSession
+      tags:
+      - gitpod.v1.SessionService
+  /gitpod.v1.SessionService/GetSession:
+    servers: []
+    post:
+      operationId: gitpod.v1.SessionService.GetSession
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetSessionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetSessionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetSession
+      tags:
+      - gitpod.v1.SessionService
+  /gitpod.v1.SessionService/ListSessionResources:
+    servers: []
+    post:
+      operationId: gitpod.v1.SessionService.ListSessionResources
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListSessionResourcesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListSessionResourcesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListSessionResources
+      tags:
+      - gitpod.v1.SessionService
+  /gitpod.v1.SessionService/ListSessions:
+    servers: []
+    post:
+      operationId: gitpod.v1.SessionService.ListSessions
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListSessionsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListSessionsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListSessions
+      tags:
+      - gitpod.v1.SessionService
+  /gitpod.v1.SessionService/RemoveSessionResource:
+    servers: []
+    post:
+      operationId: gitpod.v1.SessionService.RemoveSessionResource
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.RemoveSessionResourceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.RemoveSessionResourceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: RemoveSessionResource
+      tags:
+      - gitpod.v1.SessionService
+  /gitpod.v1.SessionService/UpdateSession:
+    servers: []
+    post:
+      operationId: gitpod.v1.SessionService.UpdateSession
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateSessionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateSessionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateSession
+      tags:
+      - gitpod.v1.SessionService
+  /gitpod.v1.SessionService/UpdateSessionResource:
+    servers: []
+    post:
+      operationId: gitpod.v1.SessionService.UpdateSessionResource
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateSessionResourceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateSessionResourceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateSessionResource
+      tags:
+      - gitpod.v1.SessionService
+components:
+  schemas:
+    gitpod.v1.GetSessionResponse:
+      additionalProperties: false
+      properties:
+        session:
+          $ref: '#/components/schemas/gitpod.v1.Session'
+          title: session
+      title: GetSessionResponse
+      type: object
+    gitpod.v1.SessionResourceRole:
+      enum:
+      - SESSION_RESOURCE_ROLE_UNSPECIFIED
+      - SESSION_RESOURCE_ROLE_OWNED
+      - SESSION_RESOURCE_ROLE_PRIMARY
+      - SESSION_RESOURCE_ROLE_SUBAGENT
+      - SESSION_RESOURCE_ROLE_FIXES
+      - SESSION_RESOURCE_ROLE_BLOCKED_BY
+      - SESSION_RESOURCE_ROLE_BLOCKS
+      - SESSION_RESOURCE_ROLE_REVIEWS
+      - SESSION_RESOURCE_ROLE_CREATED
+      - SESSION_RESOURCE_ROLE_REFERENCES
+      title: SessionResourceRole
+      type: string
+    gitpod.v1.SessionResource:
+      additionalProperties: false
+      properties:
+        description:
+          nullable: true
+          title: description
+          type: string
+        id:
+          title: id
+          type: string
+        kind:
+          $ref: '#/components/schemas/gitpod.v1.SessionResourceKind'
+          title: kind
+        role:
+          $ref: '#/components/schemas/gitpod.v1.SessionResourceRole'
+          title: role
+        title:
+          nullable: true
+          title: title
+          type: string
+        url:
+          nullable: true
+          title: url
+          type: string
+      title: SessionResource
+      type: object
+    gitpod.v1.ListSessionResourcesResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        resources:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SessionResource'
+          title: resources
+          type: array
+      title: ListSessionResourcesResponse
+      type: object
+    gitpod.v1.AddSessionResourceRequest:
+      additionalProperties: false
+      properties:
+        description:
+          title: description
+          type: string
+        kind:
+          $ref: '#/components/schemas/gitpod.v1.SessionResourceKind'
+          title: kind
+        role:
+          $ref: '#/components/schemas/gitpod.v1.SessionResourceRole'
+          title: role
+        sessionId:
+          format: uuid
+          title: session_id
+          type: string
+        title:
+          title: title
+          type: string
+        url:
+          title: url
+          type: string
+      title: AddSessionResourceRequest
+      type: object
+    gitpod.v1.ListSessionsRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.SessionPhase'
+          nullable: true
+          title: phase
+      title: ListSessionsRequest
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.DeleteSessionRequest:
+      additionalProperties: false
+      properties:
+        force:
+          title: force
+          type: boolean
+        sessionId:
+          format: uuid
+          title: session_id
+          type: string
+      title: DeleteSessionRequest
+      type: object
+    gitpod.v1.ListSessionsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        sessions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Session'
+          title: sessions
+          type: array
+      title: ListSessionsResponse
+      type: object
+    gitpod.v1.AddSessionResourceResponse:
+      additionalProperties: false
+      properties:
+        resource:
+          $ref: '#/components/schemas/gitpod.v1.SessionResource'
+          title: resource
+      title: AddSessionResourceResponse
+      type: object
+    gitpod.v1.ListSessionResourcesRequest:
+      additionalProperties: false
+      properties:
+        kind:
+          $ref: '#/components/schemas/gitpod.v1.SessionResourceKind'
+          nullable: true
+          title: kind
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+        sessionId:
+          format: uuid
+          title: session_id
+          type: string
+      title: ListSessionResourcesRequest
+      type: object
+    gitpod.v1.UpdateSessionResourceRequest:
+      additionalProperties: false
+      properties:
+        description:
+          nullable: true
+          title: description
+          type: string
+        resourceId:
+          format: uuid
+          title: resource_id
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.SessionResourceRole'
+          nullable: true
+          title: role
+        sessionId:
+          format: uuid
+          title: session_id
+          type: string
+        title:
+          nullable: true
+          title: title
+          type: string
+      title: UpdateSessionResourceRequest
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.UpdateSessionResponse:
+      additionalProperties: false
+      properties:
+        session:
+          $ref: '#/components/schemas/gitpod.v1.Session'
+          title: session
+      title: UpdateSessionResponse
+      type: object
+    gitpod.v1.SessionResourceKind:
+      enum:
+      - SESSION_RESOURCE_KIND_UNSPECIFIED
+      - SESSION_RESOURCE_KIND_ISSUE
+      - SESSION_RESOURCE_KIND_PULL_REQUEST
+      - SESSION_RESOURCE_KIND_DOCUMENTATION
+      title: SessionResourceKind
+      type: string
+    gitpod.v1.GetSessionRequest:
+      additionalProperties: false
+      properties:
+        sessionId:
+          format: uuid
+          title: session_id
+          type: string
+      title: GetSessionRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.SessionPhase:
+      enum:
+      - SESSION_PHASE_UNSPECIFIED
+      - SESSION_PHASE_ACTIVE
+      - SESSION_PHASE_ARCHIVED
+      title: SessionPhase
+      type: string
+    gitpod.v1.UpdateSessionRequest:
+      additionalProperties: false
+      properties:
+        description:
+          nullable: true
+          title: description
+          type: string
+        name:
+          nullable: true
+          title: name
+          type: string
+        orchestratorAgentExecutionId:
+          format: uuid
+          nullable: true
+          title: orchestrator_agent_execution_id
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.SessionPhase'
+          nullable: true
+          title: phase
+        sessionId:
+          format: uuid
+          title: session_id
+          type: string
+      title: UpdateSessionRequest
+      type: object
+    gitpod.v1.UpdateSessionResourceResponse:
+      additionalProperties: false
+      properties:
+        resource:
+          $ref: '#/components/schemas/gitpod.v1.SessionResource'
+          title: resource
+      title: UpdateSessionResourceResponse
+      type: object
+    gitpod.v1.CreateSessionRequest:
+      additionalProperties: false
+      properties:
+        description:
+          nullable: true
+          title: description
+          type: string
+        name:
+          nullable: true
+          title: name
+          type: string
+      title: CreateSessionRequest
+      type: object
+    gitpod.v1.Session:
+      additionalProperties: false
+      properties:
+        description:
+          title: description
+          type: string
+        id:
+          title: id
+          type: string
+        name:
+          title: name
+          type: string
+        orchestratorAgentExecutionId:
+          description: "orchestrator_agent_execution_id is the agent execution that drives this session's name.\n The first agent execution linked to a session becomes its orchestrator."
+          title: orchestrator_agent_execution_id
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.SessionPhase'
+          title: phase
+        resources:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SessionResource'
+          title: resources
+          type: array
+      title: Session
+      type: object
+    gitpod.v1.CreateSessionResponse:
+      additionalProperties: false
+      properties:
+        session:
+          $ref: '#/components/schemas/gitpod.v1.Session'
+          title: session
+      title: CreateSessionResponse
+      type: object
+    gitpod.v1.RemoveSessionResourceRequest:
+      additionalProperties: false
+      properties:
+        resourceId:
+          format: uuid
+          title: resource_id
+          type: string
+        sessionId:
+          format: uuid
+          title: session_id
+          type: string
+      title: RemoveSessionResourceRequest
+      type: object
+    gitpod.v1.DeleteSessionResponse:
+      additionalProperties: false
+      title: DeleteSessionResponse
+      type: object
+    gitpod.v1.RemoveSessionResourceResponse:
+      additionalProperties: false
+      title: RemoveSessionResourceResponse
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

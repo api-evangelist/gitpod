@@ -1,0 +1,1260 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.PrebuildService API
+  version: v1.0.0
+  description: "PrebuildService manages prebuilds for projects to enable faster environment startup times.\n Prebuilds create snapshots of environments that can be used to provision new environments quickly."
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- description: "PrebuildService manages prebuilds for projects to enable faster environment startup times.\n Prebuilds create snapshots of environments that can be used to provision new environments quickly."
+  name: gitpod.v1.PrebuildService
+  x-displayName: gitpod.v1.PrebuildService
+paths:
+  /gitpod.v1.PrebuildService/CancelPrebuild:
+    servers: []
+    post:
+      description: "Cancels a running prebuild.\n\n Use this method to:\n - Stop prebuilds that are no longer needed\n - Free up resources for other operations\n\n ### Examples\n\n - Cancel prebuild:\n\n   Stops a running prebuild and cleans up resources.\n\n   ```yaml\n   prebuildId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.PrebuildService.CancelPrebuild
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              cancel_prebuild:
+                description: Stops a running prebuild and cleans up resources.
+                value:
+                  prebuildId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CancelPrebuildRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CancelPrebuildResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CancelPrebuild
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/CreatePrebuild:
+    servers: []
+    post:
+      description: "Creates a prebuild for a project.\n\n Use this method to:\n - Create on-demand prebuilds for faster environment startup\n - Trigger prebuilds after repository changes\n - Generate prebuilds for specific environment classes\n\n The prebuild process creates an environment, runs the devcontainer prebuild lifecycle,\n and creates a snapshot for future environment provisioning.\n\n ### Examples\n\n - Create basic prebuild:\n\n   Creates a prebuild for a project using default settings.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   spec:\n     timeout: \"3600s\"  # 60 minutes default\n   ```\n\n - Create prebuild with custom environment class:\n\n   Creates a prebuild with a specific environment class and timeout.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   environmentClassId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   spec:\n     timeout: \"3600s\"  # 1 hour\n   ```"
+      operationId: gitpod.v1.PrebuildService.CreatePrebuild
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_basic_prebuild:
+                description: Creates a prebuild for a project using default settings.
+                value:
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  spec:
+                    timeout: 3600s
+              create_prebuild_with_custom_environment_class:
+                description: Creates a prebuild with a specific environment class and timeout.
+                value:
+                  environmentClassId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  spec:
+                    timeout: 3600s
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreatePrebuildRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreatePrebuildResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreatePrebuild
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/CreatePrebuildLogsToken:
+    servers: []
+    post:
+      description: "Creates a logs access token for a prebuild.\n\n Use this method to:\n - Stream logs from a running prebuild\n - Access archived logs from completed prebuilds\n\n Generated tokens are valid for one hour.\n\n ### Examples\n\n - Create prebuild logs token:\n\n   Generates a token for accessing prebuild logs.\n\n   ```yaml\n   prebuildId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.PrebuildService.CreatePrebuildLogsToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_prebuild_logs_token:
+                description: Generates a token for accessing prebuild logs.
+                value:
+                  prebuildId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreatePrebuildLogsTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreatePrebuildLogsTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreatePrebuildLogsToken
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/CreateWarmPool:
+    servers: []
+    post:
+      description: "Creates a warm pool for a project and environment class.\n\n A warm pool maintains pre-created environment instances from a prebuild snapshot\n so that new environments can start near-instantly.\n\n Only one warm pool is allowed per <project, environment_class> pair.\n The environment class must have prebuilds enabled on the project.\n\n The pool's snapshot is managed automatically: when a new prebuild completes\n for the same project and environment class, the pool's snapshot is updated\n and the runner rotates instances.\n\n ### Examples\n\n - Create warm pool:\n\n   Creates a warm pool with 2 instances for a project and environment class.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   environmentClassId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   desiredSize: 2\n   ```"
+      operationId: gitpod.v1.PrebuildService.CreateWarmPool
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_warm_pool:
+                description: Creates a warm pool with 2 instances for a project and environment class.
+                value:
+                  desiredSize: 2
+                  environmentClassId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateWarmPoolRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateWarmPoolResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateWarmPool
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/DeletePrebuild:
+    servers: []
+    post:
+      description: "Deletes a prebuild.\n\n Prebuilds are automatically deleted after some time. Use this method to\n manually delete a prebuild before automatic cleanup, for example to remove\n a prebuild that should no longer be used.\n\n Deletion is processed asynchronously. The prebuild will be marked for deletion\n and removed from the system in the background.\n\n ### Examples\n\n - Delete prebuild:\n\n   Marks a prebuild for deletion and removes it from the system.\n\n   ```yaml\n   prebuildId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.PrebuildService.DeletePrebuild
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_prebuild:
+                description: Marks a prebuild for deletion and removes it from the system.
+                value:
+                  prebuildId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeletePrebuildRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeletePrebuildResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeletePrebuild
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/DeleteWarmPool:
+    servers: []
+    post:
+      description: "Deletes a warm pool.\n\n Deletion is processed asynchronously. The pool is marked for deletion\n and the runner drains instances in the background.\n\n Warm pools are also automatically deleted when prebuilds are disabled\n on the project or the environment class is removed from the prebuild\n configuration.\n\n ### Examples\n\n - Delete warm pool:\n\n   ```yaml\n   warmPoolId: \"a1b2c3d4-5678-9abc-def0-1234567890ab\"\n   ```"
+      operationId: gitpod.v1.PrebuildService.DeleteWarmPool
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_warm_pool:
+                description: 'warmPoolId: "a1b2c3d4-5678-9abc-def0-1234567890ab"
+
+                  '
+                value:
+                  warmPoolId: a1b2c3d4-5678-9abc-def0-1234567890ab
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteWarmPoolRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteWarmPoolResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteWarmPool
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/GetPrebuild:
+    servers: []
+    post:
+      description: "Gets details about a specific prebuild.\n\n Use this method to:\n - Check prebuild status and progress\n - Access prebuild logs for debugging\n\n ### Examples\n\n - Get prebuild details:\n\n   Retrieves comprehensive information about a prebuild.\n\n   ```yaml\n   prebuildId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.PrebuildService.GetPrebuild
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_prebuild_details:
+                description: Retrieves comprehensive information about a prebuild.
+                value:
+                  prebuildId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetPrebuildRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetPrebuildResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetPrebuild
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/GetWarmPool:
+    servers: []
+    post:
+      description: "Gets details about a specific warm pool.\n\n Use this method to:\n - Check warm pool status and phase\n - View the current snapshot being warmed\n - Monitor pool health\n\n ### Examples\n\n - Get warm pool:\n\n   ```yaml\n   warmPoolId: \"a1b2c3d4-5678-9abc-def0-1234567890ab\"\n   ```"
+      operationId: gitpod.v1.PrebuildService.GetWarmPool
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_warm_pool:
+                description: 'warmPoolId: "a1b2c3d4-5678-9abc-def0-1234567890ab"
+
+                  '
+                value:
+                  warmPoolId: a1b2c3d4-5678-9abc-def0-1234567890ab
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetWarmPoolRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetWarmPoolResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetWarmPool
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/ListPrebuilds:
+    servers: []
+    post:
+      operationId: gitpod.v1.PrebuildService.ListPrebuilds
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListPrebuildsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListPrebuildsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListPrebuilds
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/ListWarmPools:
+    servers: []
+    post:
+      description: "Lists warm pools with optional filtering.\n\n Use this method to:\n - View all warm pools for a project\n - Monitor warm pool status across environment classes\n\n ### Examples\n\n - List warm pools for a project:\n\n   ```yaml\n   filter:\n     projectIds: [\"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"]\n   ```"
+      operationId: gitpod.v1.PrebuildService.ListWarmPools
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_warm_pools_for_a_project:
+                description: "filter:\n  projectIds: [\"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"]\n"
+                value:
+                  filter:
+                    projectIds:
+                    - b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListWarmPoolsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListWarmPoolsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListWarmPools
+      tags:
+      - gitpod.v1.PrebuildService
+  /gitpod.v1.PrebuildService/UpdateWarmPool:
+    servers: []
+    post:
+      description: "Updates a warm pool's configuration.\n\n Use this method to change the desired pool size.\n\n ### Examples\n\n - Update pool size:\n\n   ```yaml\n   warmPoolId: \"a1b2c3d4-5678-9abc-def0-1234567890ab\"\n   desiredSize: 5\n   ```"
+      operationId: gitpod.v1.PrebuildService.UpdateWarmPool
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_pool_size:
+                description: 'warmPoolId: "a1b2c3d4-5678-9abc-def0-1234567890ab"
+
+                  desiredSize: 5
+
+                  '
+                value:
+                  desiredSize: 5
+                  warmPoolId: a1b2c3d4-5678-9abc-def0-1234567890ab
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateWarmPoolRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateWarmPoolResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateWarmPool
+      tags:
+      - gitpod.v1.PrebuildService
+components:
+  schemas:
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.CreatePrebuildLogsTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          description: access_token is the token that can be used to access the logs of the prebuild
+          title: access_token
+          type: string
+      required:
+      - accessToken
+      title: CreatePrebuildLogsTokenResponse
+      type: object
+    gitpod.v1.CreatePrebuildResponse:
+      additionalProperties: false
+      properties:
+        prebuild:
+          $ref: '#/components/schemas/gitpod.v1.Prebuild'
+          title: prebuild
+      required:
+      - prebuild
+      title: CreatePrebuildResponse
+      type: object
+    gitpod.v1.UpdateWarmPoolResponse:
+      additionalProperties: false
+      properties:
+        warmPool:
+          $ref: '#/components/schemas/gitpod.v1.WarmPool'
+          title: warm_pool
+      required:
+      - warmPool
+      title: UpdateWarmPoolResponse
+      type: object
+    gitpod.v1.GetPrebuildRequest:
+      additionalProperties: false
+      properties:
+        prebuildId:
+          description: prebuild_id specifies the prebuild to retrieve
+          format: uuid
+          title: prebuild_id
+          type: string
+      required:
+      - prebuildId
+      title: GetPrebuildRequest
+      type: object
+    gitpod.v1.PrebuildSpec:
+      additionalProperties: false
+      description: PrebuildSpec contains the configuration used to create a prebuild
+      properties:
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.PrebuildPhase'
+          description: "desired_phase is the desired phase of the prebuild.\n Used to signal cancellation or other state changes.\n This field is managed by the API and reconciler."
+          title: desired_phase
+        specVersion:
+          description: "spec_version is incremented each time the spec is updated.\n Used for optimistic concurrency control."
+          title: spec_version
+          type: string
+        timeout:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "timeout is the maximum time allowed for the prebuild to complete.\n Defaults to 60 minutes if not specified.\n Maximum allowed timeout is 2 hours."
+          title: timeout
+      title: PrebuildSpec
+      type: object
+    gitpod.v1.ListWarmPoolsRequest.Filter:
+      additionalProperties: false
+      properties:
+        environmentClassIds:
+          description: environment_class_ids filters warm pools to specific environment classes
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: environment_class_ids
+          type: array
+        projectIds:
+          description: project_ids filters warm pools to specific projects
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: project_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.GetPrebuildResponse:
+      additionalProperties: false
+      properties:
+        prebuild:
+          $ref: '#/components/schemas/gitpod.v1.Prebuild'
+          title: prebuild
+      required:
+      - prebuild
+      title: GetPrebuildResponse
+      type: object
+    gitpod.v1.DeleteWarmPoolRequest:
+      additionalProperties: false
+      properties:
+        warmPoolId:
+          description: warm_pool_id specifies the warm pool to delete
+          format: uuid
+          title: warm_pool_id
+          type: string
+      required:
+      - warmPoolId
+      title: DeleteWarmPoolRequest
+      type: object
+    gitpod.v1.DeleteWarmPoolResponse:
+      additionalProperties: false
+      title: DeleteWarmPoolResponse
+      type: object
+    gitpod.v1.ListWarmPoolsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination response
+          title: pagination
+        warmPools:
+          description: warm_pools are the warm pools that matched the query
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WarmPool'
+          title: warm_pools
+          type: array
+      title: ListWarmPoolsResponse
+      type: object
+    gitpod.v1.CreateWarmPoolResponse:
+      additionalProperties: false
+      properties:
+        warmPool:
+          $ref: '#/components/schemas/gitpod.v1.WarmPool'
+          title: warm_pool
+      required:
+      - warmPool
+      title: CreateWarmPoolResponse
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.PrebuildPhase:
+      description: PrebuildPhase represents the lifecycle phase of a prebuild
+      enum:
+      - PREBUILD_PHASE_UNSPECIFIED
+      - PREBUILD_PHASE_PENDING
+      - PREBUILD_PHASE_STARTING
+      - PREBUILD_PHASE_RUNNING
+      - PREBUILD_PHASE_STOPPING
+      - PREBUILD_PHASE_SNAPSHOTTING
+      - PREBUILD_PHASE_COMPLETED
+      - PREBUILD_PHASE_FAILED
+      - PREBUILD_PHASE_CANCELLING
+      - PREBUILD_PHASE_CANCELLED
+      - PREBUILD_PHASE_DELETING
+      - PREBUILD_PHASE_DELETED
+      title: PrebuildPhase
+      type: string
+    gitpod.v1.PrebuildMetadata.PrebuildTrigger:
+      description: PrebuildTrigger indicates how the prebuild was triggered
+      enum:
+      - PREBUILD_TRIGGER_UNSPECIFIED
+      - PREBUILD_TRIGGER_MANUAL
+      - PREBUILD_TRIGGER_SCHEDULED
+      title: PrebuildTrigger
+      type: string
+    gitpod.v1.WarmPoolMetadata:
+      additionalProperties: false
+      description: WarmPoolMetadata contains metadata about the warm pool
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is when the warm pool was created
+          title: created_at
+        environmentClassId:
+          description: environment_class_id is the environment class whose instances are warmed
+          format: uuid
+          title: environment_class_id
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization that owns the warm pool
+          format: uuid
+          title: organization_id
+          type: string
+        projectId:
+          description: project_id is the ID of the project this warm pool belongs to
+          format: uuid
+          title: project_id
+          type: string
+        runnerId:
+          description: "runner_id is the runner that manages this warm pool.\n Derived from the environment class."
+          format: uuid
+          title: runner_id
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: updated_at is when the warm pool was last updated
+          title: updated_at
+      required:
+      - createdAt
+      - updatedAt
+      title: WarmPoolMetadata
+      type: object
+    gitpod.v1.WarmPoolStatus:
+      additionalProperties: false
+      description: WarmPoolStatus contains the current status of a warm pool as reported by the runner
+      properties:
+        desiredSize:
+          description: "desired_size is the current target number of instances the autoscaler\n has decided on. Unlike running_instances, this value is stable and\n does not fluctuate as instances are claimed and backfilled."
+          format: int32
+          title: desired_size
+          type: integer
+        failureMessage:
+          description: failure_message contains details about why the warm pool is degraded or failed
+          title: failure_message
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.WarmPoolPhase'
+          description: phase is the current phase of the warm pool lifecycle
+          title: phase
+        runningInstances:
+          description: "running_instances is the number of running warm instances in the pool,\n ready to be claimed for near-instant environment startup."
+          format: int32
+          title: running_instances
+          type: integer
+        statusVersion:
+          description: "status_version is incremented each time the status is updated.\n Used for optimistic concurrency control."
+          title: status_version
+          type: string
+        stoppedInstances:
+          description: "stopped_instances is the number of pre-provisioned but stopped instances\n in the pool. When a running instance is claimed, stopped instances are\n used to backfill the running pool faster than provisioning from scratch.\n Stopped instances only incur storage costs, allowing a larger total pool\n at lower cost than keeping all instances running."
+          format: int32
+          title: stopped_instances
+          type: integer
+      required:
+      - phase
+      title: WarmPoolStatus
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.ListPrebuildsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListPrebuildsRequest.Filter'
+          description: filter contains the filter options for listing prebuilds
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing prebuilds
+          title: pagination
+      title: ListPrebuildsRequest
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.CreateWarmPoolRequest:
+      additionalProperties: false
+      properties:
+        desiredSize:
+          deprecated: true
+          description: "desired_size is the number of warm instances to maintain.\n Deprecated: Use min_size and max_size instead for dynamic scaling."
+          format: int32
+          maximum: 20
+          minimum: 1
+          title: desired_size
+          type: integer
+        environmentClassId:
+          description: "environment_class_id specifies which environment class to warm.\n Must be listed in the project's prebuild configuration environment_class_ids."
+          format: uuid
+          title: environment_class_id
+          type: string
+        maxSize:
+          description: "max_size is the maximum number of warm instances to maintain.\n The pool will never scale above this value.\n Must be >= min_size and <= 20."
+          format: int32
+          maximum: 20
+          minimum: 1
+          nullable: true
+          title: max_size
+          type: integer
+        minSize:
+          description: "min_size is the minimum number of warm instances to maintain.\n The pool will never scale below this value.\n Must be >= 0 and <= max_size. Set to 0 to allow full scale-down."
+          format: int32
+          maximum: 20
+          nullable: true
+          title: min_size
+          type: integer
+        projectId:
+          description: "project_id specifies the project this warm pool belongs to.\n The project must have prebuilds enabled."
+          format: uuid
+          title: project_id
+          type: string
+      required:
+      - projectId
+      - environmentClassId
+      title: CreateWarmPoolRequest
+      type: object
+    google.protobuf.Duration:
+      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
+      format: regex
+      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
+      type: string
+    gitpod.v1.WarmPoolPhase:
+      description: WarmPoolPhase represents the lifecycle phase of a warm pool
+      enum:
+      - WARM_POOL_PHASE_UNSPECIFIED
+      - WARM_POOL_PHASE_PENDING
+      - WARM_POOL_PHASE_READY
+      - WARM_POOL_PHASE_DEGRADED
+      - WARM_POOL_PHASE_DELETING
+      - WARM_POOL_PHASE_DELETED
+      title: WarmPoolPhase
+      type: string
+    gitpod.v1.CreatePrebuildRequest:
+      additionalProperties: false
+      properties:
+        environmentClassId:
+          description: "environment_class_id specifies which environment class to use for the prebuild.\n If not specified, uses the project's default environment class."
+          format: uuid
+          nullable: true
+          title: environment_class_id
+          type: string
+        projectId:
+          description: project_id specifies the project to create a prebuild for
+          format: uuid
+          title: project_id
+          type: string
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.PrebuildSpec'
+          description: spec contains the configuration for creating the prebuild
+          title: spec
+      required:
+      - projectId
+      - spec
+      title: CreatePrebuildRequest
+      type: object
+    gitpod.v1.CancelPrebuildResponse:
+      additionalProperties: false
+      properties:
+        prebuild:
+          $ref: '#/components/schemas/gitpod.v1.Prebuild'
+          title: prebuild
+      required:
+      - prebuild
+      title: CancelPrebuildResponse
+      type: object
+    gitpod.v1.GetWarmPoolRequest:
+      additionalProperties: false
+      properties:
+        warmPoolId:
+          description: warm_pool_id specifies the warm pool to retrieve
+          format: uuid
+          title: warm_pool_id
+          type: string
+      required:
+      - warmPoolId
+      title: GetWarmPoolRequest
+      type: object
+    gitpod.v1.ListPrebuildsRequest.Filter:
+      additionalProperties: false
+      properties:
+        creatorIds:
+          description: creator_ids filters prebuilds by who created them
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: creator_ids
+          type: array
+        executorIds:
+          description: executor_ids filters prebuilds by whose credentials were used to run them
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: executor_ids
+          type: array
+        phases:
+          description: phases filters prebuilds by their current phase
+          items:
+            $ref: '#/components/schemas/gitpod.v1.PrebuildPhase'
+          maxItems: 10
+          title: phases
+          type: array
+        projectIds:
+          description: project_ids filters prebuilds to specific projects
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: project_ids
+          type: array
+        triggeredBy:
+          description: triggered_by filters prebuilds by how they were triggered
+          items:
+            $ref: '#/components/schemas/gitpod.v1.PrebuildMetadata.PrebuildTrigger'
+          maxItems: 5
+          title: triggered_by
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.PrebuildMetadata:
+      additionalProperties: false
+      description: PrebuildMetadata contains metadata about the prebuild
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is when the prebuild was created
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: "creator is the identity of who created the prebuild.\n For manual prebuilds, this is the user who triggered it.\n For scheduled prebuilds, this is the configured executor."
+          title: creator
+        environmentClassId:
+          description: "environment_class_id is the environment class used to create this prebuild.\n While the prebuild is created with a specific environment class, environments\n with different classes (e.g., smaller or larger instance sizes) can be created\n from the same prebuild, as long as they run on the same runner.\n If not specified in create requests, uses the project's default environment class."
+          format: uuid
+          title: environment_class_id
+          type: string
+        executor:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: "executor is the identity used to run the prebuild.\n The executor's SCM credentials are used to clone the repository.\n If not set, the creator's identity is used."
+          title: executor
+        organizationId:
+          description: organization_id is the ID of the organization that owns the prebuild
+          format: uuid
+          title: organization_id
+          type: string
+        projectId:
+          description: project_id is the ID of the project this prebuild was created for
+          format: uuid
+          title: project_id
+          type: string
+        triggeredBy:
+          $ref: '#/components/schemas/gitpod.v1.PrebuildMetadata.PrebuildTrigger'
+          description: trigger describes the trigger that created this prebuild.
+          title: triggered_by
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: updated_at is when the prebuild was last updated
+          title: updated_at
+      required:
+      - creator
+      - createdAt
+      - updatedAt
+      title: PrebuildMetadata
+      type: object
+    gitpod.v1.CancelPrebuildRequest:
+      additionalProperties: false
+      properties:
+        prebuildId:
+          description: prebuild_id specifies the prebuild to cancel
+          format: uuid
+          title: prebuild_id
+          type: string
+      required:
+      - prebuildId
+      title: CancelPrebuildRequest
+      type: object
+    gitpod.v1.WarmPoolSpec:
+      additionalProperties: false
+      description: WarmPoolSpec contains the desired configuration for a warm pool
+      properties:
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.WarmPoolPhase'
+          description: "desired_phase is the intended lifecycle phase for this warm pool.\n Managed by the API and reconciler."
+          title: desired_phase
+        desiredSize:
+          deprecated: true
+          description: "desired_size is the number of warm instances to maintain.\n Deprecated: Use min_size and max_size instead for dynamic scaling.\n Existing pools will be migrated to min_size=max_size=desired_size."
+          format: int32
+          maximum: 20
+          minimum: 1
+          title: desired_size
+          type: integer
+        maxSize:
+          description: "max_size is the maximum number of warm instances to maintain.\n The pool will never scale above this value.\n Must be >= min_size and <= 20."
+          format: int32
+          maximum: 20
+          minimum: 1
+          nullable: true
+          title: max_size
+          type: integer
+        minSize:
+          description: "min_size is the minimum number of warm instances to maintain.\n The pool will never scale below this value.\n Must be >= 0 and <= max_size. Set to 0 to allow full scale-down."
+          format: int32
+          maximum: 20
+          nullable: true
+          title: min_size
+          type: integer
+        snapshotId:
+          description: "snapshot_id is the prebuild snapshot to warm up in the pool.\n Updated by the reconciler when a new prebuild completes for this\n project and environment class. Empty when no completed prebuild exists yet."
+          format: uuid
+          nullable: true
+          title: snapshot_id
+          type: string
+        specVersion:
+          description: "spec_version is incremented each time the spec is updated.\n Used for optimistic concurrency control."
+          title: spec_version
+          type: string
+      title: WarmPoolSpec
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.DeletePrebuildRequest:
+      additionalProperties: false
+      properties:
+        prebuildId:
+          description: prebuild_id specifies the prebuild to delete
+          format: uuid
+          title: prebuild_id
+          type: string
+      required:
+      - prebuildId
+      title: DeletePrebuildRequest
+      type: object
+    gitpod.v1.CreatePrebuildLogsTokenRequest:
+      additionalProperties: false
+      properties:
+        prebuildId:
+          description: "prebuild_id specifies the prebuild for which the logs token should be created.\n\n +required"
+          format: uuid
+          title: prebuild_id
+          type: string
+      required:
+      - prebuildId
+      title: CreatePrebuildLogsTokenRequest
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.UpdateWarmPoolRequest:
+      additionalProperties: false
+      properties:
+        desiredSize:
+          deprecated: true
+          description: "desired_size updates the number of warm instances to maintain.\n Deprecated: Use min_size and max_size instead for dynamic scaling."
+          format: int32
+          maximum: 20
+          minimum: 1
+          nullable: true
+          title: desired_size
+          type: integer
+        maxSize:
+          description: "max_size updates the maximum number of warm instances to maintain.\n The pool will never scale above this value.\n Must be >= min_size and <= 20."
+          format: int32
+          maximum: 20
+          minimum: 1
+          nullable: true
+          title: max_size
+          type: integer
+        minSize:
+          description: "min_size updates the minimum number of warm instances to maintain.\n The pool will never scale below this value.\n Must be >= 0 and <= max_size. Set to 0 to allow full scale-down."
+          format: int32
+          maximum: 20
+          nullable: true
+          title: min_size
+          type: integer
+        warmPoolId:
+          description: warm_pool_id specifies the warm pool to update
+          format: uuid
+          title: warm_pool_id
+          type: string
+      required:
+      - warmPoolId
+      title: UpdateWarmPoolRequest
+      type: object
+    gitpod.v1.ListPrebuildsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination response
+          title: pagination
+        prebuilds:
+          description: prebuilds are the prebuilds that matched the query
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Prebuild'
+          title: prebuilds
+          type: array
+      title: ListPrebuildsResponse
+      type: object
+    gitpod.v1.DeletePrebuildResponse:
+      additionalProperties: false
+      title: DeletePrebuildResponse
+      type: object
+    gitpod.v1.Prebuild:
+      additionalProperties: false
+      description: "Prebuild represents a prebuild for a project that creates a snapshot\n for faster environment startup times."
+      properties:
+        id:
+          description: id is the unique identifier for the prebuild
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.PrebuildMetadata'
+          description: metadata contains organizational and ownership information
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.PrebuildSpec'
+          description: spec contains the configuration used to create this prebuild
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.PrebuildStatus'
+          description: status contains the current status and progress of the prebuild
+          title: status
+      required:
+      - metadata
+      - spec
+      - status
+      title: Prebuild
+      type: object
+    gitpod.v1.PrebuildStatus:
+      additionalProperties: false
+      description: PrebuildStatus contains the current status and progress of a prebuild
+      properties:
+        completionTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: completion_time is when the prebuild completed (successfully or with failure)
+          title: completion_time
+        environmentId:
+          description: "environment_id is the ID of the environment used to create this prebuild.\n This field is set when the prebuild environment is created."
+          format: uuid
+          title: environment_id
+          type: string
+        failureMessage:
+          description: failure_message contains details about why the prebuild failed
+          title: failure_message
+          type: string
+        logUrl:
+          description: "log_url provides access to prebuild logs.\n During prebuild execution, this references the environment logs.\n After completion, this may reference archived logs."
+          format: uri
+          title: log_url
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.PrebuildPhase'
+          description: phase is the current phase of the prebuild lifecycle
+          title: phase
+        snapshotCompletionPercentage:
+          description: "snapshot_completion_percentage is the progress of snapshot creation (0-100).\n Only populated when phase is SNAPSHOTTING and progress is available from the cloud provider.\n This value may update infrequently or remain at 0 depending on the provider."
+          format: int32
+          maximum: 100
+          title: snapshot_completion_percentage
+          type: integer
+        snapshotSizeBytes:
+          description: "snapshot_size_bytes is the size of the snapshot in bytes.\n Only populated when the snapshot is available (phase is COMPLETED)."
+          title: snapshot_size_bytes
+          type: string
+        statusVersion:
+          description: "status_version is incremented each time the status is updated.\n Used for optimistic concurrency control."
+          title: status_version
+          type: string
+        warningMessage:
+          description: "warning_message contains warnings from the prebuild environment that indicate something went wrong\n but the prebuild could still complete. For example, the devcontainer failed to build but the environment\n is still usable. These warnings will likely affect any environment started from this prebuild."
+          title: warning_message
+          type: string
+      required:
+      - phase
+      title: PrebuildStatus
+      type: object
+    gitpod.v1.GetWarmPoolResponse:
+      additionalProperties: false
+      properties:
+        warmPool:
+          $ref: '#/components/schemas/gitpod.v1.WarmPool'
+          title: warm_pool
+      required:
+      - warmPool
+      title: GetWarmPoolResponse
+      type: object
+    gitpod.v1.WarmPool:
+      additionalProperties: false
+      description: "WarmPool maintains pre-created environment instances from a prebuild snapshot\n for near-instant environment startup.\n One warm pool exists per <project, environment_class> pair."
+      properties:
+        id:
+          description: id is the unique identifier for the warm pool
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.WarmPoolMetadata'
+          description: metadata contains organizational and ownership information
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.WarmPoolSpec'
+          description: spec contains the desired configuration for this warm pool
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.WarmPoolStatus'
+          description: status contains the current status reported by the runner
+          title: status
+      required:
+      - metadata
+      - spec
+      - status
+      title: WarmPool
+      type: object
+    gitpod.v1.ListWarmPoolsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListWarmPoolsRequest.Filter'
+          description: filter contains the filter options for listing warm pools
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing warm pools
+          title: pagination
+      title: ListWarmPoolsRequest
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

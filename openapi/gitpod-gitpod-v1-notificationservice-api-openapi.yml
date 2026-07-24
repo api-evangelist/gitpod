@@ -1,0 +1,471 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.NotificationService API
+  version: v1.0.0
+  description: NotificationService manages in-app notifications for users.
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- description: NotificationService manages in-app notifications for users.
+  name: gitpod.v1.NotificationService
+  x-displayName: gitpod.v1.NotificationService
+paths:
+  /gitpod.v1.NotificationService/DeleteNotifications:
+    servers: []
+    post:
+      description: Deletes notifications.
+      operationId: gitpod.v1.NotificationService.DeleteNotifications
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteNotificationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteNotificationsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteNotifications
+      tags:
+      - gitpod.v1.NotificationService
+  /gitpod.v1.NotificationService/ListNotifications:
+    servers: []
+    post:
+      description: "Lists notifications for the authenticated user.\n Response includes unread_count and total_count for the inbox badge."
+      operationId: gitpod.v1.NotificationService.ListNotifications
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListNotificationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListNotificationsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListNotifications
+      tags:
+      - gitpod.v1.NotificationService
+  /gitpod.v1.NotificationService/MarkNotificationsRead:
+    servers: []
+    post:
+      description: Marks notifications as read.
+      operationId: gitpod.v1.NotificationService.MarkNotificationsRead
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.MarkNotificationsReadRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.MarkNotificationsReadResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: MarkNotificationsRead
+      tags:
+      - gitpod.v1.NotificationService
+  /gitpod.v1.NotificationService/MarkNotificationsUnread:
+    servers: []
+    post:
+      description: Marks notifications as unread.
+      operationId: gitpod.v1.NotificationService.MarkNotificationsUnread
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.MarkNotificationsUnreadRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.MarkNotificationsUnreadResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: MarkNotificationsUnread
+      tags:
+      - gitpod.v1.NotificationService
+components:
+  schemas:
+    gitpod.v1.MarkNotificationsUnreadRequest:
+      additionalProperties: false
+      properties:
+        notificationIds:
+          items:
+            format: uuid
+            maxItems: 25
+            minItems: 1
+            type: string
+          maxItems: 25
+          minItems: 1
+          title: notification_ids
+          type: array
+      title: MarkNotificationsUnreadRequest
+      type: object
+    gitpod.v1.MarkNotificationsReadResponse:
+      additionalProperties: false
+      title: MarkNotificationsReadResponse
+      type: object
+    gitpod.v1.Notification:
+      additionalProperties: false
+      description: Notification represents an in-app notification for a user.
+      properties:
+        body:
+          title: body
+          type: string
+        context:
+          $ref: '#/components/schemas/gitpod.v1.NotificationContext'
+          title: context
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        id:
+          format: uuid
+          title: id
+          type: string
+        readAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: read_at
+        title:
+          title: title
+          type: string
+        type:
+          $ref: '#/components/schemas/gitpod.v1.NotificationType'
+          title: type
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      required:
+      - userId
+      title: Notification
+      type: object
+    gitpod.v1.ListNotificationsResponse:
+      additionalProperties: false
+      properties:
+        notifications:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Notification'
+          title: notifications
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        totalCount:
+          format: int32
+          title: total_count
+          type: integer
+        unreadCount:
+          description: Counts for the inbox badge. Always returned regardless of filters.
+          format: int32
+          title: unread_count
+          type: integer
+      title: ListNotificationsResponse
+      type: object
+    gitpod.v1.DeleteNotificationsResponse:
+      additionalProperties: false
+      title: DeleteNotificationsResponse
+      type: object
+    gitpod.v1.ListNotificationsRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+        read:
+          description: Filter by read status. If not set, returns all notifications.
+          nullable: true
+          title: read
+          type: boolean
+        types:
+          description: Filter by notification types. If empty, returns all types.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.NotificationType'
+          maxItems: 20
+          title: types
+          type: array
+      title: ListNotificationsRequest
+      type: object
+    gitpod.v1.MarkNotificationsReadRequest:
+      additionalProperties: false
+      properties:
+        notificationIds:
+          items:
+            format: uuid
+            maxItems: 25
+            minItems: 1
+            type: string
+          maxItems: 25
+          minItems: 1
+          title: notification_ids
+          type: array
+      title: MarkNotificationsReadRequest
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.MarkNotificationsUnreadResponse:
+      additionalProperties: false
+      title: MarkNotificationsUnreadResponse
+      type: object
+    gitpod.v1.NotificationType:
+      enum:
+      - NOTIFICATION_TYPE_UNSPECIFIED
+      - NOTIFICATION_TYPE_AGENT_COMPLETED
+      - NOTIFICATION_TYPE_AGENT_WAITING_FOR_INPUT
+      - NOTIFICATION_TYPE_ENVIRONMENT_ARCHIVED
+      - NOTIFICATION_TYPE_ENVIRONMENT_LIFETIME_EXCEEDED
+      - NOTIFICATION_TYPE_GROUP_ADDED
+      - NOTIFICATION_TYPE_GROUP_REMOVED
+      - NOTIFICATION_TYPE_BILLING_CREDITS_LOW
+      - NOTIFICATION_TYPE_BILLING_PAYMENT_FAILED
+      - NOTIFICATION_TYPE_BILLING_ACCOUNT_SUSPENDED
+      - NOTIFICATION_TYPE_AUTOMATION_COMPLETED
+      - NOTIFICATION_TYPE_AUTOMATION_STOPPED
+      - NOTIFICATION_TYPE_PREBUILD_FAILED
+      title: NotificationType
+      type: string
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.NotificationContext.EnvironmentContext:
+      additionalProperties: false
+      properties:
+        environmentId:
+          title: environment_id
+          type: string
+      title: EnvironmentContext
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.DeleteNotificationsRequest:
+      additionalProperties: false
+      properties:
+        notificationIds:
+          items:
+            format: uuid
+            maxItems: 25
+            minItems: 1
+            type: string
+          maxItems: 25
+          minItems: 1
+          title: notification_ids
+          type: array
+      title: DeleteNotificationsRequest
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.NotificationContext:
+      additionalProperties: false
+      description: "NotificationContext carries structured metadata for click-through navigation.\n Context is snapshotted at emit time so deleted resources still have display names."
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - environment
+          - required:
+            - project
+        required:
+        - agentExecution
+      - not:
+          anyOf:
+          - required:
+            - agentExecution
+          - required:
+            - project
+        required:
+        - environment
+      - not:
+          anyOf:
+          - required:
+            - agentExecution
+          - required:
+            - environment
+        required:
+        - project
+      properties:
+        agentExecution:
+          $ref: '#/components/schemas/gitpod.v1.NotificationContext.AgentExecutionContext'
+          title: agent_execution
+        environment:
+          $ref: '#/components/schemas/gitpod.v1.NotificationContext.EnvironmentContext'
+          title: environment
+        project:
+          $ref: '#/components/schemas/gitpod.v1.NotificationContext.ProjectContext'
+          title: project
+      title: NotificationContext
+      type: object
+    gitpod.v1.NotificationContext.ProjectContext:
+      additionalProperties: false
+      properties:
+        projectId:
+          title: project_id
+          type: string
+        projectName:
+          title: project_name
+          type: string
+      title: ProjectContext
+      type: object
+    gitpod.v1.NotificationContext.AgentExecutionContext:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          title: agent_execution_id
+          type: string
+        agentExecutionName:
+          title: agent_execution_name
+          type: string
+        environmentId:
+          title: environment_id
+          type: string
+      title: AgentExecutionContext
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

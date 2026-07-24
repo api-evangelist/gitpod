@@ -1,0 +1,232 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.AgentSecurityService API
+  version: v1.0.0
+  description: "AgentSecurityService receives agent security events from runners.\n Authenticated with runner tokens (same as RunnerInteractionService)."
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- description: "AgentSecurityService receives agent security events from runners.\n Authenticated with runner tokens (same as RunnerInteractionService)."
+  name: gitpod.v1.AgentSecurityService
+  x-displayName: gitpod.v1.AgentSecurityService
+paths:
+  /gitpod.v1.AgentSecurityService/ReportExecEvent:
+    servers: []
+    post:
+      description: "ReportExecEvent reports a blocked or audited process execution.\n\n Use this method to:\n - Report process executions that were blocked or audited by security policy\n\n ### Examples\n\n - Report a blocked execution:\n\n   ```yaml\n   environmentId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   executable: \"sha256:a1b2c3d4...\"\n   filename: \"/usr/bin/curl\"\n   action: KERNEL_CONTROLS_ACTION_BLOCK\n   process:\n     pid: 1234\n     tid: 1234\n     name: \"curl\"\n     cmdline: \"curl https://example.com\"\n     startedAt: \"2026-01-15T10:30:00Z\"\n     ppid: 1000\n     pgid: 1000\n     sid: 1000\n   timestamp: \"2026-01-15T10:30:00Z\"\n   ```"
+      operationId: gitpod.v1.AgentSecurityService.ReportExecEvent
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              report_a_blocked_execution:
+                description: "environmentId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\nexecutable: \"sha256:a1b2c3d4...\"\nfilename: \"/usr/bin/curl\"\naction: KERNEL_CONTROLS_ACTION_BLOCK\nprocess:\n  pid: 1234\n  tid: 1234\n  name: \"curl\"\n  cmdline: \"curl https://example.com\"\n  startedAt: \"2026-01-15T10:30:00Z\"\n  ppid: 1000\n  pgid: 1000\n  sid: 1000\ntimestamp: \"2026-01-15T10:30:00Z\"\n"
+                value:
+                  action: KERNEL_CONTROLS_ACTION_BLOCK
+                  environmentId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  executable: sha256:a1b2c3d4...
+                  filename: /usr/bin/curl
+                  process:
+                    cmdline: curl https://example.com
+                    name: curl
+                    pgid: 1000
+                    pid: 1234
+                    ppid: 1000
+                    sid: 1000
+                    startedAt: '2026-01-15T10:30:00Z'
+                    tid: 1234
+                  timestamp: '2026-01-15T10:30:00Z'
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ReportExecEventRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ReportExecEventResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ReportExecEvent
+      tags:
+      - gitpod.v1.AgentSecurityService
+components:
+  schemas:
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.Process:
+      additionalProperties: false
+      description: "Process describes the process that triggered a security event.\n This message is specific to event reporting (ingest path).\n List/Get RPCs may use a separate process representation.\n\n PID fields use int32 to match the kernel's pid_t (signed int).\n Linux PID max is 4,194,304 (2^22), well within int32 range.\n Postgres has no unsigned integer type: Ent maps uint32 to bigint\n (8 bytes) while int32 maps to integer (4 bytes). Using int32\n aligns proto, Go, and Postgres types without wasting storage."
+      properties:
+        cmdline:
+          description: "cmdline is the full command line.\n The real hard limit the kernel enforces per argument during execve(). MAX_ARG_STRLEN = 131072 defined in include/uapi/linux/binfmts.h as PAGE_SIZE * 32."
+          maxLength: 131072
+          title: cmdline
+          type: string
+        name:
+          description: "name is the process name (comm).\n 2x kernel TASK_COMM_LEN=16"
+          maxLength: 32
+          title: name
+          type: string
+        pgid:
+          description: pgid is the process group ID.
+          format: int32
+          title: pgid
+          type: integer
+        pid:
+          description: pid is the userspace process ID (kernel thread group ID, tgid).
+          format: int32
+          title: pid
+          type: integer
+        ppid:
+          description: ppid is the parent process ID.
+          format: int32
+          title: ppid
+          type: integer
+        sid:
+          description: sid is the session ID.
+          format: int32
+          title: sid
+          type: integer
+        startedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: started_at is when the process started.
+          title: started_at
+        tid:
+          description: tid is the userspace thread ID (kernel pid).
+          format: int32
+          title: tid
+          type: integer
+      title: Process
+      type: object
+    gitpod.v1.ReportExecEventRequest:
+      additionalProperties: false
+      properties:
+        action:
+          $ref: '#/components/schemas/gitpod.v1.KernelControlsAction'
+          description: action is the enforcement action taken (block or audit).
+          not:
+            enum:
+            - 0
+          title: action
+        environmentId:
+          description: environment_id is the environment where the event occurred.
+          format: uuid
+          title: environment_id
+          type: string
+        executable:
+          description: "executable is the digest of the binary content (e.g., \"sha256:a1b2c3d4...\").\n 256 allows for longer hash algorithms or prefixed identifiers.\n May be empty when the event source cannot compute the hash."
+          maxLength: 256
+          title: executable
+          type: string
+        filename:
+          description: "filename is the kernel-resolved path of the binary.\n Kernel PATH_MAX = 4096 (include/uapi/linux/limits.h).\n May be empty if the event source could not resolve it."
+          maxLength: 4096
+          title: filename
+          type: string
+        process:
+          $ref: '#/components/schemas/gitpod.v1.Process'
+          description: process contains metadata about the process that triggered the event.
+          title: process
+        timestamp:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: timestamp is when the event occurred in the environment.
+          title: timestamp
+      required:
+      - process
+      - timestamp
+      title: ReportExecEventRequest
+      type: object
+    gitpod.v1.ReportExecEventResponse:
+      additionalProperties: false
+      title: ReportExecEventResponse
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.KernelControlsAction:
+      description: KernelControlsAction defines how a kernel-level policy violation is handled.
+      enum:
+      - KERNEL_CONTROLS_ACTION_UNSPECIFIED
+      - KERNEL_CONTROLS_ACTION_BLOCK
+      - KERNEL_CONTROLS_ACTION_AUDIT
+      title: KernelControlsAction
+      type: string
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

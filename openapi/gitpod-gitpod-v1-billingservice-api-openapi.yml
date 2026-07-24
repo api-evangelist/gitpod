@@ -1,0 +1,3218 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.BillingService API
+  version: v1.0.0
+  description: BillingService provides billing and subscription management functionality.
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- description: BillingService provides billing and subscription management functionality.
+  name: gitpod.v1.BillingService
+  x-displayName: gitpod.v1.BillingService
+paths:
+  /gitpod.v1.BillingService/CancelSubscription:
+    servers: []
+    post:
+      description: "Cancels an existing subscription.\n\n Use this method to:\n - Cancel active subscription\n - Stop recurring billing\n - Maintain access until end of billing period\n\n ### Examples\n\n - Cancel subscription:\n\n   Cancels the specified subscription.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   subscriptionType: SUBSCRIPTION_TYPE_CORE\n   ```"
+      operationId: gitpod.v1.BillingService.CancelSubscription
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              cancel_subscription:
+                description: Cancels the specified subscription.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  subscriptionType: SUBSCRIPTION_TYPE_CORE
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CancelSubscriptionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CancelSubscriptionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CancelSubscription
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/ClearTopupFailure:
+    servers: []
+    post:
+      description: "Clears a topup payment failure for an organization.\n\n Use this method to:\n - Acknowledge and clear a failed topup payment\n - Allow the UI to return to normal state after user acknowledges the failure\n\n Unlike subscription failures which auto-resolve when payment succeeds,\n topup failures need explicit user acknowledgment because the commit was\n voided by Metronome and the user needs to retry with a working payment method."
+      operationId: gitpod.v1.BillingService.ClearTopupFailure
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ClearTopupFailureRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ClearTopupFailureResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ClearTopupFailure
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/CompleteBillingSetup:
+    servers: []
+    post:
+      description: "Completes the billing setup process after Stripe payment workflow completion.\n\n Use this method to:\n - Verify Stripe setup intent completion\n - Create Metronome contract for the organization\n - Grant free trial credits\n - Finalize billing configuration\n\n ### Examples\n\n - Complete billing setup:\n\n   Finalizes billing after successful Stripe payment setup.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   setupIntentId: \"seti_1234567890abcdef\"\n   ```"
+      operationId: gitpod.v1.BillingService.CompleteBillingSetup
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              complete_billing_setup:
+                description: Finalizes billing after successful Stripe payment setup.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  setupIntentId: seti_1234567890abcdef
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CompleteBillingSetupRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CompleteBillingSetupResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CompleteBillingSetup
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/CorrectUsageEvents:
+    servers: []
+    post:
+      description: "Corrects previously-synced usage events by cancelling the originals and\n creating compensating negative-value events that flow through the normal\n sync pipeline to Stripe. Internal admin operation."
+      operationId: gitpod.v1.BillingService.CorrectUsageEvents
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CorrectUsageEventsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CorrectUsageEventsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CorrectUsageEvents
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/CreateCardVerification:
+    servers: []
+    post:
+      description: "Creates a card verification entry for an account, allowing them to skip credit card verification.\n\n Use this method to:\n - Grant Ona for Open Source program participants immediate access\n - Mark pre-vetted accounts as credit card verified\n\n Requires the 'create_card_verification' account permission.\n\n ### Examples\n\n - Create card verification for open source maintainer:\n\n   ```yaml\n   email: \"maintainer@example.org\"\n   ```"
+      operationId: gitpod.v1.BillingService.CreateCardVerification
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_card_verification_for_open_source_maintainer:
+                description: 'email: "maintainer@example.org"
+
+                  '
+                value:
+                  email: maintainer@example.org
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateCardVerificationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateCardVerificationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateCardVerification
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/CreateCoupon:
+    servers: []
+    post:
+      description: "Creates a new coupon for support staff to distribute to customers.\n\n Use this method to:\n - Create promotional coupons for marketing campaigns\n - Generate support coupons for customer service\n - Set up trial credit coupons for new users"
+      operationId: gitpod.v1.BillingService.CreateCoupon
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateCouponRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateCouponResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateCoupon
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/CreateSubscription:
+    servers: []
+    post:
+      description: "Creates a new subscription for an organization.\n\n Use this method to:\n - Create a new subscription with specified type\n - Add subscription to existing Metronome contract\n - Create new contract if none exists"
+      operationId: gitpod.v1.BillingService.CreateSubscription
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateSubscriptionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateSubscriptionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateSubscription
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/CreateTeamCreditAllocation:
+    servers: []
+    post:
+      description: "Creates a credit allocation (budget) for a team.\n\n Allocations are soft budgets for reporting and alerting — not enforced at usage time.\n Over-allocation (sum of team budgets > org grant) is allowed.\n\n ### Examples\n\n - Create a team allocation:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   creditBudget: \"500\"\n   ```\n\n ### Authorization\n\n Requires `billing:create` permission on the organization."
+      operationId: gitpod.v1.BillingService.CreateTeamCreditAllocation
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_a_team_allocation:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  teamId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+                  creditBudget: "500"
+
+                  '
+                value:
+                  creditBudget: '500'
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  teamId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateTeamCreditAllocationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateTeamCreditAllocationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateTeamCreditAllocation
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/DeleteTeamCreditAllocation:
+    servers: []
+    post:
+      description: "Deletes the credit allocation for a team.\n\n ### Examples\n\n - Delete a team's allocation:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `billing:delete` permission on the organization."
+      operationId: gitpod.v1.BillingService.DeleteTeamCreditAllocation
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_a_team's_allocation:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  teamId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+                  '
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  teamId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteTeamCreditAllocationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteTeamCreditAllocationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteTeamCreditAllocation
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetAutoTopupSettings:
+    servers: []
+    post:
+      description: Retrieves auto-topup settings for an organization.
+      operationId: gitpod.v1.BillingService.GetAutoTopupSettings
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetAutoTopupSettingsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetAutoTopupSettingsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetAutoTopupSettings
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetBillingInfo:
+    servers: []
+    post:
+      description: "Retrieves billing information including credit balance for an organization.\n\n Use this method to:\n - Check available credits for the organization\n - Monitor credit usage and remaining balance\n - Display billing status in the dashboard\n - Implement usage-based alerts\n\n ### Examples\n\n - Get billing info:\n\n   Retrieves current credit balance and usage information.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.BillingService.GetBillingInfo
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_billing_info:
+                description: Retrieves current credit balance and usage information.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetBillingInfoRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetBillingInfoResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetBillingInfo
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetBillingRecord:
+    servers: []
+    post:
+      description: Gets details about a specific billing record.
+      operationId: gitpod.v1.BillingService.GetBillingRecord
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetBillingRecordRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetBillingRecordResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetBillingRecord
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetCoupon:
+    servers: []
+    post:
+      description: "Retrieves a specific coupon by its code.\n\n Use this method to:\n - Validate coupon codes during checkout\n - Display coupon details to users\n - Check coupon availability and expiration\n\n ### Examples\n\n - Get coupon by code:\n\n   Retrieves coupon details for validation.\n\n   ```yaml\n   couponCode: \"WELCOME2024\"\n   organizationId: \"123e4567-e89b-12d3-a456-426614174000\"\n   ```"
+      operationId: gitpod.v1.BillingService.GetCoupon
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_coupon_by_code:
+                description: Retrieves coupon details for validation.
+                value:
+                  couponCode: WELCOME2024
+                  organizationId: 123e4567-e89b-12d3-a456-426614174000
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetCouponRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetCouponResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetCoupon
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetCreditConsumptionTimeSeries:
+    servers: []
+    post:
+      description: "Returns daily credit consumption (OCU) time series for an organization,\n broken down by metric category."
+      operationId: gitpod.v1.BillingService.GetCreditConsumptionTimeSeries
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetCreditConsumptionTimeSeriesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetCreditConsumptionTimeSeriesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetCreditConsumptionTimeSeries
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetCreditUsageExport:
+    servers: []
+    post:
+      description: "Returns a signed download URL for a CSV export of per-user credit usage.\n The URL points to an HTTP endpoint that streams gzip-compressed CSV."
+      operationId: gitpod.v1.BillingService.GetCreditUsageExport
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetCreditUsageExportRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetCreditUsageExportResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetCreditUsageExport
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetCreditUsageReport:
+    servers: []
+    post:
+      description: "Returns a daily credit usage report for an enterprise organization,\n broken down by usage type and by user."
+      operationId: gitpod.v1.BillingService.GetCreditUsageReport
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetCreditUsageReportRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetCreditUsageReportResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetCreditUsageReport
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetCumulativeCreditUsage:
+    servers: []
+    post:
+      description: "Returns cumulative credit usage for an organization and its teams.\n\n Use this method to:\n - Get the total cumulative credit consumption as of a point in time\n - Get per-team cumulative usage with credit allocation (budget) comparison\n - Display team credit summaries on the usage page and team detail page\n\n ### Examples\n\n - Get current cumulative usage:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```\n\n - Get cumulative usage as of a specific date:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   asOf: \"2026-03-31T23:59:59Z\"\n   ```\n\n ### Authorization\n\n Requires `billing:read_usage` permission on the organization."
+      operationId: gitpod.v1.BillingService.GetCumulativeCreditUsage
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_cumulative_usage_as_of_a_specific_date:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  asOf: "2026-03-31T23:59:59Z"
+
+                  '
+                value:
+                  asOf: '2026-03-31T23:59:59Z'
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              get_current_cumulative_usage:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  '
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetCumulativeCreditUsageRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetCumulativeCreditUsageResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetCumulativeCreditUsage
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetEnterpriseBillingInfo:
+    servers: []
+    post:
+      description: Returns enterprise billing info for an organization.
+      operationId: gitpod.v1.BillingService.GetEnterpriseBillingInfo
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetEnterpriseBillingInfoRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetEnterpriseBillingInfoResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetEnterpriseBillingInfo
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetStripePortalUrl:
+    servers: []
+    post:
+      description: "Retrieves the Stripe Customer Portal URL for an organization.\n\n Use this method to:\n - Get the Stripe Customer Portal URL for billing management\n - Allow customers to manage their payment methods and billing details\n - Provide access to billing history and invoices\n\n ### Examples\n\n - Get Stripe portal URL:\n\n   Retrieves the portal URL for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.BillingService.GetStripePortalUrl
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_stripe_portal_url:
+                description: Retrieves the portal URL for the organization.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetStripePortalUrlRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetStripePortalUrlResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetStripePortalUrl
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetStripePublishableKey:
+    servers: []
+    post:
+      description: "Retrieves the Stripe publishable key for an organization.\n\n Use this method to:\n - Get the appropriate Stripe publishable key for frontend payment forms\n - Support different billing realms (production/sandbox)\n - Ensure proper isolation between organizations\n\n ### Examples\n\n - Get publishable key:\n\n   Retrieves the Stripe publishable key for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.BillingService.GetStripePublishableKey
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_publishable_key:
+                description: Retrieves the Stripe publishable key for the organization.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetStripePublishableKeyRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetStripePublishableKeyResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetStripePublishableKey
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GetTeamCreditAllocation:
+    servers: []
+    post:
+      description: "Gets the credit allocation for a team.\n\n ### Examples\n\n - Get a team's allocation:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `billing:read` permission on the organization."
+      operationId: gitpod.v1.BillingService.GetTeamCreditAllocation
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_a_team's_allocation:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  teamId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+                  '
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  teamId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetTeamCreditAllocationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetTeamCreditAllocationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetTeamCreditAllocation
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/GrantCredits:
+    servers: []
+    post:
+      description: "Grants additional credits to an organization.\n\n Use this method to:\n - Grant credits to existing customers\n - Add promotional credits\n - Provide customer service credits\n\n ### Examples\n\n - Grant credits:\n\n   Grants 80 credits to the organization for one year.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   creditsAmount: 80.0\n   ```"
+      operationId: gitpod.v1.BillingService.GrantCredits
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              grant_credits:
+                description: Grants 80 credits to the organization for one year.
+                value:
+                  creditsAmount: 80
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GrantCreditsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GrantCreditsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GrantCredits
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/InsertUsageEvents:
+    servers: []
+    post:
+      description: "Inserts usage events from an external source (e.g., backfilling missing\n LLM token usage from a provider console export). Internal admin operation."
+      operationId: gitpod.v1.BillingService.InsertUsageEvents
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.InsertUsageEventsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.InsertUsageEventsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: InsertUsageEvents
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/ListCoupons:
+    servers: []
+    post:
+      description: "Lists existing coupons with filtering and pagination support.\n\n Use this method to:\n - View all created coupons\n - Filter coupons by status or type\n - Monitor coupon usage and expiration"
+      operationId: gitpod.v1.BillingService.ListCoupons
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListCouponsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListCouponsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListCoupons
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/ListSubscriptions:
+    servers: []
+    post:
+      description: "Lists current subscriptions for an organization.\n\n Use this method to:\n - View all active subscriptions\n - Check subscription status and details\n - Monitor subscription lifecycle\n\n ### Examples\n\n - List subscriptions:\n\n   Retrieves all subscriptions for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.BillingService.ListSubscriptions
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_subscriptions:
+                description: Retrieves all subscriptions for the organization.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListSubscriptionsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListSubscriptionsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListSubscriptions
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/ReconcileBilling:
+    servers: []
+    post:
+      description: "Reconciles billing state for an organization.\n\n Use this method to:\n - Ensure billing state is up-to-date with external providers (Stripe, Metronome)\n - Sync organization tier based on active contracts\n - Update credit status and payment failure state\n\n Call this when the user navigates to the billing page to ensure\n they see the most current billing information.\n\n ### Examples\n\n - Reconcile billing:\n\n   Triggers billing reconciliation for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.BillingService.ReconcileBilling
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              reconcile_billing:
+                description: Triggers billing reconciliation for the organization.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ReconcileBillingRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ReconcileBillingResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ReconcileBilling
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/RequestRecoveryCredit:
+    servers: []
+    post:
+      description: "Requests a one-time recovery credit grant for an organization that is out of credits.\n Grants a small amount of free credits so the user can start an environment and push\n uncommitted work. Can only be used once per organization."
+      operationId: gitpod.v1.BillingService.RequestRecoveryCredit
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.RequestRecoveryCreditRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.RequestRecoveryCreditResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: RequestRecoveryCredit
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/SetBillingAddress:
+    servers: []
+    post:
+      description: "Sets or updates the billing address for an organization.\n\n Use this method to:\n - Set billing address for tax calculation and compliance\n - Update existing billing address information\n - Support international billing requirements\n\n ### Examples\n\n - Set billing address:\n\n   Sets a complete billing address for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"John Doe\"\n   address:\n     line1: \"123 Main St\"\n     line2: \"Suite 100\"\n     city: \"San Francisco\"\n     state: \"CA\"\n     postalCode: \"94105\"\n     country: \"US\"\n   ```"
+      operationId: gitpod.v1.BillingService.SetBillingAddress
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              set_billing_address:
+                description: Sets a complete billing address for the organization.
+                value:
+                  address:
+                    city: San Francisco
+                    country: US
+                    line1: 123 Main St
+                    line2: Suite 100
+                    postalCode: '94105'
+                    state: CA
+                  name: John Doe
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetBillingAddressRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetBillingAddressResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetBillingAddress
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/SetBillingRealm:
+    servers: []
+    post:
+      description: "Sets the billing realm for an organization.\n\n Use this method to:\n - Change organization's billing realm between sandbox and production\n - Configure billing environment for the organization\n - Requires Account permissions to perform the operation\n\n ### Examples\n\n - Set billing realm:\n\n   Changes organization billing realm to production.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   realm: BILLING_REALM_PRODUCTION\n   ```"
+      operationId: gitpod.v1.BillingService.SetBillingRealm
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              set_billing_realm:
+                description: Changes organization billing realm to production.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  realm: BILLING_REALM_PRODUCTION
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetBillingRealmRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetBillingRealmResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetBillingRealm
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/SetOrganizationCreditGrant:
+    servers: []
+    post:
+      description: "Sets the contracted credit grant for an organization.\n\n This is an admin-only operation for setting the total credit budget\n allocated to an enterprise organization under their contract.\n\n ### Examples\n\n - Set credit grant:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   creditGrant: \"10000\"\n   ```\n\n ### Authorization\n\n Requires `change_billing_realm` account permission."
+      operationId: gitpod.v1.BillingService.SetOrganizationCreditGrant
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              set_credit_grant:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  creditGrant: "10000"
+
+                  '
+                value:
+                  creditGrant: '10000'
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetOrganizationCreditGrantRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetOrganizationCreditGrantResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetOrganizationCreditGrant
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/SetTaxID:
+    servers: []
+    post:
+      description: "Sets or updates the tax ID for an organization.\n\n Use this method to:\n - Set tax ID for billing purposes\n - Update existing tax ID information\n - Support various tax ID types (VAT, GST, etc.)\n\n ### Examples\n\n - Set EU VAT ID:\n\n   Sets a VAT ID for an EU organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   taxIdType: \"eu_vat\"\n   taxIdValue: \"DE123456789\"\n   ```"
+      operationId: gitpod.v1.BillingService.SetTaxID
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              set_eu_vat_id:
+                description: Sets a VAT ID for an EU organization.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  taxIdType: eu_vat
+                  taxIdValue: DE123456789
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetTaxIDRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetTaxIDResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetTaxID
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/SetupBilling:
+    servers: []
+    post:
+      operationId: gitpod.v1.BillingService.SetupBilling
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetupBillingRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetupBillingResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetupBilling
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/SetupEnterpriseBilling:
+    servers: []
+    post:
+      description: "Sets up enterprise billing for an organization.\n\n Creates a Stripe customer, subscribes to the enterprise pricing plan,\n and updates the billing realm. Idempotent — safe to retry on failure.\n\n Requires the 'change_billing_realm' account permission.\n\n ### Examples\n\n - Setup enterprise billing (production):\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   email: \"billing@example.com\"\n   ```\n\n - Setup enterprise billing (sandbox):\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   sandbox: true\n   ```"
+      operationId: gitpod.v1.BillingService.SetupEnterpriseBilling
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              setup_enterprise_billing_(production):
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  email: "billing@example.com"
+
+                  '
+                value:
+                  email: billing@example.com
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              setup_enterprise_billing_(sandbox):
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  sandbox: true
+
+                  '
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  sandbox: true
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetupEnterpriseBillingRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetupEnterpriseBillingResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetupEnterpriseBilling
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/UpdateAutoTopupSettings:
+    servers: []
+    post:
+      description: "Updates auto-topup settings for an organization.\n\n Use this method to:\n - Enable or disable automatic credit top-ups\n - Configure the top-up amount and threshold\n - Set a daily safety cap on automatic top-ups\n\n Requires Core tier and the auto-topup feature flag."
+      operationId: gitpod.v1.BillingService.UpdateAutoTopupSettings
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateAutoTopupSettingsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateAutoTopupSettingsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateAutoTopupSettings
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/UpdateBillingRecord:
+    servers: []
+    post:
+      description: Updates a billing record
+      operationId: gitpod.v1.BillingService.UpdateBillingRecord
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateBillingRecordRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateBillingRecordResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateBillingRecord
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/UpdateSubscription:
+    servers: []
+    post:
+      description: "Updates an existing subscription's amount mid billing period, without cancellation.\n\n Use this method to:\n - Change the subscription amount without cancelling and re-subscribing\n - Switch between billing plans mid billing cycle"
+      operationId: gitpod.v1.BillingService.UpdateSubscription
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateSubscriptionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateSubscriptionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateSubscription
+      tags:
+      - gitpod.v1.BillingService
+  /gitpod.v1.BillingService/UpdateTeamCreditAllocation:
+    servers: []
+    post:
+      description: "Updates the credit allocation for a team.\n\n ### Examples\n\n - Update a team's budget:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   creditBudget: \"750\"\n   ```\n\n ### Authorization\n\n Requires `billing:update` permission on the organization."
+      operationId: gitpod.v1.BillingService.UpdateTeamCreditAllocation
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_a_team's_budget:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  teamId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+                  creditBudget: "750"
+
+                  '
+                value:
+                  creditBudget: '750'
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  teamId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateTeamCreditAllocationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateTeamCreditAllocationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateTeamCreditAllocation
+      tags:
+      - gitpod.v1.BillingService
+components:
+  schemas:
+    gitpod.v1.GetStripePublishableKeyRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to get the publishable key for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetStripePublishableKeyRequest
+      type: object
+    gitpod.v1.SetBillingRealmResponse:
+      additionalProperties: false
+      title: SetBillingRealmResponse
+      type: object
+    gitpod.v1.BillingRealm:
+      enum:
+      - BILLING_REALM_UNSPECIFIED
+      - BILLING_REALM_SANDBOX
+      - BILLING_REALM_PRODUCTION
+      title: BillingRealm
+      type: string
+    gitpod.v1.CompleteBillingSetupRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to complete billing setup for
+          format: uuid
+          title: organization_id
+          type: string
+        setupIntentId:
+          description: setup_intent_id is the Stripe SetupIntent ID to verify completion
+          minLength: 1
+          title: setup_intent_id
+          type: string
+      required:
+      - organizationId
+      - setupIntentId
+      title: CompleteBillingSetupRequest
+      type: object
+    gitpod.v1.CouponConfig:
+      additionalProperties: false
+      properties:
+        autoTerminate:
+          description: auto_terminate is whether the subscription should be terminated after the duration has passed
+          title: auto_terminate
+          type: boolean
+        durationMonths:
+          description: duration_months is the duration of the coupon in months
+          nullable: true
+          title: duration_months
+          type: string
+        oneTimeOcuGrant:
+          description: one_time_ocu_grant is the amount of OCU this coupon grants
+          nullable: true
+          title: one_time_ocu_grant
+          type: string
+        percentageOff:
+          description: percentage_off is the percentage off this coupon grants
+          nullable: true
+          title: percentage_off
+          type: string
+      title: CouponConfig
+      type: object
+    gitpod.v1.PaymentFailureInfo:
+      additionalProperties: false
+      properties:
+        failedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: failed_at is when the payment failure occurred
+          title: failed_at
+        failureReason:
+          description: failure_reason describes why the payment failed
+          title: failure_reason
+          type: string
+        gracePeriodEndsAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: grace_period_ends_at is when the grace period ends
+          title: grace_period_ends_at
+        state:
+          $ref: '#/components/schemas/gitpod.v1.PaymentFailureState'
+          description: state indicates the current state of the payment failure
+          title: state
+      title: PaymentFailureInfo
+      type: object
+    gitpod.v1.PaymentMethodStatus:
+      enum:
+      - PAYMENT_METHOD_STATUS_UNSPECIFIED
+      - PAYMENT_METHOD_STATUS_NOT_SET_UP
+      - PAYMENT_METHOD_STATUS_VERIFIED
+      title: PaymentMethodStatus
+      type: string
+    gitpod.v1.SetTaxIDResponse:
+      additionalProperties: false
+      title: SetTaxIDResponse
+      type: object
+    gitpod.v1.CreateCouponRequest:
+      additionalProperties: false
+      properties:
+        code:
+          description: code is the unique coupon code that customers will redeem
+          maxLength: 50
+          minLength: 3
+          title: code
+          type: string
+        config:
+          $ref: '#/components/schemas/gitpod.v1.CouponConfig'
+          description: config is the configuration for this coupon
+          title: config
+        description:
+          description: description is a human-readable description of the coupon
+          maxLength: 500
+          nullable: true
+          title: description
+          type: string
+        expiresAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: expires_at is when this coupon expires (optional)
+          nullable: true
+          title: expires_at
+        maxUses:
+          description: max_uses is the maximum number of times this coupon can be redeemed
+          exclusiveMinimum: true
+          format: int32
+          minimum: 0
+          title: max_uses
+          type: integer
+        maxUsesPerOrg:
+          description: max_uses_per_org is the maximum number of times this coupon can be redeemed per organization
+          exclusiveMinimum: true
+          format: int32
+          minimum: 0
+          nullable: true
+          title: max_uses_per_org
+          type: integer
+      required:
+      - code
+      - maxUses
+      title: CreateCouponRequest
+      type: object
+    gitpod.v1.ListCouponsRequest.Filter:
+      additionalProperties: false
+      properties:
+        code:
+          description: code filters coupons by exact code match
+          nullable: true
+          title: code
+          type: string
+        couponIds:
+          description: coupon_ids filters the response to only coupons with these IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: coupon_ids
+          type: array
+        expiresAfter:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: expires_after filters coupons that expire after this timestamp
+          nullable: true
+          title: expires_after
+        expiresBefore:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: expires_before filters coupons that expire before this timestamp
+          nullable: true
+          title: expires_before
+      title: Filter
+      type: object
+    gitpod.v1.AutoTopupSettings:
+      additionalProperties: false
+      description: AutoTopupSettings configures automatic credit top-ups for an organization.
+      properties:
+        amountCredits:
+          description: 'OCU amount per top-up. Must be one of: 40, 100, 200, 400, 1000.'
+          format: double
+          title: amount_credits
+          type: number
+        enabled:
+          description: Whether auto-topup is enabled.
+          title: enabled
+          type: boolean
+        maxDailyTopups:
+          description: Maximum number of automatic top-ups per day (safety cap, 0 means no cap).
+          format: int32
+          title: max_daily_topups
+          type: integer
+      title: AutoTopupSettings
+      type: object
+    gitpod.v1.RequestRecoveryCreditResponse:
+      additionalProperties: false
+      title: RequestRecoveryCreditResponse
+      type: object
+    gitpod.v1.CreditsByType:
+      additionalProperties: false
+      description: CreditsByType contains credits consumed for a single usage type.
+      properties:
+        credits:
+          format: double
+          title: credits
+          type: number
+        usageType:
+          $ref: '#/components/schemas/gitpod.v1.UsageType'
+          title: usage_type
+      title: CreditsByType
+      type: object
+    gitpod.v1.GetBillingInfoResponse:
+      additionalProperties: false
+      properties:
+        autoTopupSettings:
+          $ref: '#/components/schemas/gitpod.v1.AutoTopupSettings'
+          description: auto_topup_settings contains the current auto-topup configuration
+          title: auto_topup_settings
+        availableCredits:
+          description: available_credits is the remaining credits available for use
+          format: double
+          title: available_credits
+          type: number
+        creditGrant:
+          description: "credit_grant is the contracted credit grant for the organization, in whole credits.\n Only set for enterprise UBB organizations. 0 means no grant has been configured."
+          title: credit_grant
+          type: string
+        creditStatus:
+          $ref: '#/components/schemas/gitpod.v1.CreditStatus'
+          description: credit_status indicates the status of the credit balance
+          title: credit_status
+        lastAutoTopupAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: last_auto_topup_at is the timestamp of the most recent automatic top-up, if any.
+          title: last_auto_topup_at
+        monthlyCommitmentCents:
+          description: "monthly_commitment_cents is the monthly subscription amount in USD cents.\n 0 means the organization is on a free Core plan. Only set for Core tier organizations\n with an active contract."
+          title: monthly_commitment_cents
+          type: string
+        paymentFailure:
+          $ref: '#/components/schemas/gitpod.v1.PaymentFailureInfo'
+          description: payment_failure contains information about payment failures if any
+          title: payment_failure
+        paymentMethodStatus:
+          $ref: '#/components/schemas/gitpod.v1.PaymentMethodStatus'
+          description: payment_method_status indicates the status of the payment method
+          title: payment_method_status
+        recoveryCreditGrantedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "recovery_credit_granted_at is set when the one-time recovery credit grant has been used.\n Nil means the organization is still eligible for a recovery credit grant."
+          title: recovery_credit_granted_at
+        topupPaymentFailure:
+          $ref: '#/components/schemas/gitpod.v1.TopupPaymentFailureInfo'
+          description: topup_payment_failure contains information about topup payment failures if any
+          title: topup_payment_failure
+        totalCredits:
+          description: total_credits is the total amount of credits granted to the organization
+          format: double
+          title: total_credits
+          type: number
+        usedCredits:
+          description: used_credits is the amount of credits already consumed
+          format: double
+          title: used_credits
+          type: number
+      title: GetBillingInfoResponse
+      type: object
+    gitpod.v1.GetStripePortalUrlResponse:
+      additionalProperties: false
+      properties:
+        portalUrl:
+          description: portal_url is the URL to the Stripe Customer Portal for billing management
+          title: portal_url
+          type: string
+      required:
+      - portalUrl
+      title: GetStripePortalUrlResponse
+      type: object
+    gitpod.v1.DeleteTeamCreditAllocationResponse:
+      additionalProperties: false
+      title: DeleteTeamCreditAllocationResponse
+      type: object
+    gitpod.v1.GetStripePublishableKeyResponse:
+      additionalProperties: false
+      properties:
+        publishableKey:
+          description: publishable_key is the Stripe publishable key for the organization's billing realm
+          title: publishable_key
+          type: string
+      required:
+      - publishableKey
+      title: GetStripePublishableKeyResponse
+      type: object
+    gitpod.v1.GrantCreditsRequest:
+      additionalProperties: false
+      properties:
+        creditsAmount:
+          description: credits_amount is the amount of credits to grant (must be >= 40)
+          format: double
+          minimum: 40
+          title: credits_amount
+          type: number
+        organizationId:
+          description: organization_id is the ID of the organization to grant credits to
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      - creditsAmount
+      title: GrantCreditsRequest
+      type: object
+    gitpod.v1.TeamCreditAllocationInfo:
+      additionalProperties: false
+      description: TeamCreditAllocationInfo represents a team's credit budget allocation.
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        creditBudget:
+          description: credit_budget is the allocated credit budget in whole credits.
+          title: credit_budget
+          type: string
+        id:
+          format: uuid
+          title: id
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+      title: TeamCreditAllocationInfo
+      type: object
+    gitpod.v1.UpdateSubscriptionResponse:
+      additionalProperties: false
+      properties:
+        subscription:
+          $ref: '#/components/schemas/gitpod.v1.Subscription'
+          title: subscription
+      title: UpdateSubscriptionResponse
+      type: object
+    gitpod.v1.SetOrganizationCreditGrantResponse:
+      additionalProperties: false
+      title: SetOrganizationCreditGrantResponse
+      type: object
+    gitpod.v1.DateRange:
+      additionalProperties: false
+      description: DateRange specifies a time period for queries.
+      properties:
+        endTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: End time of the date range (exclusive).
+          title: end_time
+        startTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Start time of the date range (inclusive).
+          title: start_time
+      required:
+      - startTime
+      - endTime
+      title: DateRange
+      type: object
+    gitpod.v1.InsertUsageEventsRequest:
+      additionalProperties: false
+      properties:
+        events:
+          description: Events to insert.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UsageEventInput'
+          maxItems: 1000
+          minItems: 1
+          title: events
+          type: array
+        ignoreAgeCheck:
+          description: "If true, allow events with timestamps older than 35 days.\n By default, old events are rejected because Stripe cannot accept them."
+          title: ignore_age_check
+          type: boolean
+        reason:
+          description: Why these events are being inserted (stored in audit log and event payload).
+          minLength: 1
+          title: reason
+          type: string
+      title: InsertUsageEventsRequest
+      type: object
+    gitpod.v1.CorrectUsageEventsResponse:
+      additionalProperties: false
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UsageEventCorrectionResult'
+          title: results
+          type: array
+      title: CorrectUsageEventsResponse
+      type: object
+    gitpod.v1.CreditUsageDataPoint:
+      additionalProperties: false
+      description: A single data point in a credit consumption time series.
+      properties:
+        ocu:
+          description: Cost in Ona Compute Units.
+          format: double
+          title: ocu
+          type: number
+        time:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Start of the day (UTC midnight).
+          title: time
+      title: CreditUsageDataPoint
+      type: object
+    gitpod.v1.UserCreditUsage:
+      additionalProperties: false
+      description: UserCreditUsage contains a single user's credit usage, broken down by type.
+      properties:
+        displayName:
+          title: display_name
+          type: string
+        usage:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CreditsByType'
+          title: usage
+          type: array
+        userId:
+          description: Empty when representing the "Others" aggregation bucket.
+          title: user_id
+          type: string
+      title: UserCreditUsage
+      type: object
+    gitpod.v1.ListCouponsResponse:
+      additionalProperties: false
+      properties:
+        coupons:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Coupon'
+          title: coupons
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination response
+          title: pagination
+      title: ListCouponsResponse
+      type: object
+    gitpod.v1.DeleteTeamCreditAllocationRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+      required:
+      - organizationId
+      - teamId
+      title: DeleteTeamCreditAllocationRequest
+      type: object
+    gitpod.v1.GetBillingRecordResponse:
+      additionalProperties: false
+      properties:
+        billingRecord:
+          $ref: '#/components/schemas/gitpod.v1.BillingRecord'
+          title: billing_record
+      title: GetBillingRecordResponse
+      type: object
+    gitpod.v1.GetTeamCreditAllocationRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+      required:
+      - organizationId
+      - teamId
+      title: GetTeamCreditAllocationRequest
+      type: object
+    gitpod.v1.ListCouponsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListCouponsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing coupons
+          title: pagination
+      title: ListCouponsRequest
+      type: object
+    gitpod.v1.UpdateTeamCreditAllocationRequest:
+      additionalProperties: false
+      properties:
+        creditBudget:
+          description: credit_budget is the new allocated credit budget in whole credits. Must be > 0.
+          exclusiveMinimum: true
+          minimum: 0
+          title: credit_budget
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+      required:
+      - organizationId
+      - teamId
+      - creditBudget
+      title: UpdateTeamCreditAllocationRequest
+      type: object
+    gitpod.v1.MetricConsumptionTimeSeries.Kind:
+      enum:
+      - KIND_UNSPECIFIED
+      - KIND_ALL
+      - KIND_ENVIRONMENT
+      - KIND_LLM
+      title: Kind
+      type: string
+    gitpod.v1.BillingRecordSpec:
+      additionalProperties: false
+      properties:
+        plan:
+          $ref: '#/components/schemas/gitpod.v1.BillingPlanSpec'
+          description: plan contains the plan details
+          title: plan
+      title: BillingRecordSpec
+      type: object
+    gitpod.v1.Subscription:
+      additionalProperties: false
+      properties:
+        cancelledAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: cancelled_at is when the subscription was cancelled (if applicable)
+          title: cancelled_at
+        contractId:
+          description: contract_id is the unique identifier for the contract
+          title: contract_id
+          type: string
+        endsAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: ends_at is when the subscription access will end (if cancelled)
+          title: ends_at
+        organizationId:
+          description: organization_id is the ID of the organization that owns the subscription
+          title: organization_id
+          type: string
+        startsAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: starts_at is when the subscription was created
+          title: starts_at
+        status:
+          $ref: '#/components/schemas/gitpod.v1.SubscriptionStatus'
+          description: status is the current status of the subscription
+          title: status
+        subscriptionType:
+          $ref: '#/components/schemas/gitpod.v1.SubscriptionType'
+          description: subscription_type is the type of subscription
+          title: subscription_type
+      title: Subscription
+      type: object
+    gitpod.v1.InsertUsageEventsResponse:
+      additionalProperties: false
+      properties:
+        errorCount:
+          format: int32
+          title: error_count
+          type: integer
+        insertedCount:
+          description: Summary counts.
+          format: int32
+          title: inserted_count
+          type: integer
+        results:
+          description: "One result per input event, in the same order as the request.\n Each result echoes the original input fields plus status columns,\n so the CLI can write the response directly to stdout as CSV."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UsageEventInsertResult'
+          title: results
+          type: array
+        skippedCount:
+          format: int32
+          title: skipped_count
+          type: integer
+      title: InsertUsageEventsResponse
+      type: object
+    gitpod.v1.BillingPlanSpec:
+      additionalProperties: false
+      properties:
+        amountCentsUsd:
+          description: amount_cents contains the amount of cents to charge the organization
+          title: amount_cents_usd
+          type: string
+        kind:
+          $ref: '#/components/schemas/gitpod.v1.BillingPlanKind'
+          description: kind contains the kind of plan
+          title: kind
+        versionId:
+          description: version contains the version of the plan
+          title: version_id
+          type: string
+      required:
+      - amountCentsUsd
+      title: BillingPlanSpec
+      type: object
+    gitpod.v1.GetCreditConsumptionTimeSeriesRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: "Date range for the consumption query. Optional; defaults to the last 7 days.\n The range must not exceed 30 days, and end_time must not be in the future."
+          title: date_range
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetCreditConsumptionTimeSeriesRequest
+      type: object
+    gitpod.v1.UsageType:
+      description: UsageType identifies the category of usage.
+      enum:
+      - USAGE_TYPE_UNSPECIFIED
+      - USAGE_TYPE_ENVIRONMENT
+      - USAGE_TYPE_AGENTIC
+      title: UsageType
+      type: string
+    gitpod.v1.SetTaxIDRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to set tax ID for
+          format: uuid
+          title: organization_id
+          type: string
+        taxIdType:
+          description: tax_id_type is the type of tax ID (e.g., "eu_vat", "us_ein", "gb_vat")
+          minLength: 1
+          title: tax_id_type
+          type: string
+        taxIdValue:
+          description: tax_id_value is the tax ID value
+          minLength: 1
+          title: tax_id_value
+          type: string
+      required:
+      - organizationId
+      - taxIdType
+      - taxIdValue
+      title: SetTaxIDRequest
+      type: object
+    gitpod.v1.PaymentFailureState:
+      enum:
+      - PAYMENT_FAILURE_STATE_UNSPECIFIED
+      - PAYMENT_FAILURE_STATE_IN_GRACE
+      - PAYMENT_FAILURE_STATE_SUSPENDED
+      - PAYMENT_FAILURE_STATE_RESOLVED
+      title: PaymentFailureState
+      type: string
+    gitpod.v1.UpdateTeamCreditAllocationResponse:
+      additionalProperties: false
+      properties:
+        allocation:
+          $ref: '#/components/schemas/gitpod.v1.TeamCreditAllocationInfo'
+          title: allocation
+      title: UpdateTeamCreditAllocationResponse
+      type: object
+    gitpod.v1.GetEnterpriseBillingInfoResponse:
+      additionalProperties: false
+      properties:
+        creditUsageEnabled:
+          title: credit_usage_enabled
+          type: boolean
+      title: GetEnterpriseBillingInfoResponse
+      type: object
+    gitpod.v1.UpdateAutoTopupSettingsRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to update auto-topup settings for
+          format: uuid
+          title: organization_id
+          type: string
+        settings:
+          $ref: '#/components/schemas/gitpod.v1.AutoTopupSettings'
+          description: settings contains the new auto-topup configuration
+          title: settings
+      required:
+      - organizationId
+      - settings
+      title: UpdateAutoTopupSettingsRequest
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.CumulativeCreditUsage:
+      additionalProperties: false
+      description: CumulativeCreditUsage contains cumulative credit consumption totals.
+      properties:
+        totalCredits:
+          description: Total credits consumed.
+          format: double
+          title: total_credits
+          type: number
+        usageByType:
+          description: Credits consumed broken down by usage type.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CreditsByType'
+          title: usage_by_type
+          type: array
+      title: CumulativeCreditUsage
+      type: object
+    gitpod.v1.CorrectUsageEventsRequest:
+      additionalProperties: false
+      properties:
+        idempotencyKeys:
+          description: Idempotency keys of events to correct.
+          items:
+            minItems: 1
+            type: string
+          minItems: 1
+          title: idempotency_keys
+          type: array
+        reason:
+          description: Why these events are being corrected (stored in cancel_reason and correction payload).
+          minLength: 1
+          title: reason
+          type: string
+      title: CorrectUsageEventsRequest
+      type: object
+    gitpod.v1.BillingRecordStatus:
+      additionalProperties: false
+      properties:
+        credit:
+          $ref: '#/components/schemas/gitpod.v1.CreditStatus'
+          description: credit contains the status of the credit balance
+          title: credit
+        error:
+          description: error contains any error message
+          maxLength: 1024
+          minLength: 1
+          title: error
+          type: string
+        paymentMethodVerification:
+          $ref: '#/components/schemas/gitpod.v1.PaymentMethodVerificationStatus'
+          description: card_verification contains the status of the card verification
+          title: payment_method_verification
+        plan:
+          $ref: '#/components/schemas/gitpod.v1.BillingPlanStatus'
+          description: plan contains the plan status
+          title: plan
+      title: BillingRecordStatus
+      type: object
+    gitpod.v1.CreateTeamCreditAllocationResponse:
+      additionalProperties: false
+      properties:
+        allocation:
+          $ref: '#/components/schemas/gitpod.v1.TeamCreditAllocationInfo'
+          title: allocation
+      title: CreateTeamCreditAllocationResponse
+      type: object
+    gitpod.v1.UpdateSubscriptionRequest:
+      additionalProperties: false
+      properties:
+        newAmountCents:
+          description: new_amount_cents is the new amount in cents to charge the organization
+          enum:
+          - 2000
+          - 5000
+          - 10000
+          - 20000
+          - 50000
+          title: new_amount_cents
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization whose subscription to update
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      - newAmountCents
+      title: UpdateSubscriptionRequest
+      type: object
+    gitpod.v1.GetCreditUsageReportResponse:
+      additionalProperties: false
+      properties:
+        dailyUsage:
+          description: One entry per day in the requested date range.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.DailyCreditUsage'
+          title: daily_usage
+          type: array
+        periodStart:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "Start of the billing period for this organization.\n Used by the frontend to filter out months before usage tracking began."
+          nullable: true
+          title: period_start
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: When the report data was last computed.
+          title: updated_at
+      title: GetCreditUsageReportResponse
+      type: object
+    gitpod.v1.GetCreditUsageExportResponse:
+      additionalProperties: false
+      properties:
+        downloadUrl:
+          description: Signed download URL for the CSV export. Short-lived (5 minutes).
+          title: download_url
+          type: string
+      title: GetCreditUsageExportResponse
+      type: object
+    gitpod.v1.SetupBillingRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to update
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: SetupBillingRequest
+      type: object
+    gitpod.v1.GetEnterpriseBillingInfoRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetEnterpriseBillingInfoRequest
+      type: object
+    gitpod.v1.UpdateAutoTopupSettingsResponse:
+      additionalProperties: false
+      properties:
+        settings:
+          $ref: '#/components/schemas/gitpod.v1.AutoTopupSettings'
+          description: settings contains the updated auto-topup configuration
+          title: settings
+      title: UpdateAutoTopupSettingsResponse
+      type: object
+    gitpod.v1.GetCouponRequest:
+      additionalProperties: false
+      properties:
+        couponCode:
+          description: coupon_code is the code of the coupon to retrieve
+          maxLength: 50
+          minLength: 3
+          title: coupon_code
+          type: string
+        organizationId:
+          description: organization_id is the organization context for per-organization validation
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - couponCode
+      - organizationId
+      title: GetCouponRequest
+      type: object
+    gitpod.v1.BillingAddress:
+      additionalProperties: false
+      description: BillingAddress represents a billing address for an organization
+      properties:
+        city:
+          description: city is the city name
+          maxLength: 100
+          minLength: 1
+          title: city
+          type: string
+        country:
+          description: country is the two-letter country code (ISO 3166-1 alpha-2)
+          maxLength: 2
+          minLength: 2
+          pattern: ^[A-Z]{2}$
+          title: country
+          type: string
+        line1:
+          description: line1 is the first line of the address (street address)
+          maxLength: 255
+          minLength: 1
+          title: line1
+          type: string
+        line2:
+          description: line2 is the second line of the address (apartment, suite, etc.)
+          maxLength: 255
+          title: line2
+          type: string
+        postalCode:
+          description: postal_code is the postal or ZIP code
+          maxLength: 20
+          minLength: 1
+          title: postal_code
+          type: string
+        state:
+          description: state is the state or province
+          maxLength: 100
+          title: state
+          type: string
+      required:
+      - line1
+      - city
+      - postalCode
+      - country
+      title: BillingAddress
+      type: object
+    gitpod.v1.TeamCreditUsage:
+      additionalProperties: false
+      description: TeamCreditUsage contains a single team's credit usage for a day, broken down by type.
+      properties:
+        displayName:
+          title: display_name
+          type: string
+        teamId:
+          description: Empty when representing the "Others" aggregation bucket.
+          title: team_id
+          type: string
+        usage:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CreditsByType'
+          title: usage
+          type: array
+      title: TeamCreditUsage
+      type: object
+    gitpod.v1.TopupPaymentFailureInfo:
+      additionalProperties: false
+      description: TopupPaymentFailureInfo contains information about a failed topup payment
+      properties:
+        errorMessage:
+          description: error_message describes why the topup payment failed
+          title: error_message
+          type: string
+        failedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: failed_at is when the topup payment failure occurred
+          title: failed_at
+      title: TopupPaymentFailureInfo
+      type: object
+    gitpod.v1.GetCumulativeCreditUsageResponse:
+      additionalProperties: false
+      properties:
+        orgUsage:
+          $ref: '#/components/schemas/gitpod.v1.CumulativeCreditUsage'
+          description: Org-wide cumulative usage, broken down by type and total.
+          title: org_usage
+        periodStart:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "Start of the cumulative calculation period.\n Cumulative totals are computed from this date forward."
+          title: period_start
+        teamUsage:
+          description: "Per-team cumulative usage with credit allocation comparison.\n Returns all teams (no top-N limit)."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TeamCumulativeCreditUsage'
+          title: team_usage
+          type: array
+        unteamedUsage:
+          $ref: '#/components/schemas/gitpod.v1.CumulativeCreditUsage'
+          description: Usage by members not assigned to any team.
+          title: unteamed_usage
+      title: GetCumulativeCreditUsageResponse
+      type: object
+    gitpod.v1.GrantCreditsResponse:
+      additionalProperties: false
+      title: GrantCreditsResponse
+      type: object
+    gitpod.v1.CreateSubscriptionRequest:
+      additionalProperties: false
+      properties:
+        amountCents:
+          description: amount_cents is the amount of cents to charge the organization
+          enum:
+          - 2000
+          - 5000
+          - 10000
+          - 20000
+          - 50000
+          title: amount_cents
+          type: string
+        couponCode:
+          description: coupon_code is the code of the coupon to apply to the subscription
+          title: coupon_code
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization to create subscription for
+          format: uuid
+          title: organization_id
+          type: string
+        subscriptionType:
+          $ref: '#/components/schemas/gitpod.v1.SubscriptionType'
+          description: subscription_type specifies the type of subscription to create
+          title: subscription_type
+      required:
+      - organizationId
+      - subscriptionType
+      - amountCents
+      title: CreateSubscriptionRequest
+      type: object
+    gitpod.v1.BillingRecord:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the unique identifier for the billing record
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.BillingRecordMetadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.BillingRecordSpec'
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.BillingRecordStatus'
+          title: status
+      title: BillingRecord
+      type: object
+    gitpod.v1.Coupon:
+      additionalProperties: false
+      description: Coupon represents a promotional code that can be redeemed for credits
+      properties:
+        code:
+          description: code is the unique coupon code that customers can redeem
+          title: code
+          type: string
+        config:
+          $ref: '#/components/schemas/gitpod.v1.CouponConfig'
+          description: config is the configuration for this coupon
+          title: config
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is when the coupon was created
+          title: created_at
+        description:
+          description: description is a human-readable description of the coupon
+          nullable: true
+          title: description
+          type: string
+        expiresAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: expires_at is when this coupon expires (optional)
+          nullable: true
+          title: expires_at
+        id:
+          description: id is the unique identifier for the coupon
+          format: uuid
+          title: id
+          type: string
+        maxUses:
+          description: max_uses is the maximum number of times this coupon can be redeemed
+          exclusiveMinimum: true
+          format: int32
+          minimum: 0
+          title: max_uses
+          type: integer
+        maxUsesPerOrg:
+          description: max_uses_per_org is the maximum number of times this coupon can be redeemed per organization
+          exclusiveMinimum: true
+          format: int32
+          minimum: 0
+          nullable: true
+          title: max_uses_per_org
+          type: integer
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: updated_at is when the coupon was last updated
+          title: updated_at
+      title: Coupon
+      type: object
+    gitpod.v1.SetBillingAddressResponse:
+      additionalProperties: false
+      title: SetBillingAddressResponse
+      type: object
+    gitpod.v1.GetCouponResponse:
+      additionalProperties: false
+      properties:
+        coupon:
+          $ref: '#/components/schemas/gitpod.v1.Coupon'
+          title: coupon
+      title: GetCouponResponse
+      type: object
+    gitpod.v1.SetBillingAddressRequest:
+      additionalProperties: false
+      properties:
+        address:
+          $ref: '#/components/schemas/gitpod.v1.BillingAddress'
+          description: address is the billing address details
+          title: address
+        name:
+          description: name is the name associated with the billing address
+          maxLength: 255
+          minLength: 1
+          title: name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization to set billing address for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      - name
+      - address
+      title: SetBillingAddressRequest
+      type: object
+    gitpod.v1.BillingPlanStatus:
+      additionalProperties: false
+      properties:
+        amountCentsUsd:
+          description: amount_cents contains the amount of cents to charge the organization
+          title: amount_cents_usd
+          type: string
+        endingAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: ending_at contains the date and time when the plan ends
+          title: ending_at
+        kind:
+          $ref: '#/components/schemas/gitpod.v1.BillingPlanKind'
+          description: kind contains the kind of plan
+          title: kind
+        versionId:
+          description: version contains the version of the plan
+          title: version_id
+          type: string
+      required:
+      - amountCentsUsd
+      title: BillingPlanStatus
+      type: object
+    gitpod.v1.UpdateBillingRecordRequest:
+      additionalProperties: false
+      properties:
+        amountCentsUsd:
+          description: amount_cents contains the amount of cents to charge the organization
+          nullable: true
+          title: amount_cents_usd
+          type: string
+        billingRecordId:
+          description: billing_record_id is the ID of the billing record to update
+          format: uuid
+          title: billing_record_id
+          type: string
+        kind:
+          $ref: '#/components/schemas/gitpod.v1.BillingPlanKind'
+          description: kind contains the kind of plan
+          nullable: true
+          title: kind
+      required:
+      - billingRecordId
+      - amountCentsUsd
+      title: UpdateBillingRecordRequest
+      type: object
+    gitpod.v1.SetBillingRealmRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to update
+          format: uuid
+          title: organization_id
+          type: string
+        realm:
+          $ref: '#/components/schemas/gitpod.v1.BillingRealm'
+          description: realm is the new billing realm to set for the organization
+          title: realm
+      required:
+      - organizationId
+      - realm
+      title: SetBillingRealmRequest
+      type: object
+    gitpod.v1.ClearTopupFailureResponse:
+      additionalProperties: false
+      title: ClearTopupFailureResponse
+      type: object
+    gitpod.v1.CreateSubscriptionResponse:
+      additionalProperties: false
+      properties:
+        subscription:
+          $ref: '#/components/schemas/gitpod.v1.Subscription'
+          title: subscription
+      title: CreateSubscriptionResponse
+      type: object
+    gitpod.v1.RequestRecoveryCreditRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization requesting recovery credits
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: RequestRecoveryCreditRequest
+      type: object
+    gitpod.v1.UsageEventInsertResult:
+      additionalProperties: false
+      properties:
+        eventName:
+          title: event_name
+          type: string
+        idempotencyKey:
+          description: Generated idempotency key (empty for validation errors before key generation).
+          title: idempotency_key
+          type: string
+        message:
+          description: Error/skip reason (empty for status "ok").
+          title: message
+          type: string
+        organizationId:
+          description: Original input fields echoed back.
+          title: organization_id
+          type: string
+        payloadJson:
+          title: payload_json
+          type: string
+        status:
+          description: '"ok", "skipped", or "error".'
+          title: status
+          type: string
+        timestamp:
+          description: Unix epoch seconds (echoed from input).
+          title: timestamp
+          type: string
+        userId:
+          title: user_id
+          type: string
+        value:
+          title: value
+          type: string
+      title: UsageEventInsertResult
+      type: object
+    gitpod.v1.CancelSubscriptionRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: subscription_id is the ID of the subscription to cancel
+          minLength: 1
+          title: organization_id
+          type: string
+        subscriptionType:
+          $ref: '#/components/schemas/gitpod.v1.SubscriptionType'
+          description: subscription_type specifies the type of subscription to cancel
+          title: subscription_type
+      required:
+      - organizationId
+      - subscriptionType
+      title: CancelSubscriptionRequest
+      type: object
+    gitpod.v1.CancelSubscriptionResponse:
+      additionalProperties: false
+      title: CancelSubscriptionResponse
+      type: object
+    gitpod.v1.ListSubscriptionsRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to list subscriptions for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: ListSubscriptionsRequest
+      type: object
+    gitpod.v1.SetupEnterpriseBillingRequest:
+      additionalProperties: false
+      properties:
+        contractStartDate:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "contract_start_date is the date from which usage data should be shown/exported.\n Usage events before this date are still recorded but excluded from reports and Stripe sync."
+          nullable: true
+          title: contract_start_date
+        email:
+          description: email is the email address for the Stripe customer (optional)
+          format: email
+          nullable: true
+          title: email
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization to set up enterprise billing for
+          format: uuid
+          title: organization_id
+          type: string
+        sandbox:
+          description: sandbox selects the sandbox billing environment. If false or unset, production is used.
+          title: sandbox
+          type: boolean
+        setEnterpriseTier:
+          description: "set_enterprise_tier also sets the organization tier to Enterprise.\n If false or unset, the organization must already be on Enterprise tier."
+          title: set_enterprise_tier
+          type: boolean
+      required:
+      - organizationId
+      title: SetupEnterpriseBillingRequest
+      type: object
+    gitpod.v1.GetCreditConsumptionTimeSeriesResponse:
+      additionalProperties: false
+      properties:
+        metrics:
+          description: Per-metric OCU consumption time series, plus a total entry with kind ALL.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.MetricConsumptionTimeSeries'
+          title: metrics
+          type: array
+      title: GetCreditConsumptionTimeSeriesResponse
+      type: object
+    gitpod.v1.GetBillingRecordRequest:
+      additionalProperties: false
+      properties:
+        billingRecordId:
+          description: billing_record_id specifies the billing record identifier
+          format: uuid
+          title: billing_record_id
+          type: string
+      title: GetBillingRecordRequest
+      type: object
+    gitpod.v1.SetOrganizationCreditGrantRequest:
+      additionalProperties: false
+      properties:
+        creditGrant:
+          description: credit_grant is the contracted credit grant in whole credits. Must be >= 0.
+          title: credit_grant
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      - creditGrant
+      title: SetOrganizationCreditGrantRequest
+      type: object
+    gitpod.v1.GetBillingInfoRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to get billing info for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetBillingInfoRequest
+      type: object
+    gitpod.v1.GetCreditUsageExportRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Month to export. Same semantics as GetCreditUsageReport.date_range.
+          title: date_range
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      - dateRange
+      title: GetCreditUsageExportRequest
+      type: object
+    gitpod.v1.DailyCreditUsage:
+      additionalProperties: false
+      description: DailyCreditUsage contains credit usage for a single day.
+      properties:
+        date:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Start of the day (midnight in the requested timezone).
+          title: date
+        orgUsage:
+          description: Org-wide usage broken down by type.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CreditsByType'
+          title: org_usage
+          type: array
+        teamUsage:
+          description: "Per-team usage for this day (top teams + \"Others\").\n Empty team_id represents the \"Others\" aggregation bucket."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TeamCreditUsage'
+          title: team_usage
+          type: array
+        userUsage:
+          description: Per-user usage for this day (top users + "Others").
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UserCreditUsage'
+          title: user_usage
+          type: array
+      title: DailyCreditUsage
+      type: object
+    gitpod.v1.ListSubscriptionsResponse:
+      additionalProperties: false
+      properties:
+        subscriptions:
+          description: subscriptions is the list of subscriptions for the organization
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Subscription'
+          title: subscriptions
+          type: array
+      title: ListSubscriptionsResponse
+      type: object
+    gitpod.v1.BillingPlanKind:
+      enum:
+      - BILLING_PLAN_KIND_UNSPECIFIED
+      - BILLING_PLAN_KIND_FREE
+      - BILLING_PLAN_KIND_CORE
+      title: BillingPlanKind
+      type: string
+    gitpod.v1.UpdateBillingRecordResponse:
+      additionalProperties: false
+      title: UpdateBillingRecordResponse
+      type: object
+    gitpod.v1.SubscriptionType:
+      enum:
+      - SUBSCRIPTION_TYPE_UNSPECIFIED
+      - SUBSCRIPTION_TYPE_CORE
+      title: SubscriptionType
+      type: string
+    gitpod.v1.CreateCardVerificationResponse:
+      additionalProperties: false
+      title: CreateCardVerificationResponse
+      type: object
+    gitpod.v1.GetCreditUsageReportRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: "Date range for the report. Both start and end dates are inclusive.\n Time-of-day is ignored; dates are truncated to midnight in the specified timezone.\n The range must not exceed 31 days."
+          title: date_range
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        timezone:
+          description: "IANA timezone name (e.g. \"America/New_York\", \"Europe/Berlin\") used to\n bucket daily usage. When empty, defaults to \"UTC\"."
+          title: timezone
+          type: string
+      required:
+      - organizationId
+      - dateRange
+      title: GetCreditUsageReportRequest
+      type: object
+    gitpod.v1.SetupBillingResponse:
+      additionalProperties: false
+      properties:
+        customerSessionClientSecret:
+          description: customer_session_client_secret is the client secret for the Stripe CustomerSession
+          title: customer_session_client_secret
+          type: string
+        setupIntentClientSecret:
+          description: setup_intent_client_secret is the client secret for the Stripe SetupIntent
+          title: setup_intent_client_secret
+          type: string
+      required:
+      - setupIntentClientSecret
+      - customerSessionClientSecret
+      title: SetupBillingResponse
+      type: object
+    gitpod.v1.GetTeamCreditAllocationResponse:
+      additionalProperties: false
+      properties:
+        allocation:
+          $ref: '#/components/schemas/gitpod.v1.TeamCreditAllocationInfo'
+          title: allocation
+      title: GetTeamCreditAllocationResponse
+      type: object
+    gitpod.v1.SetupEnterpriseBillingResponse:
+      additionalProperties: false
+      properties:
+        stripeCustomerId:
+          description: stripe_customer_id is the created or existing Stripe customer ID
+          title: stripe_customer_id
+          type: string
+      required:
+      - stripeCustomerId
+      title: SetupEnterpriseBillingResponse
+      type: object
+    gitpod.v1.GetStripePortalUrlRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to get the Stripe portal URL for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetStripePortalUrlRequest
+      type: object
+    gitpod.v1.CreditCardVerificationStatus:
+      enum:
+      - CREDIT_CARD_VERIFICATION_STATUS_UNSPECIFIED
+      - CREDIT_CARD_VERIFICATION_STATUS_PENDING
+      - CREDIT_CARD_VERIFICATION_STATUS_REQUIRES_CONFIRMATION
+      - CREDIT_CARD_VERIFICATION_STATUS_INVALID_CVC
+      - CREDIT_CARD_VERIFICATION_STATUS_INVALID_NUMBER
+      - CREDIT_CARD_VERIFICATION_STATUS_INSUFFICIENT_FUNDS
+      - CREDIT_CARD_VERIFICATION_STATUS_EXPIRED_CARD
+      - CREDIT_CARD_VERIFICATION_STATUS_FAILED
+      - CREDIT_CARD_VERIFICATION_STATUS_SUCCESS
+      - CREDIT_CARD_VERIFICATION_STATUS_NOT_REQUIRED
+      title: CreditCardVerificationStatus
+      type: string
+    gitpod.v1.MetricConsumptionTimeSeries:
+      additionalProperties: false
+      description: Daily OCU consumption for a single metric category.
+      properties:
+        displayName:
+          description: Human-readable label (e.g. "Environment Usage", "LLM Cache Reads", "Total").
+          title: display_name
+          type: string
+        kind:
+          $ref: '#/components/schemas/gitpod.v1.MetricConsumptionTimeSeries.Kind'
+          description: Category for grouping and filtering.
+          title: kind
+        series:
+          description: Daily data points.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CreditUsageDataPoint'
+          title: series
+          type: array
+      title: MetricConsumptionTimeSeries
+      type: object
+    gitpod.v1.CompleteBillingSetupResponse:
+      additionalProperties: false
+      properties:
+        contractId:
+          description: contract_id is the Metronome contract ID created for the organization
+          title: contract_id
+          type: string
+        trialAmountCredits:
+          description: trial_amount_credits is the amount of trial credits granted in Gitpod Credits
+          format: double
+          title: trial_amount_credits
+          type: number
+        trialExpiresAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: trial_expires_at is when the trial credits expire
+          title: trial_expires_at
+        trialGranted:
+          description: trial_granted indicates whether a free trial was successfully granted
+          title: trial_granted
+          type: boolean
+      title: CompleteBillingSetupResponse
+      type: object
+    gitpod.v1.ReconcileBillingRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to reconcile billing for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: ReconcileBillingRequest
+      type: object
+    gitpod.v1.CreditStatus:
+      enum:
+      - CREDIT_STATUS_UNSPECIFIED
+      - CREDIT_STATUS_OUT_OF_CREDITS
+      - CREDIT_STATUS_LOW_ON_CREDITS
+      - CREDIT_STATUS_HAS_CREDITS
+      title: CreditStatus
+      type: string
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.UsageEventInput:
+      additionalProperties: false
+      properties:
+        eventName:
+          description: 'Must be a known event type: "environment_usage" or "llm_usage".'
+          minLength: 1
+          title: event_name
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        payloadJson:
+          description: JSON-encoded payload metadata. Validated per event_name by the service.
+          title: payload_json
+          type: string
+        timestamp:
+          description: "Unix epoch seconds. Raw int64 (not google.protobuf.Timestamp) to match\n the storage model and allow direct CSV round-tripping."
+          exclusiveMinimum: true
+          minimum: 0
+          title: timestamp
+          type: string
+        userId:
+          nullable: true
+          title: user_id
+          type: string
+        value:
+          title: value
+          type: string
+      title: UsageEventInput
+      type: object
+    gitpod.v1.TeamCumulativeCreditUsage:
+      additionalProperties: false
+      description: TeamCumulativeCreditUsage contains a team's cumulative credit usage and allocation.
+      properties:
+        creditBudget:
+          description: "The team's credit allocation (budget) in whole credits, if set.\n Not set means no allocation has been configured for this team."
+          nullable: true
+          title: credit_budget
+          type: string
+        displayName:
+          title: display_name
+          type: string
+        teamId:
+          title: team_id
+          type: string
+        usage:
+          $ref: '#/components/schemas/gitpod.v1.CumulativeCreditUsage'
+          description: Cumulative credit usage for this team.
+          title: usage
+      title: TeamCumulativeCreditUsage
+      type: object
+    gitpod.v1.BillingRecordMetadata:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is the time the record was created
+          title: created_at
+        organizationId:
+          description: organization_id is the ID of the organization that owns the record
+          format: uuid
+          title: organization_id
+          type: string
+        realm:
+          $ref: '#/components/schemas/gitpod.v1.BillingRealm'
+          description: realm is the billing realm (sandbox or production)
+          title: realm
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: updated_at is the time the record was last updated
+          title: updated_at
+      title: BillingRecordMetadata
+      type: object
+    gitpod.v1.ReconcileBillingResponse:
+      additionalProperties: false
+      title: ReconcileBillingResponse
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.ClearTopupFailureRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to clear the topup failure for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: ClearTopupFailureRequest
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.GetAutoTopupSettingsRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to get auto-topup settings for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetAutoTopupSettingsRequest
+      type: object
+    gitpod.v1.CreateCardVerificationRequest:
+      additionalProperties: false
+      properties:
+        email:
+          description: email is the exact email address of the account
+          format: email
+          maxLength: 255
+          minLength: 1
+          title: email
+          type: string
+        freeCredits:
+          description: "free_credits is the number of free credits to grant when the user's Core\n subscription is provisioned. If zero or unset, the default amount is used."
+          format: int32
+          nullable: true
+          title: free_credits
+          type: integer
+        organizationId:
+          description: organization_id is the specific organization to verify (required if user has multiple orgs or already has a verified org)
+          format: uuid
+          nullable: true
+          title: organization_id
+          type: string
+        reason:
+          description: "reason is an optional description of why this email is being approved\n (e.g., \"Ona for Open Source - Project X\")"
+          maxLength: 1024
+          nullable: true
+          title: reason
+          type: string
+      required:
+      - email
+      title: CreateCardVerificationRequest
+      type: object
+    gitpod.v1.SubscriptionStatus:
+      enum:
+      - SUBSCRIPTION_STATUS_UNSPECIFIED
+      - SUBSCRIPTION_STATUS_ACTIVE
+      - SUBSCRIPTION_STATUS_CANCELLED
+      - SUBSCRIPTION_STATUS_EXPIRED
+      - SUBSCRIPTION_STATUS_PENDING
+      title: SubscriptionStatus
+      type: string
+    gitpod.v1.CreateCouponResponse:
+      additionalProperties: false
+      properties:
+        coupon:
+          $ref: '#/components/schemas/gitpod.v1.Coupon'
+          title: coupon
+      title: CreateCouponResponse
+      type: object
+    gitpod.v1.GetCumulativeCreditUsageRequest:
+      additionalProperties: false
+      properties:
+        asOf:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "as_of is the point in time to compute cumulative usage up to.\n Defaults to now if not set."
+          nullable: true
+          title: as_of
+        organizationId:
+          description: organization_id is the ID of the organization to get cumulative usage for.
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetCumulativeCreditUsageRequest
+      type: object
+    gitpod.v1.UsageEventCorrectionResult:
+      additionalProperties: false
+      properties:
+        error:
+          description: Error message if correction failed (e.g., event not found, already cancelled).
+          title: error
+          type: string
+        idempotencyKey:
+          title: idempotency_key
+          type: string
+        success:
+          title: success
+          type: boolean
+      title: UsageEventCorrectionResult
+      type: object
+    gitpod.v1.GetAutoTopupSettingsResponse:
+      additionalProperties: false
+      properties:
+        settings:
+          $ref: '#/components/schemas/gitpod.v1.AutoTopupSettings'
+          description: settings contains the current auto-topup configuration
+          title: settings
+      title: GetAutoTopupSettingsResponse
+      type: object
+    gitpod.v1.PaymentMethodVerificationStatus:
+      additionalProperties: false
+      properties:
+        cardVerificationStatus:
+          $ref: '#/components/schemas/gitpod.v1.CreditCardVerificationStatus'
+          description: status contains the status of the card verification
+          title: card_verification_status
+        error:
+          description: error contains any error message
+          maxLength: 1024
+          minLength: 1
+          title: error
+          type: string
+      title: PaymentMethodVerificationStatus
+      type: object
+    gitpod.v1.CreateTeamCreditAllocationRequest:
+      additionalProperties: false
+      properties:
+        creditBudget:
+          description: credit_budget is the allocated credit budget in whole credits. Must be > 0.
+          exclusiveMinimum: true
+          minimum: 0
+          title: credit_budget
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+      required:
+      - organizationId
+      - teamId
+      - creditBudget
+      title: CreateTeamCreditAllocationRequest
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

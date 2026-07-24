@@ -1,0 +1,3852 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.OrganizationService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.OrganizationService
+  x-displayName: gitpod.v1.OrganizationService
+paths:
+  /gitpod.v1.OrganizationService/CreateCustomDomain:
+    servers: []
+    post:
+      description: "Creates a custom domain configuration for an organization.\n\n Use this method to configure custom domains for organization workspaces\n\n ### Examples\n\n - Configure AWS custom domain:\n\n   Sets up a custom domain with AWS provider.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   domainName: \"workspaces.acme-corp.com\"\n   provider: CUSTOM_DOMAIN_PROVIDER_AWS\n   awsAccountId: \"123456789012\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.CreateCustomDomain
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              configure_aws_custom_domain:
+                description: Sets up a custom domain with AWS provider.
+                value:
+                  awsAccountId: '123456789012'
+                  domainName: workspaces.acme-corp.com
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  provider: CUSTOM_DOMAIN_PROVIDER_AWS
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateCustomDomainRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateCustomDomainResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateCustomDomain
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/CreateDomainVerification:
+    servers: []
+    post:
+      description: "Initiates domain verification process to enable organization features.\n\n Use this method to:\n - Start domain ownership verification\n - Enable automatic team joining\n - Set up SSO restrictions\n - Configure email-based policies\n\n ### Examples\n\n - Verify primary domain:\n\n   Starts verification for main company domain.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   domain: \"acme-corp.com\"\n   ```\n\n - Verify subsidiary domain:\n\n   Adds verification for additional company domain.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   domain: \"acme-subsidiary.com\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.CreateDomainVerification
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              verify_primary_domain:
+                description: Starts verification for main company domain.
+                value:
+                  domain: acme-corp.com
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              verify_subsidiary_domain:
+                description: Adds verification for additional company domain.
+                value:
+                  domain: acme-subsidiary.com
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateDomainVerificationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateDomainVerificationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateDomainVerification
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/CreateOrganization:
+    servers: []
+    post:
+      description: "Creates a new organization with the specified name and settings.\n\n Use this method to:\n - Create a new organization for team collaboration\n - Set up automatic domain-based invites for team members\n - Join the organization immediately upon creation\n\n ### Examples\n\n - Create a basic organization:\n\n   Creates an organization with just a name.\n\n   ```yaml\n   name: \"Acme Corp Engineering\"\n   joinOrganization: true\n   ```\n\n - Create with domain-based invites:\n\n   Creates an organization that automatically invites users with matching email domains.\n\n   ```yaml\n   name: \"Acme Corp\"\n   joinOrganization: true\n   inviteAccountsWithMatchingDomain: true\n   ```"
+      operationId: gitpod.v1.OrganizationService.CreateOrganization
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_a_basic_organization:
+                description: Creates an organization with just a name.
+                value:
+                  joinOrganization: true
+                  name: Acme Corp Engineering
+              create_with_domain_based_invites:
+                description: Creates an organization that automatically invites users with matching email domains.
+                value:
+                  inviteAccountsWithMatchingDomain: true
+                  joinOrganization: true
+                  name: Acme Corp
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateOrganizationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateOrganizationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateOrganization
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/CreateOrganizationInvite:
+    servers: []
+    post:
+      description: "Creates an invite link for joining an organization.\n Any existing OrganizationInvites are invalidated and can no longer be used.\n\n Use this method to:\n - Generate shareable invite links\n - Manage team growth\n - Control organization access\n\n ### Examples\n\n - Create organization invite:\n\n   Generates a new invite link for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.CreateOrganizationInvite
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_organization_invite:
+                description: Generates a new invite link for the organization.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateOrganizationInviteRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateOrganizationInviteResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateOrganizationInvite
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/CreateSCIMConfiguration:
+    servers: []
+    post:
+      description: "Creates a new SCIM configuration for automated user provisioning.\n\n Use this method to:\n - Set up SCIM 2.0 provisioning from an identity provider\n - Generate a bearer token for SCIM API authentication\n - Link SCIM provisioning to an existing SSO configuration\n\n ### Examples\n\n - Create basic SCIM configuration:\n\n   Creates a SCIM configuration linked to an SSO provider with default 1 year token expiration.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ssoConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n - Create SCIM configuration with custom token expiration:\n\n   Creates a SCIM configuration with a 90-day token expiration.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ssoConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   tokenExpiresIn: \"7776000s\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.CreateSCIMConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_basic_scim_configuration:
+                description: Creates a SCIM configuration linked to an SSO provider with default 1 year token expiration.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  ssoConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+              create_scim_configuration_with_custom_token_expiration:
+                description: Creates a SCIM configuration with a 90-day token expiration.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  ssoConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  tokenExpiresIn: 7776000s
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateSCIMConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateSCIMConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateSCIMConfiguration
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/CreateSSOConfiguration:
+    servers: []
+    post:
+      description: "Creates or updates SSO configuration for organizational authentication.\n\n Use this method to:\n - Configure OIDC-based SSO providers\n - Set up built-in providers (Google, GitHub, etc.)\n - Define custom identity providers\n - Manage authentication policies\n\n ### Examples\n\n - Configure built-in Google SSO:\n\n   Sets up SSO using Google Workspace.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   clientId: \"012345678-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com\"\n   clientSecret: \"GOCSPX-abcdefghijklmnopqrstuvwxyz123456\"\n   issuerUrl: \"https://accounts.google.com\"\n   emailDomain: \"acme-corp.com\"\n   ```\n\n - Configure custom OIDC provider:\n\n   Sets up SSO with a custom identity provider.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   clientId: \"acme-corp-gitpod\"\n   clientSecret: \"secret-token-value\"\n   issuerUrl: \"https://sso.acme-corp.com\"\n   emailDomain: \"acme-corp.com\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.CreateSSOConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              configure_built_in_google_sso:
+                description: Sets up SSO using Google Workspace.
+                value:
+                  clientId: 012345678-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com
+                  clientSecret: GOCSPX-abcdefghijklmnopqrstuvwxyz123456
+                  emailDomain: acme-corp.com
+                  issuerUrl: https://accounts.google.com
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              configure_custom_oidc_provider:
+                description: Sets up SSO with a custom identity provider.
+                value:
+                  clientId: acme-corp-gitpod
+                  clientSecret: secret-token-value
+                  emailDomain: acme-corp.com
+                  issuerUrl: https://sso.acme-corp.com
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateSSOConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateSSOConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateSSOConfiguration
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/DeleteCustomDomain:
+    servers: []
+    post:
+      description: "Removes a custom domain configuration from an organization.\n\n Use this method to:\n - Disable custom domain functionality\n - Remove outdated configurations\n - Clean up unused domains\n\n ### Examples\n\n - Delete custom domain configuration:\n\n   Removes a specific custom domain configuration.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.DeleteCustomDomain
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_custom_domain_configuration:
+                description: Removes a specific custom domain configuration.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteCustomDomainRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteCustomDomainResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteCustomDomain
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/DeleteDomainVerification:
+    servers: []
+    post:
+      description: "Removes a domain verification request.\n\n Use this method to:\n - Cancel pending verifications\n - Remove verified domains\n - Clean up unused domain records\n\n ### Examples\n\n - Delete verification:\n\n   Removes a domain verification request.\n\n   ```yaml\n   domainVerificationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.DeleteDomainVerification
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_verification:
+                description: Removes a domain verification request.
+                value:
+                  domainVerificationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteDomainVerificationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteDomainVerificationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteDomainVerification
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/DeleteOrganization:
+    servers: []
+    post:
+      description: "Permanently deletes an organization.\n\n Use this method to:\n - Remove unused organizations\n - Clean up test organizations\n - Complete organization migration\n\n ### Examples\n\n - Delete organization:\n\n   Permanently removes an organization and all its data.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.DeleteOrganization
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_organization:
+                description: Permanently removes an organization and all its data.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteOrganizationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteOrganizationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteOrganization
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/DeleteSCIMConfiguration:
+    servers: []
+    post:
+      description: "Removes a SCIM configuration from an organization.\n\n Use this method to:\n - Disable SCIM provisioning completely\n - Remove unused configurations\n - Clean up after migration\n\n ### Examples\n\n - Delete SCIM configuration:\n\n   Removes a specific SCIM configuration.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.DeleteSCIMConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_scim_configuration:
+                description: Removes a specific SCIM configuration.
+                value:
+                  scimConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteSCIMConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteSCIMConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteSCIMConfiguration
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/DeleteSSOConfiguration:
+    servers: []
+    post:
+      description: "Removes an SSO configuration from an organization.\n\n Use this method to:\n - Disable SSO authentication\n - Remove outdated providers\n - Clean up unused configurations\n\n ### Examples\n\n - Delete SSO configuration:\n\n   Removes a specific SSO configuration.\n\n   ```yaml\n   ssoConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.DeleteSSOConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_sso_configuration:
+                description: Removes a specific SSO configuration.
+                value:
+                  ssoConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteSSOConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteSSOConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteSSOConfiguration
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetAnnouncementBanner:
+    servers: []
+    post:
+      description: "Retrieves the announcement banner configuration for an organization.\n\n Use this method to fetch the current announcement banner settings.\n All organization members can read the banner configuration.\n\n ### Examples\n\n - Get announcement banner:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.GetAnnouncementBanner
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_announcement_banner:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  '
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetAnnouncementBannerRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetAnnouncementBannerResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetAnnouncementBanner
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetCustomDomain:
+    servers: []
+    post:
+      description: "Retrieves a specific custom domain configuration.\n\n Use this method to view custom domain details\n\n ### Examples\n\n - Get custom domain configuration:\n\n   Retrieves details of a specific custom domain.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.GetCustomDomain
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_custom_domain_configuration:
+                description: Retrieves details of a specific custom domain.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetCustomDomainRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetCustomDomainResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetCustomDomain
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetDomainVerification:
+    servers: []
+    post:
+      description: "Retrieves the status of a domain verification request.\n\n Use this method to:\n - Check verification progress\n - View verification requirements\n - Monitor domain status\n\n ### Examples\n\n - Get verification status:\n\n   Checks the current state of a domain verification.\n\n   ```yaml\n   domainVerificationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.GetDomainVerification
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_verification_status:
+                description: Checks the current state of a domain verification.
+                value:
+                  domainVerificationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetDomainVerificationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetDomainVerificationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetDomainVerification
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetOIDCConfig:
+    servers: []
+    post:
+      description: "Retrieves the OIDC token configuration for an organization.\n\n Use this method to:\n - Check which OIDC token version is active (V2 or V3)\n - View extra sub claim fields (V3 only)\n\n ### Examples\n\n - Get OIDC config:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.GetOIDCConfig
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_oidc_config:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  '
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetOIDCConfigRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetOIDCConfigResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetOIDCConfig
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetOrganization:
+    servers: []
+    post:
+      description: "Gets details about a specific organization.\n\n Use this method to:\n - Retrieve organization settings and configuration\n - Check organization membership status\n - View domain verification settings\n\n ### Examples\n\n - Get organization details:\n\n   Retrieves information about a specific organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.GetOrganization
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_organization_details:
+                description: Retrieves information about a specific organization.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetOrganizationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetOrganizationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetOrganization
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetOrganizationInvite:
+    servers: []
+    post:
+      operationId: gitpod.v1.OrganizationService.GetOrganizationInvite
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetOrganizationInviteRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetOrganizationInviteResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetOrganizationInvite
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetOrganizationInviteSummary:
+    servers: []
+    post:
+      description: "Retrieves organization details and membership info based on an invite link.\n\n Use this method to:\n - Preview organization details before joining\n - Validate invite link authenticity\n - Check organization size and activity\n - View team information before accepting\n\n ### Examples\n\n - Get invite summary:\n\n   Retrieves organization information from an invite.\n\n   ```yaml\n   inviteId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.GetOrganizationInviteSummary
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_invite_summary:
+                description: Retrieves organization information from an invite.
+                value:
+                  inviteId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetOrganizationInviteSummaryRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetOrganizationInviteSummaryResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetOrganizationInviteSummary
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetOrganizationPolicies:
+    servers: []
+    post:
+      description: "Gets organization policy settings by organization ID.\n\n Use this method to:\n - Retrieve current policy settings for an organization\n - View resource limits and restrictions\n - Check allowed editors and other configurations\n\n ### Examples\n\n - Get organization policies:\n\n   Retrieves policy settings for a specific organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.GetOrganizationPolicies
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_organization_policies:
+                description: Retrieves policy settings for a specific organization.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetOrganizationPoliciesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetOrganizationPoliciesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetOrganizationPolicies
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetSCIMConfiguration:
+    servers: []
+    post:
+      description: "Retrieves a specific SCIM configuration.\n\n Use this method to:\n - View SCIM configuration details\n - Check if SCIM is enabled\n - Verify SSO linkage\n\n ### Examples\n\n - Get SCIM configuration:\n\n   Retrieves details of a specific SCIM configuration.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.GetSCIMConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_scim_configuration:
+                description: Retrieves details of a specific SCIM configuration.
+                value:
+                  scimConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetSCIMConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetSCIMConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetSCIMConfiguration
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/GetSSOConfiguration:
+    servers: []
+    post:
+      description: "Retrieves a specific SSO configuration.\n\n Use this method to:\n - View SSO provider details\n - Check configuration status\n - Verify SSO settings\n\n ### Examples\n\n - Get SSO configuration:\n\n   Retrieves details of a specific SSO configuration.\n\n   ```yaml\n   ssoConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.GetSSOConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_sso_configuration:
+                description: Retrieves details of a specific SSO configuration.
+                value:
+                  ssoConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetSSOConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetSSOConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetSSOConfiguration
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/JoinOrganization:
+    servers: []
+    post:
+      description: "Allows users to join an organization through direct ID, invite link, or domain-based auto-join.\n\n Use this method to:\n - Join an organization via direct ID or invite\n - Join automatically based on email domain\n - Accept organization invitations\n\n ### Examples\n\n - Join via organization ID:\n\n   Joins an organization directly when you have the ID.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```\n\n - Join via invite:\n\n   Accepts an organization invitation link.\n\n   ```yaml\n   inviteId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.JoinOrganization
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              join_via_invite:
+                description: Accepts an organization invitation link.
+                value:
+                  inviteId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+              join_via_organization_id:
+                description: Joins an organization directly when you have the ID.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.JoinOrganizationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.JoinOrganizationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: JoinOrganization
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/LeaveOrganization:
+    servers: []
+    post:
+      description: "Removes a user from an organization while preserving organization data.\n\n Use this method to:\n - Remove yourself from an organization\n - Clean up inactive memberships\n - Transfer project ownership before leaving\n - Manage team transitions\n\n ### Examples\n\n - Leave organization:\n\n   Removes user from organization membership.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```\n\n Note: Ensure all projects and resources are transferred before leaving."
+      operationId: gitpod.v1.OrganizationService.LeaveOrganization
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              leave_organization:
+                description: Removes user from organization membership.
+                value:
+                  userId: f53d2330-3795-4c5d-a1f3-453121af9c60
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.LeaveOrganizationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.LeaveOrganizationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: LeaveOrganization
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/ListDomainVerifications:
+    servers: []
+    post:
+      description: "Lists and monitors domain verification status across an organization.\n\n Use this method to:\n - Track verification progress\n - View all verified domains\n - Monitor pending verifications\n - Audit domain settings\n\n ### Examples\n\n - List all verifications:\n\n   Shows all domain verifications regardless of status.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```\n\n - List with pagination:\n\n   Retrieves next page of verifications.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n     token: \"next-page-token-from-previous-response\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.ListDomainVerifications
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_verifications:
+                description: Shows all domain verifications regardless of status.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  pagination:
+                    pageSize: 20
+              list_with_pagination:
+                description: Retrieves next page of verifications.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  pagination:
+                    pageSize: 20
+                    token: next-page-token-from-previous-response
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListDomainVerificationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListDomainVerificationsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListDomainVerifications
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/ListMembers:
+    servers: []
+    post:
+      description: "Lists and filters organization members with optional pagination.\n\n Use this method to:\n - View all organization members\n - Monitor member activity\n - Manage team membership\n\n ### Examples\n\n - List active members:\n\n   Retrieves active members with pagination.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```\n\n - List with pagination:\n\n   Retrieves next page of members.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 50\n     token: \"next-page-token-from-previous-response\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.ListMembers
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_active_members:
+                description: Retrieves active members with pagination.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  pagination:
+                    pageSize: 20
+              list_with_pagination:
+                description: Retrieves next page of members.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  pagination:
+                    pageSize: 50
+                    token: next-page-token-from-previous-response
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListMembersRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListMembersResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListMembers
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/ListSCIMConfigurations:
+    servers: []
+    post:
+      description: "Lists SCIM configurations for an organization.\n\n Use this method to:\n - View all SCIM configurations\n - Monitor provisioning status\n - Audit SCIM settings\n\n ### Examples\n\n - List SCIM configurations:\n\n   Shows all SCIM configurations for an organization.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.OrganizationService.ListSCIMConfigurations
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_scim_configurations:
+                description: Shows all SCIM configurations for an organization.
+                value:
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListSCIMConfigurationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListSCIMConfigurationsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListSCIMConfigurations
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/ListSSOConfigurations:
+    servers: []
+    post:
+      description: "Lists and filters SSO configurations for an organization.\n\n Use this method to:\n - View all SSO providers\n - Monitor authentication status\n - Audit security settings\n - Manage provider configurations\n\n ### Examples\n\n - List active configurations:\n\n   Shows all active SSO providers.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```\n\n - List by provider type:\n\n   Shows custom SSO configurations.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n     token: \"next-page-token-from-previous-response\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.ListSSOConfigurations
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_active_configurations:
+                description: Shows all active SSO providers.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  pagination:
+                    pageSize: 20
+              list_by_provider_type:
+                description: Shows custom SSO configurations.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  pagination:
+                    pageSize: 20
+                    token: next-page-token-from-previous-response
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListSSOConfigurationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListSSOConfigurationsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListSSOConfigurations
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/RegenerateSCIMToken:
+    servers: []
+    post:
+      description: "Regenerates the bearer token for a SCIM configuration.\n\n Use this method to:\n - Rotate SCIM credentials\n - Recover from token compromise\n - Update IdP configuration\n\n ### Examples\n\n - Regenerate token:\n\n   Creates a new bearer token with the same expiration duration as the previous token.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n - Regenerate token with new expiration:\n\n   Creates a new bearer token with a custom 180-day expiration.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   tokenExpiresIn: \"15552000s\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.RegenerateSCIMToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              regenerate_token:
+                description: Creates a new bearer token with the same expiration duration as the previous token.
+                value:
+                  scimConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+              regenerate_token_with_new_expiration:
+                description: Creates a new bearer token with a custom 180-day expiration.
+                value:
+                  scimConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  tokenExpiresIn: 15552000s
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.RegenerateSCIMTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.RegenerateSCIMTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: RegenerateSCIMToken
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/SetRole:
+    servers: []
+    post:
+      description: "Manages organization membership and roles by setting a user's role within the organization.\n\n Use this method to:\n - Promote members to admin role\n - Change member permissions\n - Demote admins to regular members\n\n ### Examples\n\n - Promote to admin:\n\n   Makes a user an organization administrator.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: ORGANIZATION_ROLE_ADMIN\n   ```\n\n - Change to member:\n\n   Changes a user's role to regular member.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: ORGANIZATION_ROLE_MEMBER\n   ```"
+      operationId: gitpod.v1.OrganizationService.SetRole
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              change_to_member:
+                description: Changes a user's role to regular member.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  role: ORGANIZATION_ROLE_MEMBER
+                  userId: f53d2330-3795-4c5d-a1f3-453121af9c60
+              promote_to_admin:
+                description: Makes a user an organization administrator.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  role: ORGANIZATION_ROLE_ADMIN
+                  userId: f53d2330-3795-4c5d-a1f3-453121af9c60
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetRoleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetRoleResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetRole
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/SetStripeCustomerID:
+    servers: []
+    post:
+      deprecated: true
+      description: "Sets the Stripe customer ID for an organization's billing configuration.\n\n Use this method to associate an existing Stripe customer with an organization\n during enterprise customer onboarding.\n\n ### Examples\n\n Deprecated: Use BillingService.SetupEnterpriseBilling instead.\n This method is no longer functional and will return an Unimplemented error.\n\n - Set Stripe customer ID:\n\n   Associates a Stripe customer with an organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   stripeCustomerId: \"cus_ABC123\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.SetStripeCustomerID
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              set_stripe_customer_id:
+                description: Associates a Stripe customer with an organization.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  stripeCustomerId: cus_ABC123
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetStripeCustomerIDRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetStripeCustomerIDResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetStripeCustomerID
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/SetTier:
+    servers: []
+    post:
+      description: "Sets the tier of an organization.\n\n Use this method to:\n - Change an organization's tier between free, core, and enterprise\n\n ### Examples\n\n - Set organization tier:\n\n   Changes organization tier to enterprise.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   tier: ORGANIZATION_TIER_ENTERPRISE\n   ```"
+      operationId: gitpod.v1.OrganizationService.SetTier
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              set_organization_tier:
+                description: Changes organization tier to enterprise.
+                value:
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  tier: ORGANIZATION_TIER_ENTERPRISE
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetTierRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetTierResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetTier
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/UpdateAnnouncementBanner:
+    servers: []
+    post:
+      description: "Updates the announcement banner configuration for an organization.\n\n Use this method to configure the announcement banner displayed to all users.\n Only organization admins can update the banner. Requires Enterprise tier.\n\n ### Examples\n\n - Enable announcement banner:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   message: \"Scheduled maintenance on Saturday 10pm-2am UTC\"\n   enabled: true\n   ```\n\n - Disable announcement banner:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   enabled: false\n   ```"
+      operationId: gitpod.v1.OrganizationService.UpdateAnnouncementBanner
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              disable_announcement_banner:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  enabled: false
+
+                  '
+                value:
+                  enabled: false
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              enable_announcement_banner:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  message: "Scheduled maintenance on Saturday 10pm-2am UTC"
+
+                  enabled: true
+
+                  '
+                value:
+                  enabled: true
+                  message: Scheduled maintenance on Saturday 10pm-2am UTC
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateAnnouncementBannerRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateAnnouncementBannerResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateAnnouncementBanner
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/UpdateCustomDomain:
+    servers: []
+    post:
+      description: "Updates custom domain configuration settings.\n\n Use this method to:\n - Update cloud provider settings\n - Change AWS account ID\n - Modify domain configuration\n\n ### Examples\n\n - Update AWS account ID:\n\n   Changes the AWS account ID for the custom domain.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   domainName: \"workspaces.acme-corp.com\"\n   awsAccountId: \"987654321098\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.UpdateCustomDomain
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_aws_account_id:
+                description: Changes the AWS account ID for the custom domain.
+                value:
+                  awsAccountId: '987654321098'
+                  domainName: workspaces.acme-corp.com
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateCustomDomainRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateCustomDomainResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateCustomDomain
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/UpdateOIDCConfig:
+    servers: []
+    post:
+      description: "Updates the OIDC token configuration for an organization.\n\n Use this method to:\n - Switch between OIDC token versions (V2 or V3)\n - Configure extra sub claim fields (V3 only)\n\n ### Examples\n\n - Enable V3 tokens with extra sub fields:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   oidcConfig:\n     v3:\n       extraSubFields:\n         - \"environment_id\"\n         - \"creator_email\"\n   ```\n\n - Switch back to V2 tokens:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   oidcConfig:\n     v2: {}\n   ```"
+      operationId: gitpod.v1.OrganizationService.UpdateOIDCConfig
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              enable_v3_tokens_with_extra_sub_fields:
+                description: "organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\noidcConfig:\n  v3:\n    extraSubFields:\n      - \"environment_id\"\n      - \"creator_email\"\n"
+                value:
+                  oidcConfig:
+                    v3:
+                      extraSubFields:
+                      - environment_id
+                      - creator_email
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              switch_back_to_v2_tokens:
+                description: "organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\noidcConfig:\n  v2: {}\n"
+                value:
+                  oidcConfig:
+                    v2: {}
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateOIDCConfigRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateOIDCConfigResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateOIDCConfig
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/UpdateOrganization:
+    servers: []
+    post:
+      description: "Updates an organization's settings including name, invite domains, and member policies.\n\n Use this method to:\n - Modify organization display name\n - Configure email domain restrictions\n - Update organization-wide settings\n - Manage member access policies\n\n ### Examples\n\n - Update basic settings:\n\n   Changes organization name and invite domains.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"New Company Name\"\n   inviteDomains:\n     domains:\n       - \"company.com\"\n       - \"subsidiary.com\"\n   ```\n\n - Remove domain restrictions:\n\n   Clears all domain-based invite restrictions.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   inviteDomains:\n     domains: []\n   ```"
+      operationId: gitpod.v1.OrganizationService.UpdateOrganization
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              remove_domain_restrictions:
+                description: Clears all domain-based invite restrictions.
+                value:
+                  inviteDomains:
+                    domains: []
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              update_basic_settings:
+                description: Changes organization name and invite domains.
+                value:
+                  inviteDomains:
+                    domains:
+                    - company.com
+                    - subsidiary.com
+                  name: New Company Name
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateOrganizationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateOrganizationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateOrganization
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/UpdateOrganizationPolicies:
+    servers: []
+    post:
+      description: "Updates organization policy settings.\n\n Use this method to:\n - Configure editor restrictions\n - Set environment resource limits\n - Define project creation permissions\n - Customize default configurations\n\n ### Examples\n\n - Update editor policies:\n\n   Restricts available editors and sets a default.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   allowedEditorIds:\n     - \"vscode\"\n     - \"jetbrains\"\n   defaultEditorId: \"vscode\"\n   ```\n\n - Set environment limits:\n\n   Configures limits for environment usage.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   maximumEnvironmentTimeout: \"3600s\"\n   maximumRunningEnvironmentsPerUser: \"5\"\n   maximumEnvironmentsPerUser: \"20\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.UpdateOrganizationPolicies
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              set_environment_limits:
+                description: Configures limits for environment usage.
+                value:
+                  maximumEnvironmentTimeout: 3600s
+                  maximumEnvironmentsPerUser: '20'
+                  maximumRunningEnvironmentsPerUser: '5'
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              update_editor_policies:
+                description: Restricts available editors and sets a default.
+                value:
+                  allowedEditorIds:
+                  - vscode
+                  - jetbrains
+                  defaultEditorId: vscode
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateOrganizationPoliciesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateOrganizationPoliciesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateOrganizationPolicies
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/UpdateSCIMConfiguration:
+    servers: []
+    post:
+      description: "Updates a SCIM configuration.\n\n Use this method to:\n - Enable or disable SCIM provisioning\n - Link or unlink SSO configuration\n - Update configuration name\n\n ### Examples\n\n - Disable SCIM:\n\n   Disables SCIM provisioning.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   enabled: false\n   ```\n\n - Link to SSO:\n\n   Links SCIM configuration to an SSO provider.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ssoConfigurationId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.UpdateSCIMConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              disable_scim:
+                description: Disables SCIM provisioning.
+                value:
+                  enabled: false
+                  scimConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+              link_to_sso:
+                description: Links SCIM configuration to an SSO provider.
+                value:
+                  scimConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  ssoConfigurationId: f53d2330-3795-4c5d-a1f3-453121af9c60
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateSCIMConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateSCIMConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateSCIMConfiguration
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/UpdateSSOConfiguration:
+    servers: []
+    post:
+      description: "Updates SSO provider settings and authentication rules.\n\n Use this method to:\n - Rotate client credentials\n - Update provider endpoints\n - Modify claim mappings\n - Change authentication policies\n - Toggle SSO enforcement\n\n ### Examples\n\n - Update credentials:\n\n   Rotates client ID and secret.\n\n   ```yaml\n   ssoConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   clientId: \"new-client-id\"\n   clientSecret: \"new-client-secret\"\n   ```\n\n - Update provider status:\n\n   Activates or deactivates SSO provider.\n\n   ```yaml\n   ssoConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   state: SSO_CONFIGURATION_STATE_ACTIVE\n   ```"
+      operationId: gitpod.v1.OrganizationService.UpdateSSOConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_credentials:
+                description: Rotates client ID and secret.
+                value:
+                  clientId: new-client-id
+                  clientSecret: new-client-secret
+                  ssoConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+              update_provider_status:
+                description: Activates or deactivates SSO provider.
+                value:
+                  ssoConfigurationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  state: SSO_CONFIGURATION_STATE_ACTIVE
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateSSOConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateSSOConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateSSOConfiguration
+      tags:
+      - gitpod.v1.OrganizationService
+  /gitpod.v1.OrganizationService/VerifyDomain:
+    servers: []
+    post:
+      description: "Verifies domain ownership for an organization.\n\n Use this method to:\n - Complete domain verification process\n - Enable domain-based features\n - Validate DNS configuration\n\n ### Examples\n\n - Verify domain ownership:\n\n   Verifies ownership after DNS records are configured.\n\n   ```yaml\n   domainVerificationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.OrganizationService.VerifyDomain
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              verify_domain_ownership:
+                description: Verifies ownership after DNS records are configured.
+                value:
+                  domainVerificationId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.VerifyDomainRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.VerifyDomainResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: VerifyDomain
+      tags:
+      - gitpod.v1.OrganizationService
+components:
+  schemas:
+    gitpod.v1.CreateOrganizationInviteRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: CreateOrganizationInviteRequest
+      type: object
+    gitpod.v1.CustomDomainProvider:
+      description: CustomDomainProvider represents the cloud provider for custom domain configuration
+      enum:
+      - CUSTOM_DOMAIN_PROVIDER_UNSPECIFIED
+      - CUSTOM_DOMAIN_PROVIDER_AWS
+      - CUSTOM_DOMAIN_PROVIDER_GCP
+      title: CustomDomainProvider
+      type: string
+    gitpod.v1.SCIMConfiguration:
+      additionalProperties: false
+      description: SCIMConfiguration represents a SCIM 2.0 provisioning configuration
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is when the SCIM configuration was created
+          title: created_at
+        enabled:
+          description: enabled indicates if SCIM provisioning is active
+          title: enabled
+          type: boolean
+        id:
+          description: id is the unique identifier of the SCIM configuration
+          format: uuid
+          title: id
+          type: string
+        name:
+          description: name is a human-readable name for the SCIM configuration
+          maxLength: 128
+          title: name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization this SCIM configuration belongs to
+          format: uuid
+          title: organization_id
+          type: string
+        ssoConfigurationId:
+          description: sso_configuration_id is the linked SSO configuration (optional)
+          format: uuid
+          title: sso_configuration_id
+          type: string
+        tokenExpiresAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: token_expires_at is when the current SCIM token expires
+          title: token_expires_at
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: updated_at is when the SCIM configuration was last updated
+          title: updated_at
+      required:
+      - id
+      - organizationId
+      - createdAt
+      - updatedAt
+      - tokenExpiresAt
+      title: SCIMConfiguration
+      type: object
+    gitpod.v1.SetTierRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to update
+          format: uuid
+          title: organization_id
+          type: string
+        tier:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationTier'
+          description: tier is the new tier to set for the organization
+          title: tier
+      required:
+      - organizationId
+      - tier
+      title: SetTierRequest
+      type: object
+    gitpod.v1.VerifyDomainResponse:
+      additionalProperties: false
+      properties:
+        domainVerification:
+          $ref: '#/components/schemas/gitpod.v1.DomainVerification'
+          title: domain_verification
+      required:
+      - domainVerification
+      title: VerifyDomainResponse
+      type: object
+    gitpod.v1.UpdateOrganizationPoliciesRequest.UpdateAgentPolicy:
+      additionalProperties: false
+      properties:
+        commandDenyList:
+          description: command_deny_list contains a list of commands that agents are not allowed to execute
+          items:
+            type: string
+          title: command_deny_list
+          type: array
+        conversationSharingPolicy:
+          $ref: '#/components/schemas/gitpod.v1.ConversationSharingPolicy'
+          description: conversation_sharing_policy controls whether agent conversations can be shared
+          nullable: true
+          title: conversation_sharing_policy
+        maxSubagentsPerEnvironment:
+          description: "max_subagents_per_environment limits the number of non-terminal sub-agents\n a parent can have running simultaneously in the same environment.\n Valid range: 0-10. Zero means use the default (5)."
+          format: int32
+          maximum: 10
+          nullable: true
+          title: max_subagents_per_environment
+          type: integer
+        mcpDisabled:
+          description: mcp_disabled controls whether MCP (Model Context Protocol) is disabled for agents
+          nullable: true
+          title: mcp_disabled
+          type: boolean
+        scmToolsAllowedGroupId:
+          description: "scm_tools_allowed_group_id restricts SCM tools access to members of this group.\n Empty means no restriction (all users can use SCM tools if not disabled)."
+          nullable: true
+          title: scm_tools_allowed_group_id
+          type: string
+        scmToolsDisabled:
+          description: scm_tools_disabled controls whether SCM (Source Control Management) tools are disabled for agents
+          nullable: true
+          title: scm_tools_disabled
+          type: boolean
+      title: UpdateAgentPolicy
+      type: object
+    gitpod.v1.DeleteSCIMConfigurationResponse:
+      additionalProperties: false
+      title: DeleteSCIMConfigurationResponse
+      type: object
+    gitpod.v1.GetCustomDomainResponse:
+      additionalProperties: false
+      properties:
+        customDomain:
+          $ref: '#/components/schemas/gitpod.v1.CustomDomain'
+          title: custom_domain
+      required:
+      - customDomain
+      title: GetCustomDomainResponse
+      type: object
+    gitpod.v1.ListDomainVerificationsResponse:
+      additionalProperties: false
+      properties:
+        domainVerifications:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.DomainVerification'
+          title: domain_verifications
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      required:
+      - pagination
+      title: ListDomainVerificationsResponse
+      type: object
+    gitpod.v1.UserStatus:
+      enum:
+      - USER_STATUS_UNSPECIFIED
+      - USER_STATUS_ACTIVE
+      - USER_STATUS_SUSPENDED
+      - USER_STATUS_LEFT
+      title: UserStatus
+      type: string
+    gitpod.v1.OIDCConfigV3:
+      additionalProperties: false
+      description: OIDCConfigV3 configures V3 OIDC tokens with optional sub claim customization.
+      properties:
+        extraSubFields:
+          description: "extra_sub_fields are additional property keys to include in the sub claim.\n Valid keys include: account_id, user_id, organization_id, project_id, runner_id,\n environment_id, creator_id, creator_principal, creator_email, creator_name,\n creator_idp, email, name, idp, runner_name, service_account_id, and\n dot-notation keys like creator_idp_claims.groups or idp_claims.department."
+          items:
+            maxItems: 50
+            minLength: 1
+            type: string
+            uniqueItems: true
+          maxItems: 50
+          title: extra_sub_fields
+          type: array
+          uniqueItems: true
+      title: OIDCConfigV3
+      type: object
+    gitpod.v1.CountResponseRelation:
+      enum:
+      - COUNT_RESPONSE_RELATION_UNSPECIFIED
+      - COUNT_RESPONSE_RELATION_EQ
+      - COUNT_RESPONSE_RELATION_GTE
+      title: CountResponseRelation
+      type: string
+    gitpod.v1.JoinOrganizationResponse:
+      additionalProperties: false
+      properties:
+        member:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationMember'
+          description: member is the member that was created by joining the organization.
+          title: member
+      required:
+      - member
+      title: JoinOrganizationResponse
+      type: object
+    gitpod.v1.DeleteSSOConfigurationResponse:
+      additionalProperties: false
+      title: DeleteSSOConfigurationResponse
+      type: object
+    gitpod.v1.GetOIDCConfigResponse:
+      additionalProperties: false
+      description: GetOIDCConfigResponse is the response message for retrieving OIDC token configuration.
+      properties:
+        oidcConfig:
+          $ref: '#/components/schemas/gitpod.v1.OIDCConfig'
+          description: oidc_config is the current OIDC token configuration.
+          title: oidc_config
+      required:
+      - oidcConfig
+      title: GetOIDCConfigResponse
+      type: object
+    google.protobuf.Duration:
+      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
+      format: regex
+      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
+      type: string
+    gitpod.v1.SetStripeCustomerIDRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to update
+          format: uuid
+          title: organization_id
+          type: string
+        stripeCustomerId:
+          description: stripe_customer_id is the Stripe customer ID to associate with the organization
+          minLength: 1
+          title: stripe_customer_id
+          type: string
+      required:
+      - organizationId
+      - stripeCustomerId
+      title: SetStripeCustomerIDRequest
+      type: object
+    gitpod.v1.UpdateSSOConfigurationResponse:
+      additionalProperties: false
+      title: UpdateSSOConfigurationResponse
+      type: object
+    gitpod.v1.UpdateAnnouncementBannerRequest:
+      additionalProperties: false
+      properties:
+        enabled:
+          description: enabled controls whether the banner is displayed
+          nullable: true
+          title: enabled
+          type: boolean
+        message:
+          description: message is the banner message. Supports basic Markdown. Maximum 1000 characters.
+          maxLength: 1000
+          nullable: true
+          title: message
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: UpdateAnnouncementBannerRequest
+      type: object
+    gitpod.v1.OIDCConfig:
+      additionalProperties: false
+      description: "OIDCConfig represents the OIDC token configuration for an organization.\n The version oneof determines which token version is active."
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - v3
+        required:
+        - v2
+      - not:
+          anyOf:
+          - required:
+            - v2
+        required:
+        - v3
+      properties:
+        v2:
+          $ref: '#/components/schemas/gitpod.v1.OIDCConfigV2'
+          description: v2 selects V2 OIDC tokens (the default for new organizations).
+          title: v2
+        v3:
+          $ref: '#/components/schemas/gitpod.v1.OIDCConfigV3'
+          description: v3 selects V3 OIDC tokens with richer claims and optional sub claim customization.
+          title: v3
+      title: OIDCConfig
+      type: object
+    gitpod.v1.ListSCIMConfigurationsRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListSCIMConfigurationsRequest
+      type: object
+    gitpod.v1.UpdateSSOConfigurationRequest:
+      additionalProperties: false
+      properties:
+        additionalScopes:
+          $ref: '#/components/schemas/gitpod.v1.AdditionalScopesUpdate'
+          description: "additional_scopes replaces the configured OIDC scopes when present.\n When absent (nil), scopes are left unchanged.\n When present with an empty scopes list, all additional scopes are cleared."
+          nullable: true
+          title: additional_scopes
+        claims:
+          additionalProperties:
+            title: value
+            type: string
+          description: claims are key/value pairs that defines a mapping of claims issued by the IdP.
+          title: claims
+          type: object
+        claimsExpression:
+          description: "claims_expression is a CEL expression evaluated against OIDC token claims during login.\n When set, the expression must evaluate to true for the login to succeed.\n When present with an empty string, the expression is cleared."
+          maxLength: 4096
+          nullable: true
+          title: claims_expression
+          type: string
+        clientId:
+          description: client_id is the client ID of the SSO provider
+          minLength: 1
+          nullable: true
+          title: client_id
+          type: string
+        clientSecret:
+          description: client_secret is the client secret of the SSO provider
+          minLength: 1
+          nullable: true
+          title: client_secret
+          type: string
+        displayName:
+          maxLength: 128
+          nullable: true
+          title: display_name
+          type: string
+        emailDomain:
+          minLength: 4
+          nullable: true
+          title: email_domain
+          type: string
+        emailDomains:
+          items:
+            maxLength: 253
+            minLength: 4
+            pattern: ^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$
+            type: string
+            uniqueItems: true
+          title: email_domains
+          type: array
+          uniqueItems: true
+        issuerUrl:
+          description: issuer_url is the URL of the IdP issuer
+          format: uri
+          nullable: true
+          title: issuer_url
+          type: string
+        ssoConfigurationId:
+          description: sso_configuration_id is the ID of the SSO configuration to update
+          format: uuid
+          title: sso_configuration_id
+          type: string
+        state:
+          $ref: '#/components/schemas/gitpod.v1.SSOConfigurationState'
+          description: state is the state of the SSO configuration
+          nullable: true
+          title: state
+      required:
+      - ssoConfigurationId
+      title: UpdateSSOConfigurationRequest
+      type: object
+    gitpod.v1.UpdateOrganizationResponse:
+      additionalProperties: false
+      properties:
+        organization:
+          $ref: '#/components/schemas/gitpod.v1.Organization'
+          description: organization is the updated organization
+          title: organization
+      required:
+      - organization
+      title: UpdateOrganizationResponse
+      type: object
+    gitpod.v1.GetSCIMConfigurationRequest:
+      additionalProperties: false
+      properties:
+        scimConfigurationId:
+          description: scim_configuration_id is the ID of the SCIM configuration to get
+          format: uuid
+          title: scim_configuration_id
+          type: string
+      required:
+      - scimConfigurationId
+      title: GetSCIMConfigurationRequest
+      type: object
+    gitpod.v1.LeaveOrganizationResponse:
+      additionalProperties: false
+      title: LeaveOrganizationResponse
+      type: object
+    gitpod.v1.CreateSCIMConfigurationRequest:
+      additionalProperties: false
+      properties:
+        name:
+          description: name is a human-readable name for the SCIM configuration
+          maxLength: 128
+          nullable: true
+          title: name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization to create the SCIM configuration for
+          format: uuid
+          title: organization_id
+          type: string
+        ssoConfigurationId:
+          description: sso_configuration_id is the SSO configuration to link (required for user provisioning)
+          format: uuid
+          title: sso_configuration_id
+          type: string
+        tokenExpiresIn:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "token_expires_in is the duration until the token expires.\n Defaults to 1 year. Minimum 1 day, maximum 2 years."
+          nullable: true
+          title: token_expires_in
+      required:
+      - organizationId
+      - ssoConfigurationId
+      title: CreateSCIMConfigurationRequest
+      type: object
+    gitpod.v1.GetAnnouncementBannerRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetAnnouncementBannerRequest
+      type: object
+    gitpod.v1.GetDomainVerificationRequest:
+      additionalProperties: false
+      properties:
+        domainVerificationId:
+          format: uuid
+          title: domain_verification_id
+          type: string
+      required:
+      - domainVerificationId
+      title: GetDomainVerificationRequest
+      type: object
+    gitpod.v1.GetOIDCConfigRequest:
+      additionalProperties: false
+      description: GetOIDCConfigRequest is the request message for retrieving OIDC token configuration.
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization.
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetOIDCConfigRequest
+      type: object
+    gitpod.v1.VerifyDomainRequest:
+      additionalProperties: false
+      properties:
+        domainVerificationId:
+          format: uuid
+          title: domain_verification_id
+          type: string
+      required:
+      - domainVerificationId
+      title: VerifyDomainRequest
+      type: object
+    gitpod.v1.OrganizationRole:
+      enum:
+      - ORGANIZATION_ROLE_UNSPECIFIED
+      - ORGANIZATION_ROLE_ADMIN
+      - ORGANIZATION_ROLE_MEMBER
+      title: OrganizationRole
+      type: string
+    gitpod.v1.GetSSOConfigurationResponse:
+      additionalProperties: false
+      properties:
+        ssoConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.SSOConfiguration'
+          description: sso_configuration is the SSO configuration identified by the ID
+          title: sso_configuration
+      required:
+      - ssoConfiguration
+      title: GetSSOConfigurationResponse
+      type: object
+    gitpod.v1.GetOrganizationInviteSummaryResponse:
+      additionalProperties: false
+      properties:
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        organizationMemberCount:
+          format: int32
+          title: organization_member_count
+          type: integer
+        organizationName:
+          title: organization_name
+          type: string
+      required:
+      - organizationId
+      title: GetOrganizationInviteSummaryResponse
+      type: object
+    gitpod.v1.DeleteOrganizationRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to delete
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: DeleteOrganizationRequest
+      type: object
+    gitpod.v1.ListSSOConfigurationsRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to list SSO configurations for.
+          format: uuid
+          title: organization_id
+          type: string
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      required:
+      - organizationId
+      title: ListSSOConfigurationsRequest
+      type: object
+    gitpod.v1.CreateDomainVerificationResponse:
+      additionalProperties: false
+      properties:
+        domainVerification:
+          $ref: '#/components/schemas/gitpod.v1.DomainVerification'
+          title: domain_verification
+      required:
+      - domainVerification
+      title: CreateDomainVerificationResponse
+      type: object
+    gitpod.v1.CreateOrganizationInviteResponse:
+      additionalProperties: false
+      properties:
+        invite:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationInvite'
+          title: invite
+      required:
+      - invite
+      title: CreateOrganizationInviteResponse
+      type: object
+    gitpod.v1.AnnouncementBanner:
+      additionalProperties: false
+      properties:
+        enabled:
+          description: enabled controls whether the banner is displayed
+          title: enabled
+          type: boolean
+        message:
+          description: message is the banner message displayed to users. Supports basic Markdown.
+          maxLength: 1000
+          title: message
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: AnnouncementBanner
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.GetOrganizationInviteRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetOrganizationInviteRequest
+      type: object
+    gitpod.v1.SetStripeCustomerIDResponse:
+      additionalProperties: false
+      title: SetStripeCustomerIDResponse
+      type: object
+    gitpod.v1.ListDomainVerificationsRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      required:
+      - organizationId
+      title: ListDomainVerificationsRequest
+      type: object
+    gitpod.v1.EditorVersionPolicy:
+      additionalProperties: false
+      description: EditorVersionPolicy defines the version policy for a specific editor
+      properties:
+        allowedVersions:
+          description: "allowed_versions lists the versions that are allowed\n If empty, we will use the latest version of the editor\n\n Examples for JetBrains: `[\"2025.2\", \"2025.1\", \"2024.3\"]`"
+          items:
+            type: string
+          title: allowed_versions
+          type: array
+      title: EditorVersionPolicy
+      type: object
+    gitpod.v1.VetoExecPolicy:
+      additionalProperties: false
+      description: VetoExecPolicy defines the policy for blocking or auditing executable execution in environments.
+      properties:
+        action:
+          $ref: '#/components/schemas/gitpod.v1.KernelControlsAction'
+          description: action specifies what action kernel-level controls take on policy violations
+          title: action
+        enabled:
+          description: enabled controls whether executable blocking is active
+          title: enabled
+          type: boolean
+        executables:
+          description: executables is the list of executable paths or names to block
+          items:
+            type: string
+          title: executables
+          type: array
+        safelist:
+          description: "Output only. Executable paths that are protected by the safelist and cannot\n be blocked by the denylist. Populated by the server from the built-in\n default safelist. Ignored on update requests."
+          items:
+            type: string
+          title: safelist
+          type: array
+          x-stainless-skip: true
+      title: VetoExecPolicy
+      type: object
+    gitpod.v1.DeleteSCIMConfigurationRequest:
+      additionalProperties: false
+      properties:
+        scimConfigurationId:
+          description: scim_configuration_id is the ID of the SCIM configuration to delete
+          format: uuid
+          title: scim_configuration_id
+          type: string
+      required:
+      - scimConfigurationId
+      title: DeleteSCIMConfigurationRequest
+      type: object
+    gitpod.v1.AgentPolicy:
+      additionalProperties: false
+      description: AgentPolicy contains agent-specific policy settings for an organization
+      properties:
+        commandDenyList:
+          description: command_deny_list contains a list of commands that agents are not allowed to execute
+          items:
+            type: string
+          title: command_deny_list
+          type: array
+        conversationSharingPolicy:
+          $ref: '#/components/schemas/gitpod.v1.ConversationSharingPolicy'
+          description: conversation_sharing_policy controls whether agent conversations can be shared
+          title: conversation_sharing_policy
+        maxSubagentsPerEnvironment:
+          description: "max_subagents_per_environment limits the number of non-terminal sub-agents\n a parent can have running simultaneously in the same environment.\n Valid range: 0-10. Zero means use the default (5)."
+          format: int32
+          maximum: 10
+          title: max_subagents_per_environment
+          type: integer
+        mcpDisabled:
+          description: mcp_disabled controls whether MCP (Model Context Protocol) is disabled for agents
+          title: mcp_disabled
+          type: boolean
+        scmToolsAllowedGroupId:
+          description: "scm_tools_allowed_group_id restricts SCM tools access to members of this group.\n Empty means no restriction (all users can use SCM tools if not disabled)."
+          title: scm_tools_allowed_group_id
+          type: string
+        scmToolsDisabled:
+          description: scm_tools_disabled controls whether SCM (Source Control Management) tools are disabled for agents
+          title: scm_tools_disabled
+          type: boolean
+      required:
+      - mcpDisabled
+      - commandDenyList
+      - scmToolsDisabled
+      title: AgentPolicy
+      type: object
+    gitpod.v1.CreateCustomDomainResponse:
+      additionalProperties: false
+      description: CreateCustomDomainResponse is the response message for creating a custom domain
+      properties:
+        customDomain:
+          $ref: '#/components/schemas/gitpod.v1.CustomDomain'
+          description: custom_domain is the created custom domain
+          title: custom_domain
+      required:
+      - customDomain
+      title: CreateCustomDomainResponse
+      type: object
+    gitpod.v1.DeleteCustomDomainResponse:
+      additionalProperties: false
+      description: DeleteCustomDomainResponse is the response message for deleting a custom domain
+      title: DeleteCustomDomainResponse
+      type: object
+    gitpod.v1.ListMembersRequest.Filter:
+      additionalProperties: false
+      properties:
+        excludeGroupIds:
+          description: exclude_group_ids excludes members who are already in any of the specified groups
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: exclude_group_ids
+          type: array
+        excludeMembersInAnyTeam:
+          description: exclude_members_in_any_team excludes members who belong to any team in the organization
+          title: exclude_members_in_any_team
+          type: boolean
+        roles:
+          description: roles filters members by their organization role
+          items:
+            $ref: '#/components/schemas/gitpod.v1.OrganizationRole'
+          title: roles
+          type: array
+        search:
+          description: search performs case-insensitive search across member name and email
+          maxLength: 256
+          title: search
+          type: string
+        statuses:
+          description: status filters members by their user status
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UserStatus'
+          title: statuses
+          type: array
+        userIds:
+          description: user_ids filters the response to only members with the specified user IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: user_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.CountResponse:
+      additionalProperties: false
+      description: "CountResponse represents a bounded count of matching records.\n When the actual count exceeds the counting limit, value is capped and\n relation is set to GREATER_THAN_OR_EQUAL."
+      properties:
+        relation:
+          $ref: '#/components/schemas/gitpod.v1.CountResponseRelation'
+          description: Indicates whether value is the exact total or a lower bound.
+          title: relation
+        value:
+          description: The count of matching records, capped at the server's counting limit.
+          format: int32
+          title: value
+          type: integer
+      title: CountResponse
+      type: object
+    gitpod.v1.CrowdStrikeConfig:
+      additionalProperties: false
+      description: CrowdStrikeConfig configures CrowdStrike Falcon sensor deployment
+      properties:
+        additionalOptions:
+          additionalProperties:
+            title: value
+            type: string
+          description: "additional_options contains additional FALCONCTL_OPT_* options as key-value pairs.\n Keys should NOT include the FALCONCTL_OPT_ prefix."
+          title: additional_options
+          type: object
+        cidSecretId:
+          description: cid_secret_id references an organization secret containing the Customer ID (CID).
+          format: uuid
+          title: cid_secret_id
+          type: string
+        enabled:
+          description: enabled controls whether CrowdStrike Falcon is deployed to environments
+          title: enabled
+          type: boolean
+        image:
+          description: image is the CrowdStrike Falcon sensor container image reference
+          title: image
+          type: string
+        tags:
+          description: tags are optional tags to apply to the Falcon sensor (comma-separated)
+          title: tags
+          type: string
+      title: CrowdStrikeConfig
+      type: object
+    gitpod.v1.CreateOrganizationResponse:
+      additionalProperties: false
+      properties:
+        member:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationMember'
+          description: member is the member that joined the org on creation. Only set if specified "join_organization" is "true" in the request.
+          title: member
+        organization:
+          $ref: '#/components/schemas/gitpod.v1.Organization'
+          description: organization is the created organization
+          title: organization
+      required:
+      - organization
+      title: CreateOrganizationResponse
+      type: object
+    gitpod.v1.CustomAgentEnvMapping:
+      additionalProperties: false
+      description: "CustomAgentEnvMapping maps a script placeholder to an organization secret.\n The backend resolves the secret name to a UUID at runtime."
+      properties:
+        name:
+          description: name is the environment variable name used as a placeholder in the start command.
+          title: name
+          type: string
+        secretName:
+          description: secret_name is the name of the organization secret whose value populates this placeholder.
+          title: secret_name
+          type: string
+      title: CustomAgentEnvMapping
+      type: object
+    gitpod.v1.UpdateOrganizationPoliciesResponse:
+      additionalProperties: false
+      title: UpdateOrganizationPoliciesResponse
+      type: object
+    gitpod.v1.UpdateOrganizationPoliciesRequest.UpdateCrowdStrikeConfig:
+      additionalProperties: false
+      description: UpdateCrowdStrikeConfig contains CrowdStrike Falcon configuration updates
+      properties:
+        additionalOptions:
+          additionalProperties:
+            title: value
+            type: string
+          description: additional_options contains additional FALCONCTL_OPT_* options as key-value pairs
+          title: additional_options
+          type: object
+        cidSecretId:
+          description: cid_secret_id references an organization secret containing the Customer ID (CID)
+          format: uuid
+          nullable: true
+          title: cid_secret_id
+          type: string
+        enabled:
+          description: enabled controls whether CrowdStrike Falcon is deployed to environments
+          nullable: true
+          title: enabled
+          type: boolean
+        image:
+          description: image is the CrowdStrike Falcon sensor container image reference
+          nullable: true
+          title: image
+          type: string
+        tags:
+          description: tags are optional tags to apply to the Falcon sensor
+          nullable: true
+          title: tags
+          type: string
+      title: UpdateCrowdStrikeConfig
+      type: object
+    gitpod.v1.DeleteCustomDomainRequest:
+      additionalProperties: false
+      description: DeleteCustomDomainRequest is the request message for deleting a custom domain
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to delete custom domain for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: DeleteCustomDomainRequest
+      type: object
+    gitpod.v1.Organization:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        id:
+          format: uuid
+          title: id
+          type: string
+        inviteDomains:
+          $ref: '#/components/schemas/gitpod.v1.InviteDomains'
+          title: invite_domains
+        name:
+          title: name
+          type: string
+        tier:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationTier'
+          description: The tier of the organization - free, enterprise or core
+          title: tier
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+      required:
+      - id
+      - name
+      - createdAt
+      - updatedAt
+      - tier
+      title: Organization
+      type: object
+    gitpod.v1.DeleteSSOConfigurationRequest:
+      additionalProperties: false
+      properties:
+        ssoConfigurationId:
+          format: uuid
+          title: sso_configuration_id
+          type: string
+      required:
+      - ssoConfigurationId
+      title: DeleteSSOConfigurationRequest
+      type: object
+    gitpod.v1.LeaveOrganizationRequest:
+      additionalProperties: false
+      properties:
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      required:
+      - userId
+      title: LeaveOrganizationRequest
+      type: object
+    gitpod.v1.UpdateSCIMConfigurationRequest:
+      additionalProperties: false
+      properties:
+        enabled:
+          description: enabled controls whether SCIM provisioning is active
+          nullable: true
+          title: enabled
+          type: boolean
+        name:
+          description: name is a human-readable name for the SCIM configuration
+          maxLength: 128
+          nullable: true
+          title: name
+          type: string
+        scimConfigurationId:
+          description: scim_configuration_id is the ID of the SCIM configuration to update
+          format: uuid
+          title: scim_configuration_id
+          type: string
+        ssoConfigurationId:
+          description: sso_configuration_id is the SSO configuration to link
+          format: uuid
+          nullable: true
+          title: sso_configuration_id
+          type: string
+      required:
+      - scimConfigurationId
+      title: UpdateSCIMConfigurationRequest
+      type: object
+    gitpod.v1.CustomDomain:
+      additionalProperties: false
+      description: CustomDomain represents a custom domain configuration for an organization
+      properties:
+        awsAccountId:
+          deprecated: true
+          description: 'aws_account_id is the AWS account ID (deprecated: use cloud_account_id)'
+          title: aws_account_id
+          type: string
+        cloudAccountId:
+          description: cloud_account_id is the unified cloud account identifier (AWS Account ID or GCP Project ID)
+          title: cloud_account_id
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is when the custom domain was created
+          title: created_at
+        domainName:
+          description: domain_name is the custom domain name
+          maxLength: 253
+          minLength: 4
+          title: domain_name
+          type: string
+        id:
+          description: id is the unique identifier of the custom domain
+          format: uuid
+          title: id
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization this custom domain belongs to
+          format: uuid
+          title: organization_id
+          type: string
+        provider:
+          $ref: '#/components/schemas/gitpod.v1.CustomDomainProvider'
+          description: provider is the cloud provider for this custom domain
+          title: provider
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: updated_at is when the custom domain was last updated
+          title: updated_at
+      required:
+      - id
+      - organizationId
+      - domainName
+      - createdAt
+      - updatedAt
+      title: CustomDomain
+      type: object
+    gitpod.v1.GetOrganizationPoliciesRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to retrieve policies for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetOrganizationPoliciesRequest
+      type: object
+    gitpod.v1.SetRoleRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationRole'
+          title: role
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      required:
+      - organizationId
+      - userId
+      title: SetRoleRequest
+      type: object
+    gitpod.v1.DeleteDomainVerificationRequest:
+      additionalProperties: false
+      properties:
+        domainVerificationId:
+          format: uuid
+          title: domain_verification_id
+          type: string
+      required:
+      - domainVerificationId
+      title: DeleteDomainVerificationRequest
+      type: object
+    gitpod.v1.UpdateOrganizationPoliciesRequest:
+      additionalProperties: false
+      properties:
+        agentPolicy:
+          $ref: '#/components/schemas/gitpod.v1.UpdateOrganizationPoliciesRequest.UpdateAgentPolicy'
+          description: agent_policy contains agent-specific policy settings
+          nullable: true
+          title: agent_policy
+        allowLocalRunners:
+          description: allow_local_runners controls whether local runners are allowed to be used in the organization
+          nullable: true
+          title: allow_local_runners
+          type: boolean
+        allowedEditorIds:
+          description: allowed_editor_ids is the list of editor IDs that are allowed to be used in the organization
+          items:
+            type: string
+          title: allowed_editor_ids
+          type: array
+        defaultEditorId:
+          description: default_editor_id is the default editor ID to be used when a user doesn't specify one
+          nullable: true
+          title: default_editor_id
+          type: string
+        defaultEnvironmentImage:
+          description: default_environment_image is the default container image when none is defined in repo
+          nullable: true
+          title: default_environment_image
+          type: string
+        deleteArchivedEnvironmentsAfter:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "delete_archived_environments_after controls how long archived environments are kept before automatic deletion.\n 0 means no automatic deletion. Maximum duration is 4 weeks (2419200 seconds)."
+          nullable: true
+          title: delete_archived_environments_after
+        editorVersionRestrictions:
+          additionalProperties:
+            $ref: '#/components/schemas/gitpod.v1.EditorVersionPolicy'
+            title: value
+          description: "editor_version_restrictions restricts which editor versions can be used.\n Maps editor ID to version policy with allowed major versions."
+          title: editor_version_restrictions
+          type: object
+        maximumEnvironmentLifetime:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "maximum_environment_lifetime controls for how long environments are allowed to be reused.\n 0 means no maximum lifetime. Maximum duration is 180 days (15552000 seconds)."
+          nullable: true
+          title: maximum_environment_lifetime
+        maximumEnvironmentLifetimeStrict:
+          description: "maximum_environment_lifetime_strict controls whether environments past their\n lockdown_at timestamp are blocked from starting."
+          nullable: true
+          title: maximum_environment_lifetime_strict
+          type: boolean
+          x-stainless-skip: true
+        maximumEnvironmentTimeout:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "maximum_environment_timeout controls the maximum timeout allowed for environments in seconds.\n 0 means no limit (never). Minimum duration is 30 minutes (1800 seconds).\nvalue must be 0s (no limit) or at least 1800s (30 minutes):\n```\nthis == duration('0s') || this >= duration('1800s')\n```\n\n"
+          nullable: true
+          title: maximum_environment_timeout
+        maximumEnvironmentsPerUser:
+          description: maximum_environments_per_user limits total environments (running or stopped) per user
+          nullable: true
+          title: maximum_environments_per_user
+          type: string
+        maximumRunningEnvironmentsPerUser:
+          description: maximum_running_environments_per_user limits simultaneously running environments per user
+          nullable: true
+          title: maximum_running_environments_per_user
+          type: string
+        membersCreateProjects:
+          description: members_create_projects controls whether members can create projects
+          nullable: true
+          title: members_create_projects
+          type: boolean
+        membersRequireProjects:
+          description: members_require_projects controls whether environments can only be created from projects by non-admin users
+          nullable: true
+          title: members_require_projects
+          type: boolean
+        organizationId:
+          description: organization_id is the ID of the organization to update policies for
+          format: uuid
+          title: organization_id
+          type: string
+        portSharingDisabled:
+          description: "port_sharing_disabled controls whether user-initiated port sharing is disabled in the organization.\n System ports (VS Code Browser, agents) are always exempt from this policy."
+          nullable: true
+          title: port_sharing_disabled
+          type: boolean
+        requireCustomDomainAccess:
+          description: "require_custom_domain_access controls whether users must access via custom domain\n when one is configured. When true, access via app.gitpod.io is blocked."
+          nullable: true
+          title: require_custom_domain_access
+          type: boolean
+        restrictAccountCreationToScim:
+          description: "restrict_account_creation_to_scim controls whether account creation is restricted to SCIM-provisioned users only.\n When true and SCIM is configured for the organization, only users provisioned via SCIM can create accounts."
+          nullable: true
+          title: restrict_account_creation_to_scim
+          type: boolean
+        securityAgentPolicy:
+          $ref: '#/components/schemas/gitpod.v1.UpdateOrganizationPoliciesRequest.UpdateSecurityAgentPolicy'
+          description: security_agent_policy contains security agent configuration updates
+          nullable: true
+          title: security_agent_policy
+        vetoExecPolicy:
+          $ref: '#/components/schemas/gitpod.v1.VetoExecPolicy'
+          description: veto_exec_policy contains the veto exec policy for environments.
+          nullable: true
+          title: veto_exec_policy
+      required:
+      - organizationId
+      title: UpdateOrganizationPoliciesRequest
+      type: object
+    gitpod.v1.ListMembersRequest.SortField:
+      enum:
+      - SORT_FIELD_UNSPECIFIED
+      - SORT_FIELD_NAME
+      - SORT_FIELD_DATE_JOINED
+      title: SortField
+      type: string
+    gitpod.v1.UpdateCustomDomainRequest:
+      additionalProperties: false
+      description: UpdateCustomDomainRequest is the request message for updating a custom domain
+      properties:
+        awsAccountId:
+          deprecated: true
+          description: 'aws_account_id is the AWS account ID (deprecated: use cloud_account_id)'
+          nullable: true
+          title: aws_account_id
+          type: string
+        cloudAccountId:
+          description: cloud_account_id is the unified cloud account identifier (AWS Account ID or GCP Project ID)
+          nullable: true
+          title: cloud_account_id
+          type: string
+        domainName:
+          description: domain_name is the custom domain name
+          maxLength: 253
+          minLength: 4
+          title: domain_name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization to update custom domain for
+          format: uuid
+          title: organization_id
+          type: string
+        provider:
+          $ref: '#/components/schemas/gitpod.v1.CustomDomainProvider'
+          description: provider is the cloud provider for this custom domain
+          nullable: true
+          title: provider
+      required:
+      - organizationId
+      - domainName
+      title: UpdateCustomDomainRequest
+      type: object
+    gitpod.v1.SortOrder:
+      enum:
+      - SORT_ORDER_UNSPECIFIED
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+      title: SortOrder
+      type: string
+    gitpod.v1.KernelControlsAction:
+      description: KernelControlsAction defines how a kernel-level policy violation is handled.
+      enum:
+      - KERNEL_CONTROLS_ACTION_UNSPECIFIED
+      - KERNEL_CONTROLS_ACTION_BLOCK
+      - KERNEL_CONTROLS_ACTION_AUDIT
+      title: KernelControlsAction
+      type: string
+    gitpod.v1.GetOrganizationPoliciesResponse:
+      additionalProperties: false
+      properties:
+        policies:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationPolicies'
+          title: policies
+      required:
+      - policies
+      title: GetOrganizationPoliciesResponse
+      type: object
+    gitpod.v1.OrganizationPolicies:
+      additionalProperties: false
+      properties:
+        agentPolicy:
+          $ref: '#/components/schemas/gitpod.v1.AgentPolicy'
+          description: agent_policy contains agent-specific policy settings
+          title: agent_policy
+        allowLocalRunners:
+          description: allow_local_runners controls whether local runners are allowed to be used in the organization
+          title: allow_local_runners
+          type: boolean
+        allowedEditorIds:
+          description: allowed_editor_ids is the list of editor IDs that are allowed to be used in the organization
+          items:
+            type: string
+          title: allowed_editor_ids
+          type: array
+        defaultEditorId:
+          description: default_editor_id is the default editor ID to be used when a user doesn't specify one
+          title: default_editor_id
+          type: string
+        defaultEnvironmentImage:
+          description: default_environment_image is the default container image when none is defined in repo
+          title: default_environment_image
+          type: string
+        deleteArchivedEnvironmentsAfter:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "delete_archived_environments_after controls how long archived environments are kept before automatic deletion.\n 0 means no automatic deletion. Maximum duration is 4 weeks (2419200 seconds)."
+          title: delete_archived_environments_after
+        editorVersionRestrictions:
+          additionalProperties:
+            $ref: '#/components/schemas/gitpod.v1.EditorVersionPolicy'
+            title: value
+          description: "editor_version_restrictions restricts which editor versions can be used.\n Maps editor ID to version policy, editor_version_restrictions not set means no restrictions.\n If empty or not set for an editor, we will use the latest version of the editor"
+          title: editor_version_restrictions
+          type: object
+        maximumEnvironmentLifetime:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "maximum_environment_lifetime controls for how long environments are allowed to be reused.\n 0 means no maximum lifetime. Maximum duration is 180 days (15552000 seconds)."
+          title: maximum_environment_lifetime
+        maximumEnvironmentLifetimeStrict:
+          description: "maximum_environment_lifetime_strict controls whether environments past their\n lockdown_at timestamp are blocked from starting."
+          title: maximum_environment_lifetime_strict
+          type: boolean
+          x-stainless-skip: true
+        maximumEnvironmentTimeout:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "maximum_environment_timeout controls the maximum timeout allowed for environments in seconds.\n 0 means no limit (never). Minimum duration is 30 minutes (1800 seconds).\nvalue must be 0s (no limit) or at least 1800s (30 minutes):\n```\nthis == duration('0s') || this >= duration('1800s')\n```\n\n"
+          title: maximum_environment_timeout
+        maximumEnvironmentsPerUser:
+          description: maximum_environments_per_user limits total environments (running or stopped) per user
+          title: maximum_environments_per_user
+          type: string
+        maximumRunningEnvironmentsPerUser:
+          description: maximum_running_environments_per_user limits simultaneously running environments per user
+          title: maximum_running_environments_per_user
+          type: string
+        membersCreateProjects:
+          description: members_create_projects controls whether members can create projects
+          title: members_create_projects
+          type: boolean
+        membersRequireProjects:
+          description: members_require_projects controls whether environments can only be created from projects by non-admin users
+          title: members_require_projects
+          type: boolean
+        organizationId:
+          description: organization_id is the ID of the organization
+          format: uuid
+          title: organization_id
+          type: string
+        portSharingDisabled:
+          description: "port_sharing_disabled controls whether user-initiated port sharing is disabled in the organization.\n System ports (VS Code Browser, agents) are always exempt from this policy."
+          title: port_sharing_disabled
+          type: boolean
+        requireCustomDomainAccess:
+          description: "require_custom_domain_access controls whether users must access via custom domain\n when one is configured. When true, access via app.gitpod.io is blocked."
+          title: require_custom_domain_access
+          type: boolean
+        restrictAccountCreationToScim:
+          description: "restrict_account_creation_to_scim controls whether account creation is restricted to SCIM-provisioned users only.\n When true and SCIM is configured for the organization, only users provisioned via SCIM can create accounts."
+          title: restrict_account_creation_to_scim
+          type: boolean
+        securityAgentPolicy:
+          $ref: '#/components/schemas/gitpod.v1.SecurityAgentPolicy'
+          description: "security_agent_policy contains security agent configuration for the organization.\n When configured, security agents are automatically deployed to all environments."
+          title: security_agent_policy
+        vetoExecPolicy:
+          $ref: '#/components/schemas/gitpod.v1.VetoExecPolicy'
+          description: veto_exec_policy contains the veto exec policy for environments.
+          title: veto_exec_policy
+      required:
+      - organizationId
+      - membersRequireProjects
+      - membersCreateProjects
+      - allowedEditorIds
+      - defaultEditorId
+      - allowLocalRunners
+      - maximumRunningEnvironmentsPerUser
+      - maximumEnvironmentsPerUser
+      - defaultEnvironmentImage
+      - portSharingDisabled
+      - agentPolicy
+      - requireCustomDomainAccess
+      - restrictAccountCreationToScim
+      title: OrganizationPolicies
+      type: object
+    gitpod.v1.GetOrganizationInviteSummaryRequest:
+      additionalProperties: false
+      properties:
+        inviteId:
+          format: uuid
+          title: invite_id
+          type: string
+      required:
+      - inviteId
+      title: GetOrganizationInviteSummaryRequest
+      type: object
+    gitpod.v1.SSOConfiguration:
+      additionalProperties: false
+      properties:
+        additionalScopes:
+          description: additional_scopes are extra OIDC scopes requested from the identity provider during sign-in.
+          items:
+            type: string
+          title: additional_scopes
+          type: array
+        claims:
+          additionalProperties:
+            title: value
+            type: string
+          description: claims are key/value pairs that defines a mapping of claims issued by the IdP.
+          title: claims
+          type: object
+        claimsExpression:
+          description: "claims_expression is a CEL (Common Expression Language) expression evaluated against\n the OIDC token claims during login. When set, the expression must evaluate to true\n for the login to succeed. The expression has access to a `claims` variable containing\n all token claims as a map. Example: `claims.email_verified && claims.email.endsWith(\"@example.com\")`"
+          maxLength: 4096
+          title: claims_expression
+          type: string
+        clientId:
+          description: client_id is the client ID of the OIDC application set on the IdP
+          title: client_id
+          type: string
+        displayName:
+          maxLength: 128
+          title: display_name
+          type: string
+        emailDomain:
+          title: email_domain
+          type: string
+        emailDomains:
+          items:
+            maxLength: 253
+            minLength: 4
+            pattern: ^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$
+            type: string
+            uniqueItems: true
+          title: email_domains
+          type: array
+          uniqueItems: true
+        id:
+          description: id is the unique identifier of the SSO configuration
+          format: uuid
+          title: id
+          type: string
+        issuerUrl:
+          description: issuer_url is the URL of the IdP issuer
+          title: issuer_url
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        providerType:
+          $ref: '#/components/schemas/gitpod.v1.SSOConfiguration.ProviderType'
+          description: provider_type defines the type of the SSO configuration
+          title: provider_type
+        state:
+          $ref: '#/components/schemas/gitpod.v1.SSOConfigurationState'
+          description: state is the state of the SSO configuration
+          title: state
+      required:
+      - id
+      - organizationId
+      - issuerUrl
+      - state
+      - providerType
+      title: SSOConfiguration
+      type: object
+    gitpod.v1.RegenerateSCIMTokenResponse:
+      additionalProperties: false
+      properties:
+        token:
+          description: "token is the new bearer token for SCIM API authentication.\n This invalidates the previous token - store it securely."
+          title: token
+          type: string
+        tokenExpiresAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: token_expires_at is when the new token will expire
+          title: token_expires_at
+      required:
+      - token
+      - tokenExpiresAt
+      title: RegenerateSCIMTokenResponse
+      type: object
+    gitpod.v1.CountRequest:
+      additionalProperties: false
+      description: "CountRequest controls whether the response should include a bounded\n count of matching records."
+      properties:
+        include:
+          description: "When true, the first page of results will include a CountResponse with\n the bounded total. Subsequent pages (requests with a pagination token)\n will not contain the count."
+          title: include
+          type: boolean
+      title: CountRequest
+      type: object
+    gitpod.v1.UpdateAnnouncementBannerResponse:
+      additionalProperties: false
+      properties:
+        banner:
+          $ref: '#/components/schemas/gitpod.v1.AnnouncementBanner'
+          description: banner is the updated announcement banner configuration
+          title: banner
+      required:
+      - banner
+      title: UpdateAnnouncementBannerResponse
+      type: object
+    gitpod.v1.DomainVerificationState:
+      enum:
+      - DOMAIN_VERIFICATION_STATE_UNSPECIFIED
+      - DOMAIN_VERIFICATION_STATE_PENDING
+      - DOMAIN_VERIFICATION_STATE_VERIFIED
+      title: DomainVerificationState
+      type: string
+    gitpod.v1.CreateSCIMConfigurationResponse:
+      additionalProperties: false
+      properties:
+        scimConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.SCIMConfiguration'
+          description: scim_configuration is the created SCIM configuration
+          title: scim_configuration
+        token:
+          description: "token is the bearer token for SCIM API authentication.\n This is only returned once during creation - store it securely."
+          title: token
+          type: string
+        tokenExpiresAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: token_expires_at is when the token will expire
+          title: token_expires_at
+      required:
+      - scimConfiguration
+      - token
+      - tokenExpiresAt
+      title: CreateSCIMConfigurationResponse
+      type: object
+    gitpod.v1.CustomSecurityAgent:
+      additionalProperties: false
+      description: CustomSecurityAgent defines a custom security agent configured by an organization admin.
+      properties:
+        description:
+          description: description is a human-readable description of what this agent does
+          title: description
+          type: string
+        enabled:
+          description: enabled controls whether this custom agent is deployed to environments
+          title: enabled
+          type: boolean
+        envMappings:
+          description: "env_mappings maps script placeholders to organization secret names,\n resolved to secret values at runtime."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CustomAgentEnvMapping'
+          title: env_mappings
+          type: array
+        id:
+          description: "id is a unique identifier for this custom agent within the organization.\n Server-generated at save time if empty."
+          title: id
+          type: string
+        name:
+          description: name is the display name for this custom agent
+          title: name
+          type: string
+        startCommand:
+          description: start_command is the shell script that starts the agent
+          title: start_command
+          type: string
+      title: CustomSecurityAgent
+      type: object
+    gitpod.v1.GetOrganizationRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the unique identifier of the Organization to retreive.
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetOrganizationRequest
+      type: object
+    gitpod.v1.ListSCIMConfigurationsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        scimConfigurations:
+          description: scim_configurations are the SCIM configurations for the organization
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SCIMConfiguration'
+          title: scim_configurations
+          type: array
+      required:
+      - pagination
+      title: ListSCIMConfigurationsResponse
+      type: object
+    gitpod.v1.SSOConfigurationState:
+      enum:
+      - SSO_CONFIGURATION_STATE_UNSPECIFIED
+      - SSO_CONFIGURATION_STATE_INACTIVE
+      - SSO_CONFIGURATION_STATE_ACTIVE
+      title: SSOConfigurationState
+      type: string
+    gitpod.v1.CreateOrganizationRequest:
+      additionalProperties: false
+      properties:
+        inviteAccountsWithMatchingDomain:
+          description: Should other Accounts with the same domain be automatically invited to the organization?
+          title: invite_accounts_with_matching_domain
+          type: boolean
+        joinOrganization:
+          description: join_organization decides whether the Identity issuing this request joins the org on creation
+          title: join_organization
+          type: boolean
+        name:
+          description: name is the organization name
+          minLength: 3
+          title: name
+          type: string
+      required:
+      - name
+      title: CreateOrganizationRequest
+      type: object
+    gitpod.v1.AdditionalScopesUpdate:
+      additionalProperties: false
+      description: "AdditionalScopesUpdate wraps a list of OIDC scopes so that the update request\n can distinguish \"not changing scopes\" (field absent) from \"clearing all scopes\"\n (field present, empty list)."
+      properties:
+        scopes:
+          items:
+            maxItems: 100
+            maxLength: 128
+            minLength: 1
+            type: string
+          maxItems: 100
+          title: scopes
+          type: array
+      title: AdditionalScopesUpdate
+      type: object
+    gitpod.v1.DeleteDomainVerificationResponse:
+      additionalProperties: false
+      title: DeleteDomainVerificationResponse
+      type: object
+    gitpod.v1.JoinOrganizationRequest:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - organizationId
+        required:
+        - inviteId
+      - not:
+          anyOf:
+          - required:
+            - inviteId
+        required:
+        - organizationId
+      properties:
+        inviteId:
+          description: invite_id is the unique identifier of the invite to join the organization.
+          format: uuid
+          title: invite_id
+          type: string
+        organizationId:
+          description: organization_id is the unique identifier of the Organization to join.
+          format: uuid
+          title: organization_id
+          type: string
+      title: JoinOrganizationRequest
+      type: object
+    gitpod.v1.DomainVerification:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        domain:
+          maxLength: 253
+          minLength: 4
+          title: domain
+          type: string
+        id:
+          format: uuid
+          title: id
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        state:
+          $ref: '#/components/schemas/gitpod.v1.DomainVerificationState'
+          title: state
+        verificationToken:
+          title: verification_token
+          type: string
+        verifiedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: verified_at
+      required:
+      - id
+      - organizationId
+      - domain
+      - state
+      title: DomainVerification
+      type: object
+    gitpod.v1.GetAnnouncementBannerResponse:
+      additionalProperties: false
+      properties:
+        banner:
+          $ref: '#/components/schemas/gitpod.v1.AnnouncementBanner'
+          description: banner is the announcement banner configuration
+          title: banner
+      required:
+      - banner
+      title: GetAnnouncementBannerResponse
+      type: object
+    gitpod.v1.ListSSOConfigurationsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        ssoConfigurations:
+          description: sso_configurations are the SSO configurations for the organization
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SSOConfiguration'
+          title: sso_configurations
+          type: array
+      required:
+      - pagination
+      title: ListSSOConfigurationsResponse
+      type: object
+    gitpod.v1.OrganizationTier:
+      enum:
+      - ORGANIZATION_TIER_UNSPECIFIED
+      - ORGANIZATION_TIER_FREE
+      - ORGANIZATION_TIER_ENTERPRISE
+      - ORGANIZATION_TIER_CORE
+      - ORGANIZATION_TIER_FREE_ONA
+      title: OrganizationTier
+      type: string
+    gitpod.v1.UpdateOIDCConfigRequest:
+      additionalProperties: false
+      description: UpdateOIDCConfigRequest is the request message for updating OIDC token configuration.
+      properties:
+        oidcConfig:
+          $ref: '#/components/schemas/gitpod.v1.OIDCConfig'
+          description: oidc_config is the desired OIDC token configuration.
+          title: oidc_config
+        organizationId:
+          description: organization_id is the ID of the organization.
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      - oidcConfig
+      title: UpdateOIDCConfigRequest
+      type: object
+    gitpod.v1.CreateCustomDomainRequest:
+      additionalProperties: false
+      description: CreateCustomDomainRequest is the request message for creating a custom domain
+      properties:
+        awsAccountId:
+          deprecated: true
+          description: 'aws_account_id is the AWS account ID (deprecated: use cloud_account_id)'
+          nullable: true
+          title: aws_account_id
+          type: string
+        cloudAccountId:
+          description: cloud_account_id is the unified cloud account identifier (AWS Account ID or GCP Project ID)
+          nullable: true
+          title: cloud_account_id
+          type: string
+        domainName:
+          description: domain_name is the custom domain name
+          maxLength: 253
+          minLength: 4
+          title: domain_name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization to create the custom domain for
+          format: uuid
+          title: organization_id
+          type: string
+        provider:
+          $ref: '#/components/schemas/gitpod.v1.CustomDomainProvider'
+          description: provider is the cloud provider for this custom domain
+          title: provider
+      required:
+      - organizationId
+      - domainName
+      title: CreateCustomDomainRequest
+      type: object
+    gitpod.v1.ListMembersRequest.Sort:
+      additionalProperties: false
+      properties:
+        field:
+          $ref: '#/components/schemas/gitpod.v1.ListMembersRequest.SortField'
+          title: field
+        order:
+          $ref: '#/components/schemas/gitpod.v1.SortOrder'
+          title: order
+      title: Sort
+      type: object
+    gitpod.v1.CreateSSOConfigurationRequest:
+      additionalProperties: false
+      properties:
+        additionalScopes:
+          description: "additional_scopes are extra OIDC scopes to request from the identity provider during sign-in.\n These are appended to the default scopes (openid, email, profile)."
+          items:
+            maxItems: 100
+            maxLength: 128
+            minLength: 1
+            type: string
+          maxItems: 100
+          title: additional_scopes
+          type: array
+        claimsExpression:
+          description: "claims_expression is an optional CEL expression evaluated against OIDC token claims during login.\n When set, the expression must evaluate to true for the login to succeed.\n Example: `claims.email_verified && claims.email.endsWith(\"@example.com\")`"
+          maxLength: 4096
+          nullable: true
+          title: claims_expression
+          type: string
+        clientId:
+          description: client_id is the client ID of the OIDC application set on the IdP
+          minLength: 1
+          title: client_id
+          type: string
+        clientSecret:
+          description: client_secret is the client secret of the OIDC application set on the IdP
+          minLength: 1
+          title: client_secret
+          type: string
+        displayName:
+          maxLength: 128
+          title: display_name
+          type: string
+        emailDomain:
+          description: email_domain is the domain that is allowed to sign in to the organization
+          minLength: 4
+          nullable: true
+          title: email_domain
+          type: string
+        emailDomains:
+          items:
+            maxLength: 253
+            minLength: 4
+            pattern: ^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$
+            type: string
+            uniqueItems: true
+          title: email_domains
+          type: array
+          uniqueItems: true
+        issuerUrl:
+          description: issuer_url is the URL of the IdP issuer
+          format: uri
+          title: issuer_url
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      - clientId
+      - clientSecret
+      - issuerUrl
+      title: CreateSSOConfigurationRequest
+      type: object
+    gitpod.v1.ListMembersResponse:
+      additionalProperties: false
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountResponse'
+          description: "count is the bounded total count of matching members, present only when\n requested via CountRequest.include on the first page."
+          title: count
+          x-stainless-skip: true
+        members:
+          description: members are the members of the organization
+          items:
+            $ref: '#/components/schemas/gitpod.v1.OrganizationMember'
+          title: members
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing members
+          title: pagination
+      required:
+      - pagination
+      - members
+      title: ListMembersResponse
+      type: object
+    gitpod.v1.OrganizationInvite:
+      additionalProperties: false
+      properties:
+        inviteId:
+          description: "invite_id is the unique identifier of the invite to join the organization.\n Use JoinOrganization with this ID to join the organization."
+          format: uuid
+          title: invite_id
+          type: string
+      required:
+      - inviteId
+      title: OrganizationInvite
+      type: object
+    gitpod.v1.GetOrganizationResponse:
+      additionalProperties: false
+      properties:
+        organization:
+          $ref: '#/components/schemas/gitpod.v1.Organization'
+          description: organization is the requested organization
+          title: organization
+      required:
+      - organization
+      title: GetOrganizationResponse
+      type: object
+    gitpod.v1.OrganizationMember:
+      additionalProperties: false
+      properties:
+        avatarUrl:
+          title: avatar_url
+          type: string
+        email:
+          title: email
+          type: string
+        fullName:
+          title: full_name
+          type: string
+        loginProvider:
+          description: login_provider is the login provider the user uses to sign in
+          title: login_provider
+          type: string
+        memberSince:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: member_since
+        role:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationRole'
+          title: role
+        status:
+          $ref: '#/components/schemas/gitpod.v1.UserStatus'
+          title: status
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      required:
+      - userId
+      - role
+      - memberSince
+      - fullName
+      - email
+      - status
+      - loginProvider
+      title: OrganizationMember
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.DeleteOrganizationResponse:
+      additionalProperties: false
+      title: DeleteOrganizationResponse
+      type: object
+    gitpod.v1.ConversationSharingPolicy:
+      description: ConversationSharingPolicy controls how agent conversations can be shared.
+      enum:
+      - CONVERSATION_SHARING_POLICY_UNSPECIFIED
+      - CONVERSATION_SHARING_POLICY_DISABLED
+      - CONVERSATION_SHARING_POLICY_ORGANIZATION
+      title: ConversationSharingPolicy
+      type: string
+    gitpod.v1.UpdateCustomDomainResponse:
+      additionalProperties: false
+      description: UpdateCustomDomainResponse is the response message for updating a custom domain
+      properties:
+        customDomain:
+          $ref: '#/components/schemas/gitpod.v1.CustomDomain'
+          description: custom_domain is the updated custom domain
+          title: custom_domain
+      required:
+      - customDomain
+      title: UpdateCustomDomainResponse
+      type: object
+    gitpod.v1.UpdateOrganizationPoliciesRequest.UpdateSecurityAgentPolicy:
+      additionalProperties: false
+      description: UpdateSecurityAgentPolicy contains security agent configuration updates
+      properties:
+        crowdstrike:
+          $ref: '#/components/schemas/gitpod.v1.UpdateOrganizationPoliciesRequest.UpdateCrowdStrikeConfig'
+          description: crowdstrike contains CrowdStrike Falcon configuration updates
+          nullable: true
+          title: crowdstrike
+        customAgents:
+          description: "custom_agents contains custom security agent definitions.\n Callers must read-then-write the full list."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CustomSecurityAgent'
+          title: custom_agents
+          type: array
+          x-stainless-skip: true
+      title: UpdateSecurityAgentPolicy
+      type: object
+    gitpod.v1.SSOConfiguration.ProviderType:
+      enum:
+      - PROVIDER_TYPE_UNSPECIFIED
+      - PROVIDER_TYPE_BUILTIN
+      - PROVIDER_TYPE_CUSTOM
+      title: ProviderType
+      type: string
+    gitpod.v1.CreateSSOConfigurationResponse:
+      additionalProperties: false
+      properties:
+        ssoConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.SSOConfiguration'
+          description: sso_configuration is the created SSO configuration
+          title: sso_configuration
+      required:
+      - ssoConfiguration
+      title: CreateSSOConfigurationResponse
+      type: object
+    gitpod.v1.SetTierResponse:
+      additionalProperties: false
+      title: SetTierResponse
+      type: object
+    gitpod.v1.ListMembersRequest:
+      additionalProperties: false
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountRequest'
+          description: count controls whether the response includes a bounded total count.
+          title: count
+          x-stainless-skip: true
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListMembersRequest.Filter'
+          title: filter
+        organizationId:
+          description: organization_id is the ID of the organization to list members for
+          format: uuid
+          title: organization_id
+          type: string
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing members
+          title: pagination
+        sort:
+          $ref: '#/components/schemas/gitpod.v1.ListMembersRequest.Sort'
+          description: "sort specifies the order of results. When unspecified, the authenticated user is\n returned first, followed by other members sorted by name ascending. When an explicit\n sort is specified, results are sorted purely by the requested field without any\n special handling for the authenticated user."
+          title: sort
+      required:
+      - organizationId
+      title: ListMembersRequest
+      type: object
+    gitpod.v1.SetRoleResponse:
+      additionalProperties: false
+      title: SetRoleResponse
+      type: object
+    gitpod.v1.GetCustomDomainRequest:
+      additionalProperties: false
+      description: GetCustomDomainRequest is the request message for getting a custom domain
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to retrieve custom domain for
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: GetCustomDomainRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.UpdateSCIMConfigurationResponse:
+      additionalProperties: false
+      properties:
+        scimConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.SCIMConfiguration'
+          description: scim_configuration is the updated SCIM configuration
+          title: scim_configuration
+      required:
+      - scimConfiguration
+      title: UpdateSCIMConfigurationResponse
+      type: object
+    gitpod.v1.InviteDomains:
+      additionalProperties: false
+      properties:
+        domains:
+          description: domains is the list of domains that are allowed to join the organization
+          items:
+            maxLength: 253
+            minLength: 4
+            pattern: ^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$
+            type: string
+            uniqueItems: true
+          title: domains
+          type: array
+          uniqueItems: true
+      title: InviteDomains
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.GetSSOConfigurationRequest:
+      additionalProperties: false
+      properties:
+        ssoConfigurationId:
+          description: sso_configuration_id is the ID of the SSO configuration to get
+          format: uuid
+          title: sso_configuration_id
+          type: string
+      required:
+      - ssoConfigurationId
+      title: GetSSOConfigurationRequest
+      type: object
+    gitpod.v1.OIDCConfigV2:
+      additionalProperties: false
+      description: OIDCConfigV2 configures V2 OIDC tokens. No additional parameters.
+      title: OIDCConfigV2
+      type: object
+    gitpod.v1.GetOrganizationInviteResponse:
+      additionalProperties: false
+      properties:
+        invite:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationInvite'
+          title: invite
+      required:
+      - invite
+      title: GetOrganizationInviteResponse
+      type: object
+    gitpod.v1.RegenerateSCIMTokenRequest:
+      additionalProperties: false
+      properties:
+        scimConfigurationId:
+          description: scim_configuration_id is the ID of the SCIM configuration to regenerate token for
+          format: uuid
+          title: scim_configuration_id
+          type: string
+        tokenExpiresIn:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "token_expires_in is the duration until the new token expires.\n If not specified, uses the same duration as the previous token."
+          nullable: true
+          title: token_expires_in
+      required:
+      - scimConfigurationId
+      title: RegenerateSCIMTokenRequest
+      type: object
+    gitpod.v1.GetDomainVerificationResponse:
+      additionalProperties: false
+      properties:
+        domainVerification:
+          $ref: '#/components/schemas/gitpod.v1.DomainVerification'
+          title: domain_verification
+      required:
+      - domainVerification
+      title: GetDomainVerificationResponse
+      type: object
+    gitpod.v1.CreateDomainVerificationRequest:
+      additionalProperties: false
+      properties:
+        domain:
+          maxLength: 253
+          minLength: 4
+          title: domain
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      - domain
+      title: CreateDomainVerificationRequest
+      type: object
+    gitpod.v1.GetSCIMConfigurationResponse:
+      additionalProperties: false
+      properties:
+        scimConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.SCIMConfiguration'
+          description: scim_configuration is the SCIM configuration identified by the ID
+          title: scim_configuration
+      required:
+      - scimConfiguration
+      title: GetSCIMConfigurationResponse
+      type: object
+    gitpod.v1.SecurityAgentPolicy:
+      additionalProperties: false
+      description: "SecurityAgentPolicy contains security agent configuration for an organization.\n When enabled, security agents are automatically deployed to all environments."
+      properties:
+        crowdstrike:
+          $ref: '#/components/schemas/gitpod.v1.CrowdStrikeConfig'
+          description: crowdstrike contains CrowdStrike Falcon configuration
+          title: crowdstrike
+        customAgents:
+          description: custom_agents contains custom security agent definitions
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CustomSecurityAgent'
+          title: custom_agents
+          type: array
+          x-stainless-skip: true
+      title: SecurityAgentPolicy
+      type: object
+    gitpod.v1.UpdateOIDCConfigResponse:
+      additionalProperties: false
+      description: UpdateOIDCConfigResponse is the response message for updating OIDC token configuration.
+      properties:
+        oidcConfig:
+          $ref: '#/components/schemas/gitpod.v1.OIDCConfig'
+          description: oidc_config is the updated OIDC token configuration.
+          title: oidc_config
+      required:
+      - oidcConfig
+      title: UpdateOIDCConfigResponse
+      type: object
+    gitpod.v1.UpdateOrganizationRequest:
+      additionalProperties: false
+      properties:
+        inviteDomains:
+          $ref: '#/components/schemas/gitpod.v1.InviteDomains'
+          description: invite_domains is the domain allowlist of the organization
+          nullable: true
+          title: invite_domains
+        name:
+          description: name is the new name of the organization
+          nullable: true
+          title: name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization to update the settings for.
+          format: uuid
+          title: organization_id
+          type: string
+      required:
+      - organizationId
+      title: UpdateOrganizationRequest
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

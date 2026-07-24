@@ -1,0 +1,483 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.ErrorsService API
+  version: v1.0.0
+  description: "ErrorsService provides endpoints for clients to report errors\n that will be sent to error reporting systems."
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- description: "ErrorsService provides endpoints for clients to report errors\n that will be sent to error reporting systems."
+  name: gitpod.v1.ErrorsService
+  x-displayName: gitpod.v1.ErrorsService
+paths:
+  /gitpod.v1.ErrorsService/ReportErrors:
+    servers: []
+    post:
+      description: "ReportErrors allows clients to report batches of errors that will be sent to error reporting systems.\n The structure is fully compatible with Sentry's event payload format.\n\n Use this method to:\n - Report client-side errors and exceptions\n - Track application crashes and panics\n - Send error context and metadata for debugging\n\n ### Examples\n\n - Report a JavaScript error with Sentry-compatible structure:\n   The service accepts events with comprehensive error information\n   including stack traces, identity context, breadcrumbs, and metadata\n   that align with Sentry's event payload format."
+      operationId: gitpod.v1.ErrorsService.ReportErrors
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ReportErrorsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ReportErrorsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ReportErrors
+      tags:
+      - gitpod.v1.ErrorsService
+components:
+  schemas:
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.StackFrame:
+      additionalProperties: false
+      description: Stack trace frame information (Sentry-compatible)
+      properties:
+        colno:
+          description: Column number in the line
+          format: int32
+          title: colno
+          type: integer
+        contextLine:
+          maxLength: 1000
+          title: context_line
+          type: string
+        filename:
+          description: File name or path
+          maxLength: 1000
+          title: filename
+          type: string
+        function:
+          description: Function name
+          maxLength: 1000
+          title: function
+          type: string
+        inApp:
+          description: Whether this frame is in application code (vs library/framework code)
+          title: in_app
+          type: boolean
+        lineno:
+          description: Line number in the file
+          format: int32
+          title: lineno
+          type: integer
+        module:
+          description: Module or package name
+          maxLength: 1000
+          title: module
+          type: string
+        postContext:
+          items:
+            maxItems: 10
+            type: string
+          maxItems: 10
+          title: post_context
+          type: array
+        preContext:
+          description: Source code context around the error line
+          items:
+            maxItems: 10
+            type: string
+          maxItems: 10
+          title: pre_context
+          type: array
+        vars:
+          additionalProperties:
+            maxLength: 1000
+            title: value
+            type: string
+          description: Additional frame-specific variables/locals
+          maxProperties: 20
+          title: vars
+          type: object
+      title: StackFrame
+      type: object
+    gitpod.v1.ExceptionInfo:
+      additionalProperties: false
+      description: Exception information (Sentry-compatible)
+      properties:
+        mechanism:
+          $ref: '#/components/schemas/gitpod.v1.ExceptionMechanism'
+          description: Exception mechanism
+          title: mechanism
+        module:
+          description: Module or package where the exception type is defined
+          maxLength: 200
+          title: module
+          type: string
+        stacktrace:
+          description: Stack trace frames
+          items:
+            $ref: '#/components/schemas/gitpod.v1.StackFrame'
+          maxItems: 100
+          title: stacktrace
+          type: array
+        threadId:
+          description: Thread ID if applicable
+          maxLength: 100
+          title: thread_id
+          type: string
+        type:
+          description: Exception type/class name
+          maxLength: 200
+          minLength: 1
+          title: type
+          type: string
+        value:
+          description: Exception message/value
+          maxLength: 10000
+          title: value
+          type: string
+      title: ExceptionInfo
+      type: object
+    gitpod.v1.ReportErrorsRequest:
+      additionalProperties: false
+      description: ReportErrorsRequest contains the error information to be reported
+      properties:
+        events:
+          description: Error events to be reported (batch) - now using Sentry-compatible structure
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ErrorEvent'
+          maxItems: 100
+          minItems: 1
+          title: events
+          type: array
+      title: ReportErrorsRequest
+      type: object
+    gitpod.v1.ErrorEvent:
+      additionalProperties: false
+      description: ErrorEvent contains comprehensive error information (Sentry-compatible)
+      properties:
+        breadcrumbs:
+          description: Breadcrumbs leading up to the error
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Breadcrumb'
+          maxItems: 100
+          title: breadcrumbs
+          type: array
+        environment:
+          description: Environment (e.g., "production", "staging", "development")
+          maxLength: 100
+          title: environment
+          type: string
+        eventId:
+          description: Unique event identifier (required by Sentry)
+          maxLength: 32
+          minLength: 32
+          pattern: ^[a-f0-9]{32}$
+          title: event_id
+          type: string
+        exceptions:
+          description: Exception information (primary error data)
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ExceptionInfo'
+          maxItems: 10
+          minItems: 1
+          title: exceptions
+          type: array
+        extra:
+          additionalProperties:
+            maxLength: 1000
+            title: value
+            type: string
+          description: Additional arbitrary metadata
+          maxProperties: 50
+          title: extra
+          type: object
+        fingerprint:
+          description: Custom fingerprint for grouping
+          items:
+            maxItems: 10
+            maxLength: 200
+            minLength: 1
+            type: string
+          maxItems: 10
+          title: fingerprint
+          type: array
+        identityId:
+          description: Identity ID of the user (UUID)
+          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+          title: identity_id
+          type: string
+        level:
+          $ref: '#/components/schemas/gitpod.v1.ErrorLevel'
+          description: Error severity level
+          title: level
+        logger:
+          description: Logger name
+          maxLength: 200
+          title: logger
+          type: string
+        modules:
+          additionalProperties:
+            maxLength: 100
+            title: value
+            type: string
+          description: Modules/dependencies information
+          maxProperties: 100
+          title: modules
+          type: object
+        platform:
+          description: Platform identifier (required by Sentry)
+          maxLength: 100
+          minLength: 1
+          title: platform
+          type: string
+        release:
+          description: Release version
+          maxLength: 200
+          title: release
+          type: string
+        request:
+          $ref: '#/components/schemas/gitpod.v1.RequestInfo'
+          description: Request information
+          title: request
+        sdk:
+          additionalProperties:
+            maxLength: 200
+            title: value
+            type: string
+          description: SDK information
+          maxProperties: 10
+          title: sdk
+          type: object
+        serverName:
+          description: Server/host name
+          maxLength: 200
+          title: server_name
+          type: string
+        tags:
+          additionalProperties:
+            maxLength: 200
+            title: value
+            type: string
+          description: Tags for filtering and grouping
+          maxProperties: 50
+          title: tags
+          type: object
+        timestamp:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: When the event occurred (required by Sentry)
+          title: timestamp
+        transaction:
+          description: Transaction name (e.g., route name, function name)
+          maxLength: 200
+          title: transaction
+          type: string
+      title: ErrorEvent
+      type: object
+    gitpod.v1.ReportErrorsResponse:
+      additionalProperties: false
+      description: "ReportErrorsResponse confirms that the errors were successfully received\n Success is indicated by HTTP 200 status code, failures by other status codes Empty response - success indicated by HTTP status code"
+      title: ReportErrorsResponse
+      type: object
+    gitpod.v1.ErrorLevel:
+      description: Error severity levels (aligned with Sentry levels)
+      enum:
+      - ERROR_LEVEL_UNSPECIFIED
+      - ERROR_LEVEL_DEBUG
+      - ERROR_LEVEL_INFO
+      - ERROR_LEVEL_WARNING
+      - ERROR_LEVEL_ERROR
+      - ERROR_LEVEL_FATAL
+      title: ErrorLevel
+      type: string
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.RequestInfo:
+      additionalProperties: false
+      description: Request information (Sentry-compatible)
+      properties:
+        data:
+          description: Request body (truncated if large)
+          maxLength: 10000
+          title: data
+          type: string
+        headers:
+          additionalProperties:
+            maxLength: 1000
+            title: value
+            type: string
+          description: Request headers
+          maxProperties: 50
+          title: headers
+          type: object
+        method:
+          description: HTTP method
+          maxLength: 10
+          title: method
+          type: string
+        queryString:
+          additionalProperties:
+            maxLength: 1000
+            title: value
+            type: string
+          description: Query parameters
+          maxProperties: 50
+          title: query_string
+          type: object
+        url:
+          description: Request URL
+          maxLength: 2000
+          title: url
+          type: string
+      title: RequestInfo
+      type: object
+    gitpod.v1.Breadcrumb:
+      additionalProperties: false
+      description: Breadcrumb information (Sentry-compatible)
+      properties:
+        category:
+          description: Breadcrumb category
+          maxLength: 100
+          title: category
+          type: string
+        data:
+          additionalProperties:
+            maxLength: 1000
+            title: value
+            type: string
+          description: Additional breadcrumb data
+          maxProperties: 20
+          title: data
+          type: object
+        level:
+          $ref: '#/components/schemas/gitpod.v1.ErrorLevel'
+          description: Breadcrumb level
+          title: level
+        message:
+          description: Breadcrumb message
+          maxLength: 1000
+          title: message
+          type: string
+        timestamp:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: When the breadcrumb occurred
+          title: timestamp
+        type:
+          description: Breadcrumb type (e.g., "navigation", "http", "user", "error")
+          maxLength: 100
+          title: type
+          type: string
+      title: Breadcrumb
+      type: object
+    gitpod.v1.ExceptionMechanism:
+      additionalProperties: false
+      description: Exception mechanism information (Sentry-compatible)
+      properties:
+        data:
+          additionalProperties:
+            maxLength: 1000
+            title: value
+            type: string
+          description: Additional mechanism-specific data
+          maxProperties: 20
+          title: data
+          type: object
+        description:
+          description: Human-readable description of the mechanism
+          maxLength: 1000
+          title: description
+          type: string
+        handled:
+          description: Whether the exception was handled by user code
+          title: handled
+          type: boolean
+        synthetic:
+          description: Whether this is a synthetic exception (created by SDK)
+          title: synthetic
+          type: boolean
+        type:
+          description: Type of mechanism (e.g., "generic", "promise", "onerror")
+          maxLength: 100
+          minLength: 1
+          title: type
+          type: string
+      title: ExceptionMechanism
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

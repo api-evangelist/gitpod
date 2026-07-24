@@ -1,0 +1,2790 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.EnvironmentService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.EnvironmentService
+  x-displayName: gitpod.v1.EnvironmentService
+paths:
+  /gitpod.v1.EnvironmentService/AllowPortAccess:
+    servers: []
+    post:
+      deprecated: true
+      description: "Deprecated: Use local validation with the environment state cache instead.\n\n Checks if the authenticated caller can access a specific port on an environment.\n This is called by the Runner Proxy to validate access tokens against current state.\n The caller's identity is extracted from the JWT in the request context.\n\n ### Examples\n\n - Check port access:\n\n   Verifies if the caller can access port 8080 on an environment.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   port: 8080\n   ```"
+      operationId: gitpod.v1.EnvironmentService.AllowPortAccess
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              check_port_access:
+                description: Verifies if the caller can access port 8080 on an environment.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  port: 8080
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.AllowPortAccessRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.AllowPortAccessResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: AllowPortAccess
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/CreateEnvironment:
+    servers: []
+    post:
+      description: "Creates a development environment from a context URL (e.g. Git repository) and starts it.\n\n The `class` field must be a valid environment class ID. You can find a list of\n available environment classes with the `ListEnvironmentClasses` method.\n\n ### Examples\n\n - Create from context URL:\n\n   Creates an environment from a Git repository URL with default settings.\n\n   ```yaml\n   spec:\n     machine:\n       class: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n     content:\n       initializer:\n         specs:\n           - contextUrl:\n               url: \"https://github.com/gitpod-io/gitpod\"\n   ```\n\n - Create from Git repository:\n\n   Creates an environment from a Git repository with specific branch targeting.\n\n   ```yaml\n   spec:\n     machine:\n       class: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n     content:\n       initializer:\n         specs:\n           - git:\n               remoteUri: \"https://github.com/gitpod-io/gitpod\"\n               cloneTarget: \"main\"\n               targetMode: \"CLONE_TARGET_MODE_REMOTE_BRANCH\"\n   ```\n\n - Create with custom timeout and ports:\n\n   Creates an environment with custom inactivity timeout and exposed port configuration.\n\n   ```yaml\n   spec:\n     machine:\n       class: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n     content:\n       initializer:\n         specs:\n           - contextUrl:\n               url: \"https://github.com/gitpod-io/gitpod\"\n     timeout:\n       disconnected: \"7200s\"  # 2 hours in seconds\n     ports:\n       - port: 3000\n         admission: \"ADMISSION_LEVEL_EVERYONE\"\n         name: \"Web App\"\n   ```"
+      operationId: gitpod.v1.EnvironmentService.CreateEnvironment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_from_context_url:
+                description: Creates an environment from a Git repository URL with default settings.
+                value:
+                  spec:
+                    content:
+                      initializer:
+                        specs:
+                        - contextUrl:
+                            url: https://github.com/gitpod-io/gitpod
+                    machine:
+                      class: d2c94c27-3b76-4a42-b88c-95a85e392c68
+              create_from_git_repository:
+                description: Creates an environment from a Git repository with specific branch targeting.
+                value:
+                  spec:
+                    content:
+                      initializer:
+                        specs:
+                        - git:
+                            cloneTarget: main
+                            remoteUri: https://github.com/gitpod-io/gitpod
+                            targetMode: CLONE_TARGET_MODE_REMOTE_BRANCH
+                    machine:
+                      class: d2c94c27-3b76-4a42-b88c-95a85e392c68
+              create_with_custom_timeout_and_ports:
+                description: Creates an environment with custom inactivity timeout and exposed port configuration.
+                value:
+                  spec:
+                    content:
+                      initializer:
+                        specs:
+                        - contextUrl:
+                            url: https://github.com/gitpod-io/gitpod
+                    machine:
+                      class: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                    ports:
+                    - admission: ADMISSION_LEVEL_EVERYONE
+                      name: Web App
+                      port: 3000
+                    timeout:
+                      disconnected: 7200s
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateEnvironmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateEnvironmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateEnvironment
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/CreateEnvironmentAccessToken:
+    servers: []
+    post:
+      description: "Creates an access token for the environment.\n\n Generated tokens are valid for one hour and provide environment-specific access permissions.\n The token is scoped to a specific environment.\n\n ### Examples\n\n - Generate environment token:\n\n   Creates a temporary access token for accessing an environment.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.EnvironmentService.CreateEnvironmentAccessToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              generate_environment_token:
+                description: Creates a temporary access token for accessing an environment.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateEnvironmentAccessTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateEnvironmentAccessTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateEnvironmentAccessToken
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/CreateEnvironmentFromProject:
+    servers: []
+    post:
+      description: "Creates an environment from an existing project configuration and starts it.\n\n This method uses project settings as defaults but allows overriding specific\n configurations. Project settings take precedence over default configurations,\n while custom specifications in the request override project settings.\n\n ### Examples\n\n - Create with project defaults:\n\n   Creates an environment using all default settings from the project configuration.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```\n\n - Create with custom compute resources:\n\n   Creates an environment from project with custom machine class and timeout settings.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   spec:\n     machine:\n       class: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n     timeout:\n       disconnected: \"14400s\"  # 4 hours in seconds\n   ```"
+      operationId: gitpod.v1.EnvironmentService.CreateEnvironmentFromProject
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_with_custom_compute_resources:
+                description: Creates an environment from project with custom machine class and timeout settings.
+                value:
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  spec:
+                    machine:
+                      class: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                    timeout:
+                      disconnected: 14400s
+              create_with_project_defaults:
+                description: Creates an environment using all default settings from the project configuration.
+                value:
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateEnvironmentFromProjectRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateEnvironmentFromProjectResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateEnvironmentFromProject
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/CreateEnvironmentLogsToken:
+    servers: []
+    post:
+      description: "Creates an access token for retrieving environment logs.\n\n Generated tokens are valid for one hour and provide read-only access\n to the environment's logs.\n\n ### Examples\n\n - Generate logs token:\n\n   Creates a temporary access token for retrieving environment logs.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.EnvironmentService.CreateEnvironmentLogsToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              generate_logs_token:
+                description: Creates a temporary access token for retrieving environment logs.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateEnvironmentLogsTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateEnvironmentLogsTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateEnvironmentLogsToken
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/CreatePortAccessToken:
+    servers: []
+    post:
+      description: "Creates an access token for a specific port on an environment.\n\n The token grants access to the specified port based on the port's admission level.\n Tokens are short-lived (~1 hour) with refresh tokens for long-running connections.\n\n ### Examples\n\n - Generate port access token:\n\n   Creates a token for accessing port 8080 on an environment.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   port: 8080\n   ```"
+      operationId: gitpod.v1.EnvironmentService.CreatePortAccessToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              generate_port_access_token:
+                description: Creates a token for accessing port 8080 on an environment.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  port: 8080
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreatePortAccessTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreatePortAccessTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreatePortAccessToken
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/DeleteEnvironment:
+    servers: []
+    post:
+      description: "Permanently deletes an environment.\n\n Running environments are automatically stopped before deletion. If force\n is true, the environment is deleted immediately without graceful shutdown.\n\n ### Examples\n\n - Delete with graceful shutdown:\n\n   Deletes an environment after gracefully stopping it.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   force: false\n   ```\n\n - Force delete:\n\n   Immediately deletes an environment without waiting for graceful shutdown.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   force: true\n   ```"
+      operationId: gitpod.v1.EnvironmentService.DeleteEnvironment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_with_graceful_shutdown:
+                description: Deletes an environment after gracefully stopping it.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  force: false
+              force_delete:
+                description: Immediately deletes an environment without waiting for graceful shutdown.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  force: true
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteEnvironmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteEnvironmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteEnvironment
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/GetEnvironment:
+    servers: []
+    post:
+      description: "Gets details about a specific environment including its status, configuration, and context URL.\n\n Use this method to:\n - Check if an environment is ready to use\n - Get connection details for IDE and exposed ports\n - Monitor environment health and resource usage\n - Debug environment setup issues\n\n ### Examples\n\n - Get environment details:\n\n   Retrieves detailed information about a specific environment using its unique identifier.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.EnvironmentService.GetEnvironment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_environment_details:
+                description: Retrieves detailed information about a specific environment using its unique identifier.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetEnvironmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetEnvironmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetEnvironment
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/ListEnvironmentClasses:
+    servers: []
+    post:
+      description: "Lists available environment classes with their specifications and resource limits.\n\n Use this method to understand what types of environments you can create and their\n capabilities. Environment classes define the compute resources and features available\n to your environments.\n\n ### Examples\n\n - List all available classes:\n\n   Retrieves a list of all environment classes with their specifications.\n\n   ```yaml\n   {}\n   ```\n buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE"
+      operationId: gitpod.v1.EnvironmentService.ListEnvironmentClasses
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_available_classes:
+                description: Retrieves a list of all environment classes with their specifications.
+                value: {}
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListEnvironmentClassesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListEnvironmentClassesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListEnvironmentClasses
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/ListEnvironments:
+    servers: []
+    post:
+      description: "Lists all environments matching the specified criteria.\n\n Use this method to find and monitor environments across your organization.\n Results are ordered by creation time with newest environments first.\n\n ### Examples\n\n - List running environments for a project:\n\n   Retrieves all running environments for a specific project with pagination.\n\n   ```yaml\n   filter:\n     statusPhases: [\"ENVIRONMENT_PHASE_RUNNING\"]\n     projectIds: [\"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"]\n   pagination:\n     pageSize: 10\n   ```\n\n - List all environments for a specific runner:\n\n   Filters environments by runner ID and creator ID.\n\n   ```yaml\n   filter:\n     runnerIds: [\"e6aa9c54-89d3-42c1-ac31-bd8d8f1concentrate\"]\n     creatorIds: [\"f53d2330-3795-4c5d-a1f3-453121af9c60\"]\n   ```\n\n - List stopped and deleted environments:\n\n   Retrieves all environments in stopped or deleted state.\n\n   ```yaml\n   filter:\n     statusPhases: [\"ENVIRONMENT_PHASE_STOPPED\", \"ENVIRONMENT_PHASE_DELETED\"]\n   ```"
+      operationId: gitpod.v1.EnvironmentService.ListEnvironments
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_environments_for_a_specific_runner:
+                description: Filters environments by runner ID and creator ID.
+                value:
+                  filter:
+                    creatorIds:
+                    - f53d2330-3795-4c5d-a1f3-453121af9c60
+                    runnerIds:
+                    - e6aa9c54-89d3-42c1-ac31-bd8d8f1concentrate
+              list_running_environments_for_a_project:
+                description: Retrieves all running environments for a specific project with pagination.
+                value:
+                  filter:
+                    projectIds:
+                    - b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                    statusPhases:
+                    - ENVIRONMENT_PHASE_RUNNING
+                  pagination:
+                    pageSize: 10
+              list_stopped_and_deleted_environments:
+                description: Retrieves all environments in stopped or deleted state.
+                value:
+                  filter:
+                    statusPhases:
+                    - ENVIRONMENT_PHASE_STOPPED
+                    - ENVIRONMENT_PHASE_DELETED
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListEnvironmentsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListEnvironmentsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListEnvironments
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/MarkEnvironmentActive:
+    servers: []
+    post:
+      description: "Records environment activity to prevent automatic shutdown.\n\n Activity signals should be sent every 5 minutes while the environment\n is actively being used. The source must be between 3-80 characters.\n\n ### Examples\n\n - Signal VS Code activity:\n\n   Records VS Code editor activity to prevent environment shutdown.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   activitySignal:\n     source: \"VS Code\"\n     timestamp: \"2025-02-12T14:30:00Z\"\n   ```"
+      operationId: gitpod.v1.EnvironmentService.MarkEnvironmentActive
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              signal_vs_code_activity:
+                description: Records VS Code editor activity to prevent environment shutdown.
+                value:
+                  activitySignal:
+                    source: VS Code
+                    timestamp: '2025-02-12T14:30:00Z'
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.MarkEnvironmentActiveRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.MarkEnvironmentActiveResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: MarkEnvironmentActive
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/StartEnvironment:
+    servers: []
+    post:
+      description: "Starts a stopped environment.\n\n Use this method to resume work on a previously stopped environment. The environment\n retains its configuration and workspace content from when it was stopped.\n\n ### Examples\n\n - Start an environment:\n\n   Resumes a previously stopped environment with its existing configuration.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.EnvironmentService.StartEnvironment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              start_an_environment:
+                description: Resumes a previously stopped environment with its existing configuration.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.StartEnvironmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.StartEnvironmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: StartEnvironment
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/StopEnvironment:
+    servers: []
+    post:
+      description: "Stops a running environment.\n\n Use this method to pause work while preserving the environment's state.\n The environment can be resumed later using StartEnvironment.\n\n ### Examples\n\n - Stop an environment:\n\n   Gracefully stops a running environment while preserving its state.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.EnvironmentService.StopEnvironment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              stop_an_environment:
+                description: Gracefully stops a running environment while preserving its state.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.StopEnvironmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.StopEnvironmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: StopEnvironment
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/UnarchiveEnvironment:
+    servers: []
+    post:
+      description: "Unarchives an environment.\n\n ### Examples\n\n - Unarchive an environment:\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.EnvironmentService.UnarchiveEnvironment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              unarchive_an_environment:
+                description: 'environmentId: "07e03a28-65a5-4d98-b532-8ea67b188048"
+
+                  '
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UnarchiveEnvironmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UnarchiveEnvironmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UnarchiveEnvironment
+      tags:
+      - gitpod.v1.EnvironmentService
+  /gitpod.v1.EnvironmentService/UpdateEnvironment:
+    servers: []
+    post:
+      description: "Updates an environment's configuration while it is running.\n\n Updates are limited to:\n - Git credentials (username, email)\n - SSH public keys\n - Content initialization\n - Port configurations\n - Automation files\n - Environment timeouts\n\n ### Examples\n\n - Update Git credentials:\n\n   Updates the Git configuration for the environment.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   spec:\n     content:\n       gitUsername: \"example-user\"\n       gitEmail: \"user@example.com\"\n   ```\n\n - Add SSH public key:\n\n   Adds a new SSH public key for authentication.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   spec:\n     sshPublicKeys:\n       - id: \"0194b7c1-c954-718d-91a4-9a742aa5fc11\"\n         value: \"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...\"\n   ```\n\n - Update content session:\n\n   Updates the content session identifier for the environment.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   spec:\n     content:\n       session: \"0194b7c1-c954-718d-91a4-9a742aa5fc11\"\n   ```\n\n Note: Machine class changes require stopping the environment and creating a new one."
+      operationId: gitpod.v1.EnvironmentService.UpdateEnvironment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              add_ssh_public_key:
+                description: Adds a new SSH public key for authentication.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  spec:
+                    sshPublicKeys:
+                    - id: 0194b7c1-c954-718d-91a4-9a742aa5fc11
+                      value: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...
+              update_content_session:
+                description: Updates the content session identifier for the environment.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  spec:
+                    content:
+                      session: 0194b7c1-c954-718d-91a4-9a742aa5fc11
+              update_git_credentials:
+                description: Updates the Git configuration for the environment.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  spec:
+                    content:
+                      gitEmail: user@example.com
+                      gitUsername: example-user
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateEnvironmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateEnvironmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateEnvironment
+      tags:
+      - gitpod.v1.EnvironmentService
+components:
+  schemas:
+    gitpod.v1.EnvironmentStatus.DevContainer.Phase:
+      enum:
+      - PHASE_UNSPECIFIED
+      - PHASE_CREATING
+      - PHASE_RUNNING
+      - PHASE_STOPPED
+      - PHASE_FAILED
+      title: Phase
+      type: string
+    gitpod.v1.CreateEnvironmentFromProjectRequest:
+      additionalProperties: false
+      properties:
+        annotations:
+          additionalProperties:
+            title: value
+            type: string
+          description: annotations are key/value pairs attached to the environment metadata.
+          title: annotations
+          type: object
+          x-stainless-skip: true
+        name:
+          description: "name is a user-defined identifier for the environment.\n If not specified, the system will generate a name."
+          maxLength: 80
+          nullable: true
+          title: name
+          type: string
+        projectId:
+          format: uuid
+          title: project_id
+          type: string
+        sessionId:
+          description: "session_id is the ID of the session this environment belongs to.\n If empty, a new session is created implicitly."
+          format: uuid
+          title: session_id
+          type: string
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec'
+          description: "Spec is the configuration of the environment that's required for the\n runner to start the environment\n Configuration already defined in the Project will override parts of the spec, if set"
+          title: spec
+      title: CreateEnvironmentFromProjectRequest
+      type: object
+    gitpod.v1.EnvironmentSpec.Secret:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - containerRegistryBasicAuthHost
+          - required:
+            - environmentVariable
+          - required:
+            - filePath
+          - required:
+            - gitCredentialHost
+        required:
+        - apiOnly
+      - not:
+          anyOf:
+          - required:
+            - apiOnly
+          - required:
+            - environmentVariable
+          - required:
+            - filePath
+          - required:
+            - gitCredentialHost
+        required:
+        - containerRegistryBasicAuthHost
+      - not:
+          anyOf:
+          - required:
+            - apiOnly
+          - required:
+            - containerRegistryBasicAuthHost
+          - required:
+            - filePath
+          - required:
+            - gitCredentialHost
+        required:
+        - environmentVariable
+      - not:
+          anyOf:
+          - required:
+            - apiOnly
+          - required:
+            - containerRegistryBasicAuthHost
+          - required:
+            - environmentVariable
+          - required:
+            - gitCredentialHost
+        required:
+        - filePath
+      - not:
+          anyOf:
+          - required:
+            - apiOnly
+          - required:
+            - containerRegistryBasicAuthHost
+          - required:
+            - environmentVariable
+          - required:
+            - filePath
+        required:
+        - gitCredentialHost
+      properties:
+        apiOnly:
+          description: "api_only indicates the secret is only available via API/CLI.\n These secrets are resolved but NOT automatically injected into services or devcontainers."
+          title: api_only
+          type: boolean
+        containerRegistryBasicAuthHost:
+          description: container_registry_basic_auth_host is the hostname of the container registry that supports basic auth
+          title: container_registry_basic_auth_host
+          type: string
+        credentialProxy:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.Secret.CredentialProxy'
+          description: "credential_proxy configures transparent credential injection via the\n credential proxy. When set, the credential proxy intercepts HTTPS\n traffic to the target hosts and replaces the dummy secret value with\n the real value in the specified HTTP header. The real secret value is\n never exposed in the environment.\n This field is orthogonal to mount — a secret can be both mounted (e.g.\n as a git credential) and proxied at the same time."
+          title: credential_proxy
+        environmentVariable:
+          title: environment_variable
+          type: string
+        filePath:
+          description: file_path is the path inside the devcontainer where the secret is mounted
+          title: file_path
+          type: string
+        gitCredentialHost:
+          title: git_credential_host
+          type: string
+        id:
+          description: id is the unique identifier of the secret.
+          title: id
+          type: string
+        name:
+          description: name is the human readable description of the secret
+          title: name
+          type: string
+        scope:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.Secret.Scope'
+          description: "scope indicates where this secret originated from.\n Used to filter secrets during build (only org and project secrets are injected)."
+          title: scope
+        session:
+          description: "session indicated the current session of the secret.\n When the session does not change, secrets are not reloaded in the environment."
+          title: session
+          type: string
+        source:
+          description: source is the source of the secret, for now control-plane or runner
+          title: source
+          type: string
+        sourceRef:
+          description: source_ref into the source, in case of control-plane this is uuid of the secret
+          title: source_ref
+          type: string
+      title: Secret
+      type: object
+    gitpod.v1.EnvironmentStatus.AutomationsFile:
+      additionalProperties: false
+      properties:
+        automationsFilePath:
+          description: automations_file_path is the path to the automations file relative to the repo root.
+          title: automations_file_path
+          type: string
+        automationsFilePresence:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.AutomationsFile.Presence'
+          description: automations_file_presence indicates how an automations file is present in the environment.
+          title: automations_file_presence
+        failureMessage:
+          description: "failure_message contains the reason the automations file failed to be applied.\n This is only set if the phase is FAILED."
+          title: failure_message
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.ContentPhase'
+          description: phase is the current phase of the automations file.
+          title: phase
+        session:
+          description: session is the automations file session that is currently applied in the environment.
+          title: session
+          type: string
+        warningMessage:
+          description: warning_message contains warnings, e.g. when no triggers are defined in the automations file.
+          title: warning_message
+          type: string
+      title: AutomationsFile
+      type: object
+    gitpod.v1.EnvironmentStatus.Content:
+      additionalProperties: false
+      properties:
+        contentLocationInMachine:
+          description: content_location_in_machine is the location of the content in the machine
+          title: content_location_in_machine
+          type: string
+        failureMessage:
+          description: failure_message contains the reason the content initialization failed.
+          title: failure_message
+          type: string
+        git:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentGitStatus'
+          description: "git is the Git working copy status of the environment.\n Note: this is a best-effort field and more often than not will not be\n present. Its absence does not indicate the absence of a working copy."
+          title: git
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.ContentPhase'
+          description: phase is the current phase of the environment content
+          title: phase
+        session:
+          description: session is the session that is currently active in the environment.
+          title: session
+          type: string
+        warningMessage:
+          description: warning_message contains warnings, e.g. when the content is present but not in the expected state.
+          title: warning_message
+          type: string
+      title: Content
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.CountResponseRelation:
+      enum:
+      - COUNT_RESPONSE_RELATION_UNSPECIFIED
+      - COUNT_RESPONSE_RELATION_EQ
+      - COUNT_RESPONSE_RELATION_GTE
+      title: CountResponseRelation
+      type: string
+    gitpod.v1.UpdateEnvironmentRequest.Timeout:
+      additionalProperties: false
+      properties:
+        disconnected:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "inacitivity is the maximum time of disconnection before the environment is\n stopped or paused. Minimum duration is 30 minutes. Set to 0 to disable.\nvalue must be 0s (disabled) or at least 1800s (30 minutes):\n```\nthis == duration('0s') || this >= duration('1800s')\n```\n\n"
+          nullable: true
+          title: disconnected
+      title: Timeout
+      type: object
+    gitpod.v1.EnvironmentStatus.EnvironmentURLs:
+      additionalProperties: false
+      properties:
+        logs:
+          description: logs is the URL at which the environment logs can be accessed.
+          title: logs
+          type: string
+        ops:
+          description: ops is the URL at which the environment ops service can be accessed.
+          title: ops
+          type: string
+        ports:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.EnvironmentPortURL'
+          title: ports
+          type: array
+        ssh:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.EnvironmentSSHURL'
+          description: SSH is the URL at which the environment can be accessed via SSH.
+          title: ssh
+        supportBundle:
+          description: support_bundle is the URL at which the environment support bundle can be accessed.
+          title: support_bundle
+          type: string
+        vmLiveUsage:
+          description: vm_live_usage is the URL at which the environment's live VM resource usage can be accessed.
+          title: vm_live_usage
+          type: string
+          x-stainless-skip: true
+      title: EnvironmentURLs
+      type: object
+    gitpod.v1.UpdateEnvironmentRequest.AutomationsFile:
+      additionalProperties: false
+      properties:
+        automationsFilePath:
+          description: "automations_file_path is the path to the automations file that is applied in the environment,\n relative to the repo root.\npath must not be absolute (start with a /):\n```\nthis.matches('^$|^[^/].*')\n```\n\n"
+          nullable: true
+          title: automations_file_path
+          type: string
+        session:
+          nullable: true
+          title: session
+          type: string
+      title: AutomationsFile
+      type: object
+    gitpod.v1.UpdateEnvironmentRequest.Spec:
+      additionalProperties: false
+      properties:
+        automationsFile:
+          $ref: '#/components/schemas/gitpod.v1.UpdateEnvironmentRequest.AutomationsFile'
+          description: automations_file is the automations file spec of the environment
+          nullable: true
+          title: automations_file
+        content:
+          $ref: '#/components/schemas/gitpod.v1.UpdateEnvironmentRequest.Content'
+          nullable: true
+          title: content
+        devcontainer:
+          $ref: '#/components/schemas/gitpod.v1.UpdateEnvironmentRequest.DevContainer'
+          nullable: true
+          title: devcontainer
+        kernelControlsConfig:
+          $ref: '#/components/schemas/gitpod.v1.KernelControlsConfig'
+          description: kernel_controls_config configures kernel-level controls for this environment
+          nullable: true
+          title: kernel_controls_config
+        ports:
+          description: ports controls port sharing
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.EnvironmentPort'
+          title: ports
+          type: array
+        sshPublicKeys:
+          description: "ssh_public_keys are the public keys to update\n empty array means nothing to update"
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UpdateEnvironmentRequest.SSHPublicKey'
+          title: ssh_public_keys
+          type: array
+        timeout:
+          $ref: '#/components/schemas/gitpod.v1.UpdateEnvironmentRequest.Timeout'
+          description: Timeout configures the environment timeout
+          nullable: true
+          title: timeout
+      title: Spec
+      type: object
+    gitpod.v1.FieldValue:
+      additionalProperties: false
+      properties:
+        key:
+          title: key
+          type: string
+        value:
+          title: value
+          type: string
+      title: FieldValue
+      type: object
+    gitpod.v1.EnvironmentSpec.Secret.CredentialProxy:
+      additionalProperties: false
+      description: "CredentialProxy describes how the credential proxy should inject this\n secret into outgoing HTTPS requests."
+      properties:
+        format:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.Secret.CredentialProxy.Format'
+          description: "format describes how the secret value is encoded. The proxy uses\n this to decode the value before injecting it into the header."
+          title: format
+        header:
+          description: header is the HTTP header name to inject (e.g. "Authorization").
+          title: header
+          type: string
+        targetHosts:
+          description: "target_hosts lists the hostnames to intercept (for example\n \"github.com\" or \"*.github.com\"). Wildcards are subdomain-only and\n do not match the apex domain."
+          items:
+            type: string
+          title: target_hosts
+          type: array
+      title: CredentialProxy
+      type: object
+    google.protobuf.Duration:
+      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
+      format: regex
+      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
+      type: string
+    gitpod.v1.UnarchiveEnvironmentResponse:
+      additionalProperties: false
+      title: UnarchiveEnvironmentResponse
+      type: object
+    gitpod.v1.EnvironmentActivitySignal:
+      additionalProperties: false
+      description: EnvironmentActivitySignal used to signal activity for an environment.
+      properties:
+        source:
+          description: "source of the activity signal, such as \"VS Code\", \"SSH\", or \"Automations\".\n It should be a human-readable string that describes the source of the activity signal."
+          maxLength: 80
+          minLength: 3
+          title: source
+          type: string
+        timestamp:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "timestamp of when the activity was observed by the source.\n Only reported every 5 minutes.\n Zero value means no activity was observed."
+          title: timestamp
+      title: EnvironmentActivitySignal
+      type: object
+    gitpod.v1.KernelControlsConfig:
+      additionalProperties: false
+      description: KernelControlsConfig configures kernel-level controls for the environment
+      properties:
+        bpfDebugLevel:
+          $ref: '#/components/schemas/gitpod.v1.BPFDebugLevel'
+          description: "bpf_debug_level controls the verbosity of BPF trace_pipe output\n for all BPF-based agents in this environment."
+          title: bpf_debug_level
+          x-stainless-skip: true
+        veto:
+          $ref: '#/components/schemas/gitpod.v1.Veto'
+          description: veto controls blocking mechanisms
+          title: veto
+      title: KernelControlsConfig
+      type: object
+    gitpod.v1.EnvironmentSpec.SSHPublicKey:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the unique identifier of the public key
+          title: id
+          type: string
+        value:
+          description: value is the actual public key in the public key file format
+          title: value
+          type: string
+      title: SSHPublicKey
+      type: object
+    gitpod.v1.UpdateEnvironmentRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: "environment_id specifies which environment should be updated.\n\n +required"
+          format: uuid
+          title: environment_id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.UpdateEnvironmentRequest.Metadata'
+          nullable: true
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.UpdateEnvironmentRequest.Spec'
+          nullable: true
+          title: spec
+      title: UpdateEnvironmentRequest
+      type: object
+    gitpod.v1.CreateEnvironmentAccessTokenRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: environment_id specifies the environment for which the access token should be created.
+          format: uuid
+          title: environment_id
+          type: string
+      required:
+      - environmentId
+      title: CreateEnvironmentAccessTokenRequest
+      type: object
+    gitpod.v1.EnvironmentSpec.Content:
+      additionalProperties: false
+      properties:
+        gitEmail:
+          description: The Git email address
+          title: git_email
+          type: string
+        gitUsername:
+          description: The Git username
+          title: git_username
+          type: string
+        initializer:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentInitializer'
+          description: initializer configures how the environment is to be initialized
+          title: initializer
+        session:
+          title: session
+          type: string
+      title: Content
+      type: object
+    gitpod.v1.EnvironmentGitStatus:
+      additionalProperties: false
+      properties:
+        branch:
+          description: branch is branch we're currently on
+          title: branch
+          type: string
+        changedFiles:
+          description: "changed_files is an array of changed files in the environment, possibly\n truncated"
+          items:
+            $ref: '#/components/schemas/gitpod.v1.FileChange'
+          maxItems: 101
+          title: changed_files
+          type: array
+        cloneUrl:
+          description: "clone_url is the repository url as you would pass it to \"git clone\".\n Only HTTPS clone URLs are supported."
+          title: clone_url
+          type: string
+        latestCommit:
+          description: latest_commit is the most recent commit on the current branch
+          title: latest_commit
+          type: string
+        totalChangedFiles:
+          format: int32
+          title: total_changed_files
+          type: integer
+        totalUnpushedCommits:
+          description: the total number of unpushed changes
+          format: int32
+          title: total_unpushed_commits
+          type: integer
+        unpushedCommits:
+          description: "unpushed_commits is an array of unpushed changes in the environment, possibly\n truncated"
+          items:
+            maxItems: 101
+            type: string
+          maxItems: 101
+          title: unpushed_commits
+          type: array
+      title: EnvironmentGitStatus
+      type: object
+    gitpod.v1.ListEnvironmentClassesRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListEnvironmentClassesRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing environment classes
+          title: pagination
+      title: ListEnvironmentClassesRequest
+      type: object
+    gitpod.v1.CreateEnvironmentRequest:
+      additionalProperties: false
+      description: "Required fields:\n - metadata.organization_id\n - metadata.configuration_id"
+      properties:
+        annotations:
+          additionalProperties:
+            title: value
+            type: string
+          description: annotations are key/value pairs attached to the environment metadata.
+          title: annotations
+          type: object
+          x-stainless-skip: true
+        name:
+          description: "name is a user-defined identifier for the environment.\n If not specified, the system will generate a name."
+          maxLength: 80
+          nullable: true
+          title: name
+          type: string
+        sessionId:
+          description: "session_id is the ID of the session this environment belongs to.\n If empty, a new session is created implicitly."
+          format: uuid
+          title: session_id
+          type: string
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec'
+          description: "spec is the configuration of the environment that's required for the to\n start the environment"
+          title: spec
+      title: CreateEnvironmentRequest
+      type: object
+    gitpod.v1.RunnerKind:
+      description: RunnerKind represents the kind of a runner
+      enum:
+      - RUNNER_KIND_UNSPECIFIED
+      - RUNNER_KIND_LOCAL
+      - RUNNER_KIND_REMOTE
+      - RUNNER_KIND_LOCAL_CONFIGURATION
+      title: RunnerKind
+      type: string
+    gitpod.v1.CreatePortAccessTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          description: access_token is the token that can be used to access the port.
+          title: access_token
+          type: string
+      required:
+      - accessToken
+      title: CreatePortAccessTokenResponse
+      type: object
+    gitpod.v1.UpdateEnvironmentRequest.SSHPublicKey:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the unique identifier of the public key
+          title: id
+          type: string
+        value:
+          description: "value is the actual public key in the public key file format\n if not provided, the public key will be removed"
+          nullable: true
+          title: value
+          type: string
+      title: SSHPublicKey
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.EnvironmentSpec.EnvironmentPort.Protocol:
+      description: Protocol describes the communication protocol between Gateway and user environment services.
+      enum:
+      - PROTOCOL_UNSPECIFIED
+      - PROTOCOL_HTTP
+      - PROTOCOL_HTTPS
+      title: Protocol
+      type: string
+    gitpod.v1.EnvironmentStatus.RunnerACK:
+      additionalProperties: false
+      description: "RunnerACK is the acknowledgement from the runner that is has received the\n environment spec."
+      properties:
+        message:
+          title: message
+          type: string
+        specVersion:
+          title: spec_version
+          type: string
+        statusCode:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.RunnerACK.StatusCode'
+          title: status_code
+      title: RunnerACK
+      type: object
+    gitpod.v1.EnvironmentSpec.EnvironmentPort:
+      additionalProperties: false
+      properties:
+        admission:
+          $ref: '#/components/schemas/gitpod.v1.AdmissionLevel'
+          description: policy of this port
+          title: admission
+        authNonce:
+          description: "auth_nonce is a monotonically increasing counter incremented by the\n backend whenever the port's admission level changes. Used by the proxy\n to invalidate browser auth cookies without requiring a backend round-trip."
+          title: auth_nonce
+          type: string
+          x-stainless-skip: true
+        name:
+          description: name of this port
+          maxLength: 100
+          minLength: 1
+          title: name
+          type: string
+        port:
+          description: port number
+          format: int32
+          maximum: 65535
+          minimum: 1024
+          title: port
+          type: integer
+        protocol:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.EnvironmentPort.Protocol'
+          description: "protocol for communication (Gateway proxy → user environment service).\n this setting only affects the protocol used between Gateway and user environment services."
+          title: protocol
+      title: EnvironmentPort
+      type: object
+    gitpod.v1.GitInitializer.CloneTargetMode:
+      description: "CloneTargetMode is the target state in which we want to leave a\n GitEnvironment"
+      enum:
+      - CLONE_TARGET_MODE_UNSPECIFIED
+      - CLONE_TARGET_MODE_REMOTE_HEAD
+      - CLONE_TARGET_MODE_REMOTE_COMMIT
+      - CLONE_TARGET_MODE_REMOTE_BRANCH
+      - CLONE_TARGET_MODE_LOCAL_BRANCH
+      - CLONE_TARGET_MODE_REMOTE_TAG
+      title: CloneTargetMode
+      type: string
+    gitpod.v1.Environment:
+      additionalProperties: false
+      description: +resource get environment
+      properties:
+        id:
+          description: "ID is a unique identifier of this environment. No other environment with the\n same name must be managed by this environment manager"
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentMetadata'
+          description: "Metadata is data associated with this environment that's required for other\n parts of Gitpod to function"
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec'
+          description: "Spec is the configuration of the environment that's required for the\n runner to start the environment"
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus'
+          description: Status is the current status of the environment
+          title: status
+      required:
+      - id
+      title: Environment
+      type: object
+    gitpod.v1.UnarchiveEnvironmentRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: "environment_id specifies the environment to unarchive.\n\n +required"
+          format: uuid
+          title: environment_id
+          type: string
+      title: UnarchiveEnvironmentRequest
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.EnvironmentSpec.DevContainer.LifecycleStage:
+      description: "LifecycleStage controls which devcontainer lifecycle commands are executed.\n See https://containers.dev/implementors/json_reference/#lifecycle-scripts"
+      enum:
+      - LIFECYCLE_STAGE_UNSPECIFIED
+      - LIFECYCLE_STAGE_FULL
+      - LIFECYCLE_STAGE_PREBUILD
+      title: LifecycleStage
+      type: string
+    gitpod.v1.EnvironmentMetadata:
+      additionalProperties: false
+      description: "EnvironmentMetadata is data associated with an environment that's required for\n other parts of the system to function"
+      properties:
+        annotations:
+          additionalProperties:
+            title: value
+            type: string
+          description: "annotations are key/value pairs that gets attached to the environment.\n +internal - not yet implemented"
+          title: annotations
+          type: object
+        archivedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Time when the Environment was archived. If not set, the environment is not archived.
+          title: archived_at
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Time when the Environment was created.
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: creator is the identity of the creator of the environment
+          title: creator
+        lastStartedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Time when the Environment was last started (i.e. CreateEnvironment or StartEnvironment were called).
+          title: last_started_at
+        lockdownAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "lockdown_at is the time at which the environment becomes locked down due\n to the organization's maximum environment lifetime policy. Nil when no\n lifetime policy applies."
+          title: lockdown_at
+        name:
+          description: name is the name of the environment as specified by the user
+          maxLength: 80
+          title: name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization that contains the environment
+          format: uuid
+          title: organization_id
+          type: string
+        originalContextUrl:
+          description: "original_context_url is the normalized URL from which the environment was\n created"
+          title: original_context_url
+          type: string
+        prebuildId:
+          description: "prebuild_id is the ID of the prebuild this environment was created from.\n Only set if the environment was created from a prebuild."
+          format: uuid
+          nullable: true
+          title: prebuild_id
+          type: string
+        projectId:
+          description: If the Environment was started from a project, the project_id will reference the project.
+          title: project_id
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentRole'
+          description: role is the role of the environment
+          title: role
+        runnerId:
+          description: Runner is the ID of the runner that runs this environment.
+          title: runner_id
+          type: string
+        sessionId:
+          description: session_id is the ID of the session this environment belongs to.
+          title: session_id
+          type: string
+          x-stainless-skip: true
+      title: EnvironmentMetadata
+      type: object
+    gitpod.v1.GetEnvironmentResponse:
+      additionalProperties: false
+      properties:
+        environment:
+          $ref: '#/components/schemas/gitpod.v1.Environment'
+          title: environment
+      required:
+      - environment
+      title: GetEnvironmentResponse
+      type: object
+    gitpod.v1.CreateEnvironmentLogsTokenRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: "environment_id specifies the environment for which the logs token should be created.\n\n +required"
+          format: uuid
+          title: environment_id
+          type: string
+      title: CreateEnvironmentLogsTokenRequest
+      type: object
+    gitpod.v1.ListEnvironmentsRequest:
+      additionalProperties: false
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountRequest'
+          description: count controls whether the response includes a bounded total count.
+          title: count
+          x-stainless-skip: true
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListEnvironmentsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing environments
+          title: pagination
+      title: ListEnvironmentsRequest
+      type: object
+    gitpod.v1.CreateEnvironmentAccessTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          description: access_token is the token that can be used for environment authentication
+          title: access_token
+          type: string
+      required:
+      - accessToken
+      title: CreateEnvironmentAccessTokenResponse
+      type: object
+    gitpod.v1.FileChange:
+      additionalProperties: false
+      properties:
+        changeType:
+          $ref: '#/components/schemas/gitpod.v1.FileChange.ChangeType'
+          title: change_type
+        path:
+          description: path is the path of the file
+          maxLength: 255
+          title: path
+          type: string
+      title: FileChange
+      type: object
+    gitpod.v1.EnvironmentSpec.Secret.CredentialProxy.Format:
+      enum:
+      - FORMAT_UNSPECIFIED
+      - FORMAT_PLAIN
+      - FORMAT_BASE64
+      title: Format
+      type: string
+    gitpod.v1.EnvironmentSpec.AutomationsFile:
+      additionalProperties: false
+      properties:
+        automationsFilePath:
+          description: "automations_file_path is the path to the automations file that is applied in the environment,\n relative to the repo root.\npath must not be absolute (start with a /):\n```\nthis.matches('^$|^[^/].*')\n```\n\n"
+          title: automations_file_path
+          type: string
+        session:
+          title: session
+          type: string
+        triggerFilter:
+          description: "trigger_filter specifies which automation triggers should execute.\n When set, only automations matching these triggers will run.\n If empty/unset, all triggers are evaluated normally."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AutomationTrigger'
+          title: trigger_filter
+          type: array
+      title: AutomationsFile
+      type: object
+    gitpod.v1.AdmissionLevel:
+      description: Admission level describes who can access an environment instance and its ports.
+      enum:
+      - ADMISSION_LEVEL_UNSPECIFIED
+      - ADMISSION_LEVEL_OWNER_ONLY
+      - ADMISSION_LEVEL_EVERYONE
+      - ADMISSION_LEVEL_ORGANIZATION
+      - ADMISSION_LEVEL_CREATOR_ONLY
+      title: AdmissionLevel
+      type: string
+    gitpod.v1.CountResponse:
+      additionalProperties: false
+      description: "CountResponse represents a bounded count of matching records.\n When the actual count exceeds the counting limit, value is capped and\n relation is set to GREATER_THAN_OR_EQUAL."
+      properties:
+        relation:
+          $ref: '#/components/schemas/gitpod.v1.CountResponseRelation'
+          description: Indicates whether value is the exact total or a lower bound.
+          title: relation
+        value:
+          description: The count of matching records, capped at the server's counting limit.
+          format: int32
+          title: value
+          type: integer
+      title: CountResponse
+      type: object
+    gitpod.v1.CreateEnvironmentResponse:
+      additionalProperties: false
+      properties:
+        environment:
+          $ref: '#/components/schemas/gitpod.v1.Environment'
+          title: environment
+      required:
+      - environment
+      title: CreateEnvironmentResponse
+      type: object
+    gitpod.v1.Veto.Exec:
+      additionalProperties: false
+      description: Exec controls executable blocking
+      properties:
+        action:
+          $ref: '#/components/schemas/gitpod.v1.KernelControlsAction'
+          description: action specifies what action kernel-level controls take on policy violations
+          title: action
+        denyBlockDevices:
+          description: "deny_block_devices blocks opening of block devices (S_ISBLK) system-wide\n inside the environment. Prevents direct disk access. Gated by a feature flag."
+          title: deny_block_devices
+          type: boolean
+          x-stainless-skip: true
+        denylist:
+          description: denylist is the list of executable paths or names to block
+          items:
+            type: string
+          title: denylist
+          type: array
+        enabled:
+          description: enabled controls whether executable blocking is active
+          title: enabled
+          type: boolean
+        resolveBareNames:
+          description: "resolve_bare_names enables the discovery agent to resolve bare executable\n names in the denylist to full filesystem paths. Gated by a feature flag\n for incremental rollout."
+          title: resolve_bare_names
+          type: boolean
+          x-stainless-skip: true
+        untouchable:
+          description: "untouchable enables file I/O blocking on denylisted files. When true,\n every read()/write() on a denylisted file is blocked via the\n security_file_permission LSM hook. Gated by a feature flag."
+          title: untouchable
+          type: boolean
+          x-stainless-skip: true
+        watch:
+          description: "watch enables the BPF file watcher that emits events when denylisted\n files are modified, unlinked, or renamed. Used by the self-healing\n responder to keep the hash denylist up to date."
+          title: watch
+          type: boolean
+          x-stainless-skip: true
+      title: Exec
+      type: object
+    gitpod.v1.EnvironmentStatus.Machine.Phase:
+      enum:
+      - PHASE_UNSPECIFIED
+      - PHASE_CREATING
+      - PHASE_STARTING
+      - PHASE_RUNNING
+      - PHASE_STOPPING
+      - PHASE_STOPPED
+      - PHASE_DELETING
+      - PHASE_DELETED
+      title: Phase
+      type: string
+    gitpod.v1.EnvironmentSpec.Machine:
+      additionalProperties: false
+      properties:
+        class:
+          description: Class denotes the class of the environment we ought to start
+          title: class
+          type: string
+        preferDualDisk:
+          description: "prefer_dual_disk indicates the management plane wants this environment\n to use a dual-disk layout (separate system and data disks). The runner\n may ignore this if it does not support dual-disk."
+          title: prefer_dual_disk
+          type: boolean
+          x-stainless-skip: true
+        session:
+          title: session
+          type: string
+      title: Machine
+      type: object
+    gitpod.v1.AutomationTrigger:
+      additionalProperties: false
+      description: "An AutomationTrigger represents a trigger for an automation action.\n The `manual` field shows a start button in the UI for manually triggering the automation.\n The `post_machine_start` field indicates that the automation should be triggered after the machine has started, before the devcontainer is ready.\n This is used for machine-level services like security agents that need to start early.\n The `post_environment_start` field indicates that the automation should be triggered after the environment has started (devcontainer ready).\n The `post_devcontainer_start` field indicates that the automation should be triggered after the dev container has started.\n The `prebuild` field starts the automation during a prebuild of an environment. This phase does not have user secrets available.\n The `before_snapshot` field triggers the automation after all prebuild tasks complete but before the snapshot is taken.\n This is used for tasks that need to run last during prebuilds, such as IDE warmup.\n Note: The prebuild and before_snapshot triggers can only be used with tasks, not services."
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - manual
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postEnvironmentStart
+          - required:
+            - postMachineStart
+          - required:
+            - prebuild
+        required:
+        - beforeSnapshot
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postEnvironmentStart
+          - required:
+            - postMachineStart
+          - required:
+            - prebuild
+        required:
+        - manual
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - manual
+          - required:
+            - postEnvironmentStart
+          - required:
+            - postMachineStart
+          - required:
+            - prebuild
+        required:
+        - postDevcontainerStart
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - manual
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postMachineStart
+          - required:
+            - prebuild
+        required:
+        - postEnvironmentStart
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - manual
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postEnvironmentStart
+          - required:
+            - prebuild
+        required:
+        - postMachineStart
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - manual
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postEnvironmentStart
+          - required:
+            - postMachineStart
+        required:
+        - prebuild
+      properties:
+        beforeSnapshot:
+          title: before_snapshot
+          type: boolean
+        manual:
+          title: manual
+          type: boolean
+        postDevcontainerStart:
+          title: post_devcontainer_start
+          type: boolean
+        postEnvironmentStart:
+          title: post_environment_start
+          type: boolean
+        postMachineStart:
+          title: post_machine_start
+          type: boolean
+        prebuild:
+          title: prebuild
+          type: boolean
+      title: AutomationTrigger
+      type: object
+    gitpod.v1.MarkEnvironmentActiveResponse:
+      additionalProperties: false
+      title: MarkEnvironmentActiveResponse
+      type: object
+    gitpod.v1.EnvironmentStatus.SSHPublicKey:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the unique identifier of the public key
+          title: id
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.ContentPhase'
+          description: phase is the current phase of the public key
+          title: phase
+      title: SSHPublicKey
+      type: object
+    gitpod.v1.EnvironmentSpec.Timeout:
+      additionalProperties: false
+      description: Timeout configures the environment timeout
+      properties:
+        disconnected:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "inacitivity is the maximum time of disconnection before the environment is\n stopped or paused. Minimum duration is 30 minutes. Set to 0 to disable.\nvalue must be 0s (disabled) or at least 1800s (30 minutes):\n```\nthis == duration('0s') || this >= duration('1800s')\n```\n\n"
+          title: disconnected
+      title: Timeout
+      type: object
+    gitpod.v1.EnvironmentInitializer.Spec:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - git
+        required:
+        - contextUrl
+      - not:
+          anyOf:
+          - required:
+            - contextUrl
+        required:
+        - git
+      properties:
+        contextUrl:
+          $ref: '#/components/schemas/gitpod.v1.ContextURLInitializer'
+          title: context_url
+        git:
+          $ref: '#/components/schemas/gitpod.v1.GitInitializer'
+          title: git
+      title: Spec
+      type: object
+    gitpod.v1.EnvironmentSpec.DevContainer.Dotfiles:
+      additionalProperties: false
+      properties:
+        repository:
+          description: URL of a dotfiles Git repository (e.g. https://github.com/owner/repository)
+          format: uri
+          title: repository
+          type: string
+      required:
+      - repository
+      title: Dotfiles
+      type: object
+    gitpod.v1.ListEnvironmentClassesRequest.Filter:
+      additionalProperties: false
+      properties:
+        canCreateEnvironments:
+          description: "can_create_environments filters the response to only environment classes that can be used to create new environments\n by the caller. Unlike enabled, which indicates general availability, this ensures the caller only sees environment classes\n they are allowed to use."
+          nullable: true
+          title: can_create_environments
+          type: boolean
+        enabled:
+          description: "enabled filters the response to only enabled or disabled environment classes.\n If not set, all environment classes are returned."
+          nullable: true
+          title: enabled
+          type: boolean
+        runnerIds:
+          description: runner_ids filters the response to only EnvironmentClasses of these Runner IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: runner_ids
+          type: array
+        runnerKinds:
+          description: runner_kind filters the response to only environment classes from runners of these kinds.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerKind'
+          maxItems: 25
+          title: runner_kinds
+          type: array
+        runnerProviders:
+          description: runner_providers filters the response to only environment classes from runners of these providers.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerProvider'
+          maxItems: 25
+          title: runner_providers
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.GetEnvironmentRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: environment_id specifies the environment to get
+          format: uuid
+          title: environment_id
+          type: string
+      required:
+      - environmentId
+      title: GetEnvironmentRequest
+      type: object
+    gitpod.v1.ContextURLInitializer:
+      additionalProperties: false
+      properties:
+        url:
+          description: url is the URL from which the environment is created
+          format: uri
+          title: url
+          type: string
+      title: ContextURLInitializer
+      type: object
+    gitpod.v1.MarkEnvironmentActiveRequest:
+      additionalProperties: false
+      properties:
+        activitySignal:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentActivitySignal'
+          description: activity_signal specifies the activity.
+          title: activity_signal
+        environmentId:
+          description: The ID of the environment to update activity for.
+          format: uuid
+          title: environment_id
+          type: string
+      title: MarkEnvironmentActiveRequest
+      type: object
+    gitpod.v1.UpdateEnvironmentResponse:
+      additionalProperties: false
+      title: UpdateEnvironmentResponse
+      type: object
+    gitpod.v1.AllowPortAccessResponse:
+      additionalProperties: false
+      properties:
+        allowed:
+          description: allowed indicates whether the caller is permitted to access the port.
+          title: allowed
+          type: boolean
+      title: AllowPortAccessResponse
+      type: object
+    gitpod.v1.UpdateEnvironmentRequest.Content:
+      additionalProperties: false
+      properties:
+        gitEmail:
+          description: The Git email address
+          nullable: true
+          title: git_email
+          type: string
+        gitUsername:
+          description: The Git username
+          nullable: true
+          title: git_username
+          type: string
+        initializer:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentInitializer'
+          description: initializer configures how the environment is to be initialized
+          nullable: true
+          title: initializer
+        session:
+          description: session should be changed to trigger a content reinitialization
+          nullable: true
+          title: session
+          type: string
+      title: Content
+      type: object
+    gitpod.v1.EnvironmentStatus.DevContainer.Presence:
+      enum:
+      - PRESENCE_UNSPECIFIED
+      - PRESENCE_GENERATED
+      - PRESENCE_DISCOVERED
+      - PRESENCE_SPECIFIED
+      title: Presence
+      type: string
+    gitpod.v1.KernelControlsAction:
+      description: KernelControlsAction defines how a kernel-level policy violation is handled.
+      enum:
+      - KERNEL_CONTROLS_ACTION_UNSPECIFIED
+      - KERNEL_CONTROLS_ACTION_BLOCK
+      - KERNEL_CONTROLS_ACTION_AUDIT
+      title: KernelControlsAction
+      type: string
+    gitpod.v1.AllowPortAccessRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: "environment_id specifies the environment to check access for.\n\n +required"
+          format: uuid
+          title: environment_id
+          type: string
+        port:
+          description: "port specifies the port number to check access for.\n\n +required"
+          format: int32
+          maximum: 65535
+          minimum: 1
+          title: port
+          type: integer
+      title: AllowPortAccessRequest
+      type: object
+    gitpod.v1.EnvironmentStatus.Machine:
+      additionalProperties: false
+      properties:
+        dualDisk:
+          description: "dual_disk indicates the environment is running with a dual-disk layout\n (separate system and data disks). Set by the runner based on actual\n machine configuration."
+          title: dual_disk
+          type: boolean
+          x-stainless-skip: true
+        failureMessage:
+          description: failure_message contains the reason the machine failed to operate.
+          title: failure_message
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.Machine.Phase'
+          description: phase is the current phase of the environment machine
+          title: phase
+        session:
+          description: session is the session that is currently active in the machine.
+          title: session
+          type: string
+        timeout:
+          description: "timeout contains the reason the environment has timed out. If this field is\n empty, the environment has not timed out."
+          title: timeout
+          type: string
+        versions:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.Machine.Versions'
+          description: versions contains the versions of components in the machine.
+          title: versions
+        warningMessage:
+          description: warning_message contains warnings, e.g. when the machine is present but not in the expected state.
+          title: warning_message
+          type: string
+      title: Machine
+      type: object
+    gitpod.v1.EnvironmentStatus.EnvironmentSSHURL:
+      additionalProperties: false
+      properties:
+        url:
+          title: url
+          type: string
+      title: EnvironmentSSHURL
+      type: object
+    gitpod.v1.CountRequest:
+      additionalProperties: false
+      description: "CountRequest controls whether the response should include a bounded\n count of matching records."
+      properties:
+        include:
+          description: "When true, the first page of results will include a CountResponse with\n the bounded total. Subsequent pages (requests with a pagination token)\n will not contain the count."
+          title: include
+          type: boolean
+      title: CountRequest
+      type: object
+    gitpod.v1.EnvironmentStatus.RunnerACK.StatusCode:
+      enum:
+      - STATUS_CODE_UNSPECIFIED
+      - STATUS_CODE_OK
+      - STATUS_CODE_INVALID_RESOURCE
+      - STATUS_CODE_FAILED_PRECONDITION
+      title: StatusCode
+      type: string
+    gitpod.v1.DeleteEnvironmentRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: "environment_id specifies the environment that is going to delete.\n\n +required"
+          format: uuid
+          title: environment_id
+          type: string
+        force:
+          description: "force indicates whether the environment should be deleted forcefully\n When force deleting an Environment, the Environment is removed immediately and\n environment lifecycle is not respected.\n Force deleting can result in data loss on the environment."
+          title: force
+          type: boolean
+      title: DeleteEnvironmentRequest
+      type: object
+    gitpod.v1.StopEnvironmentResponse:
+      additionalProperties: false
+      title: StopEnvironmentResponse
+      type: object
+    gitpod.v1.ListEnvironmentsRequest.Filter:
+      additionalProperties: false
+      properties:
+        archivalStatus:
+          $ref: '#/components/schemas/gitpod.v1.ListEnvironmentsRequest.ArchivalStatus'
+          description: archival_status filters the response based on environment archive status
+          nullable: true
+          title: archival_status
+        createdBefore:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_before filters environments created before this timestamp
+          nullable: true
+          title: created_before
+        creatorIds:
+          description: creator_ids filters the response to only Environments created by specified members
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: creator_ids
+          type: array
+        lockdownBefore:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "lockdown_before filters environments whose lockdown_at is before this timestamp.\n Only environments with lockdown_at set are matched."
+          nullable: true
+          title: lockdown_before
+          x-stainless-skip: true
+        projectIds:
+          description: project_ids filters the response to only Environments associated with the specified projects
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: project_ids
+          type: array
+        roles:
+          description: roles filters the response to only Environments with the specified roles
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentRole'
+          maxItems: 25
+          title: roles
+          type: array
+        runnerIds:
+          description: runner_ids filters the response to only Environments running on these Runner IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: runner_ids
+          type: array
+        runnerKinds:
+          description: runner_kinds filters the response to only Environments running on these Runner Kinds
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerKind'
+          maxItems: 25
+          title: runner_kinds
+          type: array
+        search:
+          description: search performs case-insensitive search across environment ID, name, repository URL, and branch
+          maxLength: 256
+          title: search
+          type: string
+          x-stainless-skip: true
+        sessionIds:
+          description: session_ids filters the response to only environments belonging to the specified sessions
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: session_ids
+          type: array
+        statusPhases:
+          description: actual_phases is a list of phases the environment must be in for it to be returned in the API call
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentPhase'
+          maxItems: 25
+          title: status_phases
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.ListEnvironmentsRequest.ArchivalStatus:
+      enum:
+      - ARCHIVAL_STATUS_UNSPECIFIED
+      - ARCHIVAL_STATUS_ACTIVE
+      - ARCHIVAL_STATUS_ARCHIVED
+      - ARCHIVAL_STATUS_ALL
+      title: ArchivalStatus
+      type: string
+    gitpod.v1.EnvironmentStatus.EnvironmentPortURL:
+      additionalProperties: false
+      properties:
+        port:
+          description: port is the port number of the environment port
+          format: int32
+          maximum: 65535
+          minimum: 1024
+          title: port
+          type: integer
+        url:
+          description: url is the URL at which the environment port can be accessed
+          title: url
+          type: string
+      title: EnvironmentPortURL
+      type: object
+    gitpod.v1.EnvironmentSpec:
+      additionalProperties: false
+      description: "EnvironmentSpec specifies the configuration of an environment for an environment\n start"
+      properties:
+        admission:
+          $ref: '#/components/schemas/gitpod.v1.AdmissionLevel'
+          description: admission controlls who can access the environment and its ports.
+          title: admission
+        automationsFile:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.AutomationsFile'
+          description: automations_file is the automations file spec of the environment
+          title: automations_file
+        content:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.Content'
+          description: content is the content spec of the environment
+          title: content
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentPhase'
+          description: Phase is the desired phase of the environment
+          title: desired_phase
+        devcontainer:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.DevContainer'
+          description: devcontainer is the devcontainer spec of the environment
+          title: devcontainer
+        kernelControlsConfig:
+          $ref: '#/components/schemas/gitpod.v1.KernelControlsConfig'
+          description: kernel_controls_config configures kernel-level controls for this environment
+          title: kernel_controls_config
+        machine:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.Machine'
+          description: machine is the machine spec of the environment
+          title: machine
+        ports:
+          description: ports is the set of ports which ought to be exposed to your network
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.EnvironmentPort'
+          title: ports
+          type: array
+        secrets:
+          description: secrets are confidential data that is mounted into the environment
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.Secret'
+          title: secrets
+          type: array
+        specVersion:
+          description: "version of the spec. The value of this field has no semantic\n meaning (e.g. don't interpret it as as a timestamp),\n but it can be used to impose a partial order. If a.spec_version <\n b.spec_version then a was the spec before b."
+          title: spec_version
+          type: string
+        sshPublicKeys:
+          description: ssh_public_keys are the public keys used to ssh into the environment
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.SSHPublicKey'
+          title: ssh_public_keys
+          type: array
+        timeout:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.Timeout'
+          description: Timeout configures the environment timeout
+          title: timeout
+        workflowActionId:
+          description: "workflow_action_id is an optional reference to the workflow execution action\n that created this environment. Used for tracking and event correlation."
+          format: uuid
+          nullable: true
+          title: workflow_action_id
+          type: string
+      title: EnvironmentSpec
+      type: object
+    gitpod.v1.EnvironmentSpec.DevContainer:
+      additionalProperties: false
+      properties:
+        defaultDevcontainerImage:
+          description: default_devcontainer_image is the default image that is used to start the devcontainer if no devcontainer config file is found
+          title: default_devcontainer_image
+          type: string
+        devcontainerFilePath:
+          description: 'devcontainer_file_path is the path to the devcontainer file relative to the repo root
+
+            path must not be absolute (start with a /):
+
+            ```
+
+            this.matches(''^$|^[^/].*'')
+
+            ```
+
+
+            '
+          title: devcontainer_file_path
+          type: string
+        dotfiles:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.DevContainer.Dotfiles'
+          description: 'Experimental: dotfiles is the dotfiles configuration of the devcontainer'
+          title: dotfiles
+        lifecycleStage:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentSpec.DevContainer.LifecycleStage'
+          description: "lifecycle_stage controls which devcontainer lifecycle commands are executed.\n Defaults to FULL if not specified."
+          title: lifecycle_stage
+        session:
+          title: session
+          type: string
+      title: DevContainer
+      type: object
+    gitpod.v1.EnvironmentInitializer:
+      additionalProperties: false
+      description: EnvironmentInitializer specifies how an environment is to be initialized
+      properties:
+        specs:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentInitializer.Spec'
+          title: specs
+          type: array
+      title: EnvironmentInitializer
+      type: object
+    gitpod.v1.StopEnvironmentRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: "environment_id specifies which environment should be stopped.\n\n +required"
+          format: uuid
+          title: environment_id
+          type: string
+      title: StopEnvironmentRequest
+      type: object
+    gitpod.v1.EnvironmentStatus.AutomationsFile.Presence:
+      enum:
+      - PRESENCE_UNSPECIFIED
+      - PRESENCE_ABSENT
+      - PRESENCE_DISCOVERED
+      - PRESENCE_SPECIFIED
+      title: Presence
+      type: string
+    gitpod.v1.EnvironmentRole:
+      description: EnvironmentRole represents the role of an environment
+      enum:
+      - ENVIRONMENT_ROLE_UNSPECIFIED
+      - ENVIRONMENT_ROLE_DEFAULT
+      - ENVIRONMENT_ROLE_PREBUILD
+      - ENVIRONMENT_ROLE_WORKFLOW
+      title: EnvironmentRole
+      type: string
+    gitpod.v1.EnvironmentStatus.DevContainer:
+      additionalProperties: false
+      properties:
+        containerId:
+          description: container_id is the ID of the container.
+          title: container_id
+          type: string
+        containerName:
+          description: container_name is the name of the container that is used to connect to the devcontainer
+          title: container_name
+          type: string
+        devcontainerFilePath:
+          description: devcontainer_file_path is the path to the devcontainer file relative to the repo root
+          title: devcontainer_file_path
+          type: string
+        devcontainerFilePresence:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.DevContainer.Presence'
+          description: devcontainer_file_presence indicates how the devcontainer file is present in the repo.
+          title: devcontainer_file_presence
+        devcontainerconfigInSync:
+          description: devcontainerconfig_in_sync indicates if the devcontainer is up to date w.r.t. the devcontainer config file.
+          title: devcontainerconfig_in_sync
+          type: boolean
+        failureMessage:
+          description: failure_message contains the reason the devcontainer failed to operate.
+          title: failure_message
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.DevContainer.Phase'
+          description: phase is the current phase of the devcontainer
+          title: phase
+        remoteUser:
+          description: remote_user is the user that is used to connect to the devcontainer
+          title: remote_user
+          type: string
+        remoteWorkspaceFolder:
+          description: remote_workspace_folder is the folder that is used to connect to the devcontainer
+          title: remote_workspace_folder
+          type: string
+        secretsInSync:
+          description: secrets_in_sync indicates if the secrets are up to date w.r.t. the running devcontainer.
+          title: secrets_in_sync
+          type: boolean
+        session:
+          description: session is the session that is currently active in the devcontainer.
+          title: session
+          type: string
+        warningMessage:
+          description: warning_message contains warnings, e.g. when the devcontainer is present but not in the expected state.
+          title: warning_message
+          type: string
+      title: DevContainer
+      type: object
+    gitpod.v1.ListEnvironmentClassesResponse:
+      additionalProperties: false
+      properties:
+        environmentClasses:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentClass'
+          title: environment_classes
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing environment classes
+          title: pagination
+      title: ListEnvironmentClassesResponse
+      type: object
+    gitpod.v1.FileChange.ChangeType:
+      description: ChangeType is the type of change that happened to the file
+      enum:
+      - CHANGE_TYPE_UNSPECIFIED
+      - CHANGE_TYPE_ADDED
+      - CHANGE_TYPE_MODIFIED
+      - CHANGE_TYPE_DELETED
+      - CHANGE_TYPE_RENAMED
+      - CHANGE_TYPE_COPIED
+      - CHANGE_TYPE_UPDATED_BUT_UNMERGED
+      - CHANGE_TYPE_UNTRACKED
+      title: ChangeType
+      type: string
+    gitpod.v1.EnvironmentStatus.Secret:
+      additionalProperties: false
+      properties:
+        failureMessage:
+          description: failure_message contains the reason the secret failed to be materialize.
+          title: failure_message
+          type: string
+        id:
+          description: id is the unique identifier of the secret.
+          title: id
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.ContentPhase'
+          title: phase
+        secretName:
+          title: secret_name
+          type: string
+        session:
+          description: session is the session that is currently active in the environment.
+          title: session
+          type: string
+        warningMessage:
+          description: warning_message contains warnings, e.g. when the secret is present but not in the expected state.
+          title: warning_message
+          type: string
+      title: Secret
+      type: object
+    gitpod.v1.EnvironmentPhase:
+      enum:
+      - ENVIRONMENT_PHASE_UNSPECIFIED
+      - ENVIRONMENT_PHASE_CREATING
+      - ENVIRONMENT_PHASE_STARTING
+      - ENVIRONMENT_PHASE_RUNNING
+      - ENVIRONMENT_PHASE_UPDATING
+      - ENVIRONMENT_PHASE_STOPPING
+      - ENVIRONMENT_PHASE_STOPPED
+      - ENVIRONMENT_PHASE_DELETING
+      - ENVIRONMENT_PHASE_DELETED
+      title: EnvironmentPhase
+      type: string
+    gitpod.v1.EnvironmentStatus.Machine.Versions:
+      additionalProperties: false
+      properties:
+        amiId:
+          title: ami_id
+          type: string
+        supervisorCommit:
+          title: supervisor_commit
+          type: string
+        supervisorVersion:
+          title: supervisor_version
+          type: string
+      title: Versions
+      type: object
+    gitpod.v1.StartEnvironmentRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: environment_id specifies which environment should be started.
+          format: uuid
+          title: environment_id
+          type: string
+      title: StartEnvironmentRequest
+      type: object
+    gitpod.v1.UpdateEnvironmentRequest.Metadata:
+      additionalProperties: false
+      properties:
+        lockdownAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "lockdown_at sets or clears the lockdown time for this environment.\n Only org admins can set this field. When set to a future time, the\n environment will become blocked at that time. When cleared (set to\n epoch zero), the lockdown is removed. Setting to a past time is rejected."
+          nullable: true
+          title: lockdown_at
+          x-stainless-skip: true
+        name:
+          description: name is the user-defined display name of the environment
+          maxLength: 128
+          nullable: true
+          title: name
+          type: string
+      title: Metadata
+      type: object
+    gitpod.v1.GitInitializer:
+      additionalProperties: false
+      properties:
+        checkoutLocation:
+          description: "a path relative to the environment root in which the code will be checked out\n to"
+          title: checkout_location
+          type: string
+        cloneTarget:
+          description: the value for the clone target mode - use depends on the target mode
+          title: clone_target
+          type: string
+        remoteUri:
+          description: remote_uri is the Git remote origin
+          title: remote_uri
+          type: string
+        targetMode:
+          $ref: '#/components/schemas/gitpod.v1.GitInitializer.CloneTargetMode'
+          description: the target mode determines what gets checked out
+          title: target_mode
+        upstreamRemoteUri:
+          description: upstream_Remote_uri is the fork upstream of a repository
+          title: upstream_remote_uri
+          type: string
+      title: GitInitializer
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.StartEnvironmentResponse:
+      additionalProperties: false
+      title: StartEnvironmentResponse
+      type: object
+    gitpod.v1.UpdateEnvironmentRequest.DevContainer:
+      additionalProperties: false
+      properties:
+        devcontainerFilePath:
+          description: 'devcontainer_file_path is the path to the devcontainer file relative to the repo root
+
+            path must not be absolute (start with a /):
+
+            ```
+
+            this.matches(''^$|^[^/].*'')
+
+            ```
+
+
+            '
+          nullable: true
+          title: devcontainer_file_path
+          type: string
+        session:
+          description: session should be changed to trigger a devcontainer rebuild
+          nullable: true
+          title: session
+          type: string
+      title: DevContainer
+      type: object
+    gitpod.v1.DeleteEnvironmentResponse:
+      additionalProperties: false
+      title: DeleteEnvironmentResponse
+      type: object
+    gitpod.v1.EnvironmentClass:
+      additionalProperties: false
+      properties:
+        configuration:
+          description: configuration describes the configuration of the environment class
+          items:
+            $ref: '#/components/schemas/gitpod.v1.FieldValue'
+          title: configuration
+          type: array
+        description:
+          description: description is a human readable description of the environment class
+          maxLength: 200
+          minLength: 3
+          title: description
+          type: string
+        displayName:
+          description: display_name is the human readable name of the environment class
+          maxLength: 127
+          minLength: 3
+          title: display_name
+          type: string
+        enabled:
+          description: "enabled indicates whether the environment class can be used to create\n new environments."
+          title: enabled
+          type: boolean
+        id:
+          description: id is the unique identifier of the environment class
+          title: id
+          type: string
+        runnerId:
+          description: runner_id is the unique identifier of the runner the environment class belongs to
+          title: runner_id
+          type: string
+      required:
+      - id
+      - runnerId
+      title: EnvironmentClass
+      type: object
+    gitpod.v1.EnvironmentSpec.Secret.Scope:
+      description: Scope indicates the origin of the secret for filtering purposes.
+      enum:
+      - SCOPE_UNSPECIFIED
+      - SCOPE_ORGANIZATION
+      - SCOPE_PROJECT
+      - SCOPE_USER
+      - SCOPE_SERVICE_ACCOUNT
+      - SCOPE_RUNNER
+      title: Scope
+      type: string
+    gitpod.v1.EnvironmentStatus:
+      additionalProperties: false
+      description: EnvironmentStatus describes an environment status
+      properties:
+        activitySignal:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentActivitySignal'
+          description: activity_signal is the last activity signal for the environment.
+          title: activity_signal
+        automationsFile:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.AutomationsFile'
+          description: automations_file contains the status of the automations file.
+          title: automations_file
+        content:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.Content'
+          description: content contains the status of the environment content.
+          title: content
+        devcontainer:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.DevContainer'
+          description: devcontainer contains the status of the devcontainer.
+          title: devcontainer
+        environmentUrls:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.EnvironmentURLs'
+          description: "environment_url contains the URL at which the environment can be accessed.\n This field is only set if the environment is running."
+          title: environment_urls
+        failureMessage:
+          description: "failure_message summarises why the environment failed to operate. If this is non-empty\n the environment has failed to operate and will likely transition to a stopped state."
+          items:
+            type: string
+          title: failure_message
+          type: array
+        machine:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.Machine'
+          description: machine contains the status of the environment machine
+          title: machine
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentPhase'
+          description: "the phase of an environment is a simple, high-level summary of where the\n environment is in its lifecycle"
+          title: phase
+        runnerAck:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.RunnerACK'
+          description: "runner_ack contains the acknowledgement from the runner that is has\n received the environment spec."
+          title: runner_ack
+        secrets:
+          description: secrets contains the status of the environment secrets
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.Secret'
+          title: secrets
+          type: array
+        sshPublicKeys:
+          description: ssh_public_keys contains the status of the environment ssh public keys
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentStatus.SSHPublicKey'
+          title: ssh_public_keys
+          type: array
+        statusVersion:
+          description: "version of the status update. Environment instances themselves are\n unversioned, but their status has different versions. The value of this\n field has no semantic meaning (e.g. don't interpret it as as a timestamp),\n but it can be used to impose a partial order. If a.status_version <\n b.status_version then a was the status before b."
+          title: status_version
+          type: string
+        warningMessage:
+          description: warning_message contains warnings, e.g. when the environment is present but not in the expected state.
+          items:
+            type: string
+          title: warning_message
+          type: array
+      title: EnvironmentStatus
+      type: object
+    gitpod.v1.CreateEnvironmentFromProjectResponse:
+      additionalProperties: false
+      properties:
+        environment:
+          $ref: '#/components/schemas/gitpod.v1.Environment'
+          title: environment
+      required:
+      - environment
+      title: CreateEnvironmentFromProjectResponse
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.CreateEnvironmentLogsTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          description: access_token is the token that can be used to access the logs of the environment
+          title: access_token
+          type: string
+      required:
+      - accessToken
+      title: CreateEnvironmentLogsTokenResponse
+      type: object
+    gitpod.v1.CreatePortAccessTokenRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: "environment_id specifies the environment for which the port access token should be created.\n\n +required"
+          format: uuid
+          title: environment_id
+          type: string
+        port:
+          description: "port specifies the port number for which the access token should be created.\n\n +required"
+          format: int32
+          maximum: 65535
+          minimum: 1
+          title: port
+          type: integer
+      title: CreatePortAccessTokenRequest
+      type: object
+    gitpod.v1.BPFDebugLevel:
+      description: "BPFDebugLevel controls the verbosity of BPF trace_pipe output (bpf_printk).\n Applies to all BPF-based agents (veto exec, future agents)."
+      enum:
+      - BPF_DEBUG_LEVEL_UNSPECIFIED
+      - BPF_DEBUG_LEVEL_INFO
+      - BPF_DEBUG_LEVEL_VERBOSE
+      title: BPFDebugLevel
+      type: string
+    gitpod.v1.RunnerProvider:
+      description: "RunnerProvider identifies the specific implementation type of a runner.\n Each provider maps to a specific kind of runner (local or remote), as\n specified below for each provider."
+      enum:
+      - RUNNER_PROVIDER_UNSPECIFIED
+      - RUNNER_PROVIDER_AWS_EC2
+      - RUNNER_PROVIDER_LINUX_HOST
+      - RUNNER_PROVIDER_DESKTOP_MAC
+      - RUNNER_PROVIDER_MANAGED
+      - RUNNER_PROVIDER_GCP
+      - RUNNER_PROVIDER_DEV_AGENT
+      title: RunnerProvider
+      type: string
+    gitpod.v1.EnvironmentStatus.ContentPhase:
+      enum:
+      - CONTENT_PHASE_UNSPECIFIED
+      - CONTENT_PHASE_CREATING
+      - CONTENT_PHASE_INITIALIZING
+      - CONTENT_PHASE_READY
+      - CONTENT_PHASE_UPDATING
+      - CONTENT_PHASE_FAILED
+      - CONTENT_PHASE_UNAVAILABLE
+      title: ContentPhase
+      type: string
+    gitpod.v1.Veto:
+      additionalProperties: false
+      description: Veto controls kernel-level blocking mechanisms
+      properties:
+        exec:
+          $ref: '#/components/schemas/gitpod.v1.Veto.Exec'
+          description: exec controls executable blocking
+          title: exec
+      title: Veto
+      type: object
+    gitpod.v1.ListEnvironmentsResponse:
+      additionalProperties: false
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountResponse'
+          description: "count is the bounded total count of matching environments, present only\n when requested via CountRequest.include on the first page."
+          title: count
+          x-stainless-skip: true
+        environments:
+          description: environments are the environments that matched the query
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Environment'
+          title: environments
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing environments
+          title: pagination
+      title: ListEnvironmentsResponse
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

@@ -1,0 +1,1065 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.UserService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.UserService
+  x-displayName: gitpod.v1.UserService
+paths:
+  /gitpod.v1.UserService/CreatePersonalAccessToken:
+    servers: []
+    post:
+      description: "Creates a new personal access token for API authentication.\n\n Use this method to:\n - Generate API access tokens\n - Create service account credentials\n - Set up automated access\n\n ### Examples\n\n - Create token:\n\n   Creates a new access token valid for 30 days.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   description: \"CI/CD Pipeline Token\"\n   validFor: \"2592000s\"  # 30 days\n   ```"
+      operationId: gitpod.v1.UserService.CreatePersonalAccessToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_token:
+                description: Creates a new access token valid for 30 days.
+                value:
+                  description: CI/CD Pipeline Token
+                  userId: f53d2330-3795-4c5d-a1f3-453121af9c60
+                  validFor: 2592000s
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreatePersonalAccessTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreatePersonalAccessTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreatePersonalAccessToken
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/DeletePersonalAccessToken:
+    servers: []
+    post:
+      description: "Deletes a personal access token.\n\n Use this method to:\n - Revoke token access\n - Remove unused tokens\n - Rotate credentials\n\n ### Examples\n\n - Delete token:\n\n   Permanently revokes a token.\n\n   ```yaml\n   personalAccessTokenId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.UserService.DeletePersonalAccessToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_token:
+                description: Permanently revokes a token.
+                value:
+                  personalAccessTokenId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeletePersonalAccessTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeletePersonalAccessTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeletePersonalAccessToken
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/DeletePreference:
+    servers: []
+    post:
+      description: "Deletes a user preference.\n\n Use this method to:\n - Remove settings\n - Reset preferences\n - Clean up configurations\n\n ### Examples\n\n - Delete preference:\n\n   Removes a specific preference.\n\n   ```yaml\n   userPreferenceId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.UserService.DeletePreference
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_preference:
+                description: Removes a specific preference.
+                value:
+                  userPreferenceId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeletePreferenceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeletePreferenceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeletePreference
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/DeleteUser:
+    servers: []
+    post:
+      description: Deletes a user. If the User comes from an organization's SSO provider, the Account will also be deleted.
+      operationId: gitpod.v1.UserService.DeleteUser
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteUserRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteUserResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteUser
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/GetAuthenticatedUser:
+    servers: []
+    post:
+      description: "Gets information about the currently authenticated user.\n\n Use this method to:\n - Get user profile information\n - Check authentication status\n - Retrieve user settings\n - Verify account details\n\n ### Examples\n\n - Get current user:\n\n   Retrieves details about the authenticated user.\n\n   ```yaml\n   {}\n   ```"
+      operationId: gitpod.v1.UserService.GetAuthenticatedUser
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_current_user:
+                description: Retrieves details about the authenticated user.
+                value: {}
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetAuthenticatedUserRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetAuthenticatedUserResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetAuthenticatedUser
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/GetDotfilesConfiguration:
+    servers: []
+    post:
+      description: "Gets the dotfiles for a user.\n\n Use this method to:\n - Retrieve user dotfiles\n\n ### Examples\n\n - Get dotfiles:\n\n   Retrieves the dotfiles for the current user.\n\n   ```yaml\n   {}\n   ```"
+      operationId: gitpod.v1.UserService.GetDotfilesConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_dotfiles:
+                description: Retrieves the dotfiles for the current user.
+                value: {}
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetDotfilesConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetDotfilesConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetDotfilesConfiguration
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/GetPersonalAccessToken:
+    servers: []
+    post:
+      description: "Gets details about a specific personal access token.\n\n Use this method to:\n - View token metadata\n - Check token expiration\n - Monitor token usage\n\n ### Examples\n\n - Get token details:\n\n   Retrieves information about a specific token.\n\n   ```yaml\n   personalAccessTokenId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.UserService.GetPersonalAccessToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_token_details:
+                description: Retrieves information about a specific token.
+                value:
+                  personalAccessTokenId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetPersonalAccessTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetPersonalAccessTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetPersonalAccessToken
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/GetPreference:
+    servers: []
+    post:
+      description: "Gets a specific user preference value.\n\n Use this method to:\n - Retrieve user settings\n - Read preference values\n - Check configurations\n\n ### Examples\n\n - Get preference:\n\n   Retrieves a specific preference value.\n\n   ```yaml\n   preferenceId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.UserService.GetPreference
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_preference:
+                description: Retrieves a specific preference value.
+                value:
+                  preferenceId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetPreferenceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetPreferenceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetPreference
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/GetUser:
+    servers: []
+    post:
+      description: "Gets basic information about a specific user by their ID.\n\n Use this method to:\n - Retrieve user profile information\n - Get user details for display purposes\n - Fetch user metadata for administrative tasks\n\n ### Examples\n\n - Get user by ID:\n\n   Retrieves basic user information by user ID.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+      operationId: gitpod.v1.UserService.GetUser
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_user_by_id:
+                description: Retrieves basic user information by user ID.
+                value:
+                  userId: f53d2330-3795-4c5d-a1f3-453121af9c60
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetUserRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetUserResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetUser
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/ListPersonalAccessTokens:
+    servers: []
+    post:
+      description: "Lists personal access tokens with optional filtering.\n\n Use this method to:\n - View all active tokens\n - Audit token usage\n - Manage token lifecycle\n\n ### Examples\n\n - List user tokens:\n\n   Shows all tokens for specific users.\n\n   ```yaml\n   filter:\n     userIds: [\"f53d2330-3795-4c5d-a1f3-453121af9c60\"]\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.UserService.ListPersonalAccessTokens
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_user_tokens:
+                description: Shows all tokens for specific users.
+                value:
+                  filter:
+                    userIds:
+                    - f53d2330-3795-4c5d-a1f3-453121af9c60
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListPersonalAccessTokensRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListPersonalAccessTokensResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListPersonalAccessTokens
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/ListPreferences:
+    servers: []
+    post:
+      description: "Lists all user preferences.\n\n Use this method to:\n - View all user settings\n - Export preferences\n - Audit configurations\n\n ### Examples\n\n - List preferences:\n\n   Shows all preferences with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.UserService.ListPreferences
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_preferences:
+                description: Shows all preferences with pagination.
+                value:
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListPreferencesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListPreferencesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListPreferences
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/SetDotfilesConfiguration:
+    servers: []
+    post:
+      description: "Sets the dotfiles configuration for a user.\n\n Use this method to:\n - Configure user dotfiles\n - Update dotfiles settings\n\n ### Examples\n\n - Set dotfiles configuration:\n\n   Sets the dotfiles configuration for the current user.\n\n   ```yaml\n   {\n     \"repository\": \"https://github.com/gitpod-io/dotfiles\",\n   }\n   ```\n\n - Remove dotfiles:\n\n   Removes the dotfiles for the current user.\n\n   ```yaml\n   {}\n   ```"
+      operationId: gitpod.v1.UserService.SetDotfilesConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              remove_dotfiles:
+                description: Removes the dotfiles for the current user.
+                value: {}
+              set_dotfiles_configuration:
+                description: Sets the dotfiles configuration for the current user.
+                value:
+                  repository: https://github.com/gitpod-io/dotfiles
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetDotfilesConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetDotfilesConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetDotfilesConfiguration
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/SetPreference:
+    servers: []
+    post:
+      description: "Sets a user preference value.\n\n Use this method to:\n - Store user settings\n - Update preferences\n - Configure user experience\n\n ### Examples\n\n - Set preference:\n\n   Updates a user preference setting.\n\n   ```yaml\n   key: \"theme\"\n   value: \"dark\"\n   ```"
+      operationId: gitpod.v1.UserService.SetPreference
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              set_preference:
+                description: Updates a user preference setting.
+                value:
+                  key: theme
+                  value: dark
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetPreferenceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetPreferenceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetPreference
+      tags:
+      - gitpod.v1.UserService
+  /gitpod.v1.UserService/SetSuspended:
+    servers: []
+    post:
+      description: "Sets whether a user account is suspended.\n\n Use this method to:\n - Suspend problematic users\n - Reactivate suspended accounts\n - Manage user access\n\n ### Examples\n\n - Suspend user:\n\n   Suspends a user account.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   suspended: true\n   ```\n\n - Reactivate user:\n\n   Removes suspension from a user account.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   suspended: false\n   ```"
+      operationId: gitpod.v1.UserService.SetSuspended
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              reactivate_user:
+                description: Removes suspension from a user account.
+                value:
+                  suspended: false
+                  userId: f53d2330-3795-4c5d-a1f3-453121af9c60
+              suspend_user:
+                description: Suspends a user account.
+                value:
+                  suspended: true
+                  userId: f53d2330-3795-4c5d-a1f3-453121af9c60
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SetSuspendedRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SetSuspendedResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SetSuspended
+      tags:
+      - gitpod.v1.UserService
+components:
+  schemas:
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.User:
+      additionalProperties: false
+      properties:
+        avatarUrl:
+          description: avatar_url is a link to the user avatar
+          title: avatar_url
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is the creation time
+          title: created_at
+        email:
+          description: email is the user's email address
+          title: email
+          type: string
+        id:
+          description: id is a UUID of the user
+          format: uuid
+          title: id
+          type: string
+        name:
+          description: name is the full name of the user
+          title: name
+          type: string
+        organizationId:
+          description: "organization_id is the id of the organization this account is owned by.\n\n +optional if not set, this account is owned by the installation."
+          format: uuid
+          title: organization_id
+          type: string
+        status:
+          $ref: '#/components/schemas/gitpod.v1.UserStatus'
+          description: status is the status the user is in
+          title: status
+      required:
+      - id
+      title: User
+      type: object
+    gitpod.v1.SetSuspendedResponse:
+      additionalProperties: false
+      title: SetSuspendedResponse
+      type: object
+    gitpod.v1.DeletePersonalAccessTokenRequest:
+      additionalProperties: false
+      properties:
+        personalAccessTokenId:
+          format: uuid
+          title: personal_access_token_id
+          type: string
+      title: DeletePersonalAccessTokenRequest
+      type: object
+    gitpod.v1.ListPersonalAccessTokensRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListPersonalAccessTokensRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListPersonalAccessTokensRequest
+      type: object
+    gitpod.v1.GetDotfilesConfigurationResponse:
+      additionalProperties: false
+      properties:
+        dotfilesConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.DotfilesConfiguration'
+          title: dotfiles_configuration
+      required:
+      - dotfilesConfiguration
+      title: GetDotfilesConfigurationResponse
+      type: object
+    gitpod.v1.UserPreference:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        id:
+          format: uuid
+          title: id
+          type: string
+        key:
+          maxLength: 255
+          minLength: 1
+          title: key
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+        value:
+          description: "omitting value field will cause an error due to min_len validation,\n to unset a preference use DeletePreference instead"
+          maxLength: 2480
+          minLength: 1
+          title: value
+          type: string
+      title: UserPreference
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.GetUserResponse:
+      additionalProperties: false
+      properties:
+        user:
+          $ref: '#/components/schemas/gitpod.v1.User'
+          title: user
+      required:
+      - user
+      title: GetUserResponse
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.PersonalAccessToken:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: creator
+        description:
+          title: description
+          type: string
+        expiresAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: expires_at
+        id:
+          format: uuid
+          title: id
+          type: string
+        lastUsed:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: last_used
+        readOnly:
+          description: "When true, the token can only be used for read operations.\n Mutations will be denied at the data layer."
+          title: read_only
+          type: boolean
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      title: PersonalAccessToken
+      type: object
+    gitpod.v1.SetDotfilesConfigurationResponse:
+      additionalProperties: false
+      title: SetDotfilesConfigurationResponse
+      type: object
+    gitpod.v1.UserStatus:
+      enum:
+      - USER_STATUS_UNSPECIFIED
+      - USER_STATUS_ACTIVE
+      - USER_STATUS_SUSPENDED
+      - USER_STATUS_LEFT
+      title: UserStatus
+      type: string
+    gitpod.v1.CreatePersonalAccessTokenRequest:
+      additionalProperties: false
+      properties:
+        description:
+          title: description
+          type: string
+        readOnly:
+          description: "When true, the token can only be used for read operations.\n Mutations will be denied at the data layer."
+          title: read_only
+          type: boolean
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+        validFor:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          title: valid_for
+      title: CreatePersonalAccessTokenRequest
+      type: object
+    gitpod.v1.GetDotfilesConfigurationRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: GetDotfilesConfigurationRequest
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.DeleteUserResponse:
+      additionalProperties: false
+      title: DeleteUserResponse
+      type: object
+    gitpod.v1.SetPreferenceRequest:
+      additionalProperties: false
+      properties:
+        key:
+          maxLength: 255
+          minLength: 1
+          title: key
+          type: string
+        value:
+          description: "omitting value field will cause an error due to min_len validation,\n to unset a preference use DeletePreference instead"
+          maxLength: 10240
+          minLength: 1
+          title: value
+          type: string
+      title: SetPreferenceRequest
+      type: object
+    google.protobuf.Duration:
+      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
+      format: regex
+      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
+      type: string
+    gitpod.v1.ListPreferencesRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListPreferencesRequest
+      type: object
+    gitpod.v1.GetAuthenticatedUserResponse:
+      additionalProperties: false
+      properties:
+        user:
+          $ref: '#/components/schemas/gitpod.v1.User'
+          title: user
+      required:
+      - user
+      title: GetAuthenticatedUserResponse
+      type: object
+    gitpod.v1.SetDotfilesConfigurationRequest:
+      additionalProperties: false
+      properties:
+        repository:
+          format: uri
+          maxLength: 255
+          title: repository
+          type: string
+      title: SetDotfilesConfigurationRequest
+      type: object
+    gitpod.v1.SetSuspendedRequest:
+      additionalProperties: false
+      properties:
+        suspended:
+          title: suspended
+          type: boolean
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      title: SetSuspendedRequest
+      type: object
+    gitpod.v1.GetAuthenticatedUserRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: GetAuthenticatedUserRequest
+      type: object
+    gitpod.v1.DeletePreferenceRequest:
+      additionalProperties: false
+      properties:
+        userPreferenceId:
+          format: uuid
+          title: user_preference_id
+          type: string
+      title: DeletePreferenceRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.GetPreferenceRequest:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - preferenceKey
+        required:
+        - preferenceId
+      - not:
+          anyOf:
+          - required:
+            - preferenceId
+        required:
+        - preferenceKey
+      properties:
+        preferenceId:
+          title: preference_id
+          type: string
+        preferenceKey:
+          maxLength: 255
+          minLength: 1
+          title: preference_key
+          type: string
+        userPreferenceId:
+          deprecated: true
+          title: user_preference_id
+          type: string
+      title: GetPreferenceRequest
+      type: object
+    gitpod.v1.ListPersonalAccessTokensRequest.Filter:
+      additionalProperties: false
+      properties:
+        userIds:
+          description: creator_ids filters the response to only Environments created by specified members
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: user_ids
+          type: array
+      title: Filter
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.CreatePersonalAccessTokenResponse:
+      additionalProperties: false
+      properties:
+        token:
+          title: token
+          type: string
+      required:
+      - token
+      title: CreatePersonalAccessTokenResponse
+      type: object
+    gitpod.v1.ListPreferencesResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        preferences:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UserPreference'
+          title: preferences
+          type: array
+      title: ListPreferencesResponse
+      type: object
+    gitpod.v1.SetPreferenceResponse:
+      additionalProperties: false
+      title: SetPreferenceResponse
+      type: object
+    gitpod.v1.GetPreferenceResponse:
+      additionalProperties: false
+      properties:
+        preference:
+          $ref: '#/components/schemas/gitpod.v1.UserPreference'
+          title: preference
+      title: GetPreferenceResponse
+      type: object
+    gitpod.v1.GetUserRequest:
+      additionalProperties: false
+      properties:
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      title: GetUserRequest
+      type: object
+    gitpod.v1.DeletePersonalAccessTokenResponse:
+      additionalProperties: false
+      title: DeletePersonalAccessTokenResponse
+      type: object
+    gitpod.v1.DeleteUserRequest:
+      additionalProperties: false
+      properties:
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      title: DeleteUserRequest
+      type: object
+    gitpod.v1.DotfilesConfiguration:
+      additionalProperties: false
+      properties:
+        repository:
+          description: The URL of a dotfiles repository.
+          format: uri
+          title: repository
+          type: string
+      title: DotfilesConfiguration
+      type: object
+    gitpod.v1.ListPersonalAccessTokensResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        personalAccessTokens:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.PersonalAccessToken'
+          title: personal_access_tokens
+          type: array
+      title: ListPersonalAccessTokensResponse
+      type: object
+    gitpod.v1.DeletePreferenceResponse:
+      additionalProperties: false
+      title: DeletePreferenceResponse
+      type: object
+    gitpod.v1.GetPersonalAccessTokenRequest:
+      additionalProperties: false
+      properties:
+        personalAccessTokenId:
+          format: uuid
+          title: personal_access_token_id
+          type: string
+      title: GetPersonalAccessTokenRequest
+      type: object
+    gitpod.v1.GetPersonalAccessTokenResponse:
+      additionalProperties: false
+      properties:
+        pat:
+          $ref: '#/components/schemas/gitpod.v1.PersonalAccessToken'
+          title: pat
+      required:
+      - pat
+      title: GetPersonalAccessTokenResponse
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

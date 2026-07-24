@@ -1,0 +1,4171 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.AgentService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.AgentService
+  x-displayName: gitpod.v1.AgentService
+paths:
+  /gitpod.v1.AgentService/CreateAgent:
+    servers: []
+    post:
+      description: "Creates a new agent.\n\n Use this method to:\n - Define new agents with custom prompts and tools"
+      operationId: gitpod.v1.AgentService.CreateAgent
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateAgentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateAgentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateAgent
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/CreateAgentExecutionConversationToken:
+    servers: []
+    post:
+      description: "Creates a token for conversation access with a specific agent run.\n\n This method generates a temporary token that can be used to securely\n connect to an ongoing agent conversation, for example in a web UI.\n\n ### Examples\n\n - Create a token to join an agent run conversation in a front-end application:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   ```"
+      operationId: gitpod.v1.AgentService.CreateAgentExecutionConversationToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_a_token_to_join_an_agent_run_conversation_in_a_front_end_application:
+                description: 'agentExecutionId: "6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35"
+
+                  '
+                value:
+                  agentExecutionId: 6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateAgentExecutionConversationTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateAgentExecutionConversationTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateAgentExecutionConversationToken
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/CreateLLMAccessToken:
+    servers: []
+    post:
+      description: Creates a token for LLM access with a specific agent run.
+      operationId: gitpod.v1.AgentService.CreateLLMAccessToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateLLMAccessTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateLLMAccessTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateLLMAccessToken
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/CreateMCPAccessToken:
+    servers: []
+    post:
+      description: "Creates a token for MCP access.\n\n Use this method to generate an access token for MCP integrations."
+      operationId: gitpod.v1.AgentService.CreateMCPAccessToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateMCPAccessTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateMCPAccessTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateMCPAccessToken
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/CreatePrompt:
+    servers: []
+    post:
+      description: "Creates a new prompt.\n\n Use this method to:\n - Define new prompts for templates or commands\n - Set up organization-wide prompt libraries"
+      operationId: gitpod.v1.AgentService.CreatePrompt
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreatePromptRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreatePromptResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreatePrompt
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/CreateSearchAccessToken:
+    servers: []
+    post:
+      description: "Creates a token for search access.\n\n Use this method to generate an access token for search proxy integrations."
+      operationId: gitpod.v1.AgentService.CreateSearchAccessToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateSearchAccessTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateSearchAccessTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateSearchAccessToken
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/DeleteAgent:
+    servers: []
+    post:
+      description: "Deletes an agent.\n\n Use this method to:\n - Remove custom agents"
+      operationId: gitpod.v1.AgentService.DeleteAgent
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteAgentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteAgentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteAgent
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/DeleteAgentExecution:
+    servers: []
+    post:
+      description: "Deletes an agent run.\n\n Use this method to:\n - Clean up agent runs that are no longer needed\n\n ### Examples\n\n - Delete an agent run by ID:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   ```"
+      operationId: gitpod.v1.AgentService.DeleteAgentExecution
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_an_agent_run_by_id:
+                description: 'agentExecutionId: "6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35"
+
+                  '
+                value:
+                  agentExecutionId: 6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteAgentExecutionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteAgentExecutionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteAgentExecution
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/DeletePrompt:
+    servers: []
+    post:
+      description: "Deletes a prompt.\n\n Use this method to:\n - Remove unused prompts"
+      operationId: gitpod.v1.AgentService.DeletePrompt
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeletePromptRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeletePromptResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeletePrompt
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/EmitAgentSessionActivity:
+    servers: []
+    post:
+      description: "Emits an activity to the external agent session (e.g., Linear) associated\n with this agent execution. The backend resolves the session ID from the\n execution's annotations and uses the org's app token to authenticate."
+      operationId: gitpod.v1.AgentService.EmitAgentSessionActivity
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.EmitAgentSessionActivityRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.EmitAgentSessionActivityResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: EmitAgentSessionActivity
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/GetAgent:
+    servers: []
+    post:
+      description: "Gets details about a specific agent including description,\n and required models.\n\n Use this method to:\n - Check if an agent is defined correctly\n - Understand which models are required for this agent\n\n ### Examples\n\n - Get agent details:\n\n   ```yaml\n   agentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.AgentService.GetAgent
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_agent_details:
+                description: 'agentId: "07e03a28-65a5-4d98-b532-8ea67b188048"
+
+                  '
+                value:
+                  agentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetAgentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetAgentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetAgent
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/GetAgentExecution:
+    servers: []
+    post:
+      description: "Gets details about a specific agent run, including its metadata, specification,\n and status (phase, error messages, and usage statistics).\n\n Use this method to:\n - Monitor the run's progress\n - Retrieve the agent's conversation URL\n - Check if an agent run is actively producing output\n\n ### Examples\n\n - Get agent run details by ID:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   ```"
+      operationId: gitpod.v1.AgentService.GetAgentExecution
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_agent_run_details_by_id:
+                description: 'agentExecutionId: "6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35"
+
+                  '
+                value:
+                  agentExecutionId: 6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetAgentExecutionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetAgentExecutionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetAgentExecution
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/GetPrompt:
+    servers: []
+    post:
+      description: "Gets details about a specific prompt including name, description,\n and prompt content.\n\n Use this method to:\n - Retrieve prompt details for editing\n - Get prompt content for execution\n\n ### Examples\n\n - Get prompt details:\n\n   ```yaml\n   promptId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.AgentService.GetPrompt
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_prompt_details:
+                description: 'promptId: "07e03a28-65a5-4d98-b532-8ea67b188048"
+
+                  '
+                value:
+                  promptId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetPromptRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetPromptResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetPrompt
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/ImprovePromptForAgent:
+    servers: []
+    post:
+      description: "Improves an agent's prompt.\n\n Use this method to:\n - Enhance the agent's understanding of the user's request\n - Refine the agent's response to be more accurate and relevant"
+      operationId: gitpod.v1.AgentService.ImprovePromptForAgent
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ImprovePromptForAgentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ImprovePromptForAgentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ImprovePromptForAgent
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/ListAgentExecutions:
+    servers: []
+    post:
+      description: "Lists all agent runs matching the specified filter.\n\n Use this method to track multiple agent runs and their associated resources. Results are ordered by their creation time with the newest first.\n\n ### Examples\n\n - List agent runs by agent ID:\n\n   ```yaml\n   filter:\n     agentIds: [\"b8a64cfa-43e2-4b9d-9fb3-07edc63f5971\"]\n   pagination:\n     pageSize: 10\n   ```"
+      operationId: gitpod.v1.AgentService.ListAgentExecutions
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_agent_runs_by_agent_id:
+                description: "filter:\n  agentIds: [\"b8a64cfa-43e2-4b9d-9fb3-07edc63f5971\"]\npagination:\n  pageSize: 10\n"
+                value:
+                  filter:
+                    agentIds:
+                    - b8a64cfa-43e2-4b9d-9fb3-07edc63f5971
+                  pagination:
+                    pageSize: 10
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListAgentExecutionsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListAgentExecutionsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListAgentExecutions
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/ListAgents:
+    servers: []
+    post:
+      description: "Lists all agents matching the specified criteria.\n\n Use this method to find and monitor agents across your organization.\n Results are ordered by their creation time with the newest first.\n\n ### Examples\n\n - List all agents:\n\n   Retrieves all agents with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 10\n   ```"
+      operationId: gitpod.v1.AgentService.ListAgents
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_agents:
+                description: Retrieves all agents with pagination.
+                value:
+                  pagination:
+                    pageSize: 10
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListAgentsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListAgentsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListAgents
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/ListMCPIntegrations:
+    servers: []
+    post:
+      description: "Lists all MCP integrations.\n\n Use this method to retrieve all configured MCP integrations.\n\n ### Examples\n\n - List all MCP integrations:\n\n   ```yaml\n   pagination:\n     pageSize: 10\n   ```"
+      operationId: gitpod.v1.AgentService.ListMCPIntegrations
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_mcp_integrations:
+                description: "pagination:\n  pageSize: 10\n"
+                value:
+                  pagination:
+                    pageSize: 10
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListMCPIntegrationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListMCPIntegrationsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListMCPIntegrations
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/ListPrompts:
+    servers: []
+    post:
+      description: "Lists all prompts matching the specified criteria.\n\n Use this method to find and browse prompts across your organization.\n Results are ordered by their creation time with the newest first.\n\n ### Examples\n\n - List all prompts:\n\n   Retrieves all prompts with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 10\n   ```"
+      operationId: gitpod.v1.AgentService.ListPrompts
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_prompts:
+                description: Retrieves all prompts with pagination.
+                value:
+                  pagination:
+                    pageSize: 10
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListPromptsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListPromptsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListPrompts
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/ReportAgentExecutionOutputs:
+    servers: []
+    post:
+      description: "Reports outputs for an agent execution.\n\n This method allows agents to report key-value outputs during execution.\n Similar to task execution outputs, but with typed values for structured data.\n Outputs are merged with any existing outputs. The API automatically infers\n the type (int, float, bool, or string) from the value.\n\n Use this method to:\n - Record execution outcomes and metrics\n - Track test results, coverage, or success indicators\n - Store any execution-related data as key-value pairs\n\n Type inference rules:\n - \"true\" or \"false\" → bool\n - Valid integer (e.g., \"42\", \"-10\") → int\n - Valid float (e.g., \"85.5\", \"3.14\") → float\n - Everything else → string\n\n Validation limits (matching task execution outputs):\n - Keys: 1-128 characters\n - String values: max 4096 characters\n\n ### Examples\n\n - Report execution outputs (types will be inferred from string_value):\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   outputs:\n     tests_passed:\n       stringValue: \"42\"        # inferred as int\n     coverage:\n       stringValue: \"85.5\"      # inferred as float\n     success:\n       stringValue: \"true\"      # inferred as bool\n     message:\n       stringValue: \"All tests passed\"  # stored as string\n   ```"
+      operationId: gitpod.v1.AgentService.ReportAgentExecutionOutputs
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              report_execution_outputs_(types_will_be_inferred_from_string_:
+                description: "agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\noutputs:\n  tests_passed:\n    stringValue: \"42\"        # inferred as int\n  coverage:\n    stringValue: \"85.5\"      # inferred as float\n  success:\n    stringValue: \"true\"      # inferred as bool\n  message:\n    stringValue: \"All tests passed\"  # stored as string\n"
+                value:
+                  agentExecutionId: 6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35
+                  outputs:
+                    coverage:
+                      stringValue: '85.5'
+                    message:
+                      stringValue: All tests passed
+                    success:
+                      stringValue: 'true'
+                    tests_passed:
+                      stringValue: '42'
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ReportAgentExecutionOutputsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ReportAgentExecutionOutputsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ReportAgentExecutionOutputs
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/SendToAgentExecution:
+    servers: []
+    post:
+      description: "Sends user input to an active agent run.\n\n This method is used to provide interactive or conversation-based input\n to an agent. The agent can respond with output blocks containing\n text, file changes, or tool usage requests.\n\n ### Examples\n\n - Send a text message to an agent:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   userInput:\n     text:\n       content: \"Generate a report based on the latest logs.\"\n   ```"
+      operationId: gitpod.v1.AgentService.SendToAgentExecution
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              send_a_text_message_to_an_agent:
+                description: "agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\nuserInput:\n  text:\n    content: \"Generate a report based on the latest logs.\"\n"
+                value:
+                  agentExecutionId: 6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35
+                  userInput:
+                    text:
+                      content: Generate a report based on the latest logs.
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.SendToAgentExecutionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.SendToAgentExecutionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: SendToAgentExecution
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/StartAgent:
+    servers: []
+    post:
+      description: "Starts (or triggers) an agent run using a provided agent.\n\n Use this method to:\n - Launch an agent based on a known agent\n\n ### Examples\n\n - Start an agent with a project ID:\n\n   ```yaml\n   agentId: \"b8a64cfa-43e2-4b9d-9fb3-07edc63f5971\"\n   codeContext:\n     projectId: \"2d22e4eb-31da-467f-882c-27e21550992f\"\n   ```"
+      operationId: gitpod.v1.AgentService.StartAgent
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              start_an_agent_with_a_project_id:
+                description: "agentId: \"b8a64cfa-43e2-4b9d-9fb3-07edc63f5971\"\ncodeContext:\n  projectId: \"2d22e4eb-31da-467f-882c-27e21550992f\"\n"
+                value:
+                  agentId: b8a64cfa-43e2-4b9d-9fb3-07edc63f5971
+                  codeContext:
+                    projectId: 2d22e4eb-31da-467f-882c-27e21550992f
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.StartAgentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.StartAgentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: StartAgent
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/StopAgentExecution:
+    servers: []
+    post:
+      description: "Stops an active agent execution.\n\n Use this method to:\n - Stop an agent that is currently running\n - Prevent further processing or resource usage\n\n ### Examples\n\n - Stop an agent execution by ID:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   ```"
+      operationId: gitpod.v1.AgentService.StopAgentExecution
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              stop_an_agent_execution_by_id:
+                description: 'agentExecutionId: "6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35"
+
+                  '
+                value:
+                  agentExecutionId: 6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.StopAgentExecutionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.StopAgentExecutionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: StopAgentExecution
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/UpdateAgent:
+    servers: []
+    post:
+      description: "Updates an existing agent.\n\n Use this method to:\n - Modify agent configuration\n - Update prompts or required tools"
+      operationId: gitpod.v1.AgentService.UpdateAgent
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateAgentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateAgentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateAgent
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/UpdateAgentExecution:
+    servers: []
+    post:
+      description: "Updates an agent execution's spec.\n\n Use this method to:\n - Set or update loop conditions on an agent execution"
+      operationId: gitpod.v1.AgentService.UpdateAgentExecution
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateAgentExecutionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateAgentExecutionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateAgentExecution
+      tags:
+      - gitpod.v1.AgentService
+  /gitpod.v1.AgentService/UpdatePrompt:
+    servers: []
+    post:
+      description: "Updates an existing prompt.\n\n Use this method to:\n - Modify prompt content or metadata\n - Change prompt type (template/command)"
+      operationId: gitpod.v1.AgentService.UpdatePrompt
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdatePromptRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdatePromptResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdatePrompt
+      tags:
+      - gitpod.v1.AgentService
+components:
+  schemas:
+    gitpod.v1.ListMCPIntegrationsRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListMCPIntegrationsRequest
+      type: object
+    gitpod.v1.WakeEvent.EnvironmentPhaseReached:
+      additionalProperties: false
+      properties:
+        environmentId:
+          title: environment_id
+          type: string
+        failureMessage:
+          items:
+            type: string
+          title: failure_message
+          type: array
+        phase:
+          description: The phase the environment reached (e.g. "running", "stopped", "deleted").
+          title: phase
+          type: string
+      title: EnvironmentPhaseReached
+      type: object
+    gitpod.v1.RunsOn:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - machine
+          - required:
+            - terminal
+        required:
+        - docker
+      - not:
+          anyOf:
+          - required:
+            - docker
+          - required:
+            - terminal
+        required:
+        - machine
+      - not:
+          anyOf:
+          - required:
+            - docker
+          - required:
+            - machine
+        required:
+        - terminal
+      properties:
+        docker:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn.Docker'
+          title: docker
+        machine:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn.Machine'
+          title: machine
+        terminal:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn.Terminal'
+          title: terminal
+      title: RunsOn
+      type: object
+    gitpod.v1.UpdatePromptRequest.Spec:
+      additionalProperties: false
+      properties:
+        command:
+          description: The command string (unique within organization)
+          maxLength: 50
+          nullable: true
+          pattern: ^[a-zA-Z0-9_-]*$
+          title: command
+          type: string
+        isCommand:
+          description: Whether this prompt is a command
+          nullable: true
+          title: is_command
+          type: boolean
+        isSkill:
+          description: Whether this prompt is a skill
+          nullable: true
+          title: is_skill
+          type: boolean
+        isTemplate:
+          description: Whether this prompt is a template
+          nullable: true
+          title: is_template
+          type: boolean
+        prompt:
+          description: The prompt content
+          maxLength: 20000
+          nullable: true
+          title: prompt
+          type: string
+      title: Spec
+      type: object
+    gitpod.v1.CreateLLMAccessTokenRequest:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          description: "The agent execution ID for tracking and runner selection.\n If empty, falls back to current logic for backward compatibility."
+          title: agent_execution_id
+          type: string
+        requiredModels:
+          description: The models required by the agent to function.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SupportedModel'
+          title: required_models
+          type: array
+      title: CreateLLMAccessTokenRequest
+      type: object
+    gitpod.v1.AgentResponseBlock.TextOutput.Type:
+      enum:
+      - TYPE_UNSPECIFIED
+      - TYPE_USER_FACING_OUTPUT
+      - TYPE_THOUGHTS
+      title: Type
+      type: string
+    gitpod.v1.AgentResponseBlock.TextOutput:
+      additionalProperties: false
+      properties:
+        content:
+          title: content
+          type: string
+        sequenceId:
+          description: Sequence ID for deduplication within the same message. Starts from 1, with 0 indicating unset (backwards compatible).
+          title: sequence_id
+          type: string
+        type:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.TextOutput.Type'
+          title: type
+      title: TextOutput
+      type: object
+    gitpod.v1.UpdateAgentRequest.Metadata:
+      additionalProperties: false
+      properties:
+        description:
+          description: A description of what the agent does
+          nullable: true
+          title: description
+          type: string
+        name:
+          description: The name of the agent
+          nullable: true
+          title: name
+          type: string
+      title: Metadata
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.GetAgentRequest:
+      additionalProperties: false
+      properties:
+        agentId:
+          format: uuid
+          title: agent_id
+          type: string
+      title: GetAgentRequest
+      type: object
+    gitpod.v1.DeleteAgentExecutionResponse:
+      additionalProperties: false
+      title: DeleteAgentExecutionResponse
+      type: object
+    gitpod.v1.ListAgentExecutionsResponse:
+      additionalProperties: false
+      properties:
+        agentExecutions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution'
+          title: agent_executions
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      title: ListAgentExecutionsResponse
+      type: object
+    gitpod.v1.UpdateAgentExecutionResponse:
+      additionalProperties: false
+      properties:
+        agentExecution:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution'
+          title: agent_execution
+      title: UpdateAgentExecutionResponse
+      type: object
+    gitpod.v1.WakeEvent.LoopRetrigger:
+      additionalProperties: false
+      properties:
+        outputs:
+          additionalProperties:
+            title: value
+            type: string
+          title: outputs
+          type: object
+        unmetConditions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WakeEvent.LoopRetrigger.UnmetCondition'
+          title: unmet_conditions
+          type: array
+      title: LoopRetrigger
+      type: object
+    gitpod.v1.EmitAgentSessionActivityResponse:
+      additionalProperties: false
+      title: EmitAgentSessionActivityResponse
+      type: object
+    gitpod.v1.GetAgentResponse:
+      additionalProperties: false
+      properties:
+        agent:
+          $ref: '#/components/schemas/gitpod.v1.Agent'
+          title: agent
+      title: GetAgentResponse
+      type: object
+    gitpod.v1.PromptMetadata:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: creator is the identity of the prompt creator
+          title: creator
+        description:
+          description: description is a description of what the prompt does
+          title: description
+          type: string
+        name:
+          description: name is the human readable name of the prompt
+          title: name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization that contains the prompt
+          format: uuid
+          title: organization_id
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+      title: PromptMetadata
+      type: object
+    gitpod.v1.AgentCodeContext.ContextURL:
+      additionalProperties: false
+      properties:
+        environmentClassId:
+          format: uuid
+          title: environment_class_id
+          type: string
+        url:
+          format: uri
+          title: url
+          type: string
+      title: ContextURL
+      type: object
+    gitpod.v1.EnvironmentVariableItem:
+      additionalProperties: false
+      description: "EnvironmentVariableItem represents an environment variable that can be set\n either from a literal value or from a secret reference."
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - valueFrom
+        required:
+        - value
+      - not:
+          anyOf:
+          - required:
+            - value
+        required:
+        - valueFrom
+      properties:
+        name:
+          description: name is the environment variable name.
+          minLength: 1
+          title: name
+          type: string
+        value:
+          description: value is a literal string value.
+          title: value
+          type: string
+        valueFrom:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentVariableSource'
+          description: value_from specifies a source for the value.
+          title: value_from
+      title: EnvironmentVariableItem
+      type: object
+    gitpod.v1.StopAgentExecutionResponse:
+      additionalProperties: false
+      title: StopAgentExecutionResponse
+      type: object
+    gitpod.v1.AgentExecution.Status.EnvironmentUsage:
+      additionalProperties: false
+      properties:
+        createdByAgent:
+          title: created_by_agent
+          type: boolean
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+      title: EnvironmentUsage
+      type: object
+    gitpod.v1.ReportAgentExecutionOutputsRequest:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          description: The ID of the agent execution to report outputs for
+          format: uuid
+          title: agent_execution_id
+          type: string
+        outputs:
+          additionalProperties:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status.OutputValue'
+            title: value
+          description: "Outputs to report. New outputs are merged with existing outputs.\n Values are stored as strings and the API determines the type."
+          minProperties: 1
+          title: outputs
+          type: object
+      title: ReportAgentExecutionOutputsRequest
+      type: object
+    gitpod.v1.WakeEvent:
+      additionalProperties: false
+      description: "WakeEvent is sent by the backend to wake an agent when a registered interest fires.\n Delivered via SendToAgentExecution as a new oneof variant."
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - loopRetrigger
+          - required:
+            - timer
+        required:
+        - environment
+      - not:
+          anyOf:
+          - required:
+            - environment
+          - required:
+            - timer
+        required:
+        - loopRetrigger
+      - not:
+          anyOf:
+          - required:
+            - environment
+          - required:
+            - loopRetrigger
+        required:
+        - timer
+      properties:
+        environment:
+          $ref: '#/components/schemas/gitpod.v1.WakeEvent.EnvironmentPhaseReached'
+          title: environment
+        interestId:
+          description: The interest ID that fired (from WaitingInfo.Interest.id).
+          title: interest_id
+          type: string
+        loopRetrigger:
+          $ref: '#/components/schemas/gitpod.v1.WakeEvent.LoopRetrigger'
+          title: loop_retrigger
+        timer:
+          $ref: '#/components/schemas/gitpod.v1.WakeEvent.TimerFired'
+          title: timer
+      title: WakeEvent
+      type: object
+    gitpod.v1.InEnvironmentAgentSpec:
+      additionalProperties: false
+      properties:
+        requiredModels:
+          description: The list of models supported by this in-environment agent
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SupportedModel'
+          title: required_models
+          type: array
+        service:
+          $ref: '#/components/schemas/gitpod.v1.ServiceSpec'
+          title: service
+      title: InEnvironmentAgentSpec
+      type: object
+    gitpod.v1.PullRequest.Repository:
+      additionalProperties: false
+      description: Repository information
+      properties:
+        cloneUrl:
+          title: clone_url
+          type: string
+        host:
+          title: host
+          type: string
+        name:
+          title: name
+          type: string
+        owner:
+          title: owner
+          type: string
+      title: Repository
+      type: object
+    gitpod.v1.ServicePhase:
+      enum:
+      - SERVICE_PHASE_UNSPECIFIED
+      - SERVICE_PHASE_STARTING
+      - SERVICE_PHASE_RUNNING
+      - SERVICE_PHASE_STOPPING
+      - SERVICE_PHASE_STOPPED
+      - SERVICE_PHASE_FAILED
+      - SERVICE_PHASE_DELETED
+      title: ServicePhase
+      type: string
+    gitpod.v1.AgentCodeContext:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - environmentId
+          - required:
+            - projectId
+        required:
+        - contextUrl
+      - not:
+          anyOf:
+          - required:
+            - contextUrl
+          - required:
+            - projectId
+        required:
+        - environmentId
+      - not:
+          anyOf:
+          - required:
+            - contextUrl
+          - required:
+            - environmentId
+        required:
+        - projectId
+      properties:
+        contextUrl:
+          $ref: '#/components/schemas/gitpod.v1.AgentCodeContext.ContextURL'
+          title: context_url
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+        projectId:
+          format: uuid
+          title: project_id
+          type: string
+        pullRequest:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest'
+          description: "Pull request context - optional metadata about the PR being worked on\n This is populated when the agent execution is triggered by a PR workflow\n or when explicitly provided through the browser extension"
+          nullable: true
+          title: pull_request
+      title: AgentCodeContext
+      type: object
+    gitpod.v1.WakeEvent.TimerFired:
+      additionalProperties: false
+      properties:
+        firedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: The actual time the timer was evaluated as expired.
+          title: fired_at
+      title: TimerFired
+      type: object
+    gitpod.v1.StopAgentExecutionRequest:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          format: uuid
+          title: agent_execution_id
+          type: string
+      title: StopAgentExecutionRequest
+      type: object
+    gitpod.v1.UpdateAgentExecutionRequest.Metadata:
+      additionalProperties: false
+      properties:
+        annotations:
+          additionalProperties:
+            title: value
+            type: string
+          description: "annotations are key-value pairs for tracking external context.\n Keys with the \"gitpod.io/\" prefix are reserved and cannot be set through this API.\n Provided annotations are merged with existing annotations."
+          title: annotations
+          type: object
+      title: Metadata
+      type: object
+    gitpod.v1.SupportedModel:
+      enum:
+      - SUPPORTED_MODEL_UNSPECIFIED
+      - SUPPORTED_MODEL_SONNET_3_5
+      - SUPPORTED_MODEL_SONNET_3_7
+      - SUPPORTED_MODEL_SONNET_3_7_EXTENDED
+      - SUPPORTED_MODEL_SONNET_4
+      - SUPPORTED_MODEL_SONNET_4_EXTENDED
+      - SUPPORTED_MODEL_SONNET_4_5
+      - SUPPORTED_MODEL_SONNET_4_5_EXTENDED
+      - SUPPORTED_MODEL_SONNET_4_6
+      - SUPPORTED_MODEL_SONNET_4_6_EXTENDED
+      - SUPPORTED_MODEL_OPUS_4
+      - SUPPORTED_MODEL_OPUS_4_EXTENDED
+      - SUPPORTED_MODEL_OPUS_4_5
+      - SUPPORTED_MODEL_OPUS_4_5_EXTENDED
+      - SUPPORTED_MODEL_OPUS_4_6
+      - SUPPORTED_MODEL_OPUS_4_6_EXTENDED
+      - SUPPORTED_MODEL_HAIKU_4_5
+      - SUPPORTED_MODEL_OPENAI_4O
+      - SUPPORTED_MODEL_OPENAI_4O_MINI
+      - SUPPORTED_MODEL_OPENAI_O1
+      - SUPPORTED_MODEL_OPENAI_O1_MINI
+      title: SupportedModel
+      type: string
+    gitpod.v1.MCPIntegrationPhase:
+      description: MCPIntegrationPhase represents the status of an MCP integration connection
+      enum:
+      - MCP_INTEGRATION_PHASE_UNSPECIFIED
+      - MCP_INTEGRATION_PHASE_INITIALIZING
+      - MCP_INTEGRATION_PHASE_READY
+      - MCP_INTEGRATION_PHASE_FAILED
+      - MCP_INTEGRATION_PHASE_UNAVAILABLE
+      title: MCPIntegrationPhase
+      type: string
+    gitpod.v1.AgentExecution.WaitingInfo.UserMessageInterest:
+      additionalProperties: false
+      title: UserMessageInterest
+      type: object
+    gitpod.v1.AgentResponseBlock.ActionCompleted:
+      additionalProperties: false
+      properties:
+        actionId:
+          minLength: 1
+          title: action_id
+          type: string
+        failed:
+          title: failed
+          type: boolean
+        resultDescription:
+          title: result_description
+          type: string
+      title: ActionCompleted
+      type: object
+    gitpod.v1.AgentExecution.WaitingInfo:
+      additionalProperties: false
+      description: WaitingInfo describes what an agent is waiting for when in PHASE_WAITING_FOR_INPUT.
+      properties:
+        interests:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.WaitingInfo.Interest'
+          title: interests
+          type: array
+        waitId:
+          title: wait_id
+          type: string
+        waitingSince:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: waiting_since
+      title: WaitingInfo
+      type: object
+    gitpod.v1.RunsOn.Machine:
+      additionalProperties: false
+      description: Machine runs the service/task directly on the VM/machine level.
+      title: Machine
+      type: object
+    gitpod.v1.UpdatePromptRequest.Metadata:
+      additionalProperties: false
+      properties:
+        description:
+          description: A description of what the prompt does
+          maxLength: 500
+          minLength: 1
+          nullable: true
+          title: description
+          type: string
+        name:
+          description: The name of the prompt
+          maxLength: 255
+          nullable: true
+          title: name
+          type: string
+      title: Metadata
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.AgentExecution.Status:
+      additionalProperties: false
+      properties:
+        cachedCreationTokensUsed:
+          title: cached_creation_tokens_used
+          type: string
+        cachedInputTokensUsed:
+          title: cached_input_tokens_used
+          type: string
+        contextWindowLength:
+          title: context_window_length
+          type: string
+        conversationUrl:
+          description: conversation_url is the URL to the conversation (all messages exchanged between the agent and the user) of the agent run.
+          title: conversation_url
+          type: string
+        currentActivity:
+          description: current_activity is the current activity description of the agent execution.
+          title: current_activity
+          type: string
+        currentOperation:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status.CurrentOperation'
+          description: current_operation is the current operation of the agent execution.
+          title: current_operation
+        failureMessage:
+          description: failure_message contains the reason the agent run failed to operate.
+          title: failure_message
+          type: string
+        failureReason:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecutionFailureReason'
+          description: failure_reason contains a structured reason code for the failure.
+          title: failure_reason
+        inputTokensUsed:
+          title: input_tokens_used
+          type: string
+        iterations:
+          title: iterations
+          type: string
+        judgement:
+          description: judgement is the judgement of the agent run produced by the judgement prompt.
+          title: judgement
+          type: string
+        loopConditionResults:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status.LoopConditionResult'
+          title: loop_condition_results
+          type: array
+          x-stainless-skip: true
+        mcpIntegrationStatuses:
+          description: mcp_integration_statuses contains the status of all MCP integrations used by this agent execution
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status.MCPIntegrationStatus'
+          title: mcp_integration_statuses
+          type: array
+        mode:
+          $ref: '#/components/schemas/gitpod.v1.AgentMode'
+          description: "mode is the current operational mode of the agent execution.\n This is set by the agent when entering different modes (e.g., Ralph mode via /ona:ralph command)."
+          title: mode
+        outputTokensUsed:
+          title: output_tokens_used
+          type: string
+        outputs:
+          additionalProperties:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status.OutputValue'
+            title: value
+          description: "outputs is a map of key-value pairs that can be set by the agent during execution.\n Similar to task execution outputs, but with typed values for structured data."
+          title: outputs
+          type: object
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Phase'
+          title: phase
+        session:
+          title: session
+          type: string
+        statusVersion:
+          description: "version of the status. The value of this field has no semantic\n meaning (e.g. don't interpret it as as a timestamp),\n but it can be used to impose a partial order. If a.status_version <\n b.status_version then a was the status before b."
+          title: status_version
+          type: string
+        supportBundleUrl:
+          description: support_bundle_url is the URL to download a diagnostic bundle for this agent execution.
+          title: support_bundle_url
+          type: string
+          x-stainless-skip: true
+        supportedModel:
+          $ref: '#/components/schemas/gitpod.v1.SupportedModel'
+          description: supported_model is the LLM model being used by the agent execution.
+          title: supported_model
+        terminalId:
+          description: 'terminal_id is the ID of the terminal running the agent, if the agent runs as a terminal service (runsOn: terminal).'
+          title: terminal_id
+          type: string
+          x-stainless-skip: true
+        transcriptUrl:
+          description: transcript_url is the URL to the LLM transcript (all messages exchanged between the agent and the LLM) of the agent run.
+          title: transcript_url
+          type: string
+        usedEnvironments:
+          description: used_environments is the list of environments that were used by the agent execution.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status.EnvironmentUsage'
+          title: used_environments
+          type: array
+        waitingInfo:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.WaitingInfo'
+          description: "waiting_info is set when phase is PHASE_WAITING_FOR_INPUT and the agent\n has registered interests (timers, sub-agent completions, user messages)."
+          title: waiting_info
+          x-stainless-skip: true
+        warningMessage:
+          description: warning_message contains warnings, e.g. when the LLM is overloaded.
+          title: warning_message
+          type: string
+      title: Status
+      type: object
+    gitpod.v1.PullRequest.State:
+      description: Current state of the pull request
+      enum:
+      - STATE_UNSPECIFIED
+      - STATE_OPEN
+      - STATE_CLOSED
+      - STATE_MERGED
+      title: State
+      type: string
+    gitpod.v1.DeleteAgentRequest:
+      additionalProperties: false
+      properties:
+        agentId:
+          description: The ID of the agent to delete
+          format: uuid
+          title: agent_id
+          type: string
+      title: DeleteAgentRequest
+      type: object
+    gitpod.v1.UserInputBlock.TextInput:
+      additionalProperties: false
+      properties:
+        content:
+          minLength: 1
+          title: content
+          type: string
+      title: TextInput
+      type: object
+    gitpod.v1.CreateAgentRequest:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - runnerSide
+        required:
+        - inEnvironment
+      - not:
+          anyOf:
+          - required:
+            - inEnvironment
+        required:
+        - runnerSide
+      properties:
+        description:
+          description: A description of what the agent does
+          title: description
+          type: string
+        inEnvironment:
+          $ref: '#/components/schemas/gitpod.v1.InEnvironmentAgentSpec'
+          title: in_environment
+        name:
+          description: The name of the agent
+          minLength: 1
+          title: name
+          type: string
+        runnerSide:
+          $ref: '#/components/schemas/gitpod.v1.RunnerSideAgentSpec'
+          title: runner_side
+      title: CreateAgentRequest
+      type: object
+    gitpod.v1.GetAgentExecutionResponse:
+      additionalProperties: false
+      properties:
+        agentExecution:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution'
+          title: agent_execution
+      title: GetAgentExecutionResponse
+      type: object
+    gitpod.v1.CreateSearchAccessTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          title: access_token
+          type: string
+      title: CreateSearchAccessTokenResponse
+      type: object
+    gitpod.v1.AgentExecution.Spec.LoopCondition:
+      additionalProperties: false
+      properties:
+        description:
+          title: description
+          type: string
+        expression:
+          title: expression
+          type: string
+        id:
+          title: id
+          type: string
+      title: LoopCondition
+      type: object
+    gitpod.v1.AgentResponseBlock.Thought:
+      additionalProperties: false
+      properties:
+        content:
+          title: content
+          type: string
+      title: Thought
+      type: object
+    gitpod.v1.AgentExecution.Status.CurrentOperation:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - toolUse
+        required:
+        - llm
+      - not:
+          anyOf:
+          - required:
+            - llm
+        required:
+        - toolUse
+      properties:
+        llm:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status.LLM'
+          title: llm
+        retries:
+          description: retries is the number of times the agent run has retried one or more steps
+          title: retries
+          type: string
+        session:
+          title: session
+          type: string
+        toolUse:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status.ToolUse'
+          title: tool_use
+      title: CurrentOperation
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.UpdateAgentExecutionRequest:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          format: uuid
+          title: agent_execution_id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.UpdateAgentExecutionRequest.Metadata'
+          description: Metadata updates. If not provided, existing metadata is kept.
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.UpdateAgentExecutionRequest.Spec'
+          description: Spec updates. If not provided, existing spec is kept.
+          title: spec
+      title: UpdateAgentExecutionRequest
+      type: object
+    gitpod.v1.AgentExecution.Status.ToolUse:
+      additionalProperties: false
+      properties:
+        complete:
+          title: complete
+          type: boolean
+        toolName:
+          minLength: 1
+          title: tool_name
+          type: string
+      title: ToolUse
+      type: object
+    gitpod.v1.AgentResponseBlock:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - actionCompleted
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - actionStarted
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - agentModeChange
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - availableCommands
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - clarifyingQuestions
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - codeAnnotation
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - environmentCreation
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - fileModification
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - hostAuthenticationRequired
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - nextStepsProposal
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - text
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - thought
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoItem
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - todoGroup
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - userInput
+          - required:
+            - userInputSeen
+        required:
+        - todoItem
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInputSeen
+        required:
+        - userInput
+      - not:
+          anyOf:
+          - required:
+            - actionCompleted
+          - required:
+            - actionStarted
+          - required:
+            - agentModeChange
+          - required:
+            - availableCommands
+          - required:
+            - clarifyingQuestions
+          - required:
+            - codeAnnotation
+          - required:
+            - environmentCreation
+          - required:
+            - fileModification
+          - required:
+            - hostAuthenticationRequired
+          - required:
+            - nextStepsProposal
+          - required:
+            - text
+          - required:
+            - thought
+          - required:
+            - todoGroup
+          - required:
+            - todoItem
+          - required:
+            - userInput
+        required:
+        - userInputSeen
+      properties:
+        actionCompleted:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.ActionCompleted'
+          title: action_completed
+        actionStarted:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.ActionStarted'
+          title: action_started
+        agentModeChange:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.AgentModeChange'
+          title: agent_mode_change
+        availableCommands:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.AvailableCommands'
+          title: available_commands
+        clarifyingQuestions:
+          $ref: '#/components/schemas/gitpod.v1.ClarifyingQuestions'
+          title: clarifying_questions
+        codeAnnotation:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.CodeAnnotation'
+          title: code_annotation
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Timestamp when this block was created. Used for debugging and support bundles.
+          title: created_at
+        environmentCreation:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.EnvironmentCreation'
+          title: environment_creation
+        fileModification:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.FileModification'
+          title: file_modification
+        hostAuthenticationRequired:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.HostAuthenticationRequired'
+          title: host_authentication_required
+        id:
+          description: "id is the unique identifier of the response block. A conversation can have multiple blocks with the same ID.\n Clients are expected to use the ID to update or replace a block."
+          format: uuid
+          title: id
+          type: string
+        nextStepsProposal:
+          $ref: '#/components/schemas/gitpod.v1.NextStepsProposal'
+          title: next_steps_proposal
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.Phase'
+          description: phase is the phase of the response block indicating how to update the previous output block with the same ID.
+          title: phase
+        text:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.TextOutput'
+          title: text
+        thought:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.Thought'
+          title: thought
+        todoGroup:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.TodoGroup'
+          title: todo_group
+        todoGroupId:
+          description: Active todo snapshot group for routing response fragments in snapshot mode.
+          title: todo_group_id
+          type: string
+        todoItem:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.TodoItem'
+          title: todo_item
+        todoItemId:
+          description: Active in-progress todo item for routing response fragments in snapshot mode.
+          title: todo_item_id
+          type: string
+        userInput:
+          $ref: '#/components/schemas/gitpod.v1.UserInputBlock'
+          title: user_input
+        userInputSeen:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.UserInputBlockSeen'
+          title: user_input_seen
+      title: AgentResponseBlock
+      type: object
+    gitpod.v1.AgentExecution.WaitingInfo.Interest:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - subAgent
+          - required:
+            - timer
+          - required:
+            - userMessage
+        required:
+        - environment
+      - not:
+          anyOf:
+          - required:
+            - environment
+          - required:
+            - timer
+          - required:
+            - userMessage
+        required:
+        - subAgent
+      - not:
+          anyOf:
+          - required:
+            - environment
+          - required:
+            - subAgent
+          - required:
+            - userMessage
+        required:
+        - timer
+      - not:
+          anyOf:
+          - required:
+            - environment
+          - required:
+            - subAgent
+          - required:
+            - timer
+        required:
+        - userMessage
+      properties:
+        environment:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.WaitingInfo.EnvironmentInterest'
+          title: environment
+        id:
+          title: id
+          type: string
+        subAgent:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.WaitingInfo.SubAgentInterest'
+          title: sub_agent
+        timer:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.WaitingInfo.TimerInterest'
+          title: timer
+        userMessage:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.WaitingInfo.UserMessageInterest'
+          title: user_message
+      title: Interest
+      type: object
+    gitpod.v1.CreateLLMAccessTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          title: access_token
+          type: string
+        llmUrl:
+          title: llm_url
+          type: string
+      title: CreateLLMAccessTokenResponse
+      type: object
+    gitpod.v1.AgentResponseBlock.ActionStarted:
+      additionalProperties: false
+      properties:
+        actionId:
+          minLength: 1
+          title: action_id
+          type: string
+        intentDescription:
+          title: intent_description
+          type: string
+      title: ActionStarted
+      type: object
+    gitpod.v1.MCPIntegration:
+      additionalProperties: false
+      properties:
+        id:
+          title: id
+          type: string
+        name:
+          title: name
+          type: string
+        url:
+          title: url
+          type: string
+      title: MCPIntegration
+      type: object
+    gitpod.v1.ListAgentsRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListAgentsRequest
+      type: object
+    gitpod.v1.AgentResponseBlock.AvailableCommands:
+      additionalProperties: false
+      properties:
+        commands:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.AvailableCommand'
+          title: commands
+          type: array
+      title: AvailableCommands
+      type: object
+    gitpod.v1.AgentResponseBlock.AgentModeChange.State:
+      enum:
+      - STATE_UNSPECIFIED
+      - STATE_SPEC_COMPLETE
+      - STATE_ITERATION_COMPLETE
+      - STATE_COMPLETE
+      - STATE_ONA_SPEC_COMPLETE
+      title: State
+      type: string
+    gitpod.v1.CreateAgentExecutionConversationTokenRequest:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          format: uuid
+          title: agent_execution_id
+          type: string
+      title: CreateAgentExecutionConversationTokenRequest
+      type: object
+    gitpod.v1.DeleteAgentResponse:
+      additionalProperties: false
+      title: DeleteAgentResponse
+      type: object
+    gitpod.v1.EnvironmentVariableSource:
+      additionalProperties: false
+      description: EnvironmentVariableSource specifies a source for an environment variable value.
+      oneOf:
+      - required:
+        - secretRef
+      properties:
+        secretRef:
+          $ref: '#/components/schemas/gitpod.v1.SecretRef'
+          description: secret_ref references a secret by ID.
+          title: secret_ref
+      title: EnvironmentVariableSource
+      type: object
+    gitpod.v1.StartAgentResponse:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          format: uuid
+          title: agent_execution_id
+          type: string
+      title: StartAgentResponse
+      type: object
+    gitpod.v1.AgentMetadata:
+      additionalProperties: false
+      properties:
+        description:
+          title: description
+          type: string
+        name:
+          title: name
+          type: string
+      title: AgentMetadata
+      type: object
+    gitpod.v1.SendToAgentExecutionRequest:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - userInput
+          - required:
+            - wakeEvent
+        required:
+        - agentMessage
+      - not:
+          anyOf:
+          - required:
+            - agentMessage
+          - required:
+            - wakeEvent
+        required:
+        - userInput
+      - not:
+          anyOf:
+          - required:
+            - agentMessage
+          - required:
+            - userInput
+        required:
+        - wakeEvent
+      properties:
+        agentExecutionId:
+          format: uuid
+          title: agent_execution_id
+          type: string
+        agentMessage:
+          $ref: '#/components/schemas/gitpod.v1.AgentMessage'
+          title: agent_message
+        userInput:
+          $ref: '#/components/schemas/gitpod.v1.UserInputBlock'
+          title: user_input
+        wakeEvent:
+          $ref: '#/components/schemas/gitpod.v1.WakeEvent'
+          title: wake_event
+      title: SendToAgentExecutionRequest
+      type: object
+    gitpod.v1.UpdateAgentExecutionRequest.Spec:
+      additionalProperties: false
+      properties:
+        loopConditions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.Spec.LoopCondition'
+          maxItems: 10
+          title: loop_conditions
+          type: array
+      title: Spec
+      type: object
+    gitpod.v1.AgentResponseBlock.HostAuthenticationRequired:
+      additionalProperties: false
+      properties:
+        actionId:
+          minLength: 1
+          title: action_id
+          type: string
+        host:
+          title: host
+          type: string
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+      title: HostAuthenticationRequired
+      type: object
+    gitpod.v1.AgentExecutionFailureReason:
+      description: AgentExecutionFailureReason represents the reason why an agent execution failed
+      enum:
+      - AGENT_EXECUTION_FAILURE_REASON_UNSPECIFIED
+      - AGENT_EXECUTION_FAILURE_REASON_ENVIRONMENT
+      - AGENT_EXECUTION_FAILURE_REASON_SERVICE
+      - AGENT_EXECUTION_FAILURE_REASON_LLM_INTEGRATION
+      - AGENT_EXECUTION_FAILURE_REASON_INTERNAL
+      - AGENT_EXECUTION_FAILURE_REASON_AGENT_EXECUTION
+      title: AgentExecutionFailureReason
+      type: string
+    gitpod.v1.AgentResponseBlock.TodoItem:
+      additionalProperties: false
+      properties:
+        id:
+          minLength: 1
+          title: id
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.TodoItem.Phase'
+          title: phase
+        title:
+          title: title
+          type: string
+      title: TodoItem
+      type: object
+    gitpod.v1.ClarifyingQuestions.Choice:
+      additionalProperties: false
+      properties:
+        description:
+          title: description
+          type: string
+        label:
+          minLength: 1
+          title: label
+          type: string
+        text:
+          minLength: 1
+          title: text
+          type: string
+      title: Choice
+      type: object
+    gitpod.v1.RunnerSideAgentSpec:
+      additionalProperties: false
+      properties:
+        preferredModels:
+          description: "Ordered list of models the runner should try when creating an LLM client.\n Populated by the backend based on org tier. If empty, the runner falls\n back to its built-in PreferredModels list (backward compatibility)."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SupportedModel'
+          title: preferred_models
+          type: array
+        prompts:
+          description: The prompts configuration for each supported model. One cannot have multiple prompts for the same model - this will return an invalid argument error.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerSideAgentSpec.Prompts'
+          title: prompts
+          type: array
+        requiredTools:
+          description: The list of tools required by this agent to function
+          items:
+            type: string
+          title: required_tools
+          type: array
+      title: RunnerSideAgentSpec
+      type: object
+    gitpod.v1.DeletePromptRequest:
+      additionalProperties: false
+      properties:
+        promptId:
+          format: uuid
+          title: prompt_id
+          type: string
+      title: DeletePromptRequest
+      type: object
+    gitpod.v1.AgentExecution.WaitingInfo.TimerInterest:
+      additionalProperties: false
+      properties:
+        cron:
+          description: cron is the cron expression, if cron-based.
+          title: cron
+          type: string
+        duration:
+          description: duration is the original duration spec (e.g. "5m"), if interval-based.
+          title: duration
+          type: string
+        firesAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: fires_at is the next fire time.
+          title: fires_at
+      title: TimerInterest
+      type: object
+    gitpod.v1.AgentExecution.Status.OutputValue:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - floatValue
+          - required:
+            - intValue
+          - required:
+            - stringValue
+        required:
+        - boolValue
+      - not:
+          anyOf:
+          - required:
+            - boolValue
+          - required:
+            - intValue
+          - required:
+            - stringValue
+        required:
+        - floatValue
+      - not:
+          anyOf:
+          - required:
+            - boolValue
+          - required:
+            - floatValue
+          - required:
+            - stringValue
+        required:
+        - intValue
+      - not:
+          anyOf:
+          - required:
+            - boolValue
+          - required:
+            - floatValue
+          - required:
+            - intValue
+        required:
+        - stringValue
+      properties:
+        boolValue:
+          title: bool_value
+          type: boolean
+        floatValue:
+          format: double
+          title: float_value
+          type: number
+        intValue:
+          title: int_value
+          type: string
+        stringValue:
+          maxLength: 4096
+          title: string_value
+          type: string
+      title: OutputValue
+      type: object
+    gitpod.v1.ListAgentExecutionsRequest.Filter:
+      additionalProperties: false
+      properties:
+        agentIds:
+          items:
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: agent_ids
+          type: array
+        annotations:
+          additionalProperties:
+            title: value
+            type: string
+          description: "annotations filters by key-value pairs. Only executions containing\n all specified annotations (with matching values) are returned."
+          title: annotations
+          type: object
+        creatorIds:
+          items:
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: creator_ids
+          type: array
+        environmentIds:
+          items:
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: environment_ids
+          type: array
+        projectIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: project_ids
+          type: array
+        roles:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecutionRole'
+          maxItems: 25
+          title: roles
+          type: array
+        sessionIds:
+          description: session_ids filters the response to only executions belonging to the specified sessions
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: session_ids
+          type: array
+        statusPhases:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.Phase'
+          maxItems: 25
+          title: status_phases
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.ImprovePromptForAgentResponse:
+      additionalProperties: false
+      properties:
+        improvedPrompt:
+          title: improved_prompt
+          type: string
+      title: ImprovePromptForAgentResponse
+      type: object
+    gitpod.v1.AgentMessage.Role:
+      description: Role identifies the sender's relationship in the parent/child hierarchy.
+      enum:
+      - ROLE_UNSPECIFIED
+      - ROLE_PARENT
+      - ROLE_CHILD
+      title: Role
+      type: string
+    gitpod.v1.ReportAgentExecutionOutputsResponse:
+      additionalProperties: false
+      properties:
+        agentExecution:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution'
+          title: agent_execution
+      title: ReportAgentExecutionOutputsResponse
+      type: object
+    gitpod.v1.UpdateAgentResponse:
+      additionalProperties: false
+      properties:
+        agent:
+          $ref: '#/components/schemas/gitpod.v1.Agent'
+          description: The updated agent
+          title: agent
+      title: UpdateAgentResponse
+      type: object
+    gitpod.v1.AgentResponseBlock.TodoItem.Phase:
+      enum:
+      - PHASE_UNSPECIFIED
+      - PHASE_PENDING
+      - PHASE_IN_PROGRESS
+      - PHASE_DONE
+      - PHASE_CLEARED
+      title: Phase
+      type: string
+    gitpod.v1.AgentExecution.Status.LLM:
+      additionalProperties: false
+      properties:
+        complete:
+          title: complete
+          type: boolean
+      title: LLM
+      type: object
+    gitpod.v1.Agent:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - runnerSide
+        required:
+        - inEnvironment
+      - not:
+          anyOf:
+          - required:
+            - inEnvironment
+        required:
+        - runnerSide
+      properties:
+        id:
+          title: id
+          type: string
+        inEnvironment:
+          $ref: '#/components/schemas/gitpod.v1.InEnvironmentAgentSpec'
+          title: in_environment
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.AgentMetadata'
+          title: metadata
+        runnerSide:
+          $ref: '#/components/schemas/gitpod.v1.RunnerSideAgentSpec'
+          title: runner_side
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.RunnerSideAgentSpec'
+          deprecated: true
+          title: spec
+      title: Agent
+      type: object
+    gitpod.v1.AgentResponseBlock.AgentModeChange:
+      additionalProperties: false
+      description: "AgentModeChange signals a mode transition in autonomous agent modes (e.g., Ralph mode).\n This provides structured signaling instead of parsing magic tokens from text output."
+      properties:
+        message:
+          description: Human-readable message describing the mode change
+          title: message
+          type: string
+        state:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.AgentModeChange.State'
+          title: state
+      title: AgentModeChange
+      type: object
+    gitpod.v1.NextStepsProposal:
+      additionalProperties: false
+      properties:
+        actions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.NextStepsProposal.Action'
+          maxItems: 4
+          minItems: 1
+          title: actions
+          type: array
+      title: NextStepsProposal
+      type: object
+    gitpod.v1.AgentExecution.Status.LoopConditionResult:
+      additionalProperties: false
+      properties:
+        conditionId:
+          title: condition_id
+          type: string
+        iteration:
+          format: int32
+          title: iteration
+          type: integer
+        lastEvaluatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: last_evaluated_at
+        met:
+          title: met
+          type: boolean
+      title: LoopConditionResult
+      type: object
+    gitpod.v1.UpdatePromptRequest:
+      additionalProperties: false
+      properties:
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.UpdatePromptRequest.Metadata'
+          description: Metadata updates
+          nullable: true
+          title: metadata
+        promptId:
+          description: The ID of the prompt to update
+          format: uuid
+          title: prompt_id
+          type: string
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.UpdatePromptRequest.Spec'
+          description: Spec updates
+          nullable: true
+          title: spec
+      title: UpdatePromptRequest
+      type: object
+    gitpod.v1.GetPromptResponse:
+      additionalProperties: false
+      properties:
+        prompt:
+          $ref: '#/components/schemas/gitpod.v1.Prompt'
+          title: prompt
+      title: GetPromptResponse
+      type: object
+    gitpod.v1.EmitAgentSessionActivityRequest:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          description: The agent execution ID. Used to resolve the organization for auth/token lookup.
+          format: uuid
+          title: agent_execution_id
+          type: string
+        externalAgentSessionId:
+          description: "The external session ID (e.g., Linear agent session ID).\n The runner resolves this from annotations at startup and passes it directly,\n avoiding repeated annotation lookups on every emit call."
+          minLength: 1
+          title: external_agent_session_id
+          type: string
+        nextStepsProposal:
+          $ref: '#/components/schemas/gitpod.v1.NextStepsProposal'
+          description: "Optional next steps proposal from the agent. Reported separately from\n response_block so integrations can decide whether and how to render it.\n The Linear integration ignores this; other integrations may render it."
+          title: next_steps_proposal
+        responseBlock:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock'
+          description: "The structured response block to forward to the external session.\n The backend type-switches on the block's oneof output to decide how to render."
+          title: response_block
+        status:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status'
+          description: "The current agent execution status. When present, the backend uses this\n for phase-specific emissions (thoughts, errors, keepalive, external URLs)\n instead of relying on the separate status reflection path.\n This field is optional for backward compatibility."
+          title: status
+      title: EmitAgentSessionActivityRequest
+      type: object
+    gitpod.v1.UserInputBlock:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - text
+        required:
+        - image
+      - not:
+          anyOf:
+          - required:
+            - image
+        required:
+        - text
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Timestamp when this block was created. Used for debugging and support bundles.
+          title: created_at
+        id:
+          title: id
+          type: string
+        image:
+          $ref: '#/components/schemas/gitpod.v1.UserInputBlock.ImageInput'
+          deprecated: true
+          title: image
+        inputs:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UserInputBlock.Input'
+          maxItems: 10
+          title: inputs
+          type: array
+        text:
+          $ref: '#/components/schemas/gitpod.v1.UserInputBlock.TextInput'
+          deprecated: true
+          title: text
+      title: UserInputBlock
+      type: object
+    gitpod.v1.CreateMCPAccessTokenRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: CreateMCPAccessTokenRequest
+      type: object
+    gitpod.v1.CreateAgentExecutionConversationTokenResponse:
+      additionalProperties: false
+      properties:
+        token:
+          title: token
+          type: string
+      title: CreateAgentExecutionConversationTokenResponse
+      type: object
+    gitpod.v1.GetAgentExecutionRequest:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          format: uuid
+          title: agent_execution_id
+          type: string
+      title: GetAgentExecutionRequest
+      type: object
+    gitpod.v1.CreatePromptRequest:
+      additionalProperties: false
+      properties:
+        command:
+          maxLength: 50
+          pattern: ^[a-zA-Z0-9_-]*$
+          title: command
+          type: string
+        description:
+          maxLength: 500
+          minLength: 1
+          title: description
+          type: string
+        isCommand:
+          title: is_command
+          type: boolean
+        isSkill:
+          title: is_skill
+          type: boolean
+        isTemplate:
+          title: is_template
+          type: boolean
+        name:
+          maxLength: 255
+          minLength: 1
+          title: name
+          type: string
+        prompt:
+          maxLength: 20000
+          minLength: 1
+          title: prompt
+          type: string
+      title: CreatePromptRequest
+      type: object
+    gitpod.v1.UpdateAgentRequest:
+      additionalProperties: false
+      properties:
+        agentId:
+          description: The ID of the agent to update
+          format: uuid
+          title: agent_id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.UpdateAgentRequest.Metadata'
+          description: "Optional metadata which will replace the existing metadata partially\n If not provided, the existing metadata will be kept."
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.UpdateAgentRequest.Spec'
+          description: Optional spec which will replace the existing spec partially
+          title: spec
+      title: UpdateAgentRequest
+      type: object
+    gitpod.v1.RunsOn.Terminal:
+      additionalProperties: false
+      description: "Terminal runs the service inside a managed PTY terminal in the devcontainer.\n Users can attach to the terminal interactively via the terminal API."
+      title: Terminal
+      type: object
+    gitpod.v1.WakeEvent.LoopRetrigger.UnmetCondition:
+      additionalProperties: false
+      properties:
+        description:
+          title: description
+          type: string
+        expression:
+          title: expression
+          type: string
+        id:
+          title: id
+          type: string
+        iteration:
+          format: int32
+          title: iteration
+          type: integer
+        maxIterations:
+          format: int32
+          title: max_iterations
+          type: integer
+        reason:
+          title: reason
+          type: string
+      title: UnmetCondition
+      type: object
+    gitpod.v1.AgentMessage:
+      additionalProperties: false
+      description: "AgentMessage is a message sent between agents (e.g. from a parent agent to a\n child agent execution, or vice versa)."
+      properties:
+        payload:
+          description: Free-form payload of the message.
+          title: payload
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.AgentMessage.Role'
+          description: The role of the sender in the agent hierarchy.
+          title: role
+          x-stainless-skip: true
+        senderExecutionId:
+          description: The execution ID of the agent that sent this message.
+          title: sender_execution_id
+          type: string
+          x-stainless-skip: true
+        type:
+          $ref: '#/components/schemas/gitpod.v1.AgentMessage.Type'
+          title: type
+      title: AgentMessage
+      type: object
+    gitpod.v1.AgentMessage.Type:
+      enum:
+      - TYPE_UNSPECIFIED
+      - TYPE_UPDATE
+      - TYPE_COMPLETE
+      title: Type
+      type: string
+    gitpod.v1.AgentResponseBlock.CodeAnnotation:
+      additionalProperties: false
+      properties:
+        description:
+          title: description
+          type: string
+        endLine:
+          format: int32
+          title: end_line
+          type: integer
+        filePath:
+          minLength: 1
+          title: file_path
+          type: string
+        startLine:
+          format: int32
+          title: start_line
+          type: integer
+        title:
+          title: title
+          type: string
+      title: CodeAnnotation
+      type: object
+    gitpod.v1.ServiceSpec.Commands:
+      additionalProperties: false
+      properties:
+        ready:
+          description: "ready is an optional command that is run repeatedly until it exits with a zero exit code.\n If set, the service will first go into a Starting phase, and then into a Running phase once the ready\n command exits with a zero exit code."
+          title: ready
+          type: string
+        start:
+          description: "start is the command to start and run the service.\n If start exits, the service will transition to the following phase:\n - Stopped: if the exit code is 0\n - Failed: if the exit code is not 0\n If the stop command is not set, the start command will receive a SIGTERM signal when the service is\n requested to stop. If it does not exit within 2 minutes, it will receive a SIGKILL signal."
+          minLength: 1
+          title: start
+          type: string
+        stop:
+          description: "stop is an optional command that runs when the service is requested to stop.\n If set, instead of sending a SIGTERM signal to the start command, the stop command will be run.\n Once the stop command exits, the start command will receive a SIGKILL signal.\n If the stop command exits with a non-zero exit code, the service will transition to the Failed phase.\n If the stop command does not exit within 2 minutes, a SIGKILL signal will be sent to both the start and\n stop commands."
+          title: stop
+          type: string
+      title: Commands
+      type: object
+    gitpod.v1.ListAgentsResponse:
+      additionalProperties: false
+      properties:
+        agents:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Agent'
+          title: agents
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      title: ListAgentsResponse
+      type: object
+    gitpod.v1.AgentResponseBlock.FileModification.DiffGroup.Type:
+      enum:
+      - TYPE_UNSPECIFIED
+      - TYPE_ADDED
+      - TYPE_REMOVED
+      - TYPE_UNCHANGED
+      title: Type
+      type: string
+    gitpod.v1.CreatePromptResponse:
+      additionalProperties: false
+      properties:
+        prompt:
+          $ref: '#/components/schemas/gitpod.v1.Prompt'
+          title: prompt
+      title: CreatePromptResponse
+      type: object
+    gitpod.v1.AgentResponseBlock.FileModification.Diff:
+      additionalProperties: false
+      description: "Diff provides a structured diff format optimized for dashboard consumption.\n This format allows the dashboard to render diffs efficiently without parsing\n the legacy SEARCH/REPLACE format in the content field."
+      properties:
+        diffGroups:
+          description: Structured diff groups for efficient rendering
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.FileModification.DiffGroup'
+          title: diff_groups
+          type: array
+        stats:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.FileModification.DiffStats'
+          description: Summary statistics for the diff
+          title: stats
+      title: Diff
+      type: object
+    gitpod.v1.AgentResponseBlock.FileModification.DiffStats:
+      additionalProperties: false
+      description: Statistics about the changes in the diff
+      properties:
+        additions:
+          description: Number of lines added
+          format: int32
+          title: additions
+          type: integer
+        deletions:
+          description: Number of lines deleted
+          format: int32
+          title: deletions
+          type: integer
+      title: DiffStats
+      type: object
+    gitpod.v1.ListPromptsRequest.Filter:
+      additionalProperties: false
+      properties:
+        command:
+          title: command
+          type: string
+        commandPrefix:
+          maxLength: 50
+          title: command_prefix
+          type: string
+        excludePromptContent:
+          description: "exclude_prompt_content omits the large spec.prompt text from the response.\n Other spec fields (is_template, is_command, command, is_skill) are still returned.\n Use GetPrompt to retrieve the full prompt content when needed."
+          title: exclude_prompt_content
+          type: boolean
+        isCommand:
+          title: is_command
+          type: boolean
+        isSkill:
+          title: is_skill
+          type: boolean
+        isTemplate:
+          title: is_template
+          type: boolean
+        search:
+          description: search performs case-insensitive search across prompt name, description, and command.
+          maxLength: 256
+          title: search
+          type: string
+      title: Filter
+      type: object
+    gitpod.v1.AgentExecution.WaitingInfo.EnvironmentInterest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+        phase:
+          description: "Optional. When empty, any terminal phase (running, stopped, deleted)\n fires the interest. Valid values: \"running\", \"stopped\", \"deleted\"."
+          enum:
+          - ''
+          - running
+          - stopped
+          - deleted
+          title: phase
+          type: string
+      title: EnvironmentInterest
+      type: object
+    gitpod.v1.AgentExecution.Spec.Limits:
+      additionalProperties: false
+      properties:
+        maxInputTokens:
+          title: max_input_tokens
+          type: string
+        maxIterations:
+          title: max_iterations
+          type: string
+        maxOutputTokens:
+          title: max_output_tokens
+          type: string
+      title: Limits
+      type: object
+    gitpod.v1.GetPromptRequest:
+      additionalProperties: false
+      properties:
+        promptId:
+          format: uuid
+          title: prompt_id
+          type: string
+      title: GetPromptRequest
+      type: object
+    gitpod.v1.SendToAgentExecutionResponse:
+      additionalProperties: false
+      title: SendToAgentExecutionResponse
+      type: object
+    gitpod.v1.CreateAgentResponse:
+      additionalProperties: false
+      properties:
+        agent:
+          $ref: '#/components/schemas/gitpod.v1.Agent'
+          description: The created agent
+          title: agent
+      required:
+      - agent
+      title: CreateAgentResponse
+      type: object
+    gitpod.v1.NextStepsProposal.Action:
+      additionalProperties: false
+      properties:
+        prompt:
+          minLength: 1
+          title: prompt
+          type: string
+        title:
+          minLength: 1
+          title: title
+          type: string
+        variant:
+          title: variant
+          type: string
+      title: Action
+      type: object
+    gitpod.v1.AgentResponseBlock.FileModification.DiffGroup:
+      additionalProperties: false
+      description: DiffGroup represents a contiguous block of lines with the same change type
+      properties:
+        lines:
+          description: The actual lines of code for this group
+          items:
+            type: string
+          title: lines
+          type: array
+        type:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.FileModification.DiffGroup.Type'
+          title: type
+      title: DiffGroup
+      type: object
+    gitpod.v1.AgentExecution.Metadata:
+      additionalProperties: false
+      properties:
+        annotations:
+          additionalProperties:
+            title: value
+            type: string
+          description: annotations are key-value pairs for tracking external context.
+          title: annotations
+          type: object
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: creator
+        description:
+          title: description
+          type: string
+        name:
+          title: name
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecutionRole'
+          description: role is the role of the agent execution
+          title: role
+        sessionId:
+          description: session_id is the ID of the session this agent execution belongs to.
+          title: session_id
+          type: string
+          x-stainless-skip: true
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+        workflowActionId:
+          description: "workflow_action_id is set when this agent execution was created as part of a workflow.\n Used to correlate agent executions with their parent workflow execution action."
+          format: uuid
+          nullable: true
+          title: workflow_action_id
+          type: string
+      title: Metadata
+      type: object
+    gitpod.v1.SecretRef:
+      additionalProperties: false
+      description: SecretRef references a secret by its ID.
+      properties:
+        id:
+          description: id is the UUID of the secret to reference.
+          format: uuid
+          title: id
+          type: string
+      title: SecretRef
+      type: object
+    gitpod.v1.AgentResponseBlock.FileModification:
+      additionalProperties: false
+      properties:
+        actionId:
+          title: action_id
+          type: string
+        content:
+          description: Legacy SEARCH/REPLACE format content (deprecated in favor of diff)
+          title: content
+          type: string
+        diff:
+          $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.FileModification.Diff'
+          description: "Enhanced diff format for dashboard consumption.\n When present, the dashboard will use this instead of parsing the content field.\n This provides better performance and more accurate diff rendering."
+          title: diff
+        filePath:
+          minLength: 1
+          title: file_path
+          type: string
+        startLine:
+          format: int32
+          title: start_line
+          type: integer
+      title: FileModification
+      type: object
+    gitpod.v1.ClarifyingQuestions.Question:
+      additionalProperties: false
+      properties:
+        allowOther:
+          title: allow_other
+          type: boolean
+        choices:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ClarifyingQuestions.Choice'
+          maxItems: 6
+          minItems: 2
+          title: choices
+          type: array
+        question:
+          minLength: 1
+          title: question
+          type: string
+        questionId:
+          minLength: 1
+          title: question_id
+          type: string
+      title: Question
+      type: object
+    gitpod.v1.AgentExecution.Status.MCPIntegrationStatus:
+      additionalProperties: false
+      description: "MCPIntegrationStatus represents the status of a single MCP integration\n within an agent execution context"
+      properties:
+        failureMessage:
+          description: failure_message contains the reason the MCP integration failed to connect or operate
+          title: failure_message
+          type: string
+        id:
+          description: id is the unique name of the MCP integration
+          title: id
+          type: string
+        name:
+          description: name is the unique name of the MCP integration (e.g., "linear", "notion")
+          title: name
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.MCPIntegrationPhase'
+          description: phase is the current connection/health phase
+          title: phase
+        warningMessage:
+          description: warning_message contains warnings (e.g., rate limiting, degraded performance)
+          title: warning_message
+          type: string
+      title: MCPIntegrationStatus
+      type: object
+    gitpod.v1.CreateSearchAccessTokenRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: CreateSearchAccessTokenRequest
+      type: object
+    gitpod.v1.AgentMode:
+      description: AgentMode defines the operational mode of an agent
+      enum:
+      - AGENT_MODE_UNSPECIFIED
+      - AGENT_MODE_EXECUTION
+      - AGENT_MODE_PLANNING
+      - AGENT_MODE_RALPH
+      - AGENT_MODE_SPEC
+      title: AgentMode
+      type: string
+    gitpod.v1.AgentResponseBlock.TodoGroup:
+      additionalProperties: false
+      properties:
+        groupId:
+          description: Agent-controlled identifier for snapshot replacement semantics.
+          minLength: 1
+          title: group_id
+          type: string
+        todos:
+          description: Complete todo snapshot for this group.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentResponseBlock.TodoItem'
+          title: todos
+          type: array
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Timestamp of the latest snapshot update.
+          title: updated_at
+      title: TodoGroup
+      type: object
+    gitpod.v1.Prompt:
+      additionalProperties: false
+      properties:
+        id:
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.PromptMetadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.PromptSpec'
+          title: spec
+      title: Prompt
+      type: object
+    gitpod.v1.AgentResponseBlock.AvailableCommand:
+      additionalProperties: false
+      properties:
+        description:
+          description: Human-readable description of what the command does
+          title: description
+          type: string
+        name:
+          description: The command name without the leading slash (e.g., "go-tests", "create-pr")
+          title: name
+          type: string
+      title: AvailableCommand
+      type: object
+    gitpod.v1.AgentExecution:
+      additionalProperties: false
+      properties:
+        id:
+          description: "ID is a unique identifier of this agent run. No other agent run with the\n same name must be managed by this agent manager"
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Metadata'
+          description: "Metadata is data associated with this agent that's required for other\n parts of Gitpod to function"
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Spec'
+          description: "Spec is the configuration of the agent that's required for the\n runner to start the agent"
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Status'
+          description: Status is the current status of the agent
+          title: status
+      title: AgentExecution
+      type: object
+    gitpod.v1.UpdateAgentRequest.Spec:
+      additionalProperties: false
+      properties:
+        prompts:
+          description: "The prompts configuration for each supported model.\n Setting the system prompt of a model to the empty value will remove the system prompt for that model.\n Adding a prompt for a model that already has a prompt will replace the existing prompt for that model.\n Adding a prompt for a model that does not exist adds a new prompt for that model."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerSideAgentSpec.Prompts'
+          title: prompts
+          type: array
+        requiredTools:
+          description: "The list of tools required by this agent to function.\n Providing a value here will replace the existing list of required tools."
+          items:
+            type: string
+          title: required_tools
+          type: array
+      title: Spec
+      type: object
+    gitpod.v1.PromptSpec:
+      additionalProperties: false
+      properties:
+        command:
+          description: command is the unique command string within the organization
+          maxLength: 50
+          pattern: ^[a-zA-Z0-9_-]*$
+          title: command
+          type: string
+        isCommand:
+          description: is_command indicates if this prompt is a command
+          title: is_command
+          type: boolean
+        isSkill:
+          description: is_skill indicates if this prompt is a skill (workflow instructions for agents)
+          title: is_skill
+          type: boolean
+        isTemplate:
+          description: is_template indicates if this prompt is a template
+          title: is_template
+          type: boolean
+        prompt:
+          description: prompt is the content of the prompt
+          maxLength: 20000
+          title: prompt
+          type: string
+      title: PromptSpec
+      type: object
+    gitpod.v1.AgentExecution.WaitingInfo.SubAgentInterest:
+      additionalProperties: false
+      properties:
+        executionId:
+          title: execution_id
+          type: string
+      title: SubAgentInterest
+      type: object
+    gitpod.v1.StartAgentRequest:
+      additionalProperties: false
+      properties:
+        agentId:
+          format: uuid
+          title: agent_id
+          type: string
+        annotations:
+          additionalProperties:
+            title: value
+            type: string
+          description: "annotations are key-value pairs for tracking external context\n (e.g., integration session IDs, GitHub issue references).\n Keys should follow domain/name convention (e.g., \"agent-client-session/id\")."
+          title: annotations
+          type: object
+        codeContext:
+          $ref: '#/components/schemas/gitpod.v1.AgentCodeContext'
+          title: code_context
+        mode:
+          $ref: '#/components/schemas/gitpod.v1.AgentMode'
+          description: "mode specifies the operational mode for this agent execution\n If not specified, defaults to AGENT_MODE_EXECUTION"
+          title: mode
+        name:
+          maxLength: 100
+          title: name
+          type: string
+        runnerId:
+          description: "runner_id specifies a runner for this agent execution.\n When set, the agent execution is routed to this runner instead of the\n runner associated with the environment."
+          format: uuid
+          title: runner_id
+          type: string
+        sessionId:
+          description: "session_id is the ID of the session this agent execution belongs to.\n If empty, a new session is created implicitly."
+          format: uuid
+          title: session_id
+          type: string
+        workflowActionId:
+          description: "workflow_action_id is an optional reference to the workflow execution action\n that created this agent execution. Used for tracking and event correlation."
+          format: uuid
+          nullable: true
+          title: workflow_action_id
+          type: string
+      title: StartAgentRequest
+      type: object
+    gitpod.v1.AgentExecution.Phase:
+      enum:
+      - PHASE_UNSPECIFIED
+      - PHASE_PENDING
+      - PHASE_RUNNING
+      - PHASE_WAITING_FOR_INPUT
+      - PHASE_STOPPED
+      title: Phase
+      type: string
+    gitpod.v1.ImprovePromptForAgentRequest:
+      additionalProperties: false
+      properties:
+        agentId:
+          format: uuid
+          title: agent_id
+          type: string
+        prompt:
+          title: prompt
+          type: string
+      title: ImprovePromptForAgentRequest
+      type: object
+    gitpod.v1.UserInputBlock.Input:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - text
+        required:
+        - image
+      - not:
+          anyOf:
+          - required:
+            - image
+        required:
+        - text
+      properties:
+        image:
+          $ref: '#/components/schemas/gitpod.v1.UserInputBlock.ImageInput'
+          title: image
+        text:
+          $ref: '#/components/schemas/gitpod.v1.UserInputBlock.TextInput'
+          title: text
+      title: Input
+      type: object
+    gitpod.v1.ClarifyingQuestions:
+      additionalProperties: false
+      properties:
+        questions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ClarifyingQuestions.Question'
+          minItems: 1
+          title: questions
+          type: array
+      title: ClarifyingQuestions
+      type: object
+    gitpod.v1.AgentExecution.Spec:
+      additionalProperties: false
+      properties:
+        agentId:
+          format: uuid
+          title: agent_id
+          type: string
+        codeContext:
+          $ref: '#/components/schemas/gitpod.v1.AgentCodeContext'
+          title: code_context
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Phase'
+          description: desired_phase is the desired phase of the agent run
+          title: desired_phase
+        limits:
+          $ref: '#/components/schemas/gitpod.v1.AgentExecution.Spec.Limits'
+          title: limits
+        loopConditions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentExecution.Spec.LoopCondition'
+          maxItems: 10
+          title: loop_conditions
+          type: array
+        session:
+          title: session
+          type: string
+        specVersion:
+          description: "version of the spec. The value of this field has no semantic\n meaning (e.g. don't interpret it as as a timestamp),\n but it can be used to impose a partial order. If a.spec_version <\n b.spec_version then a was the spec before b."
+          title: spec_version
+          type: string
+      title: Spec
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.AgentResponseBlock.EnvironmentCreation:
+      additionalProperties: false
+      properties:
+        actionId:
+          minLength: 1
+          title: action_id
+          type: string
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+      title: EnvironmentCreation
+      type: object
+    gitpod.v1.ListMCPIntegrationsResponse:
+      additionalProperties: false
+      properties:
+        mcpIntegrations:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.MCPIntegration'
+          title: mcp_integrations
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      title: ListMCPIntegrationsResponse
+      type: object
+    gitpod.v1.ListPromptsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListPromptsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListPromptsRequest
+      type: object
+    gitpod.v1.UserInputBlock.ImageInput:
+      additionalProperties: false
+      description: "ImageInput allows sending images to the agent.\n Client must provide the MIME type; backend validates against magic bytes."
+      properties:
+        data:
+          description: 'Raw image data (max 4MB). Supported formats: PNG, JPEG.'
+          format: byte
+          maxLength: 4194304
+          minLength: 1
+          title: data
+          type: string
+        dataRef:
+          description: "Content-addressed reference to offloaded image data.\n Set by the runner when storing in the conversation store; data is cleared.\n Clients never send this field."
+          title: data_ref
+          type: string
+          x-stainless-skip: true
+        mimeType:
+          enum:
+          - image/png
+          - image/jpeg
+          title: mime_type
+          type: string
+      title: ImageInput
+      type: object
+    gitpod.v1.RunsOn.Docker:
+      additionalProperties: false
+      properties:
+        environment:
+          items:
+            type: string
+          title: environment
+          type: array
+        image:
+          minLength: 1
+          title: image
+          type: string
+      title: Docker
+      type: object
+    gitpod.v1.AgentExecutionRole:
+      description: AgentExecutionRole represents the role of an agent execution
+      enum:
+      - AGENT_EXECUTION_ROLE_UNSPECIFIED
+      - AGENT_EXECUTION_ROLE_DEFAULT
+      - AGENT_EXECUTION_ROLE_WORKFLOW
+      title: AgentExecutionRole
+      type: string
+    gitpod.v1.AgentResponseBlock.Phase:
+      enum:
+      - PHASE_UNSPECIFIED
+      - PHASE_UPDATE
+      - PHASE_COMPLETED
+      - PHASE_DELTA
+      title: Phase
+      type: string
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.PullRequest:
+      additionalProperties: false
+      description: "PullRequest represents pull request metadata from source control systems.\n This message is used across workflow triggers, executions, and agent contexts\n to maintain consistent PR information throughout the system."
+      properties:
+        author:
+          description: Author name as provided by the SCM system
+          title: author
+          type: string
+        draft:
+          description: Whether this is a draft pull request
+          title: draft
+          type: boolean
+        fromBranch:
+          description: Source branch name (the branch being merged from)
+          title: from_branch
+          type: string
+        id:
+          description: 'Unique identifier from the source system (e.g., "123" for GitHub PR #123)'
+          title: id
+          type: string
+        repository:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest.Repository'
+          title: repository
+        state:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest.State'
+          title: state
+        title:
+          description: Pull request title
+          title: title
+          type: string
+        toBranch:
+          description: Target branch name (the branch being merged into)
+          title: to_branch
+          type: string
+        url:
+          description: Pull request URL (e.g., "https://github.com/owner/repo/pull/123")
+          title: url
+          type: string
+      title: PullRequest
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.ServiceSpec:
+      additionalProperties: false
+      properties:
+        commands:
+          $ref: '#/components/schemas/gitpod.v1.ServiceSpec.Commands'
+          description: commands contains the commands to start, stop and check the readiness of the service
+          title: commands
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.ServicePhase'
+          description: desired_phase is the phase the service should be in. Used to start or stop the service.
+          title: desired_phase
+        env:
+          description: env specifies environment variables for the service.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentVariableItem'
+          title: env
+          type: array
+        runsOn:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn'
+          description: runs_on specifies the environment the service should run on.
+          title: runs_on
+        session:
+          description: "session should be changed to trigger a restart of the service. If a service exits it will\n not be restarted until the session is changed."
+          title: session
+          type: string
+        specVersion:
+          description: "version of the spec. The value of this field has no semantic\n meaning (e.g. don't interpret it as as a timestamp),\n but it can be used to impose a partial order. If a.spec_version <\n b.spec_version then a was the spec before b."
+          title: spec_version
+          type: string
+      title: ServiceSpec
+      type: object
+    gitpod.v1.RunnerSideAgentSpec.Prompts:
+      additionalProperties: false
+      properties:
+        improvePrompt:
+          description: The prompt used to improve the agent's prompt
+          title: improve_prompt
+          type: string
+        initialMessage:
+          description: The initial message sent to the user. If empty, the agent will start in WAITING_FOR_INPUT state
+          title: initial_message
+          type: string
+        judgementPrompt:
+          description: The prompt used to evaluate agent's performance and provide final assessment
+          title: judgement_prompt
+          type: string
+        model:
+          $ref: '#/components/schemas/gitpod.v1.SupportedModel'
+          description: The model these prompts are for
+          title: model
+        systemPrompt:
+          description: The system prompt that defines the agent's role and capabilities
+          title: system_prompt
+          type: string
+      title: Prompts
+      type: object
+    gitpod.v1.DeletePromptResponse:
+      additionalProperties: false
+      title: DeletePromptResponse
+      type: object
+    gitpod.v1.ListAgentExecutionsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListAgentExecutionsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListAgentExecutionsRequest
+      type: object
+    gitpod.v1.DeleteAgentExecutionRequest:
+      additionalProperties: false
+      properties:
+        agentExecutionId:
+          format: uuid
+          title: agent_execution_id
+          type: string
+      title: DeleteAgentExecutionRequest
+      type: object
+    gitpod.v1.ListPromptsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        prompts:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Prompt'
+          title: prompts
+          type: array
+      title: ListPromptsResponse
+      type: object
+    gitpod.v1.AgentResponseBlock.UserInputBlockSeen:
+      additionalProperties: false
+      properties:
+        id:
+          title: id
+          type: string
+      title: UserInputBlockSeen
+      type: object
+    gitpod.v1.UpdatePromptResponse:
+      additionalProperties: false
+      properties:
+        prompt:
+          $ref: '#/components/schemas/gitpod.v1.Prompt'
+          title: prompt
+      title: UpdatePromptResponse
+      type: object
+    gitpod.v1.CreateMCPAccessTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          title: access_token
+          type: string
+      title: CreateMCPAccessTokenResponse
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

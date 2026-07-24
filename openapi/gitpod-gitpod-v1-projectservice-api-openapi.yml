@@ -1,0 +1,1710 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.ProjectService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.ProjectService
+  x-displayName: gitpod.v1.ProjectService
+paths:
+  /gitpod.v1.ProjectService/CreateProject:
+    servers: []
+    post:
+      description: "Creates a new project with specified configuration.\n\n Use this method to:\n - Set up development projects\n - Configure project environments\n - Define project settings\n - Initialize project content\n\n ### Examples\n\n - Create basic project:\n\n   Creates a project with minimal configuration.\n\n   ```yaml\n   name: \"Web Application\"\n   initializer:\n     specs:\n       - git:\n           remoteUri: \"https://github.com/org/repo\"\n   ```\n\n - Create project with devcontainer:\n\n   Creates a project with custom development container.\n\n   ```yaml\n   name: \"Backend Service\"\n   initializer:\n     specs:\n       - git:\n           remoteUri: \"https://github.com/org/backend\"\n   devcontainerFilePath: \".devcontainer/devcontainer.json\"\n   automationsFilePath: \".gitpod/automations.yaml\"\n   ```"
+      operationId: gitpod.v1.ProjectService.CreateProject
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_basic_project:
+                description: Creates a project with minimal configuration.
+                value:
+                  initializer:
+                    specs:
+                    - git:
+                        remoteUri: https://github.com/org/repo
+                  name: Web Application
+              create_project_with_devcontainer:
+                description: Creates a project with custom development container.
+                value:
+                  automationsFilePath: .gitpod/automations.yaml
+                  devcontainerFilePath: .devcontainer/devcontainer.json
+                  initializer:
+                    specs:
+                    - git:
+                        remoteUri: https://github.com/org/backend
+                  name: Backend Service
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateProjectRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateProjectResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateProject
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/CreateProjectFromEnvironment:
+    servers: []
+    post:
+      description: "Creates a new project using an existing environment as a template.\n\n Use this method to:\n - Clone environment configurations\n - Create projects from templates\n - Share environment setups\n\n ### Examples\n\n - Create from environment:\n\n   Creates a project based on existing environment.\n\n   ```yaml\n   name: \"Frontend Project\"\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+      operationId: gitpod.v1.ProjectService.CreateProjectFromEnvironment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_from_environment:
+                description: Creates a project based on existing environment.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  name: Frontend Project
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateProjectFromEnvironmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateProjectFromEnvironmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateProjectFromEnvironment
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/CreateProjectPolicy:
+    servers: []
+    post:
+      description: "Creates a new policy for a project.\n\n Use this method to:\n - Set up access controls\n - Define group permissions\n - Configure role-based access\n\n ### Examples\n\n - Create admin policy:\n\n   Grants admin access to a group.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: PROJECT_ROLE_ADMIN\n   ```"
+      operationId: gitpod.v1.ProjectService.CreateProjectPolicy
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_admin_policy:
+                description: Grants admin access to a group.
+                value:
+                  groupId: f53d2330-3795-4c5d-a1f3-453121af9c60
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  role: PROJECT_ROLE_ADMIN
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateProjectPolicyRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateProjectPolicyResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateProjectPolicy
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/CreateProjects:
+    servers: []
+    post:
+      description: "Creates multiple projects in a single request.\n\n Use this method to:\n - Onboard multiple repositories at once\n - Import a batch of projects during initial setup\n\n Returns successfully created projects and details about any failures.\n Each project in the request is processed independently — partial success\n is possible.\n\n ### Examples\n\n - Create multiple projects:\n\n   Creates several projects in one request.\n\n   ```yaml\n   projects:\n     - name: \"Frontend\"\n       initializer:\n         specs:\n           - git:\n               remoteUri: \"https://github.com/org/frontend\"\n     - name: \"Backend\"\n       initializer:\n         specs:\n           - git:\n               remoteUri: \"https://github.com/org/backend\"\n   ```"
+      operationId: gitpod.v1.ProjectService.CreateProjects
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_multiple_projects:
+                description: Creates several projects in one request.
+                value:
+                  projects:
+                  - initializer:
+                      specs:
+                      - git:
+                          remoteUri: https://github.com/org/frontend
+                    name: Frontend
+                  - initializer:
+                      specs:
+                      - git:
+                          remoteUri: https://github.com/org/backend
+                    name: Backend
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateProjectsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateProjectsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateProjects
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/DeleteProject:
+    servers: []
+    post:
+      description: "Deletes a project permanently.\n\n Use this method to:\n - Remove unused projects\n - Clean up test projects\n - Delete obsolete configurations\n\n ### Examples\n\n - Delete project:\n\n   Permanently removes a project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.ProjectService.DeleteProject
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_project:
+                description: Permanently removes a project.
+                value:
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteProjectRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteProjectResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteProject
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/DeleteProjectPolicy:
+    servers: []
+    post:
+      description: "Deletes a project policy.\n\n Use this method to:\n - Remove access controls\n - Revoke permissions\n - Clean up policies\n\n ### Examples\n\n - Delete policy:\n\n   Removes a group's access policy.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+      operationId: gitpod.v1.ProjectService.DeleteProjectPolicy
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_policy:
+                description: Removes a group's access policy.
+                value:
+                  groupId: f53d2330-3795-4c5d-a1f3-453121af9c60
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteProjectPolicyRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteProjectPolicyResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteProjectPolicy
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/DeleteProjects:
+    servers: []
+    post:
+      description: "Deletes multiple projects in a single request.\n\n Use this method to:\n - Remove multiple unused projects at once\n - Clean up projects in batch\n\n Returns successfully deleted project IDs and details about any failures.\n Each project in the request is processed independently — partial success\n is possible.\n\n ### Examples\n\n - Delete multiple projects:\n\n   Permanently removes several projects in one request.\n\n   ```yaml\n   projectIds:\n     - \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n     - \"c1f23g7d-5d78-430e-b5b7-e0949c6eb158\"\n   ```"
+      operationId: gitpod.v1.ProjectService.DeleteProjects
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_multiple_projects:
+                description: Permanently removes several projects in one request.
+                value:
+                  projectIds:
+                  - b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  - c1f23g7d-5d78-430e-b5b7-e0949c6eb158
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteProjectsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteProjectsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteProjects
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/GetProject:
+    servers: []
+    post:
+      description: "Gets details about a specific project.\n\n Use this method to:\n - View project configuration\n - Check project status\n - Get project metadata\n\n ### Examples\n\n - Get project details:\n\n   Retrieves information about a specific project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.ProjectService.GetProject
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_project_details:
+                description: Retrieves information about a specific project.
+                value:
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetProjectRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetProjectResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetProject
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/ListProjectEnvironmentClasses:
+    servers: []
+    post:
+      description: "Lists environment classes of a project.\n\n Use this method to:\n - View all environment classes of a project\n\n ### Examples\n\n - List project environment classes:\n\n   Shows all environment classes of a project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.ProjectService.ListProjectEnvironmentClasses
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_project_environment_classes:
+                description: Shows all environment classes of a project.
+                value:
+                  pagination:
+                    pageSize: 20
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListProjectEnvironmentClassesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListProjectEnvironmentClassesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListProjectEnvironmentClasses
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/ListProjectPolicies:
+    servers: []
+    post:
+      description: "Lists policies for a project.\n\n Use this method to:\n - View access controls\n - Check policy configurations\n - Audit permissions\n\n ### Examples\n\n - List policies:\n\n   Shows all policies for a project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.ProjectService.ListProjectPolicies
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_policies:
+                description: Shows all policies for a project.
+                value:
+                  pagination:
+                    pageSize: 20
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListProjectPoliciesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListProjectPoliciesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListProjectPolicies
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/ListProjects:
+    servers: []
+    post:
+      description: "Lists projects with optional filtering.\n\n Use this method to:\n - View all accessible projects\n - Browse project configurations\n - Monitor project status\n\n ### Examples\n\n - List projects:\n\n   Shows all projects with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.ProjectService.ListProjects
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_projects:
+                description: Shows all projects with pagination.
+                value:
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListProjectsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListProjectsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListProjects
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/UpdateProject:
+    servers: []
+    post:
+      description: "Updates a project's configuration.\n\n Use this method to:\n - Modify project settings\n - Update environment class\n - Change project name\n - Configure initializers\n - Configure prebuild settings\n\n ### Examples\n\n - Update project name:\n\n   Changes the project's display name.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"New Project Name\"\n   ```\n\n - Enable prebuilds with daily schedule:\n\n   Configures prebuilds to run daily at 2 AM UTC.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   prebuildConfiguration:\n     enabled: true\n     environmentClassIds:\n       - \"b0e12f6c-4c67-429d-a4a6-d9838b5da041\"\n     timeout: \"3600s\"\n     trigger:\n       dailySchedule:\n         hourUtc: 2\n   ```"
+      operationId: gitpod.v1.ProjectService.UpdateProject
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              enable_prebuilds_with_daily_schedule:
+                description: Configures prebuilds to run daily at 2 AM UTC.
+                value:
+                  prebuildConfiguration:
+                    enabled: true
+                    environmentClassIds:
+                    - b0e12f6c-4c67-429d-a4a6-d9838b5da041
+                    timeout: 3600s
+                    trigger:
+                      dailySchedule:
+                        hourUtc: 2
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+              update_project_name:
+                description: Changes the project's display name.
+                value:
+                  name: New Project Name
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateProjectRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateProjectResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateProject
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/UpdateProjectEnvironmentClasses:
+    servers: []
+    post:
+      description: "Updates all environment classes of a project.\n\n Use this method to:\n - Modify all environment classea of a project\n\n ### Examples\n\n - Update project environment classes:\n\n   Updates all environment classes for a project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   projectEnvironmentClasses:\n     - environmentClassId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da041\"\n       order: 0\n     - localRunner: true\n       order: 1\n   ```"
+      operationId: gitpod.v1.ProjectService.UpdateProjectEnvironmentClasses
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_project_environment_classes:
+                description: Updates all environment classes for a project.
+                value:
+                  projectEnvironmentClasses:
+                  - environmentClassId: b0e12f6c-4c67-429d-a4a6-d9838b5da041
+                    order: 0
+                  - localRunner: true
+                    order: 1
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateProjectEnvironmentClassesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateProjectEnvironmentClassesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateProjectEnvironmentClasses
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/UpdateProjectPolicy:
+    servers: []
+    post:
+      description: "Updates an existing project policy.\n\n Use this method to:\n - Modify access levels\n - Change group roles\n - Update permissions\n\n ### Examples\n\n - Update policy role:\n\n   Changes a group's access level.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: PROJECT_ROLE_EDITOR\n   ```"
+      operationId: gitpod.v1.ProjectService.UpdateProjectPolicy
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_policy_role:
+                description: Changes a group's access level.
+                value:
+                  groupId: f53d2330-3795-4c5d-a1f3-453121af9c60
+                  projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  role: PROJECT_ROLE_EDITOR
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateProjectPolicyRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateProjectPolicyResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateProjectPolicy
+      tags:
+      - gitpod.v1.ProjectService
+  /gitpod.v1.ProjectService/UpdateProjects:
+    servers: []
+    post:
+      description: "Updates multiple projects in a single request.\n\n Use this method to:\n - Modify settings across multiple projects at once\n - Apply configuration changes in batch\n\n Returns successfully updated projects and details about any failures.\n Each project in the request is processed independently — partial success\n is possible.\n\n ### Examples\n\n - Update multiple projects:\n\n   Updates several projects in one request.\n\n   ```yaml\n   projects:\n     - projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n       name: \"Updated Frontend\"\n     - projectId: \"c1f23g7d-5d78-430e-b5b7-e0949c6eb158\"\n       name: \"Updated Backend\"\n   ```"
+      operationId: gitpod.v1.ProjectService.UpdateProjects
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_multiple_projects:
+                description: Updates several projects in one request.
+                value:
+                  projects:
+                  - name: Updated Frontend
+                    projectId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+                  - name: Updated Backend
+                    projectId: c1f23g7d-5d78-430e-b5b7-e0949c6eb158
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateProjectsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateProjectsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateProjects
+      tags:
+      - gitpod.v1.ProjectService
+components:
+  schemas:
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.RecommendedEditors:
+      additionalProperties: false
+      description: RecommendedEditors contains the map of recommended editors and their versions.
+      properties:
+        editors:
+          additionalProperties:
+            $ref: '#/components/schemas/gitpod.v1.EditorVersions'
+            title: value
+          description: "editors maps editor aliases to their recommended versions.\n Key is the editor alias (e.g., \"intellij\", \"goland\", \"vscode\").\n Value contains the list of recommended versions for that editor.\n If versions list is empty, all available versions are recommended.\n Example: {\"intellij\": {versions: [\"2025.1\", \"2024.3\"]}, \"goland\": {}}"
+          title: editors
+          type: object
+      title: RecommendedEditors
+      type: object
+    gitpod.v1.DeleteProjectRequest:
+      additionalProperties: false
+      properties:
+        projectId:
+          description: project_id specifies the project identifier
+          format: uuid
+          title: project_id
+          type: string
+      title: DeleteProjectRequest
+      type: object
+    gitpod.v1.DeleteProjectsRequest:
+      additionalProperties: false
+      properties:
+        projectIds:
+          items:
+            format: uuid
+            maxItems: 100
+            minItems: 1
+            type: string
+          maxItems: 100
+          minItems: 1
+          title: project_ids
+          type: array
+      title: DeleteProjectsRequest
+      type: object
+    gitpod.v1.PrebuildTrigger.DailySchedule:
+      additionalProperties: false
+      description: DailySchedule triggers prebuilds once per day at a specified hour.
+      properties:
+        hourUtc:
+          description: "hour_utc is the hour of day (0-23) in UTC when the prebuild should start.\n The actual start time may be adjusted by a few minutes to balance system load."
+          format: int32
+          maximum: 23
+          title: hour_utc
+          type: integer
+      title: DailySchedule
+      type: object
+    gitpod.v1.GitInitializer.CloneTargetMode:
+      description: "CloneTargetMode is the target state in which we want to leave a\n GitEnvironment"
+      enum:
+      - CLONE_TARGET_MODE_UNSPECIFIED
+      - CLONE_TARGET_MODE_REMOTE_HEAD
+      - CLONE_TARGET_MODE_REMOTE_COMMIT
+      - CLONE_TARGET_MODE_REMOTE_BRANCH
+      - CLONE_TARGET_MODE_LOCAL_BRANCH
+      - CLONE_TARGET_MODE_REMOTE_TAG
+      title: CloneTargetMode
+      type: string
+    gitpod.v1.ProjectPrebuildConfiguration:
+      additionalProperties: false
+      description: "ProjectPrebuildConfiguration defines how prebuilds are created for a project.\n Prebuilds create environment snapshots that enable faster environment startup times."
+      properties:
+        enableJetbrainsWarmup:
+          description: enable_jetbrains_warmup controls whether JetBrains IDE warmup runs during prebuilds.
+          title: enable_jetbrains_warmup
+          type: boolean
+        enabled:
+          description: "enabled controls whether prebuilds are created for this project.\n When disabled, no automatic prebuilds will be triggered."
+          title: enabled
+          type: boolean
+        environmentClassIds:
+          description: "environment_class_ids specifies which environment classes should have prebuilds created.\n If empty, no prebuilds are created."
+          items:
+            format: uuid
+            type: string
+          title: environment_class_ids
+          type: array
+        executor:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: "executor specifies who runs prebuilds for this project.\n The executor's SCM credentials are used to clone the repository.\n If not set, defaults to the project creator."
+          title: executor
+        timeout:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: "timeout is the maximum duration allowed for a prebuild to complete.\n If not specified, defaults to 1 hour.\n Must be between 5 minutes and 2 hours."
+          title: timeout
+        trigger:
+          $ref: '#/components/schemas/gitpod.v1.PrebuildTrigger'
+          description: trigger defines when prebuilds should be created.
+          title: trigger
+      title: ProjectPrebuildConfiguration
+      type: object
+    gitpod.v1.DeleteProjectPolicyResponse:
+      additionalProperties: false
+      title: DeleteProjectPolicyResponse
+      type: object
+    gitpod.v1.UpdateProjectRequest:
+      additionalProperties: false
+      properties:
+        automationsFilePath:
+          description: 'automations_file_path is the path to the automations file relative to the repo root
+
+            path must not be absolute (start with a /):
+
+            ```
+
+            this.matches(''^$|^[^/].*'')
+
+            ```
+
+
+            '
+          nullable: true
+          title: automations_file_path
+          type: string
+        devcontainerFilePath:
+          description: 'devcontainer_file_path is the path to the devcontainer file relative to the repo root
+
+            path must not be absolute (start with a /):
+
+            ```
+
+            this.matches(''^$|^[^/].*'')
+
+            ```
+
+
+            '
+          nullable: true
+          title: devcontainer_file_path
+          type: string
+        initializer:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentInitializer'
+          description: initializer is the content initializer
+          nullable: true
+          title: initializer
+        name:
+          maxLength: 80
+          minLength: 1
+          nullable: true
+          title: name
+          type: string
+        prebuildConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.ProjectPrebuildConfiguration'
+          description: "prebuild_configuration defines how prebuilds are created for this project.\n If not provided, the existing prebuild configuration is not modified.\n To disable prebuilds, set enabled to false."
+          nullable: true
+          title: prebuild_configuration
+        projectId:
+          description: project_id specifies the project identifier
+          format: uuid
+          title: project_id
+          type: string
+        recommendedEditors:
+          $ref: '#/components/schemas/gitpod.v1.RecommendedEditors'
+          description: "recommended_editors specifies the editors recommended for this project.\n If not provided, the existing recommended editors are not modified.\n To clear all recommended editors, set to an empty RecommendedEditors message."
+          nullable: true
+          title: recommended_editors
+        technicalDescription:
+          description: "technical_description is a detailed technical description of the project\n This field is not returned by default in GetProject or ListProjects responses 8KB max"
+          maxLength: 8192
+          nullable: true
+          title: technical_description
+          type: string
+      title: UpdateProjectRequest
+      type: object
+    gitpod.v1.UpdateProjectEnvironmentClassesResponse:
+      additionalProperties: false
+      title: UpdateProjectEnvironmentClassesResponse
+      type: object
+    gitpod.v1.UpdateProjectPolicyRequest:
+      additionalProperties: false
+      description: UpdateProjectPolicyRequest updates a Project Policy.
+      properties:
+        groupId:
+          description: group_id specifies the group_id identifier
+          format: uuid
+          title: group_id
+          type: string
+        projectId:
+          description: project_id specifies the project identifier
+          format: uuid
+          title: project_id
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.ProjectRole'
+          title: role
+      title: UpdateProjectPolicyRequest
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.DeleteProjectsResponse.Failure:
+      additionalProperties: false
+      properties:
+        error:
+          description: error describes why the project deletion failed
+          title: error
+          type: string
+        index:
+          description: index is the position in the request array (0-based)
+          format: int32
+          title: index
+          type: integer
+        projectId:
+          description: project_id is the project ID that failed
+          title: project_id
+          type: string
+      title: Failure
+      type: object
+    gitpod.v1.ListProjectPoliciesResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        policies:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ProjectPolicy'
+          title: policies
+          type: array
+      title: ListProjectPoliciesResponse
+      type: object
+    gitpod.v1.EnvironmentInitializer.Spec:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - git
+        required:
+        - contextUrl
+      - not:
+          anyOf:
+          - required:
+            - contextUrl
+        required:
+        - git
+      properties:
+        contextUrl:
+          $ref: '#/components/schemas/gitpod.v1.ContextURLInitializer'
+          title: context_url
+        git:
+          $ref: '#/components/schemas/gitpod.v1.GitInitializer'
+          title: git
+      title: Spec
+      type: object
+    gitpod.v1.Project.UsedBy:
+      additionalProperties: false
+      properties:
+        subjects:
+          description: Subjects are the 10 most recent subjects who have used the project to create an environment
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: subjects
+          type: array
+        totalSubjects:
+          description: Total number of unique subjects who have used the project
+          format: int32
+          title: total_subjects
+          type: integer
+      title: UsedBy
+      type: object
+    gitpod.v1.CreateProjectRequest:
+      additionalProperties: false
+      properties:
+        automationsFilePath:
+          description: 'automations_file_path is the path to the automations file relative to the repo root
+
+            path must not be absolute (start with a /):
+
+            ```
+
+            this.matches(''^$|^[^/].*'')
+
+            ```
+
+
+            '
+          title: automations_file_path
+          type: string
+        devcontainerFilePath:
+          description: 'devcontainer_file_path is the path to the devcontainer file relative to the repo root
+
+            path must not be absolute (start with a /):
+
+            ```
+
+            this.matches(''^$|^[^/].*'')
+
+            ```
+
+
+            '
+          title: devcontainer_file_path
+          type: string
+        initializer:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentInitializer'
+          description: initializer is the content initializer
+          title: initializer
+        name:
+          maxLength: 80
+          minLength: 1
+          title: name
+          type: string
+        prebuildConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.ProjectPrebuildConfiguration'
+          description: "prebuild_configuration defines how prebuilds are created for this project.\n If not set, prebuilds are disabled for the project."
+          title: prebuild_configuration
+        technicalDescription:
+          description: "technical_description is a detailed technical description of the project\n This field is not returned by default in GetProject or ListProjects responses 8KB max"
+          maxLength: 8192
+          title: technical_description
+          type: string
+      required:
+      - initializer
+      title: CreateProjectRequest
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.CreateProjectPolicyRequest:
+      additionalProperties: false
+      description: CreateProjectPolicyRequest creates a Project Policy.
+      properties:
+        groupId:
+          description: group_id specifies the group_id identifier
+          format: uuid
+          title: group_id
+          type: string
+        projectId:
+          description: project_id specifies the project identifier
+          format: uuid
+          title: project_id
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.ProjectRole'
+          title: role
+      title: CreateProjectPolicyRequest
+      type: object
+    gitpod.v1.CreateProjectFromEnvironmentResponse:
+      additionalProperties: false
+      properties:
+        project:
+          $ref: '#/components/schemas/gitpod.v1.Project'
+          title: project
+      title: CreateProjectFromEnvironmentResponse
+      type: object
+    gitpod.v1.ContextURLInitializer:
+      additionalProperties: false
+      properties:
+        url:
+          description: url is the URL from which the environment is created
+          format: uri
+          title: url
+          type: string
+      title: ContextURLInitializer
+      type: object
+    gitpod.v1.UpdateProjectPolicyResponse:
+      additionalProperties: false
+      properties:
+        policy:
+          $ref: '#/components/schemas/gitpod.v1.ProjectPolicy'
+          title: policy
+      title: UpdateProjectPolicyResponse
+      type: object
+    gitpod.v1.ProjectMetadata:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: creator is the identity of the project creator
+          title: creator
+        name:
+          description: name is the human readable name of the project
+          maxLength: 80
+          minLength: 1
+          title: name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization that contains the environment
+          format: uuid
+          title: organization_id
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+      title: ProjectMetadata
+      type: object
+    gitpod.v1.DeleteProjectsResponse:
+      additionalProperties: false
+      properties:
+        deletedProjectIds:
+          description: deleted_project_ids contains the IDs of successfully deleted projects
+          items:
+            type: string
+          title: deleted_project_ids
+          type: array
+        failedProjects:
+          description: failed_projects contains details about projects that failed to delete
+          items:
+            $ref: '#/components/schemas/gitpod.v1.DeleteProjectsResponse.Failure'
+          title: failed_projects
+          type: array
+      title: DeleteProjectsResponse
+      type: object
+    gitpod.v1.GitInitializer:
+      additionalProperties: false
+      properties:
+        checkoutLocation:
+          description: "a path relative to the environment root in which the code will be checked out\n to"
+          title: checkout_location
+          type: string
+        cloneTarget:
+          description: the value for the clone target mode - use depends on the target mode
+          title: clone_target
+          type: string
+        remoteUri:
+          description: remote_uri is the Git remote origin
+          title: remote_uri
+          type: string
+        targetMode:
+          $ref: '#/components/schemas/gitpod.v1.GitInitializer.CloneTargetMode'
+          description: the target mode determines what gets checked out
+          title: target_mode
+        upstreamRemoteUri:
+          description: upstream_Remote_uri is the fork upstream of a repository
+          title: upstream_remote_uri
+          type: string
+      title: GitInitializer
+      type: object
+    gitpod.v1.Project:
+      additionalProperties: false
+      properties:
+        automationsFilePath:
+          description: automations_file_path is the path to the automations file relative to the repo root
+          title: automations_file_path
+          type: string
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.ProjectPhase'
+          description: "desired_phase is the desired phase of the project\n When set to DELETED, the project is pending deletion"
+          title: desired_phase
+        devcontainerFilePath:
+          description: devcontainer_file_path is the path to the devcontainer file relative to the repo root
+          title: devcontainer_file_path
+          type: string
+        environmentClass:
+          $ref: '#/components/schemas/gitpod.v1.ProjectEnvironmentClass'
+          deprecated: true
+          description: Use `environment_classes` instead.
+          title: environment_class
+        environmentClasses:
+          description: environment_classes is the list of environment classes for the project
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ProjectEnvironmentClass'
+          title: environment_classes
+          type: array
+        id:
+          description: id is the unique identifier for the project
+          format: uuid
+          title: id
+          type: string
+        initializer:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentInitializer'
+          description: initializer is the content initializer
+          title: initializer
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.ProjectMetadata'
+          title: metadata
+        prebuildConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.ProjectPrebuildConfiguration'
+          description: prebuild_configuration defines how prebuilds are created for this project.
+          title: prebuild_configuration
+        recommendedEditors:
+          $ref: '#/components/schemas/gitpod.v1.RecommendedEditors'
+          description: recommended_editors specifies the editors recommended for this project.
+          title: recommended_editors
+        technicalDescription:
+          description: "technical_description is a detailed technical description of the project\n This field is not returned by default in GetProject or ListProjects responses"
+          title: technical_description
+          type: string
+        usedBy:
+          $ref: '#/components/schemas/gitpod.v1.Project.UsedBy'
+          title: used_by
+      required:
+      - environmentClass
+      title: Project
+      type: object
+    gitpod.v1.CountResponseRelation:
+      enum:
+      - COUNT_RESPONSE_RELATION_UNSPECIFIED
+      - COUNT_RESPONSE_RELATION_EQ
+      - COUNT_RESPONSE_RELATION_GTE
+      title: CountResponseRelation
+      type: string
+    gitpod.v1.UpdateProjectResponse:
+      additionalProperties: false
+      properties:
+        project:
+          $ref: '#/components/schemas/gitpod.v1.Project'
+          title: project
+      title: UpdateProjectResponse
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.ProjectEnvironmentClass:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - localRunner
+        required:
+        - environmentClassId
+      - not:
+          anyOf:
+          - required:
+            - environmentClassId
+        required:
+        - localRunner
+      properties:
+        environmentClassId:
+          description: Use a fixed environment class on a given Runner. This cannot be a local runner's environment class.
+          format: uuid
+          title: environment_class_id
+          type: string
+        localRunner:
+          description: Use a local runner for the user
+          title: local_runner
+          type: boolean
+        order:
+          description: order is the priority of this entry
+          format: int32
+          title: order
+          type: integer
+      title: ProjectEnvironmentClass
+      type: object
+    gitpod.v1.ListProjectEnvironmentClassesResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        projectEnvironmentClasses:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ProjectEnvironmentClass'
+          title: project_environment_classes
+          type: array
+      title: ListProjectEnvironmentClassesResponse
+      type: object
+    gitpod.v1.DeleteProjectPolicyRequest:
+      additionalProperties: false
+      description: DeleteProjectPolicyRequest deletes a Project Policy.
+      properties:
+        groupId:
+          description: group_id specifies the group_id identifier
+          format: uuid
+          title: group_id
+          type: string
+        projectId:
+          description: project_id specifies the project identifier
+          format: uuid
+          title: project_id
+          type: string
+      title: DeleteProjectPolicyRequest
+      type: object
+    gitpod.v1.CreateProjectFromEnvironmentRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          description: environment_id specifies the environment identifier
+          format: uuid
+          title: environment_id
+          type: string
+        name:
+          maxLength: 80
+          minLength: 1
+          title: name
+          type: string
+      title: CreateProjectFromEnvironmentRequest
+      type: object
+    gitpod.v1.CreateProjectResponse:
+      additionalProperties: false
+      properties:
+        project:
+          $ref: '#/components/schemas/gitpod.v1.Project'
+          title: project
+      title: CreateProjectResponse
+      type: object
+    gitpod.v1.UpdateProjectsResponse:
+      additionalProperties: false
+      properties:
+        failedProjects:
+          description: failed_projects contains details about projects that failed to update
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UpdateProjectsResponse.Failure'
+          title: failed_projects
+          type: array
+        updatedProjects:
+          description: updated_projects contains the successfully updated projects
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Project'
+          title: updated_projects
+          type: array
+      title: UpdateProjectsResponse
+      type: object
+    gitpod.v1.Sort:
+      additionalProperties: false
+      properties:
+        field:
+          description: Field name to sort by, in camelCase.
+          title: field
+          type: string
+        order:
+          $ref: '#/components/schemas/gitpod.v1.SortOrder'
+          title: order
+      title: Sort
+      type: object
+    gitpod.v1.SortOrder:
+      enum:
+      - SORT_ORDER_UNSPECIFIED
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+      title: SortOrder
+      type: string
+    google.protobuf.Duration:
+      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
+      format: regex
+      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
+      type: string
+    gitpod.v1.DeleteProjectResponse:
+      additionalProperties: false
+      title: DeleteProjectResponse
+      type: object
+    gitpod.v1.ListProjectPoliciesRequest:
+      additionalProperties: false
+      description: ListProjectPoliciesRequest lists policies for a project.
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing project policies
+          title: pagination
+        projectId:
+          description: project_id specifies the project identifier
+          format: uuid
+          title: project_id
+          type: string
+      title: ListProjectPoliciesRequest
+      type: object
+    gitpod.v1.ProjectPolicy:
+      additionalProperties: false
+      properties:
+        groupId:
+          format: uuid
+          title: group_id
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.ProjectRole'
+          description: role is the role assigned to the group
+          title: role
+      title: ProjectPolicy
+      type: object
+    gitpod.v1.UpdateProjectEnvironmentClassesRequest:
+      additionalProperties: false
+      description: UpdateProjectEnvironmentClassesRequest updates all project environment classes of a project.
+      properties:
+        projectEnvironmentClasses:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ProjectEnvironmentClass'
+          maxItems: 30
+          minItems: 1
+          title: project_environment_classes
+          type: array
+        projectId:
+          description: project_id specifies the project identifier
+          format: uuid
+          title: project_id
+          type: string
+      title: UpdateProjectEnvironmentClassesRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.ListProjectEnvironmentClassesRequest:
+      additionalProperties: false
+      description: ListProjectEnvironmentClassesRequest lists environment classes of a project.
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing project policies
+          title: pagination
+        projectId:
+          description: project_id specifies the project identifier
+          format: uuid
+          title: project_id
+          type: string
+      title: ListProjectEnvironmentClassesRequest
+      type: object
+    gitpod.v1.CountRequest:
+      additionalProperties: false
+      description: "CountRequest controls whether the response should include a bounded\n count of matching records."
+      properties:
+        include:
+          description: "When true, the first page of results will include a CountResponse with\n the bounded total. Subsequent pages (requests with a pagination token)\n will not contain the count."
+          title: include
+          type: boolean
+      title: CountRequest
+      type: object
+    gitpod.v1.CreateProjectsResponse:
+      additionalProperties: false
+      properties:
+        createdProjects:
+          description: created_projects contains the successfully created projects
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Project'
+          title: created_projects
+          type: array
+        failedProjects:
+          description: failed_projects contains details about projects that failed to create
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CreateProjectsResponse.Failure'
+          title: failed_projects
+          type: array
+      title: CreateProjectsResponse
+      type: object
+    gitpod.v1.CreateProjectPolicyResponse:
+      additionalProperties: false
+      properties:
+        policy:
+          $ref: '#/components/schemas/gitpod.v1.ProjectPolicy'
+          title: policy
+      title: CreateProjectPolicyResponse
+      type: object
+    gitpod.v1.PrebuildTrigger:
+      additionalProperties: false
+      description: PrebuildTrigger defines when prebuilds should be created for a project.
+      oneOf:
+      - required:
+        - dailySchedule
+      properties:
+        dailySchedule:
+          $ref: '#/components/schemas/gitpod.v1.PrebuildTrigger.DailySchedule'
+          description: "daily_schedule triggers a prebuild once per day at the specified hour (UTC).\n The actual start time may vary slightly to distribute system load."
+          title: daily_schedule
+      title: PrebuildTrigger
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.ProjectPhase:
+      enum:
+      - PROJECT_PHASE_UNSPECIFIED
+      - PROJECT_PHASE_ACTIVE
+      - PROJECT_PHASE_DELETED
+      title: ProjectPhase
+      type: string
+    gitpod.v1.ListProjectsResponse:
+      additionalProperties: false
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountResponse'
+          description: "count is the bounded total count of matching projects, present only when\n requested via CountRequest.include on the first page."
+          title: count
+          x-stainless-skip: true
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing organizations
+          title: pagination
+        projects:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Project'
+          title: projects
+          type: array
+      title: ListProjectsResponse
+      type: object
+    gitpod.v1.ListProjectsRequest.Filter:
+      additionalProperties: false
+      properties:
+        projectIds:
+          description: project_ids filters the response to only projects with these IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: project_ids
+          type: array
+        runnerIds:
+          description: runner_ids filters the response to only projects that use environment classes from these runners
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: runner_ids
+          type: array
+        runnerKinds:
+          description: runner_kinds filters the response to only projects that use environment classes from runners of these kinds
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerKind'
+          maxItems: 25
+          title: runner_kinds
+          type: array
+        search:
+          description: search performs case-insensitive search across project name, project ID, and repository name
+          maxLength: 256
+          title: search
+          type: string
+      title: Filter
+      type: object
+    gitpod.v1.ProjectRole:
+      enum:
+      - PROJECT_ROLE_UNSPECIFIED
+      - PROJECT_ROLE_ADMIN
+      - PROJECT_ROLE_USER
+      - PROJECT_ROLE_EDITOR
+      title: ProjectRole
+      type: string
+    gitpod.v1.EditorVersions:
+      additionalProperties: false
+      description: EditorVersions contains the recommended versions for an editor.
+      properties:
+        versions:
+          description: "versions is the list of recommended versions for this editor.\n If empty, all available versions are recommended.\n Examples for JetBrains: [\"2025.1\", \"2024.3\"]"
+          items:
+            type: string
+          title: versions
+          type: array
+      title: EditorVersions
+      type: object
+    gitpod.v1.CountResponse:
+      additionalProperties: false
+      description: "CountResponse represents a bounded count of matching records.\n When the actual count exceeds the counting limit, value is capped and\n relation is set to GREATER_THAN_OR_EQUAL."
+      properties:
+        relation:
+          $ref: '#/components/schemas/gitpod.v1.CountResponseRelation'
+          description: Indicates whether value is the exact total or a lower bound.
+          title: relation
+        value:
+          description: The count of matching records, capped at the server's counting limit.
+          format: int32
+          title: value
+          type: integer
+      title: CountResponse
+      type: object
+    gitpod.v1.UpdateProjectsResponse.Failure:
+      additionalProperties: false
+      properties:
+        error:
+          description: error describes why the project update failed
+          title: error
+          type: string
+        index:
+          description: index is the position in the request array (0-based)
+          format: int32
+          title: index
+          type: integer
+        projectId:
+          description: project_id is the project ID that failed
+          title: project_id
+          type: string
+      title: Failure
+      type: object
+    gitpod.v1.RunnerKind:
+      description: RunnerKind represents the kind of a runner
+      enum:
+      - RUNNER_KIND_UNSPECIFIED
+      - RUNNER_KIND_LOCAL
+      - RUNNER_KIND_REMOTE
+      - RUNNER_KIND_LOCAL_CONFIGURATION
+      title: RunnerKind
+      type: string
+    gitpod.v1.GetProjectRequest:
+      additionalProperties: false
+      properties:
+        projectId:
+          description: project_id specifies the project identifier
+          format: uuid
+          title: project_id
+          type: string
+      title: GetProjectRequest
+      type: object
+    gitpod.v1.CreateProjectsRequest:
+      additionalProperties: false
+      properties:
+        projects:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CreateProjectRequest'
+          maxItems: 100
+          minItems: 1
+          title: projects
+          type: array
+      title: CreateProjectsRequest
+      type: object
+    gitpod.v1.CreateProjectsResponse.Failure:
+      additionalProperties: false
+      properties:
+        error:
+          description: error describes why the project creation failed
+          title: error
+          type: string
+        index:
+          description: index is the position in the request array (0-based)
+          format: int32
+          title: index
+          type: integer
+        name:
+          description: name is the project name that failed
+          title: name
+          type: string
+      title: Failure
+      type: object
+    gitpod.v1.EnvironmentInitializer:
+      additionalProperties: false
+      description: EnvironmentInitializer specifies how an environment is to be initialized
+      properties:
+        specs:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentInitializer.Spec'
+          title: specs
+          type: array
+      title: EnvironmentInitializer
+      type: object
+    gitpod.v1.GetProjectResponse:
+      additionalProperties: false
+      properties:
+        project:
+          $ref: '#/components/schemas/gitpod.v1.Project'
+          title: project
+      title: GetProjectResponse
+      type: object
+    gitpod.v1.UpdateProjectsRequest:
+      additionalProperties: false
+      properties:
+        projects:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UpdateProjectRequest'
+          maxItems: 100
+          minItems: 1
+          title: projects
+          type: array
+      title: UpdateProjectsRequest
+      type: object
+    gitpod.v1.ListProjectsRequest:
+      additionalProperties: false
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountRequest'
+          description: count controls whether the response includes a bounded total count.
+          title: count
+          x-stainless-skip: true
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListProjectsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing organizations
+          title: pagination
+        sort:
+          $ref: '#/components/schemas/gitpod.v1.Sort'
+          description: "sort specifies the order of results. Defaults to popularity descending.\n\n Supported fields:\n   - \"id\": Sort by project ID (UUID v7, effectively creation order).\n     Produces a stable, deterministic result set suitable for consistent pagination.\n   - \"popularity\": Sort by popularity — a precomputed score based on recent\n     environment creation activity. Updated periodically by a background job."
+          title: sort
+      title: ListProjectsRequest
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

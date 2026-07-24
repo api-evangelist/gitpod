@@ -1,0 +1,1402 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.GroupService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.GroupService
+  x-displayName: gitpod.v1.GroupService
+paths:
+  /gitpod.v1.GroupService/CreateGroup:
+    servers: []
+    post:
+      description: "Creates a new group within an organization.\n\n Use this method to:\n - Create teams for access control\n - Organize users by department or function\n - Set up role-based access groups\n\n ### Examples\n\n - Create a basic group:\n\n   Creates a group with name and description.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"Backend Team\"\n   description: \"Backend engineering team\"\n   ```\n\n ### Authorization\n\n Requires `org:admin` role on the organization."
+      operationId: gitpod.v1.GroupService.CreateGroup
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_a_basic_group:
+                description: Creates a group with name and description.
+                value:
+                  description: Backend engineering team
+                  name: Backend Team
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateGroupRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateGroupResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateGroup
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/CreateMembership:
+    servers: []
+    post:
+      description: "Creates a membership for a user in a group.\n\n Use this method to:\n - Add users to groups\n - Grant group-based permissions to users\n\n ### Examples\n\n - Add a user to a group:\n\n   Creates a membership for a user in a group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   subject:\n     id: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n     principal: PRINCIPAL_USER\n   ```\n\n ### Authorization\n\n Requires `org:admin` permission on the organization or `group:admin` permission on the specific group."
+      operationId: gitpod.v1.GroupService.CreateMembership
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              add_a_user_to_a_group:
+                description: Creates a membership for a user in a group.
+                value:
+                  groupId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  subject:
+                    id: f53d2330-3795-4c5d-a1f3-453121af9c60
+                    principal: PRINCIPAL_USER
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateMembershipRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateMembershipResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateMembership
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/CreateRoleAssignment:
+    servers: []
+    post:
+      description: "Creates a role assignment for a group on a resource.\n\n Use this method to:\n - Assign specific roles to groups on runners, projects, or environments\n - Grant group-based access to resources\n\n ### Examples\n\n - Assign admin role on a runner:\n\n   Grants the group admin access to a runner.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   resourceType: RESOURCE_TYPE_RUNNER\n   resourceId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   resourceRole: RESOURCE_ROLE_RUNNER_ADMIN\n   ```\n\n - Assign user role on a project:\n\n   Grants the group user access to a project.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   resourceType: RESOURCE_TYPE_PROJECT\n   resourceId: \"a1b2c3d4-5678-90ab-cdef-1234567890ab\"\n   resourceRole: RESOURCE_ROLE_PROJECT_USER\n   ```\n\n ### Authorization\n\n Requires admin role on the specific resource."
+      operationId: gitpod.v1.GroupService.CreateRoleAssignment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              assign_admin_role_on_a_runner:
+                description: Grants the group admin access to a runner.
+                value:
+                  groupId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  resourceId: f53d2330-3795-4c5d-a1f3-453121af9c60
+                  resourceRole: RESOURCE_ROLE_RUNNER_ADMIN
+                  resourceType: RESOURCE_TYPE_RUNNER
+              assign_user_role_on_a_project:
+                description: Grants the group user access to a project.
+                value:
+                  groupId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  resourceId: a1b2c3d4-5678-90ab-cdef-1234567890ab
+                  resourceRole: RESOURCE_ROLE_PROJECT_USER
+                  resourceType: RESOURCE_TYPE_PROJECT
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateRoleAssignmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateRoleAssignmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateRoleAssignment
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/DeleteGroup:
+    servers: []
+    post:
+      description: "Deletes a group and removes all its resource assignments.\n\n When a group is deleted, all resource assignments revert to org-level scope.\n\n Use this method to:\n - Remove unused groups\n - Clean up after team reorganization\n\n ### Examples\n\n - Delete a group:\n\n   Permanently removes a group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `org:admin` role on the organization."
+      operationId: gitpod.v1.GroupService.DeleteGroup
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_a_group:
+                description: Permanently removes a group.
+                value:
+                  groupId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteGroupRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteGroupResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteGroup
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/DeleteMembership:
+    servers: []
+    post:
+      description: "Deletes a membership for a user in a group.\n\n Use this method to:\n - Remove users from groups\n - Revoke group-based permissions\n\n ### Examples\n\n - Remove a user from a group:\n\n   Deletes a membership by its ID.\n\n   ```yaml\n   membershipId: \"a1b2c3d4-5678-90ab-cdef-1234567890ab\"\n   ```\n\n ### Authorization\n\n Requires `org:admin` permission on the organization or `group:admin` permission on the specific group."
+      operationId: gitpod.v1.GroupService.DeleteMembership
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              remove_a_user_from_a_group:
+                description: Deletes a membership by its ID.
+                value:
+                  membershipId: a1b2c3d4-5678-90ab-cdef-1234567890ab
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteMembershipRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteMembershipResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteMembership
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/DeleteRoleAssignment:
+    servers: []
+    post:
+      description: "Deletes a role assignment.\n\n Use this method to:\n - Remove group access to resources\n - Revoke role-based permissions\n\n ### Examples\n\n - Delete a role assignment:\n\n   Removes a role assignment by its ID.\n\n   ```yaml\n   assignmentId: \"a1b2c3d4-5678-90ab-cdef-1234567890ab\"\n   ```\n\n ### Authorization\n\n Requires admin role on the specific resource."
+      operationId: gitpod.v1.GroupService.DeleteRoleAssignment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_a_role_assignment:
+                description: Removes a role assignment by its ID.
+                value:
+                  assignmentId: a1b2c3d4-5678-90ab-cdef-1234567890ab
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteRoleAssignmentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteRoleAssignmentResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteRoleAssignment
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/GetGroup:
+    servers: []
+    post:
+      description: "Gets information about a specific group by ID or name.\n\n Use this method to:\n - Retrieve group details and metadata\n - Check group configuration\n - View member count\n\n ### Examples\n\n - Get group by ID:\n\n   Retrieves information about a specific group by its unique ID.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n All organization members can view group information (transparency model)."
+      operationId: gitpod.v1.GroupService.GetGroup
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_group_by_id:
+                description: Retrieves information about a specific group by its unique ID.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetGroupRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetGroupResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetGroup
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/GetMembership:
+    servers: []
+    post:
+      description: "Gets a specific membership by group ID and subject.\n\n Use this method to:\n - Check if a user or service account is a member of a group\n - Verify group membership for access control\n\n ### Examples\n\n - Check user membership:\n\n   Checks if a user is a member of a specific group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   subject:\n     id: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n     principal: PRINCIPAL_USER\n   ```\n\n ### Authorization\n\n All organization members can check group membership (transparency model)."
+      operationId: gitpod.v1.GroupService.GetMembership
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              check_user_membership:
+                description: Checks if a user is a member of a specific group.
+                value:
+                  groupId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  subject:
+                    id: f53d2330-3795-4c5d-a1f3-453121af9c60
+                    principal: PRINCIPAL_USER
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetMembershipRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetMembershipResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetMembership
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/ListGroups:
+    servers: []
+    post:
+      description: "Lists groups with optional pagination.\n\n Use this method to:\n - View all groups in an organization\n - Check group memberships\n - Monitor group configurations\n - Audit group access\n\n ### Examples\n\n - List all groups:\n\n   Shows all groups with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - List with custom page size:\n\n   Shows groups with specified page size.\n\n   ```yaml\n   pagination:\n     pageSize: 50\n     token: \"next-page-token-from-previous-response\"\n   ```\n\n ### Authorization\n\n All organization members can list groups (transparency model)."
+      operationId: gitpod.v1.GroupService.ListGroups
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_groups:
+                description: Shows all groups with pagination.
+                value:
+                  pagination:
+                    pageSize: 20
+              list_with_custom_page_size:
+                description: Shows groups with specified page size.
+                value:
+                  pagination:
+                    pageSize: 50
+                    token: next-page-token-from-previous-response
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListGroupsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListGroupsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListGroups
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/ListMemberships:
+    servers: []
+    post:
+      description: "Lists all memberships of a group.\n\n Use this method to:\n - View all members of a group\n - Audit group membership\n\n ### Examples\n\n - List group members:\n\n   Shows all members of a specific group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```\n\n ### Authorization\n\n All organization members can view group membership (transparency model)."
+      operationId: gitpod.v1.GroupService.ListMemberships
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_group_members:
+                description: Shows all members of a specific group.
+                value:
+                  groupId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListMembershipsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListMembershipsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListMemberships
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/ListRoleAssignments:
+    servers: []
+    post:
+      description: "Lists role assignments for a group or resource.\n\n Use this method to:\n - View all role assignments for a group\n - Audit resource access\n - Check which groups have access to resources\n\n ### Examples\n\n - List role assignments for a group:\n\n   Shows all role assignments for a specific group.\n\n   ```yaml\n   filter:\n     groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```\n\n - List role assignments by resource type:\n\n   Shows all role assignments for runners.\n\n   ```yaml\n   filter:\n     resourceTypes:\n       - RESOURCE_TYPE_RUNNER\n   pagination:\n     pageSize: 20\n   ```\n\n ### Authorization\n\n All organization members can view role assignments (transparency model)."
+      operationId: gitpod.v1.GroupService.ListRoleAssignments
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_role_assignments_by_resource_type:
+                description: Shows all role assignments for runners.
+                value:
+                  filter:
+                    resourceTypes:
+                    - RESOURCE_TYPE_RUNNER
+                  pagination:
+                    pageSize: 20
+              list_role_assignments_for_a_group:
+                description: Shows all role assignments for a specific group.
+                value:
+                  filter:
+                    groupId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListRoleAssignmentsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListRoleAssignmentsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListRoleAssignments
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/ShareResourceWithPrincipal:
+    servers: []
+    post:
+      description: "Shares a resource directly with a principal (user or service account).\n\n Use this method to:\n - Grant a user or service account direct access to a runner, project, or other resource\n - Share resources without creating and managing groups manually\n\n ### Examples\n\n - Share a runner with a user:\n\n   Grants admin access to a runner for a specific user.\n\n   ```yaml\n   resourceType: RESOURCE_TYPE_RUNNER\n   resourceId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   principal: PRINCIPAL_USER\n   principalId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: RESOURCE_ROLE_RUNNER_ADMIN\n   ```\n\n - Share a runner with a service account:\n\n   Grants user access to a runner for a service account.\n\n   ```yaml\n   resourceType: RESOURCE_TYPE_RUNNER\n   resourceId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   principal: PRINCIPAL_SERVICE_ACCOUNT\n   principalId: \"a1b2c3d4-5678-90ab-cdef-1234567890ab\"\n   role: RESOURCE_ROLE_RUNNER_USER\n   ```\n\n ### Authorization\n\n Requires admin role on the specific resource."
+      operationId: gitpod.v1.GroupService.ShareResourceWithPrincipal
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              share_a_runner_with_a_service_account:
+                description: Grants user access to a runner for a service account.
+                value:
+                  principal: PRINCIPAL_SERVICE_ACCOUNT
+                  principalId: a1b2c3d4-5678-90ab-cdef-1234567890ab
+                  resourceId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  resourceType: RESOURCE_TYPE_RUNNER
+                  role: RESOURCE_ROLE_RUNNER_USER
+              share_a_runner_with_a_user:
+                description: Grants admin access to a runner for a specific user.
+                value:
+                  principal: PRINCIPAL_USER
+                  principalId: f53d2330-3795-4c5d-a1f3-453121af9c60
+                  resourceId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  resourceType: RESOURCE_TYPE_RUNNER
+                  role: RESOURCE_ROLE_RUNNER_ADMIN
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ShareResourceWithPrincipalRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ShareResourceWithPrincipalResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ShareResourceWithPrincipal
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/UnshareResourceWithPrincipal:
+    servers: []
+    post:
+      description: "Removes direct access for a principal (user or service account) from a resource.\n\n Use this method to:\n - Revoke a principal's direct access to a resource\n - Remove sharing without affecting group-based access\n\n ### Examples\n\n - Remove user access from a runner:\n\n   Revokes a user's direct access to a runner.\n\n   ```yaml\n   resourceType: RESOURCE_TYPE_RUNNER\n   resourceId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   principal: PRINCIPAL_USER\n   principalId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```\n\n ### Authorization\n\n Requires admin role on the specific resource."
+      operationId: gitpod.v1.GroupService.UnshareResourceWithPrincipal
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              remove_user_access_from_a_runner:
+                description: Revokes a user's direct access to a runner.
+                value:
+                  principal: PRINCIPAL_USER
+                  principalId: f53d2330-3795-4c5d-a1f3-453121af9c60
+                  resourceId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  resourceType: RESOURCE_TYPE_RUNNER
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UnshareResourceWithPrincipalRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UnshareResourceWithPrincipalResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UnshareResourceWithPrincipal
+      tags:
+      - gitpod.v1.GroupService
+  /gitpod.v1.GroupService/UpdateGroup:
+    servers: []
+    post:
+      description: "Updates group information.\n\n Use this method to:\n - Rename a group\n - Update group description\n\n ### Examples\n\n - Update group name:\n\n   Changes the name of an existing group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   name: \"Platform Team\"\n   description: \"Platform engineering team\"\n   ```\n\n ### Authorization\n\n Requires `org:admin` permission on the organization or `group:admin` permission on the specific group."
+      operationId: gitpod.v1.GroupService.UpdateGroup
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_group_name:
+                description: Changes the name of an existing group.
+                value:
+                  description: Platform engineering team
+                  groupId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  name: Platform Team
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateGroupRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateGroupResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateGroup
+      tags:
+      - gitpod.v1.GroupService
+components:
+  schemas:
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.ListRoleAssignmentsRequest.Filter:
+      additionalProperties: false
+      properties:
+        groupId:
+          description: "group_id filters the response to only role assignments for this specific group\n Empty string is allowed and means no filtering by group"
+          title: group_id
+          type: string
+        resourceId:
+          description: "Filters by a single resource. Non-admin callers with :grant permission\n on the resource can see role assignments from groups they don't belong to.\n Mutually exclusive with resource_ids."
+          title: resource_id
+          type: string
+        resourceIds:
+          description: "Filters by multiple resources in a single request. Non-admin callers with\n :grant permission on a resource can see all role assignments for that\n resource, even from groups they don't belong to. The :grant check is\n applied per-resource within the batch.\n Mutually exclusive with resource_id."
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: resource_ids
+          type: array
+        resourceRoles:
+          description: resource_roles filters the response to only role assignments with these specific roles
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ResourceRole'
+          title: resource_roles
+          type: array
+        resourceTypes:
+          description: resource_types filters the response to only role assignments for these resource types
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ResourceType'
+          title: resource_types
+          type: array
+        userId:
+          description: "user_id filters the response to only role assignments for groups that this user is a member of\n Empty string is allowed and means no filtering by user"
+          title: user_id
+          type: string
+      title: Filter
+      type: object
+    gitpod.v1.GroupMembership:
+      additionalProperties: false
+      description: GroupMembership represents a subject's membership in a group
+      properties:
+        avatarUrl:
+          description: Subject's avatar URL
+          title: avatar_url
+          type: string
+        groupId:
+          description: Group identifier
+          format: uuid
+          title: group_id
+          type: string
+        id:
+          description: Unique identifier for the group membership
+          format: uuid
+          title: id
+          type: string
+        name:
+          description: Subject's display name
+          title: name
+          type: string
+        subject:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: Subject (user, runner, environment, service account, etc.)
+          title: subject
+      title: GroupMembership
+      type: object
+    gitpod.v1.ListMembershipsResponse:
+      additionalProperties: false
+      properties:
+        members:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.GroupMembership'
+          title: members
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      title: ListMembershipsResponse
+      type: object
+    gitpod.v1.GetMembershipResponse:
+      additionalProperties: false
+      properties:
+        member:
+          $ref: '#/components/schemas/gitpod.v1.GroupMembership'
+          description: The membership if found, nil if subject is not a member
+          title: member
+      title: GetMembershipResponse
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.CreateMembershipResponse:
+      additionalProperties: false
+      properties:
+        member:
+          $ref: '#/components/schemas/gitpod.v1.GroupMembership'
+          title: member
+      title: CreateMembershipResponse
+      type: object
+    gitpod.v1.ShareResourceWithPrincipalRequest:
+      additionalProperties: false
+      description: ShareResourceWithPrincipal messages
+      properties:
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Type of principal to share with (user or service account)
+          enum:
+          - 2
+          - 5
+          title: principal
+        principalId:
+          description: ID of the principal (user or service account) to share with
+          format: uuid
+          title: principal_id
+          type: string
+        resourceId:
+          description: ID of the resource to share
+          format: uuid
+          title: resource_id
+          type: string
+        resourceType:
+          $ref: '#/components/schemas/gitpod.v1.ResourceType'
+          description: Type of resource to share (runner, project, etc.)
+          not:
+            enum:
+            - 0
+          title: resource_type
+        role:
+          $ref: '#/components/schemas/gitpod.v1.ResourceRole'
+          description: Role to grant the principal on the resource
+          not:
+            enum:
+            - 0
+          title: role
+      title: ShareResourceWithPrincipalRequest
+      type: object
+    gitpod.v1.RoleAssignment:
+      additionalProperties: false
+      description: RoleAssignment represents a role assigned to a group on a specific resource
+      properties:
+        derivedFromOrgRole:
+          $ref: '#/components/schemas/gitpod.v1.ResourceRole'
+          description: "The org-level role that created this assignment, if any.\n RESOURCE_ROLE_UNSPECIFIED means this is a direct share (manually created).\n Non-zero (e.g., ORG_PROJECTS_ADMIN, ORG_RUNNERS_ADMIN) means this\n assignment was derived from an org-level role."
+          nullable: true
+          title: derived_from_org_role
+        groupId:
+          description: Group identifier
+          format: uuid
+          title: group_id
+          type: string
+        id:
+          description: Unique identifier for the role assignment
+          format: uuid
+          title: id
+          type: string
+        organizationId:
+          description: Organization identifier
+          format: uuid
+          title: organization_id
+          type: string
+        resourceId:
+          description: Resource identifier
+          format: uuid
+          title: resource_id
+          type: string
+        resourceRole:
+          $ref: '#/components/schemas/gitpod.v1.ResourceRole'
+          description: Role assigned to the group on this resource
+          title: resource_role
+        resourceType:
+          $ref: '#/components/schemas/gitpod.v1.ResourceType'
+          description: Type of resource (runner, project, environment, etc.)
+          title: resource_type
+      title: RoleAssignment
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.GetGroupResponse:
+      additionalProperties: false
+      properties:
+        group:
+          $ref: '#/components/schemas/gitpod.v1.Group'
+          title: group
+      title: GetGroupResponse
+      type: object
+    gitpod.v1.CreateMembershipRequest:
+      additionalProperties: false
+      description: CreateMembership messages
+      properties:
+        groupId:
+          format: uuid
+          title: group_id
+          type: string
+        subject:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: Subject to add to the group
+          title: subject
+      title: CreateMembershipRequest
+      type: object
+    gitpod.v1.UpdateGroupResponse:
+      additionalProperties: false
+      properties:
+        group:
+          $ref: '#/components/schemas/gitpod.v1.Group'
+          title: group
+      title: UpdateGroupResponse
+      type: object
+    gitpod.v1.UnshareResourceWithPrincipalRequest:
+      additionalProperties: false
+      description: UnshareResourceWithPrincipal messages
+      properties:
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Type of principal to remove access from (user or service account)
+          enum:
+          - 2
+          - 5
+          title: principal
+        principalId:
+          description: ID of the principal (user or service account) to remove access from
+          format: uuid
+          title: principal_id
+          type: string
+        resourceId:
+          description: ID of the resource to unshare
+          format: uuid
+          title: resource_id
+          type: string
+        resourceType:
+          $ref: '#/components/schemas/gitpod.v1.ResourceType'
+          description: Type of resource to unshare
+          not:
+            enum:
+            - 0
+          title: resource_type
+      title: UnshareResourceWithPrincipalRequest
+      type: object
+    gitpod.v1.UpdateGroupRequest:
+      additionalProperties: false
+      description: UpdateGroup messages
+      properties:
+        description:
+          maxLength: 255
+          title: description
+          type: string
+        groupId:
+          format: uuid
+          title: group_id
+          type: string
+        name:
+          maxLength: 80
+          minLength: 3
+          title: name
+          type: string
+      title: UpdateGroupRequest
+      type: object
+    gitpod.v1.CreateRoleAssignmentResponse:
+      additionalProperties: false
+      properties:
+        assignment:
+          $ref: '#/components/schemas/gitpod.v1.RoleAssignment'
+          title: assignment
+      title: CreateRoleAssignmentResponse
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.DeleteRoleAssignmentRequest:
+      additionalProperties: false
+      description: DeleteRoleAssignment messages
+      properties:
+        assignmentId:
+          format: uuid
+          title: assignment_id
+          type: string
+      title: DeleteRoleAssignmentRequest
+      type: object
+    gitpod.v1.ResourceRole:
+      description: "ResourceRole represents roles that can be assigned to groups on resources\n These map directly to the roles defined in backend/db/rule/rbac/role/role.go"
+      enum:
+      - RESOURCE_ROLE_UNSPECIFIED
+      - RESOURCE_ROLE_ORG_ADMIN
+      - RESOURCE_ROLE_ORG_MEMBER
+      - RESOURCE_ROLE_ORG_RUNNERS_ADMIN
+      - RESOURCE_ROLE_ORG_PROJECTS_ADMIN
+      - RESOURCE_ROLE_ORG_AUTOMATIONS_ADMIN
+      - RESOURCE_ROLE_ORG_GROUPS_ADMIN
+      - RESOURCE_ROLE_ORG_AUDIT_LOG_READER
+      - RESOURCE_ROLE_GROUP_ADMIN
+      - RESOURCE_ROLE_GROUP_VIEWER
+      - RESOURCE_ROLE_USER_IDENTITY
+      - RESOURCE_ROLE_USER_VIEWER
+      - RESOURCE_ROLE_USER_ADMIN
+      - RESOURCE_ROLE_ENVIRONMENT_IDENTITY
+      - RESOURCE_ROLE_ENVIRONMENT_ADMIN
+      - RESOURCE_ROLE_ENVIRONMENT_USER
+      - RESOURCE_ROLE_ENVIRONMENT_VIEWER
+      - RESOURCE_ROLE_ENVIRONMENT_RUNNER
+      - RESOURCE_ROLE_RUNNER_IDENTITY
+      - RESOURCE_ROLE_RUNNER_ADMIN
+      - RESOURCE_ROLE_RUNNER_LOCAL_ADMIN
+      - RESOURCE_ROLE_RUNNER_MANAGED_ADMIN
+      - RESOURCE_ROLE_RUNNER_USER
+      - RESOURCE_ROLE_RUNNER_CONFIGURATION_READER
+      - RESOURCE_ROLE_HOST_AUTHENTICATION_TOKEN_ADMIN
+      - RESOURCE_ROLE_HOST_AUTHENTICATION_TOKEN_UPDATER
+      - RESOURCE_ROLE_PROJECT_ADMIN
+      - RESOURCE_ROLE_PROJECT_USER
+      - RESOURCE_ROLE_PROJECT_EDITOR
+      - RESOURCE_ROLE_ENVIRONMENT_SERVICE_ADMIN
+      - RESOURCE_ROLE_ENVIRONMENT_SERVICE_VIEWER
+      - RESOURCE_ROLE_ENVIRONMENT_SERVICE_USER
+      - RESOURCE_ROLE_ENVIRONMENT_SERVICE_ENV
+      - RESOURCE_ROLE_ENVIRONMENT_TASK_ADMIN
+      - RESOURCE_ROLE_ENVIRONMENT_TASK_VIEWER
+      - RESOURCE_ROLE_ENVIRONMENT_TASK_USER
+      - RESOURCE_ROLE_ENVIRONMENT_TASK_ENV
+      - RESOURCE_ROLE_SERVICE_ACCOUNT_IDENTITY
+      - RESOURCE_ROLE_SERVICE_ACCOUNT_ADMIN
+      - RESOURCE_ROLE_AGENT_EXECUTION_USER
+      - RESOURCE_ROLE_AGENT_EXECUTION_ADMIN
+      - RESOURCE_ROLE_AGENT_EXECUTION_RUNNER
+      - RESOURCE_ROLE_AGENT_EXECUTION_OUTPUTS_REPORTER
+      - RESOURCE_ROLE_AGENT_EXECUTION_VIEWER
+      - RESOURCE_ROLE_AGENT_ADMIN
+      - RESOURCE_ROLE_AGENT_VIEWER
+      - RESOURCE_ROLE_AGENT_EXECUTOR
+      - RESOURCE_ROLE_WORKFLOW_ADMIN
+      - RESOURCE_ROLE_WORKFLOW_USER
+      - RESOURCE_ROLE_WORKFLOW_VIEWER
+      - RESOURCE_ROLE_WORKFLOW_EXECUTOR
+      - RESOURCE_ROLE_SNAPSHOT_ADMIN
+      - RESOURCE_ROLE_SNAPSHOT_RUNNER
+      - RESOURCE_ROLE_WEBHOOK_ADMIN
+      - RESOURCE_ROLE_WEBHOOK_VIEWER
+      - RESOURCE_ROLE_WARMPOOL_RUNNER
+      - RESOURCE_ROLE_WARMPOOL_ADMIN
+      - RESOURCE_ROLE_WARMPOOL_VIEWER
+      - RESOURCE_ROLE_SESSION_ADMIN
+      - RESOURCE_ROLE_SESSION_USER
+      - RESOURCE_ROLE_TEAM_ADMIN
+      - RESOURCE_ROLE_TEAM_VIEWER
+      title: ResourceRole
+      type: string
+    gitpod.v1.DeleteRoleAssignmentResponse:
+      additionalProperties: false
+      description: Empty response
+      title: DeleteRoleAssignmentResponse
+      type: object
+    gitpod.v1.UnshareResourceWithPrincipalResponse:
+      additionalProperties: false
+      description: Empty response on success
+      title: UnshareResourceWithPrincipalResponse
+      type: object
+    gitpod.v1.ListRoleAssignmentsRequest:
+      additionalProperties: false
+      description: ListRoleAssignments messages
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListRoleAssignmentsRequest.Filter'
+          description: Filter parameters
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: Pagination parameters
+          title: pagination
+      title: ListRoleAssignmentsRequest
+      type: object
+    gitpod.v1.ListGroupsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListGroupsRequest.Filter'
+          description: filter contains options for filtering the list of groups.
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing groups
+          title: pagination
+      title: ListGroupsRequest
+      type: object
+    gitpod.v1.CreateGroupRequest:
+      additionalProperties: false
+      description: CreateGroup messages
+      properties:
+        description:
+          maxLength: 255
+          title: description
+          type: string
+        name:
+          maxLength: 80
+          minLength: 3
+          title: name
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      title: CreateGroupRequest
+      type: object
+    gitpod.v1.ResourceType:
+      enum:
+      - RESOURCE_TYPE_UNSPECIFIED
+      - RESOURCE_TYPE_ENVIRONMENT
+      - RESOURCE_TYPE_RUNNER
+      - RESOURCE_TYPE_PROJECT
+      - RESOURCE_TYPE_TASK
+      - RESOURCE_TYPE_TASK_EXECUTION
+      - RESOURCE_TYPE_SERVICE
+      - RESOURCE_TYPE_ORGANIZATION
+      - RESOURCE_TYPE_USER
+      - RESOURCE_TYPE_ENVIRONMENT_CLASS
+      - RESOURCE_TYPE_RUNNER_SCM_INTEGRATION
+      - RESOURCE_TYPE_HOST_AUTHENTICATION_TOKEN
+      - RESOURCE_TYPE_GROUP
+      - RESOURCE_TYPE_PERSONAL_ACCESS_TOKEN
+      - RESOURCE_TYPE_USER_PREFERENCE
+      - RESOURCE_TYPE_SERVICE_ACCOUNT
+      - RESOURCE_TYPE_SECRET
+      - RESOURCE_TYPE_SSO_CONFIG
+      - RESOURCE_TYPE_DOMAIN_VERIFICATION
+      - RESOURCE_TYPE_AGENT_EXECUTION
+      - RESOURCE_TYPE_RUNNER_LLM_INTEGRATION
+      - RESOURCE_TYPE_AGENT
+      - RESOURCE_TYPE_ENVIRONMENT_SESSION
+      - RESOURCE_TYPE_USER_SECRET
+      - RESOURCE_TYPE_ORGANIZATION_POLICY
+      - RESOURCE_TYPE_ORGANIZATION_SECRET
+      - RESOURCE_TYPE_PROJECT_ENVIRONMENT_CLASS
+      - RESOURCE_TYPE_BILLING
+      - RESOURCE_TYPE_PROMPT
+      - RESOURCE_TYPE_COUPON
+      - RESOURCE_TYPE_COUPON_REDEMPTION
+      - RESOURCE_TYPE_ACCOUNT
+      - RESOURCE_TYPE_INTEGRATION
+      - RESOURCE_TYPE_WORKFLOW
+      - RESOURCE_TYPE_WORKFLOW_EXECUTION
+      - RESOURCE_TYPE_WORKFLOW_EXECUTION_ACTION
+      - RESOURCE_TYPE_SNAPSHOT
+      - RESOURCE_TYPE_PREBUILD
+      - RESOURCE_TYPE_ORGANIZATION_LLM_INTEGRATION
+      - RESOURCE_TYPE_CUSTOM_DOMAIN
+      - RESOURCE_TYPE_ROLE_ASSIGNMENT_CHANGED
+      - RESOURCE_TYPE_GROUP_MEMBERSHIP_CHANGED
+      - RESOURCE_TYPE_WEBHOOK
+      - RESOURCE_TYPE_SCIM_CONFIGURATION
+      - RESOURCE_TYPE_SERVICE_ACCOUNT_SECRET
+      - RESOURCE_TYPE_ANNOUNCEMENT_BANNER
+      - RESOURCE_TYPE_SERVICE_ACCOUNT_TOKEN
+      - RESOURCE_TYPE_ROLE_ASSIGNMENT
+      - RESOURCE_TYPE_WARM_POOL
+      - RESOURCE_TYPE_NOTIFICATION
+      title: ResourceType
+      type: string
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.DeleteMembershipRequest:
+      additionalProperties: false
+      description: DeleteMembership messages
+      properties:
+        membershipId:
+          description: The membership to delete
+          format: uuid
+          title: membership_id
+          type: string
+      title: DeleteMembershipRequest
+      type: object
+    gitpod.v1.ListGroupsRequest.Filter:
+      additionalProperties: false
+      properties:
+        directShare:
+          description: "direct_share filters groups by their direct_share flag.\n When set, only groups matching this value are returned."
+          nullable: true
+          title: direct_share
+          type: boolean
+        groupIds:
+          description: group_ids filters the response to only groups with the specified IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: group_ids
+          type: array
+        search:
+          description: search performs case-insensitive search across group name, description, and ID
+          maxLength: 256
+          title: search
+          type: string
+        systemManaged:
+          description: "system_managed filters groups by their system_managed flag.\n When set, only groups matching this value are returned."
+          nullable: true
+          title: system_managed
+          type: boolean
+      title: Filter
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.DeleteGroupRequest:
+      additionalProperties: false
+      description: DeleteGroup messages
+      properties:
+        groupId:
+          format: uuid
+          title: group_id
+          type: string
+      title: DeleteGroupRequest
+      type: object
+    gitpod.v1.DeleteGroupResponse:
+      additionalProperties: false
+      description: Empty response
+      title: DeleteGroupResponse
+      type: object
+    gitpod.v1.ListMembershipsRequest.Filter:
+      additionalProperties: false
+      properties:
+        search:
+          description: "search performs case-insensitive search across member name, email, ID,\n and service account name and description"
+          maxLength: 256
+          title: search
+          type: string
+      title: Filter
+      type: object
+    gitpod.v1.CreateRoleAssignmentRequest:
+      additionalProperties: false
+      description: CreateRoleAssignment messages
+      properties:
+        groupId:
+          format: uuid
+          title: group_id
+          type: string
+        resourceId:
+          format: uuid
+          title: resource_id
+          type: string
+        resourceRole:
+          $ref: '#/components/schemas/gitpod.v1.ResourceRole'
+          title: resource_role
+        resourceType:
+          $ref: '#/components/schemas/gitpod.v1.ResourceType'
+          title: resource_type
+      title: CreateRoleAssignmentRequest
+      type: object
+    gitpod.v1.GetGroupRequest:
+      additionalProperties: false
+      description: GetGroup messages
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - name
+        required:
+        - id
+      - not:
+          anyOf:
+          - required:
+            - id
+        required:
+        - name
+      properties:
+        groupId:
+          deprecated: true
+          description: 'Deprecated: use the group oneof instead.'
+          title: group_id
+          type: string
+        id:
+          description: id looks up the group by its unique ID.
+          format: uuid
+          title: id
+          type: string
+        name:
+          description: name looks up the group by its name within the caller's organization.
+          maxLength: 80
+          minLength: 3
+          title: name
+          type: string
+      title: GetGroupRequest
+      type: object
+    gitpod.v1.ListRoleAssignmentsResponse:
+      additionalProperties: false
+      properties:
+        assignments:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RoleAssignment'
+          title: assignments
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      title: ListRoleAssignmentsResponse
+      type: object
+    gitpod.v1.CreateGroupResponse:
+      additionalProperties: false
+      properties:
+        group:
+          $ref: '#/components/schemas/gitpod.v1.Group'
+          title: group
+      title: CreateGroupResponse
+      type: object
+    gitpod.v1.Group:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        description:
+          maxLength: 255
+          title: description
+          type: string
+        directShare:
+          description: "direct_share indicates that this group is used for direct user sharing on resources.\n These groups are hidden from regular group listings."
+          title: direct_share
+          type: boolean
+        id:
+          format: uuid
+          title: id
+          type: string
+        memberCount:
+          description: member_count is the total number of members in this group
+          format: int32
+          title: member_count
+          type: integer
+        name:
+          maxLength: 80
+          minLength: 3
+          title: name
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        systemManaged:
+          description: system_managed indicates that this group is created by the system automatically
+          title: system_managed
+          type: boolean
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+      title: Group
+      type: object
+    gitpod.v1.ListMembershipsRequest:
+      additionalProperties: false
+      description: ListMemberships messages
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListMembershipsRequest.Filter'
+          description: filter contains options for filtering the list of memberships.
+          title: filter
+        groupId:
+          format: uuid
+          title: group_id
+          type: string
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing memberships
+          title: pagination
+      title: ListMembershipsRequest
+      type: object
+    gitpod.v1.ListGroupsResponse:
+      additionalProperties: false
+      properties:
+        groups:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Group'
+          title: groups
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      title: ListGroupsResponse
+      type: object
+    gitpod.v1.DeleteMembershipResponse:
+      additionalProperties: false
+      description: Empty response
+      title: DeleteMembershipResponse
+      type: object
+    gitpod.v1.ShareResourceWithPrincipalResponse:
+      additionalProperties: false
+      description: Empty response on success
+      title: ShareResourceWithPrincipalResponse
+      type: object
+    gitpod.v1.GetMembershipRequest:
+      additionalProperties: false
+      description: GetMembership messages
+      properties:
+        groupId:
+          format: uuid
+          title: group_id
+          type: string
+        subject:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: Subject to check membership for
+          title: subject
+      required:
+      - subject
+      title: GetMembershipRequest
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

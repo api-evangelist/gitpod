@@ -1,0 +1,2330 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.EnvironmentAutomationService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.EnvironmentAutomationService
+  x-displayName: gitpod.v1.EnvironmentAutomationService
+paths:
+  /gitpod.v1.EnvironmentAutomationService/CreateService:
+    servers: []
+    post:
+      description: "Creates a new automation service for an environment.\n\n Use this method to:\n - Set up long-running services\n - Configure service triggers\n - Define service dependencies\n - Specify runtime environments\n\n ### Examples\n\n - Create basic service:\n\n   Creates a simple service with start command.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   metadata:\n     reference: \"web-server\"\n     name: \"Web Server\"\n     description: \"Runs the development web server\"\n     triggeredBy:\n       - postDevcontainerStart: true\n   spec:\n     commands:\n       start: \"npm run dev\"\n       ready: \"curl -s http://localhost:3000\"\n   ```\n\n - Create Docker-based service:\n\n   Creates a service running in a specific container.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   metadata:\n     reference: \"redis\"\n     name: \"Redis Server\"\n     description: \"Redis cache service\"\n   spec:\n     commands:\n       start: \"redis-server\"\n     runsOn:\n       docker:\n         image: \"redis:7\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.CreateService
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_basic_service:
+                description: Creates a simple service with start command.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  metadata:
+                    description: Runs the development web server
+                    name: Web Server
+                    reference: web-server
+                    triggeredBy:
+                    - postDevcontainerStart: true
+                  spec:
+                    commands:
+                      ready: curl -s http://localhost:3000
+                      start: npm run dev
+              create_docker_based_service:
+                description: Creates a service running in a specific container.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  metadata:
+                    description: Redis cache service
+                    name: Redis Server
+                    reference: redis
+                  spec:
+                    commands:
+                      start: redis-server
+                    runsOn:
+                      docker:
+                        image: redis:7
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateServiceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateServiceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateService
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/CreateTask:
+    servers: []
+    post:
+      description: "Creates a new automation task.\n\n Use this method to:\n - Define one-off or scheduled tasks\n - Set up build or test automation\n - Configure task dependencies\n - Specify execution environments\n\n ### Examples\n\n - Create basic task:\n\n   Creates a simple build task.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   metadata:\n     reference: \"build\"\n     name: \"Build Project\"\n     description: \"Builds the project artifacts\"\n     triggeredBy:\n       - postEnvironmentStart: true\n   spec:\n     command: \"npm run build\"\n   ```\n\n - Create task with dependencies:\n\n   Creates a task that depends on other services.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   metadata:\n     reference: \"test\"\n     name: \"Run Tests\"\n     description: \"Runs the test suite\"\n   spec:\n     command: \"npm test\"\n   dependsOn: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.CreateTask
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_basic_task:
+                description: Creates a simple build task.
+                value:
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  metadata:
+                    description: Builds the project artifacts
+                    name: Build Project
+                    reference: build
+                    triggeredBy:
+                    - postEnvironmentStart: true
+                  spec:
+                    command: npm run build
+              create_task_with_dependencies:
+                description: Creates a task that depends on other services.
+                value:
+                  dependsOn:
+                  - d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  metadata:
+                    description: Runs the test suite
+                    name: Run Tests
+                    reference: test
+                  spec:
+                    command: npm test
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateTaskRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateTaskResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateTask
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/DeleteService:
+    servers: []
+    post:
+      description: "Deletes an automation service. This call does not block until the service is deleted.\n If the service is not stopped it will be stopped before deletion.\n\n Use this method to:\n - Remove unused services\n - Clean up service configurations\n - Stop and delete services\n\n ### Examples\n\n - Delete service:\n\n   Removes a service after stopping it.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   force: false\n   ```\n\n - Force delete:\n\n   Immediately removes a service.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   force: true\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.DeleteService
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_service:
+                description: Removes a service after stopping it.
+                value:
+                  force: false
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+              force_delete:
+                description: Immediately removes a service.
+                value:
+                  force: true
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteServiceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteServiceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteService
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/DeleteTask:
+    servers: []
+    post:
+      description: "Deletes an automation task.\n\n Use this method to:\n - Remove unused tasks\n - Clean up task configurations\n - Delete obsolete automations\n\n ### Examples\n\n - Delete task:\n\n   Removes a task and its configuration.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.DeleteTask
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_task:
+                description: Removes a task and its configuration.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteTaskRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteTaskResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteTask
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/GetService:
+    servers: []
+    post:
+      description: "Gets details about a specific automation service.\n\n Use this method to:\n - Check service status\n - View service configuration\n - Monitor service health\n - Retrieve service metadata\n\n ### Examples\n\n - Get service details:\n\n   Retrieves information about a specific service.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.GetService
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_service_details:
+                description: Retrieves information about a specific service.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetServiceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetServiceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetService
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/GetTask:
+    servers: []
+    post:
+      description: "Gets details about a specific automation task.\n\n Use this method to:\n - Check task configuration\n - View task dependencies\n - Monitor task status\n\n ### Examples\n\n - Get task details:\n\n   Retrieves information about a specific task.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.GetTask
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_task_details:
+                description: Retrieves information about a specific task.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetTaskRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetTaskResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetTask
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/GetTaskExecution:
+    servers: []
+    post:
+      description: "Gets details about a specific task execution.\n\n Use this method to:\n - Monitor execution progress\n - View execution logs\n - Check execution status\n - Debug failed executions\n\n ### Examples\n\n - Get execution details:\n\n   Retrieves information about a specific task execution.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.GetTaskExecution
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_execution_details:
+                description: Retrieves information about a specific task execution.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetTaskExecutionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetTaskExecutionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetTaskExecution
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/ListServices:
+    servers: []
+    post:
+      description: "Lists automation services with optional filtering.\n\n Use this method to:\n - View all services in an environment\n - Filter services by reference\n - Monitor service status\n\n ### Examples\n\n - List environment services:\n\n   Shows all services for an environment.\n\n   ```yaml\n   filter:\n     environmentIds: [\"07e03a28-65a5-4d98-b532-8ea67b188048\"]\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by reference:\n\n   Lists services matching specific references.\n\n   ```yaml\n   filter:\n     references: [\"web-server\", \"database\"]\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.ListServices
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              filter_by_reference:
+                description: Lists services matching specific references.
+                value:
+                  filter:
+                    references:
+                    - web-server
+                    - database
+                  pagination:
+                    pageSize: 20
+              list_environment_services:
+                description: Shows all services for an environment.
+                value:
+                  filter:
+                    environmentIds:
+                    - 07e03a28-65a5-4d98-b532-8ea67b188048
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListServicesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListServicesResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListServices
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/ListTaskExecutions:
+    servers: []
+    post:
+      description: "Lists executions of automation tasks.\n\n Use this method to:\n - View task execution history\n - Monitor running tasks\n - Track task completion status\n\n ### Examples\n\n - List all executions:\n\n   Shows execution history for all tasks.\n\n   ```yaml\n   filter:\n     environmentIds: [\"07e03a28-65a5-4d98-b532-8ea67b188048\"]\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by phase:\n\n   Lists executions in specific phases.\n\n   ```yaml\n   filter:\n     phases: [\"TASK_EXECUTION_PHASE_RUNNING\", \"TASK_EXECUTION_PHASE_FAILED\"]\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.ListTaskExecutions
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              filter_by_phase:
+                description: Lists executions in specific phases.
+                value:
+                  filter:
+                    phases:
+                    - TASK_EXECUTION_PHASE_RUNNING
+                    - TASK_EXECUTION_PHASE_FAILED
+                  pagination:
+                    pageSize: 20
+              list_all_executions:
+                description: Shows execution history for all tasks.
+                value:
+                  filter:
+                    environmentIds:
+                    - 07e03a28-65a5-4d98-b532-8ea67b188048
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListTaskExecutionsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListTaskExecutionsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListTaskExecutions
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/ListTasks:
+    servers: []
+    post:
+      description: "Lists automation tasks with optional filtering.\n\n Use this method to:\n - View all tasks in an environment\n - Filter tasks by reference\n - Monitor task status\n\n ### Examples\n\n - List environment tasks:\n\n   Shows all tasks for an environment.\n\n   ```yaml\n   filter:\n     environmentIds: [\"07e03a28-65a5-4d98-b532-8ea67b188048\"]\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by reference:\n\n   Lists tasks matching specific references.\n\n   ```yaml\n   filter:\n     references: [\"build\", \"test\"]\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.ListTasks
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              filter_by_reference:
+                description: Lists tasks matching specific references.
+                value:
+                  filter:
+                    references:
+                    - build
+                    - test
+                  pagination:
+                    pageSize: 20
+              list_environment_tasks:
+                description: Shows all tasks for an environment.
+                value:
+                  filter:
+                    environmentIds:
+                    - 07e03a28-65a5-4d98-b532-8ea67b188048
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListTasksRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListTasksResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListTasks
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/StartService:
+    servers: []
+    post:
+      description: "Starts an automation service. This call does not block until the service is started.\n This call will not error if the service is already running or has been started.\n\n Use this method to:\n - Start stopped services\n - Resume service operations\n - Trigger service initialization\n\n ### Examples\n\n - Start service:\n\n   Starts a previously stopped service.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.StartService
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              start_service:
+                description: Starts a previously stopped service.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.StartServiceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.StartServiceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: StartService
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/StartTask:
+    servers: []
+    post:
+      description: "Starts a task by creating a new task execution.\n This call does not block until the task is started; the task will be started asynchronously.\n\n Use this method to:\n - Trigger task execution\n - Run one-off tasks\n - Start scheduled tasks immediately\n\n ### Examples\n\n - Start task:\n\n   Creates a new execution of a task.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.StartTask
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              start_task:
+                description: Creates a new execution of a task.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.StartTaskRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.StartTaskResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: StartTask
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/StopService:
+    servers: []
+    post:
+      description: "Stops an automation service. This call does not block until the service is stopped.\n This call will not error if the service is already stopped or has been stopped.\n\n Use this method to:\n - Pause service operations\n - Gracefully stop services\n - Prepare for updates\n\n ### Examples\n\n - Stop service:\n\n   Gracefully stops a running service.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.StopService
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              stop_service:
+                description: Gracefully stops a running service.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.StopServiceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.StopServiceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: StopService
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/StopTaskExecution:
+    servers: []
+    post:
+      description: "Stops a running task execution.\n\n Use this method to:\n - Cancel long-running tasks\n - Stop failed executions\n - Interrupt task processing\n\n ### Examples\n\n - Stop execution:\n\n   Stops a running task execution.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.StopTaskExecution
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              stop_execution:
+                description: Stops a running task execution.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.StopTaskExecutionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.StopTaskExecutionResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: StopTaskExecution
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/UpdateService:
+    servers: []
+    post:
+      description: "Updates an automation service configuration.\n\n Use this method to:\n - Modify service commands\n - Update triggers\n - Change runtime settings\n - Adjust dependencies\n\n ### Examples\n\n - Update commands:\n\n   Changes service start and ready commands.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   spec:\n     commands:\n       start: \"npm run start:dev\"\n       ready: \"curl -s http://localhost:8080\"\n   ```\n\n - Update triggers:\n\n   Modifies when the service starts.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   metadata:\n     triggeredBy:\n       trigger:\n         - postDevcontainerStart: true\n         - manual: true\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.UpdateService
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_commands:
+                description: Changes service start and ready commands.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  spec:
+                    commands:
+                      ready: curl -s http://localhost:8080
+                      start: npm run start:dev
+              update_triggers:
+                description: Modifies when the service starts.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  metadata:
+                    triggeredBy:
+                      trigger:
+                      - postDevcontainerStart: true
+                      - manual: true
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateServiceRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateServiceResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateService
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/UpdateTask:
+    servers: []
+    post:
+      description: "Updates an automation task configuration.\n\n Use this method to:\n - Modify task commands\n - Update task triggers\n - Change dependencies\n - Adjust execution settings\n\n ### Examples\n\n - Update command:\n\n   Changes the task's command.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   spec:\n     command: \"npm run test:coverage\"\n   ```\n\n - Update triggers:\n\n   Modifies when the task runs.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   metadata:\n     triggeredBy:\n       trigger:\n         - postEnvironmentStart: true\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.UpdateTask
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_command:
+                description: Changes the task's command.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  spec:
+                    command: npm run test:coverage
+              update_triggers:
+                description: Modifies when the task runs.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  metadata:
+                    triggeredBy:
+                      trigger:
+                      - postEnvironmentStart: true
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateTaskRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateTaskResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateTask
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/UpdateTaskExecutionStatus:
+    servers: []
+    post:
+      description: "Updates the status of a task execution.\n Only the environment executing a task execution is expected to call this function.\n\n Use this method to:\n - Report execution progress\n - Update step status\n - Set failure messages\n - Provide log URLs\n\n ### Examples\n\n - Update execution status:\n\n   Updates status with step information.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   steps:\n     - id: \"step-1\"\n       phase: TASK_EXECUTION_PHASE_SUCCEEDED\n   logUrl: \"https://logs.gitpod.io/task-123\"\n   ```\n\n - Report failure:\n\n   Updates status with failure information.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   failureMessage: \"Build failed due to missing dependencies\"\n   steps:\n     - id: \"step-1\"\n       phase: TASK_EXECUTION_PHASE_FAILED\n       failureMessage: \"npm install failed\"\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.UpdateTaskExecutionStatus
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              report_failure:
+                description: Updates status with failure information.
+                value:
+                  failureMessage: Build failed due to missing dependencies
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  steps:
+                  - failureMessage: npm install failed
+                    id: step-1
+                    phase: TASK_EXECUTION_PHASE_FAILED
+              update_execution_status:
+                description: Updates status with step information.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  logUrl: https://logs.gitpod.io/task-123
+                  steps:
+                  - id: step-1
+                    phase: TASK_EXECUTION_PHASE_SUCCEEDED
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateTaskExecutionStatusRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateTaskExecutionStatusResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateTaskExecutionStatus
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+  /gitpod.v1.EnvironmentAutomationService/UpsertAutomationsFile:
+    servers: []
+    post:
+      description: "Upserts the automations file for the given environment.\n\n Use this method to:\n - Configure environment automations\n - Update automation settings\n - Manage automation files\n\n ### Examples\n\n - Update automations file:\n\n   Updates or creates the automations configuration.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   automationsFile:\n     services:\n       web-server:\n         name: \"Web Server\"\n         description: \"Development web server\"\n         commands:\n           start: \"npm run dev\"\n           ready: \"curl -s http://localhost:3000\"\n         triggeredBy:\n           - postDevcontainerStart\n     tasks:\n       build:\n         name: \"Build Project\"\n         description: \"Builds the project artifacts\"\n         command: \"npm run build\"\n         triggeredBy:\n           - postEnvironmentStart\n   ```"
+      operationId: gitpod.v1.EnvironmentAutomationService.UpsertAutomationsFile
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_automations_file:
+                description: Updates or creates the automations configuration.
+                value:
+                  automationsFile:
+                    services:
+                      web-server:
+                        commands:
+                          ready: curl -s http://localhost:3000
+                          start: npm run dev
+                        description: Development web server
+                        name: Web Server
+                        triggeredBy:
+                        - postDevcontainerStart
+                    tasks:
+                      build:
+                        command: npm run build
+                        description: Builds the project artifacts
+                        name: Build Project
+                        triggeredBy:
+                        - postEnvironmentStart
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpsertAutomationsFileRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpsertAutomationsFileResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpsertAutomationsFile
+      tags:
+      - gitpod.v1.EnvironmentAutomationService
+components:
+  schemas:
+    gitpod.v1.ListTaskExecutionsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        taskExecutions:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TaskExecution'
+          title: task_executions
+          type: array
+      title: ListTaskExecutionsResponse
+      type: object
+    gitpod.v1.ServiceStatus:
+      additionalProperties: false
+      properties:
+        failureMessage:
+          description: "failure_message summarises why the service failed to operate. If this is non-empty\n the service has failed to operate and will likely transition to a failed state."
+          title: failure_message
+          type: string
+        logUrl:
+          description: log_url contains the URL at which the service logs can be accessed.
+          title: log_url
+          type: string
+        output:
+          additionalProperties:
+            maxLength: 4096
+            title: value
+            type: string
+          description: "output contains the output of the service.\n setting an output field to empty string will unset it."
+          title: output
+          type: object
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.ServicePhase'
+          description: phase is the current phase of the service.
+          title: phase
+        session:
+          description: session is the current session of the service.
+          title: session
+          type: string
+        statusVersion:
+          description: "version of the status update. Service instances themselves are\n unversioned, but their status has different versions. The value of this\n field has no semantic meaning (e.g. don't interpret it as as a timestamp),\n but it can be used to impose a partial order. If a.status_version <\n b.status_version then a was the status before b."
+          title: status_version
+          type: string
+      title: ServiceStatus
+      type: object
+    gitpod.v1.RunsOn:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - machine
+          - required:
+            - terminal
+        required:
+        - docker
+      - not:
+          anyOf:
+          - required:
+            - docker
+          - required:
+            - terminal
+        required:
+        - machine
+      - not:
+          anyOf:
+          - required:
+            - docker
+          - required:
+            - machine
+        required:
+        - terminal
+      properties:
+        docker:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn.Docker'
+          title: docker
+        machine:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn.Machine'
+          title: machine
+        terminal:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn.Terminal'
+          title: terminal
+      title: RunsOn
+      type: object
+    gitpod.v1.TaskExecutionSpec.Task:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.TaskSpec'
+          title: spec
+      title: Task
+      type: object
+    gitpod.v1.UpdateServiceRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.UpdateServiceRequest.ServiceMetadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.UpdateServiceRequest.ServiceSpec'
+          description: "Changing the spec of a service is a complex operation. The spec of a service\n can only be updated if the service is in a stopped state. If the service is\n running, it must be stopped first."
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.UpdateServiceRequest.ServiceStatus'
+          description: "Service status updates are only expected from the executing environment. As a client\n of this API you are not expected to provide this field. Updating this field requires\n the `environmentservice:update_status` permission."
+          title: status
+      title: UpdateServiceRequest
+      type: object
+    gitpod.v1.DeleteTaskRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: DeleteTaskRequest
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.AutomationsFile:
+      additionalProperties: false
+      description: "WARN: Do not remove any field here, as it will break reading automation yaml files. We error if there are any\n unknown fields in the yaml (to ensure the yaml is correct), but would break if we removed any fields.\n This includes marking a field as \"reserved\" in the proto file, this will also break reading the yaml."
+      properties:
+        services:
+          additionalProperties:
+            $ref: '#/components/schemas/gitpod.v1.AutomationsFile.Service'
+            title: value
+          title: services
+          type: object
+        tasks:
+          additionalProperties:
+            $ref: '#/components/schemas/gitpod.v1.AutomationsFile.Task'
+            title: value
+          title: tasks
+          type: object
+      title: AutomationsFile
+      type: object
+    gitpod.v1.EnvironmentVariableItem:
+      additionalProperties: false
+      description: "EnvironmentVariableItem represents an environment variable that can be set\n either from a literal value or from a secret reference."
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - valueFrom
+        required:
+        - value
+      - not:
+          anyOf:
+          - required:
+            - value
+        required:
+        - valueFrom
+      properties:
+        name:
+          description: name is the environment variable name.
+          minLength: 1
+          title: name
+          type: string
+        value:
+          description: value is a literal string value.
+          title: value
+          type: string
+        valueFrom:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentVariableSource'
+          description: value_from specifies a source for the value.
+          title: value_from
+      title: EnvironmentVariableItem
+      type: object
+    gitpod.v1.DeleteTaskResponse:
+      additionalProperties: false
+      title: DeleteTaskResponse
+      type: object
+    gitpod.v1.ServicePhase:
+      enum:
+      - SERVICE_PHASE_UNSPECIFIED
+      - SERVICE_PHASE_STARTING
+      - SERVICE_PHASE_RUNNING
+      - SERVICE_PHASE_STOPPING
+      - SERVICE_PHASE_STOPPED
+      - SERVICE_PHASE_FAILED
+      - SERVICE_PHASE_DELETED
+      title: ServicePhase
+      type: string
+    gitpod.v1.ListTasksRequest.Filter:
+      additionalProperties: false
+      properties:
+        environmentIds:
+          description: environment_ids filters the response to only tasks of these environments
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: environment_ids
+          type: array
+        references:
+          description: references filters the response to only services with these references
+          items:
+            maxItems: 25
+            minLength: 1
+            type: string
+          maxItems: 25
+          title: references
+          type: array
+        taskIds:
+          description: task_ids filters the response to only tasks with these IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: task_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.UpdateServiceRequest.ServiceSpec:
+      additionalProperties: false
+      properties:
+        commands:
+          $ref: '#/components/schemas/gitpod.v1.UpdateServiceRequest.ServiceSpec.Commands'
+          nullable: true
+          title: commands
+        env:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentVariableItem'
+          title: env
+          type: array
+        runsOn:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn'
+          nullable: true
+          title: runs_on
+      title: ServiceSpec
+      type: object
+    gitpod.v1.RunsOn.Machine:
+      additionalProperties: false
+      description: Machine runs the service/task directly on the VM/machine level.
+      title: Machine
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.TaskExecutionStatus.Step:
+      additionalProperties: false
+      properties:
+        failureMessage:
+          description: "failure_message summarises why the step failed to operate. If this is non-empty\n the step has failed to operate and will likely transition to a failed state."
+          title: failure_message
+          type: string
+        id:
+          description: ID is the ID of the execution step
+          format: uuid
+          title: id
+          type: string
+        output:
+          additionalProperties:
+            maxLength: 4096
+            title: value
+            type: string
+          description: "output contains the output of the task execution.\n setting an output field to empty string will unset it."
+          title: output
+          type: object
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.TaskExecutionPhase'
+          description: phase is the current phase of the execution step
+          title: phase
+      title: Step
+      type: object
+    gitpod.v1.TaskSpec:
+      additionalProperties: false
+      properties:
+        command:
+          description: command contains the command the task should execute
+          title: command
+          type: string
+        env:
+          description: env specifies environment variables for the task.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentVariableItem'
+          title: env
+          type: array
+        runsOn:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn'
+          description: runs_on specifies the environment the task should run on.
+          title: runs_on
+      title: TaskSpec
+      type: object
+    gitpod.v1.CreateServiceResponse:
+      additionalProperties: false
+      properties:
+        service:
+          $ref: '#/components/schemas/gitpod.v1.Service'
+          title: service
+      required:
+      - service
+      title: CreateServiceResponse
+      type: object
+    gitpod.v1.Service:
+      additionalProperties: false
+      properties:
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+        id:
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.ServiceMetadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.ServiceSpec'
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.ServiceStatus'
+          title: status
+      required:
+      - id
+      - environment_id
+      title: Service
+      type: object
+    gitpod.v1.UpdateServiceRequest.AutomationTriggerUpdate:
+      additionalProperties: false
+      properties:
+        trigger:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AutomationTrigger'
+          title: trigger
+          type: array
+      title: AutomationTriggerUpdate
+      type: object
+    gitpod.v1.ListTasksResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        tasks:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Task'
+          title: tasks
+          type: array
+      title: ListTasksResponse
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.UpdateTaskRequest.TaskMetadata:
+      additionalProperties: false
+      properties:
+        description:
+          nullable: true
+          title: description
+          type: string
+        name:
+          minLength: 1
+          nullable: true
+          title: name
+          type: string
+        triggeredBy:
+          $ref: '#/components/schemas/gitpod.v1.UpdateTaskRequest.AutomationTriggerUpdate'
+          nullable: true
+          title: triggered_by
+      title: TaskMetadata
+      type: object
+    gitpod.v1.ListTaskExecutionsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListTaskExecutionsRequest.Filter'
+          description: filter contains the filter options for listing task runs
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing task runs
+          title: pagination
+      title: ListTaskExecutionsRequest
+      type: object
+    gitpod.v1.StopServiceRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: StopServiceRequest
+      type: object
+    gitpod.v1.UpdateServiceResponse:
+      additionalProperties: false
+      title: UpdateServiceResponse
+      type: object
+    gitpod.v1.AutomationsFile.Service:
+      additionalProperties: false
+      properties:
+        commands:
+          $ref: '#/components/schemas/gitpod.v1.ServiceSpec.Commands'
+          title: commands
+        description:
+          title: description
+          type: string
+        name:
+          minLength: 1
+          title: name
+          type: string
+        role:
+          enum:
+          - ''
+          - default
+          - editor
+          - ai-agent
+          title: role
+          type: string
+        runsOn:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn'
+          title: runs_on
+        triggeredBy:
+          items:
+            enum:
+            - manual
+            - postEnvironmentStart
+            - postDevcontainerStart
+            type: string
+          title: triggered_by
+          type: array
+      title: Service
+      type: object
+    gitpod.v1.ServiceRole:
+      enum:
+      - SERVICE_ROLE_UNSPECIFIED
+      - SERVICE_ROLE_DEFAULT
+      - SERVICE_ROLE_EDITOR
+      - SERVICE_ROLE_AI_AGENT
+      - SERVICE_ROLE_SECURITY_AGENT
+      title: ServiceRole
+      type: string
+    gitpod.v1.TaskExecutionMetadata:
+      additionalProperties: false
+      properties:
+        completedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: completed_at is the time the task execution was done.
+          title: completed_at
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is the time the task was created.
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: creator describes the principal who created/started the task run.
+          title: creator
+        environmentId:
+          description: environment_id is the ID of the environment in which the task run is executed.
+          format: uuid
+          title: environment_id
+          type: string
+        startedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: started_at is the time the task execution actually started to run.
+          title: started_at
+        startedBy:
+          description: started_by describes the trigger that started the task execution.
+          title: started_by
+          type: string
+        taskId:
+          description: task_id is the ID of the main task being executed.
+          format: uuid
+          title: task_id
+          type: string
+      title: TaskExecutionMetadata
+      type: object
+    gitpod.v1.EnvironmentVariableSource:
+      additionalProperties: false
+      description: EnvironmentVariableSource specifies a source for an environment variable value.
+      oneOf:
+      - required:
+        - secretRef
+      properties:
+        secretRef:
+          $ref: '#/components/schemas/gitpod.v1.SecretRef'
+          description: secret_ref references a secret by ID.
+          title: secret_ref
+      title: EnvironmentVariableSource
+      type: object
+    gitpod.v1.CreateTaskResponse:
+      additionalProperties: false
+      properties:
+        task:
+          $ref: '#/components/schemas/gitpod.v1.Task'
+          title: task
+      required:
+      - task
+      title: CreateTaskResponse
+      type: object
+    gitpod.v1.TaskExecutionSpec.Group:
+      additionalProperties: false
+      properties:
+        steps:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TaskExecutionSpec.Step'
+          title: steps
+          type: array
+      title: Group
+      type: object
+    gitpod.v1.TaskMetadata:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is the time the task was created.
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: creator describes the principal who created the task.
+          title: creator
+        description:
+          description: description is a user-facing description for the task. It can be used to provide context and documentation for the task.
+          title: description
+          type: string
+        name:
+          description: "name is a user-facing name for the task. Unlike the reference, this field is not unique, and not referenced by the system.\n This is a short descriptive name for the task."
+          minLength: 1
+          title: name
+          type: string
+        reference:
+          description: "reference is a user-facing identifier for the task which must be unique on the environment.\n It is used to express dependencies between tasks, and to identify the task in user interactions (e.g. the CLI)."
+          pattern: ^[a-zA-Z0-9_-]{1,128}$
+          title: reference
+          type: string
+        triggeredBy:
+          description: triggered_by is a list of trigger that start the task.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AutomationTrigger'
+          title: triggered_by
+          type: array
+      title: TaskMetadata
+      type: object
+    gitpod.v1.UpsertAutomationsFileResponse:
+      additionalProperties: false
+      properties:
+        updatedServiceIds:
+          items:
+            type: string
+          title: updated_service_ids
+          type: array
+        updatedTaskIds:
+          items:
+            type: string
+          title: updated_task_ids
+          type: array
+      title: UpsertAutomationsFileResponse
+      type: object
+    gitpod.v1.TaskExecutionSpec.Step:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - task
+        required:
+        - serviceId
+      - not:
+          anyOf:
+          - required:
+            - serviceId
+        required:
+        - task
+      properties:
+        dependsOn:
+          items:
+            type: string
+          title: depends_on
+          type: array
+        id:
+          description: ID is the ID of the execution step
+          format: uuid
+          title: id
+          type: string
+        label:
+          title: label
+          type: string
+        serviceId:
+          format: uuid
+          title: service_id
+          type: string
+        task:
+          $ref: '#/components/schemas/gitpod.v1.TaskExecutionSpec.Task'
+          title: task
+      title: Step
+      type: object
+    gitpod.v1.ListServicesRequest.Filter:
+      additionalProperties: false
+      properties:
+        environmentIds:
+          description: environment_ids filters the response to only services of these environments
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: environment_ids
+          type: array
+        references:
+          description: references filters the response to only services with these references
+          items:
+            maxItems: 25
+            minLength: 1
+            type: string
+          maxItems: 25
+          title: references
+          type: array
+        roles:
+          description: roles filters the response to only services with these roles
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ServiceRole'
+          maxItems: 25
+          title: roles
+          type: array
+        serviceIds:
+          description: service_ids filters the response to only services with these IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: service_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.UpsertAutomationsFileRequest:
+      additionalProperties: false
+      properties:
+        automationsFile:
+          $ref: '#/components/schemas/gitpod.v1.AutomationsFile'
+          title: automations_file
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+      title: UpsertAutomationsFileRequest
+      type: object
+    gitpod.v1.DeleteServiceRequest:
+      additionalProperties: false
+      properties:
+        force:
+          title: force
+          type: boolean
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: DeleteServiceRequest
+      type: object
+    gitpod.v1.ListTaskExecutionsRequest.Filter:
+      additionalProperties: false
+      properties:
+        environmentIds:
+          description: environment_ids filters the response to only task runs of these environments
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: environment_ids
+          type: array
+        phases:
+          description: phases filters the response to only task runs in these phases
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TaskExecutionPhase'
+          maxItems: 25
+          title: phases
+          type: array
+        taskIds:
+          description: task_ids filters the response to only task runs of these tasks
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: task_ids
+          type: array
+        taskReferences:
+          description: task_references filters the response to only task runs with this reference
+          items:
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: task_references
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.AutomationTrigger:
+      additionalProperties: false
+      description: "An AutomationTrigger represents a trigger for an automation action.\n The `manual` field shows a start button in the UI for manually triggering the automation.\n The `post_machine_start` field indicates that the automation should be triggered after the machine has started, before the devcontainer is ready.\n This is used for machine-level services like security agents that need to start early.\n The `post_environment_start` field indicates that the automation should be triggered after the environment has started (devcontainer ready).\n The `post_devcontainer_start` field indicates that the automation should be triggered after the dev container has started.\n The `prebuild` field starts the automation during a prebuild of an environment. This phase does not have user secrets available.\n The `before_snapshot` field triggers the automation after all prebuild tasks complete but before the snapshot is taken.\n This is used for tasks that need to run last during prebuilds, such as IDE warmup.\n Note: The prebuild and before_snapshot triggers can only be used with tasks, not services."
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - manual
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postEnvironmentStart
+          - required:
+            - postMachineStart
+          - required:
+            - prebuild
+        required:
+        - beforeSnapshot
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postEnvironmentStart
+          - required:
+            - postMachineStart
+          - required:
+            - prebuild
+        required:
+        - manual
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - manual
+          - required:
+            - postEnvironmentStart
+          - required:
+            - postMachineStart
+          - required:
+            - prebuild
+        required:
+        - postDevcontainerStart
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - manual
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postMachineStart
+          - required:
+            - prebuild
+        required:
+        - postEnvironmentStart
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - manual
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postEnvironmentStart
+          - required:
+            - prebuild
+        required:
+        - postMachineStart
+      - not:
+          anyOf:
+          - required:
+            - beforeSnapshot
+          - required:
+            - manual
+          - required:
+            - postDevcontainerStart
+          - required:
+            - postEnvironmentStart
+          - required:
+            - postMachineStart
+        required:
+        - prebuild
+      properties:
+        beforeSnapshot:
+          title: before_snapshot
+          type: boolean
+        manual:
+          title: manual
+          type: boolean
+        postDevcontainerStart:
+          title: post_devcontainer_start
+          type: boolean
+        postEnvironmentStart:
+          title: post_environment_start
+          type: boolean
+        postMachineStart:
+          title: post_machine_start
+          type: boolean
+        prebuild:
+          title: prebuild
+          type: boolean
+      title: AutomationTrigger
+      type: object
+    gitpod.v1.Task:
+      additionalProperties: false
+      properties:
+        dependsOn:
+          description: dependencies specifies the IDs of the automations this task depends on.
+          items:
+            format: uuid
+            type: string
+          title: depends_on
+          type: array
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+        id:
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.TaskMetadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.TaskSpec'
+          title: spec
+      required:
+      - id
+      - environment_id
+      title: Task
+      type: object
+    gitpod.v1.TaskExecutionPhase:
+      enum:
+      - TASK_EXECUTION_PHASE_UNSPECIFIED
+      - TASK_EXECUTION_PHASE_PENDING
+      - TASK_EXECUTION_PHASE_RUNNING
+      - TASK_EXECUTION_PHASE_SUCCEEDED
+      - TASK_EXECUTION_PHASE_FAILED
+      - TASK_EXECUTION_PHASE_STOPPED
+      title: TaskExecutionPhase
+      type: string
+    gitpod.v1.UpdateTaskExecutionStatusResponse:
+      additionalProperties: false
+      title: UpdateTaskExecutionStatusResponse
+      type: object
+    gitpod.v1.UpdateTaskResponse:
+      additionalProperties: false
+      title: UpdateTaskResponse
+      type: object
+    gitpod.v1.ListServicesRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListServicesRequest.Filter'
+          description: filter contains the filter options for listing services
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing services
+          title: pagination
+      title: ListServicesRequest
+      type: object
+    gitpod.v1.StartTaskResponse:
+      additionalProperties: false
+      properties:
+        taskExecution:
+          $ref: '#/components/schemas/gitpod.v1.TaskExecution'
+          title: task_execution
+      required:
+      - taskExecution
+      title: StartTaskResponse
+      type: object
+    gitpod.v1.GetServiceResponse:
+      additionalProperties: false
+      properties:
+        service:
+          $ref: '#/components/schemas/gitpod.v1.Service'
+          title: service
+      required:
+      - service
+      title: GetServiceResponse
+      type: object
+    gitpod.v1.TaskExecution:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.TaskExecutionMetadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.TaskExecutionSpec'
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.TaskExecutionStatus'
+          title: status
+      required:
+      - id
+      title: TaskExecution
+      type: object
+    gitpod.v1.ServiceMetadata:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is the time the service was created.
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: creator describes the principal who created the service.
+          title: creator
+        description:
+          description: description is a user-facing description for the service. It can be used to provide context and documentation for the service.
+          title: description
+          type: string
+        name:
+          description: "name is a user-facing name for the service. Unlike the reference, this field is not unique, and not referenced by the system.\n This is a short descriptive name for the service."
+          minLength: 1
+          title: name
+          type: string
+        reference:
+          description: "reference is a user-facing identifier for the service which must be unique on the environment.\n It is used to express dependencies between services, and to identify the service in user interactions (e.g. the CLI)."
+          pattern: ^[a-zA-Z0-9_-]{1,128}$
+          title: reference
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.ServiceRole'
+          description: role specifies the intended role or purpose of the service.
+          title: role
+        triggeredBy:
+          description: triggered_by is a list of trigger that start the service.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AutomationTrigger'
+          title: triggered_by
+          type: array
+      title: ServiceMetadata
+      type: object
+    gitpod.v1.StopTaskExecutionResponse:
+      additionalProperties: false
+      title: StopTaskExecutionResponse
+      type: object
+    gitpod.v1.StartServiceRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: StartServiceRequest
+      type: object
+    gitpod.v1.ListTasksRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListTasksRequest.Filter'
+          description: filter contains the filter options for listing tasks
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing tasks
+          title: pagination
+      title: ListTasksRequest
+      type: object
+    gitpod.v1.RunsOn.Terminal:
+      additionalProperties: false
+      description: "Terminal runs the service inside a managed PTY terminal in the devcontainer.\n Users can attach to the terminal interactively via the terminal API."
+      title: Terminal
+      type: object
+    gitpod.v1.CreateServiceRequest:
+      additionalProperties: false
+      properties:
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.ServiceMetadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.ServiceSpec'
+          title: spec
+      title: CreateServiceRequest
+      type: object
+    gitpod.v1.AutomationsFile.Task:
+      additionalProperties: false
+      properties:
+        command:
+          minLength: 1
+          title: command
+          type: string
+        dependsOn:
+          items:
+            type: string
+          title: depends_on
+          type: array
+        description:
+          title: description
+          type: string
+        name:
+          minLength: 1
+          title: name
+          type: string
+        runsOn:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn'
+          title: runs_on
+        triggeredBy:
+          items:
+            enum:
+            - manual
+            - postEnvironmentStart
+            - postDevcontainerStart
+            - prebuild
+            type: string
+          title: triggered_by
+          type: array
+      title: Task
+      type: object
+    gitpod.v1.UpdateTaskRequest.AutomationTriggerUpdate:
+      additionalProperties: false
+      properties:
+        trigger:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AutomationTrigger'
+          title: trigger
+          type: array
+      title: AutomationTriggerUpdate
+      type: object
+    gitpod.v1.ServiceSpec.Commands:
+      additionalProperties: false
+      properties:
+        ready:
+          description: "ready is an optional command that is run repeatedly until it exits with a zero exit code.\n If set, the service will first go into a Starting phase, and then into a Running phase once the ready\n command exits with a zero exit code."
+          title: ready
+          type: string
+        start:
+          description: "start is the command to start and run the service.\n If start exits, the service will transition to the following phase:\n - Stopped: if the exit code is 0\n - Failed: if the exit code is not 0\n If the stop command is not set, the start command will receive a SIGTERM signal when the service is\n requested to stop. If it does not exit within 2 minutes, it will receive a SIGKILL signal."
+          minLength: 1
+          title: start
+          type: string
+        stop:
+          description: "stop is an optional command that runs when the service is requested to stop.\n If set, instead of sending a SIGTERM signal to the start command, the stop command will be run.\n Once the stop command exits, the start command will receive a SIGKILL signal.\n If the stop command exits with a non-zero exit code, the service will transition to the Failed phase.\n If the stop command does not exit within 2 minutes, a SIGKILL signal will be sent to both the start and\n stop commands."
+          title: stop
+          type: string
+      title: Commands
+      type: object
+    gitpod.v1.UpdateTaskExecutionStatusRequest:
+      additionalProperties: false
+      properties:
+        failureMessage:
+          description: "failure_message marks the task execution as failed and provides a message explaining the failure.\n If an individual step has failed, callers are NOT expected to set this message; only if the task execution as a whole has failed/cannot be started."
+          nullable: true
+          title: failure_message
+          type: string
+        id:
+          format: uuid
+          title: id
+          type: string
+        logUrl:
+          description: log_url is the URL to the logs of the task's steps. If this is empty, the task either has no logs or has not yet started.
+          nullable: true
+          title: log_url
+          type: string
+        steps:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TaskExecutionStatus.Step'
+          title: steps
+          type: array
+      title: UpdateTaskExecutionStatusRequest
+      type: object
+    gitpod.v1.TaskExecutionStatus:
+      additionalProperties: false
+      properties:
+        failureMessage:
+          description: "failure_message summarises why the task execution failed to operate. If this is non-empty\n the task execution has failed to operate and will likely transition to a failed state."
+          title: failure_message
+          type: string
+        logUrl:
+          description: "log_url is the URL to the logs of the task's steps. If this is empty, the task either has no logs\n or has not yet started."
+          title: log_url
+          type: string
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.TaskExecutionPhase'
+          description: the phase of a task execution represents the aggregated phase of all steps.
+          title: phase
+        statusVersion:
+          description: "version of the status update. Task executions themselves are\n unversioned, but their status has different versions. The value of this\n field has no semantic meaning (e.g. don't interpret it as as a timestamp),\n but it can be used to impose a partial order. If a.status_version <\n b.status_version then a was the status before b."
+          title: status_version
+          type: string
+        steps:
+          description: "steps provides the status for each individual step of the task execution. If a step is missing it\n has not yet started."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TaskExecutionStatus.Step'
+          title: steps
+          type: array
+      title: TaskExecutionStatus
+      type: object
+    gitpod.v1.GetServiceRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: GetServiceRequest
+      type: object
+    gitpod.v1.GetTaskRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: GetTaskRequest
+      type: object
+    gitpod.v1.UpdateServiceRequest.ServiceSpec.Commands:
+      additionalProperties: false
+      properties:
+        ready:
+          nullable: true
+          title: ready
+          type: string
+        start:
+          nullable: true
+          title: start
+          type: string
+        stop:
+          nullable: true
+          title: stop
+          type: string
+      title: Commands
+      type: object
+    gitpod.v1.StartServiceResponse:
+      additionalProperties: false
+      title: StartServiceResponse
+      type: object
+    gitpod.v1.StopTaskExecutionRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: StopTaskExecutionRequest
+      type: object
+    gitpod.v1.SecretRef:
+      additionalProperties: false
+      description: SecretRef references a secret by its ID.
+      properties:
+        id:
+          description: id is the UUID of the secret to reference.
+          format: uuid
+          title: id
+          type: string
+      title: SecretRef
+      type: object
+    gitpod.v1.CreateTaskRequest:
+      additionalProperties: false
+      properties:
+        dependsOn:
+          items:
+            format: uuid
+            type: string
+          title: depends_on
+          type: array
+        environmentId:
+          format: uuid
+          title: environment_id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.TaskMetadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.TaskSpec'
+          title: spec
+      title: CreateTaskRequest
+      type: object
+    gitpod.v1.UpdateTaskRequest:
+      additionalProperties: false
+      properties:
+        dependsOn:
+          description: dependencies specifies the IDs of the automations this task depends on.
+          items:
+            format: uuid
+            type: string
+          title: depends_on
+          type: array
+        id:
+          format: uuid
+          title: id
+          type: string
+        metadata:
+          $ref: '#/components/schemas/gitpod.v1.UpdateTaskRequest.TaskMetadata'
+          title: metadata
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.UpdateTaskRequest.TaskSpec'
+          title: spec
+      title: UpdateTaskRequest
+      type: object
+    gitpod.v1.StartTaskRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: StartTaskRequest
+      type: object
+    gitpod.v1.GetTaskResponse:
+      additionalProperties: false
+      properties:
+        task:
+          $ref: '#/components/schemas/gitpod.v1.Task'
+          title: task
+      required:
+      - task
+      title: GetTaskResponse
+      type: object
+    gitpod.v1.ListServicesResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        services:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Service'
+          title: services
+          type: array
+      title: ListServicesResponse
+      type: object
+    gitpod.v1.TaskExecutionSpec:
+      additionalProperties: false
+      properties:
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.TaskExecutionPhase'
+          description: desired_phase is the phase the task execution should be in. Used to stop a running task execution early.
+          title: desired_phase
+        plan:
+          description: "plan is a list of groups of steps. The steps in a group are executed concurrently, while the groups are executed sequentially.\n The order of the groups is the order in which they are executed."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TaskExecutionSpec.Group'
+          title: plan
+          type: array
+      title: TaskExecutionSpec
+      type: object
+    gitpod.v1.DeleteServiceResponse:
+      additionalProperties: false
+      title: DeleteServiceResponse
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.RunsOn.Docker:
+      additionalProperties: false
+      properties:
+        environment:
+          items:
+            type: string
+          title: environment
+          type: array
+        image:
+          minLength: 1
+          title: image
+          type: string
+      title: Docker
+      type: object
+    gitpod.v1.UpdateServiceRequest.ServiceMetadata:
+      additionalProperties: false
+      properties:
+        description:
+          nullable: true
+          title: description
+          type: string
+        name:
+          minLength: 1
+          nullable: true
+          title: name
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.ServiceRole'
+          nullable: true
+          title: role
+        triggeredBy:
+          $ref: '#/components/schemas/gitpod.v1.UpdateServiceRequest.AutomationTriggerUpdate'
+          nullable: true
+          title: triggered_by
+      title: ServiceMetadata
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.UpdateTaskRequest.TaskSpec:
+      additionalProperties: false
+      properties:
+        command:
+          nullable: true
+          title: command
+          type: string
+        env:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentVariableItem'
+          title: env
+          type: array
+        runsOn:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn'
+          nullable: true
+          title: runs_on
+      title: TaskSpec
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.ServiceSpec:
+      additionalProperties: false
+      properties:
+        commands:
+          $ref: '#/components/schemas/gitpod.v1.ServiceSpec.Commands'
+          description: commands contains the commands to start, stop and check the readiness of the service
+          title: commands
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.ServicePhase'
+          description: desired_phase is the phase the service should be in. Used to start or stop the service.
+          title: desired_phase
+        env:
+          description: env specifies environment variables for the service.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentVariableItem'
+          title: env
+          type: array
+        runsOn:
+          $ref: '#/components/schemas/gitpod.v1.RunsOn'
+          description: runs_on specifies the environment the service should run on.
+          title: runs_on
+        session:
+          description: "session should be changed to trigger a restart of the service. If a service exits it will\n not be restarted until the session is changed."
+          title: session
+          type: string
+        specVersion:
+          description: "version of the spec. The value of this field has no semantic\n meaning (e.g. don't interpret it as as a timestamp),\n but it can be used to impose a partial order. If a.spec_version <\n b.spec_version then a was the spec before b."
+          title: spec_version
+          type: string
+      title: ServiceSpec
+      type: object
+    gitpod.v1.UpdateServiceRequest.ServiceStatus:
+      additionalProperties: false
+      properties:
+        failureMessage:
+          nullable: true
+          title: failure_message
+          type: string
+        logUrl:
+          nullable: true
+          title: log_url
+          type: string
+        output:
+          additionalProperties:
+            title: value
+            type: string
+          description: setting an output field to empty string will unset it.
+          title: output
+          type: object
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.ServicePhase'
+          nullable: true
+          title: phase
+        session:
+          nullable: true
+          title: session
+          type: string
+      title: ServiceStatus
+      type: object
+    gitpod.v1.GetTaskExecutionResponse:
+      additionalProperties: false
+      properties:
+        taskExecution:
+          $ref: '#/components/schemas/gitpod.v1.TaskExecution'
+          title: task_execution
+      required:
+      - taskExecution
+      title: GetTaskExecutionResponse
+      type: object
+    gitpod.v1.StopServiceResponse:
+      additionalProperties: false
+      title: StopServiceResponse
+      type: object
+    gitpod.v1.GetTaskExecutionRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: GetTaskExecutionRequest
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

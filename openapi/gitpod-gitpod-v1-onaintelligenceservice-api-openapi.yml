@@ -1,0 +1,470 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.OnaIntelligenceService API
+  version: v1.0.0
+  description: "OnaIntelligenceService manages organization-level LLM configurations for Ona Intelligence.\n This service is restricted to Ona employees with the OnaIntelligenceAdmin role."
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- description: "OnaIntelligenceService manages organization-level LLM configurations for Ona Intelligence.\n This service is restricted to Ona employees with the OnaIntelligenceAdmin role."
+  name: gitpod.v1.OnaIntelligenceService
+  x-displayName: gitpod.v1.OnaIntelligenceService
+paths:
+  /gitpod.v1.OnaIntelligenceService/CreateOrganizationLLMConfiguration:
+    servers: []
+    post:
+      description: "Creates or updates the Anthropic API key configuration for an organization.\n\n Use this method to:\n - Configure Anthropic API access for an organization\n - Rotate existing API keys\n\n The API key is encrypted before storage using organization-scoped encryption."
+      operationId: gitpod.v1.OnaIntelligenceService.CreateOrganizationLLMConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateOrganizationLLMConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateOrganizationLLMConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateOrganizationLLMConfiguration
+      tags:
+      - gitpod.v1.OnaIntelligenceService
+  /gitpod.v1.OnaIntelligenceService/DeleteOrganizationLLMConfiguration:
+    servers: []
+    post:
+      description: "Deletes the organization's LLM API key configuration.\n\n Use this method to:\n - Remove API key access for an organization\n - Clean up unused configurations"
+      operationId: gitpod.v1.OnaIntelligenceService.DeleteOrganizationLLMConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteOrganizationLLMConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteOrganizationLLMConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteOrganizationLLMConfiguration
+      tags:
+      - gitpod.v1.OnaIntelligenceService
+  /gitpod.v1.OnaIntelligenceService/GetOrganizationLLMConfiguration:
+    servers: []
+    post:
+      description: "Gets metadata about the organization's LLM configuration.\n\n Use this method to:\n - Check if an organization has an API key configured\n - View when the key was last updated\n\n For security reasons, this method does not return the actual API key,\n only metadata including the last 4 characters for identification."
+      operationId: gitpod.v1.OnaIntelligenceService.GetOrganizationLLMConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetOrganizationLLMConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetOrganizationLLMConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetOrganizationLLMConfiguration
+      tags:
+      - gitpod.v1.OnaIntelligenceService
+  /gitpod.v1.OnaIntelligenceService/GetOrganizationLLMUsage:
+    servers: []
+    post:
+      description: "Gets credit usage summary for the caller's organization.\n\n The organization is inferred from the caller's identity.\n\n Use this method to:\n - View Ona credit consumption for your organization\n - Track usage over time\n - Display usage data to organization admins\n\n Returns pre-aggregated summaries for week, month, and year."
+      operationId: gitpod.v1.OnaIntelligenceService.GetOrganizationLLMUsage
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetOrganizationLLMUsageRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetOrganizationLLMUsageResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetOrganizationLLMUsage
+      tags:
+      - gitpod.v1.OnaIntelligenceService
+  /gitpod.v1.OnaIntelligenceService/ListOrganizationLLMConfigurations:
+    servers: []
+    post:
+      description: "Lists all organization LLM configurations.\n\n Use this method to:\n - View all organizations with LLM configurations\n - Audit API key usage"
+      operationId: gitpod.v1.OnaIntelligenceService.ListOrganizationLLMConfigurations
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListOrganizationLLMConfigurationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListOrganizationLLMConfigurationsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListOrganizationLLMConfigurations
+      tags:
+      - gitpod.v1.OnaIntelligenceService
+  /gitpod.v1.OnaIntelligenceService/UpdateOrganizationLLMConfiguration:
+    servers: []
+    post:
+      description: "Updates the Anthropic API key configuration for an organization.\n\n Use this method to:\n - Update existing API key\n - Modify configuration settings\n\n Only provided fields will be updated (partial update)."
+      operationId: gitpod.v1.OnaIntelligenceService.UpdateOrganizationLLMConfiguration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateOrganizationLLMConfigurationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateOrganizationLLMConfigurationResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateOrganizationLLMConfiguration
+      tags:
+      - gitpod.v1.OnaIntelligenceService
+components:
+  schemas:
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.GetOrganizationLLMUsageRequest:
+      additionalProperties: false
+      description: "The organization is inferred from the caller's identity.\n No parameters required."
+      properties:
+        empty:
+          type: boolean
+      title: GetOrganizationLLMUsageRequest
+      type: object
+    gitpod.v1.DeleteOrganizationLLMConfigurationResponse:
+      additionalProperties: false
+      title: DeleteOrganizationLLMConfigurationResponse
+      type: object
+    gitpod.v1.LLMUsageSummary:
+      additionalProperties: false
+      description: LLMUsageSummary contains aggregated LLM usage data for a specific time period
+      properties:
+        creditsConsumed:
+          description: credits_consumed is the total Ona credits consumed in this period
+          format: double
+          title: credits_consumed
+          type: number
+        dailyBreakdown:
+          description: daily_breakdown contains per-day usage data for charting
+          items:
+            $ref: '#/components/schemas/gitpod.v1.DailyUsage'
+          title: daily_breakdown
+          type: array
+      title: LLMUsageSummary
+      type: object
+    gitpod.v1.DeleteOrganizationLLMConfigurationRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to delete configuration for
+          format: uuid
+          title: organization_id
+          type: string
+      title: DeleteOrganizationLLMConfigurationRequest
+      type: object
+    gitpod.v1.ListOrganizationLLMConfigurationsResponse:
+      additionalProperties: false
+      properties:
+        configurations:
+          description: configurations is the list of organization LLM configurations
+          items:
+            $ref: '#/components/schemas/gitpod.v1.OrganizationLLMConfiguration'
+          title: configurations
+          type: array
+      title: ListOrganizationLLMConfigurationsResponse
+      type: object
+    gitpod.v1.CreateOrganizationLLMConfigurationResponse:
+      additionalProperties: false
+      properties:
+        configuration:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationLLMConfiguration'
+          description: configuration contains metadata about the stored configuration
+          title: configuration
+      title: CreateOrganizationLLMConfigurationResponse
+      type: object
+    gitpod.v1.GetOrganizationLLMConfigurationResponse:
+      additionalProperties: false
+      properties:
+        configuration:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationLLMConfiguration'
+          description: configuration contains metadata about the stored configuration
+          title: configuration
+      title: GetOrganizationLLMConfigurationResponse
+      type: object
+    gitpod.v1.OrganizationLLMConfiguration:
+      additionalProperties: false
+      description: "OrganizationLLMConfiguration contains metadata about an organization's LLM configuration.\n For security reasons, the actual API key is never returned."
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: created_at is when the configuration was first created
+          title: created_at
+        organizationId:
+          description: organization_id is the ID of the organization
+          title: organization_id
+          type: string
+        provider:
+          description: provider is the LLM provider (e.g., "anthropic")
+          title: provider
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: updated_at is when the configuration was last updated
+          title: updated_at
+      title: OrganizationLLMConfiguration
+      type: object
+    gitpod.v1.CreateOrganizationLLMConfigurationRequest:
+      additionalProperties: false
+      properties:
+        apiKey:
+          description: api_key is the plaintext Anthropic API key to encrypt and store
+          maxLength: 512
+          minLength: 1
+          title: api_key
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization to configure
+          format: uuid
+          title: organization_id
+          type: string
+      title: CreateOrganizationLLMConfigurationRequest
+      type: object
+    gitpod.v1.ListOrganizationLLMConfigurationsRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: ListOrganizationLLMConfigurationsRequest
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.DailyUsage:
+      additionalProperties: false
+      description: DailyUsage contains usage data for a single day
+      properties:
+        creditsConsumed:
+          description: credits_consumed is the number of Ona credits consumed on this day
+          format: double
+          title: credits_consumed
+          type: number
+        date:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: date is the start of the day (midnight UTC)
+          title: date
+      title: DailyUsage
+      type: object
+    gitpod.v1.UpdateOrganizationLLMConfigurationResponse:
+      additionalProperties: false
+      properties:
+        configuration:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationLLMConfiguration'
+          description: configuration contains metadata about the stored configuration
+          title: configuration
+      title: UpdateOrganizationLLMConfigurationResponse
+      type: object
+    gitpod.v1.GetOrganizationLLMUsageResponse:
+      additionalProperties: false
+      properties:
+        lastCalculatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "last_calculated_at is when this usage data was last fetched and calculated\n Helps users understand data freshness (typically 5-10 minutes behind real-time)"
+          title: last_calculated_at
+        thisMonth:
+          $ref: '#/components/schemas/gitpod.v1.LLMUsageSummary'
+          description: this_month contains usage summary for the last 30 days
+          title: this_month
+        thisWeek:
+          $ref: '#/components/schemas/gitpod.v1.LLMUsageSummary'
+          description: this_week contains usage summary for the last 7 days
+          title: this_week
+        thisYear:
+          $ref: '#/components/schemas/gitpod.v1.LLMUsageSummary'
+          description: this_year contains usage summary from Ona Intelligence activation to now (max 365 days)
+          title: this_year
+        usageDataFrom:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "usage_data_from is when usage tracking started for this organization\n Typically when Ona Intelligence was enabled (organization_llm_integration.created_at)"
+          title: usage_data_from
+      title: GetOrganizationLLMUsageResponse
+      type: object
+    gitpod.v1.GetOrganizationLLMConfigurationRequest:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the ID of the organization to query
+          format: uuid
+          title: organization_id
+          type: string
+      title: GetOrganizationLLMConfigurationRequest
+      type: object
+    gitpod.v1.UpdateOrganizationLLMConfigurationRequest:
+      additionalProperties: false
+      properties:
+        apiKey:
+          description: api_key is the plaintext Anthropic API key to encrypt and store (optional)
+          maxLength: 512
+          minLength: 1
+          nullable: true
+          title: api_key
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization to update
+          format: uuid
+          title: organization_id
+          type: string
+      title: UpdateOrganizationLLMConfigurationRequest
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

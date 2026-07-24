@@ -1,0 +1,478 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.EventService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.EventService
+  x-displayName: gitpod.v1.EventService
+paths:
+  /gitpod.v1.EventService/ListAuditLogs:
+    servers: []
+    post:
+      description: "Lists audit logs with filtering and pagination options.\n\n Use this method to:\n - View audit history\n - Track user actions\n - Monitor system changes\n\n ### Examples\n\n - List all logs:\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by actor:\n\n   ```yaml\n   filter:\n     actorIds: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n     actorPrincipals: [\"PRINCIPAL_USER\"]\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by time range:\n\n   ```yaml\n   filter:\n     from: \"2024-01-01T00:00:00Z\"\n     to: \"2024-02-01T00:00:00Z\"\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.EventService.ListAuditLogs
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              filter_by_actor:
+                description: "filter:\n  actorIds: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n  actorPrincipals: [\"PRINCIPAL_USER\"]\npagination:\n  pageSize: 20\n"
+                value:
+                  filter:
+                    actorIds:
+                    - d2c94c27-3b76-4a42-b88c-95a85e392c68
+                    actorPrincipals:
+                    - PRINCIPAL_USER
+                  pagination:
+                    pageSize: 20
+              filter_by_time_range:
+                description: "filter:\n  from: \"2024-01-01T00:00:00Z\"\n  to: \"2024-02-01T00:00:00Z\"\npagination:\n  pageSize: 20\n"
+                value:
+                  filter:
+                    from: '2024-01-01T00:00:00Z'
+                    to: '2024-02-01T00:00:00Z'
+                  pagination:
+                    pageSize: 20
+              list_all_logs:
+                description: "pagination:\n  pageSize: 20\n"
+                value:
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListAuditLogsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListAuditLogsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListAuditLogs
+      tags:
+      - gitpod.v1.EventService
+  /gitpod.v1.EventService/WatchEvents:
+    servers: []
+    post:
+      description: "Streams events for all projects, runners, environments, tasks, and services based on the\n specified scope.\n\n Use this method to:\n - Monitor resource changes in real-time\n - Track system events\n - Receive notifications\n\n The scope parameter determines which events to watch:\n - Organization scope (default): Watch all organization-wide events including projects,\n   runners and environments. Task and service events are not included. Use by setting\n   organization=true or omitting the scope.\n - Environment scope: Watch events for a specific environment, including its tasks,\n   task executions, and services. Use by setting environment_id to the UUID of the\n   environment to watch."
+      operationId: gitpod.v1.EventService.WatchEvents
+      parameters: []
+      requestBody:
+        content:
+          application/jsonl:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.WatchEventsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/jsonl:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.WatchEventsResponse'
+          description: Success
+        default:
+          content:
+            application/jsonl:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: WatchEvents
+      tags:
+      - gitpod.v1.EventService
+components:
+  schemas:
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.ListAuditLogsResponse:
+      additionalProperties: false
+      properties:
+        entries:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ListAuditLogsResponse.AuditLogEntry'
+          title: entries
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing environments
+          title: pagination
+      title: ListAuditLogsResponse
+      type: object
+    gitpod.v1.WatchEventsRequest.ResourceTypeFilter:
+      additionalProperties: false
+      description: ResourceTypeFilter restricts which events are delivered for a specific resource type.
+      properties:
+        creatorIds:
+          description: "If non-empty, only events where the resource was created by one of these user IDs\n are delivered. Skipped for DELETE operations (creator info is unavailable after deletion).\n Events with no creator information are skipped when this filter is set (fail-closed)."
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: creator_ids
+          type: array
+        resourceIds:
+          description: If non-empty, only events for these specific resource IDs are delivered.
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: resource_ids
+          type: array
+        resourceType:
+          $ref: '#/components/schemas/gitpod.v1.ResourceType'
+          description: The resource type to filter for.
+          not:
+            enum:
+            - 0
+          title: resource_type
+      title: ResourceTypeFilter
+      type: object
+    gitpod.v1.ListAuditLogsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListAuditLogsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing audit logs
+          title: pagination
+        sort:
+          $ref: '#/components/schemas/gitpod.v1.Sort'
+          description: "sort specifies the order of results. When unspecified, results are sorted\n by creation time descending (newest first).\n Supported sort fields: createdAt."
+          title: sort
+      title: ListAuditLogsRequest
+      type: object
+    gitpod.v1.ResourceOperation:
+      enum:
+      - RESOURCE_OPERATION_UNSPECIFIED
+      - RESOURCE_OPERATION_CREATE
+      - RESOURCE_OPERATION_UPDATE
+      - RESOURCE_OPERATION_DELETE
+      - RESOURCE_OPERATION_UPDATE_STATUS
+      title: ResourceOperation
+      type: string
+    gitpod.v1.ResourceType:
+      enum:
+      - RESOURCE_TYPE_UNSPECIFIED
+      - RESOURCE_TYPE_ENVIRONMENT
+      - RESOURCE_TYPE_RUNNER
+      - RESOURCE_TYPE_PROJECT
+      - RESOURCE_TYPE_TASK
+      - RESOURCE_TYPE_TASK_EXECUTION
+      - RESOURCE_TYPE_SERVICE
+      - RESOURCE_TYPE_ORGANIZATION
+      - RESOURCE_TYPE_USER
+      - RESOURCE_TYPE_ENVIRONMENT_CLASS
+      - RESOURCE_TYPE_RUNNER_SCM_INTEGRATION
+      - RESOURCE_TYPE_HOST_AUTHENTICATION_TOKEN
+      - RESOURCE_TYPE_GROUP
+      - RESOURCE_TYPE_PERSONAL_ACCESS_TOKEN
+      - RESOURCE_TYPE_USER_PREFERENCE
+      - RESOURCE_TYPE_SERVICE_ACCOUNT
+      - RESOURCE_TYPE_SECRET
+      - RESOURCE_TYPE_SSO_CONFIG
+      - RESOURCE_TYPE_DOMAIN_VERIFICATION
+      - RESOURCE_TYPE_AGENT_EXECUTION
+      - RESOURCE_TYPE_RUNNER_LLM_INTEGRATION
+      - RESOURCE_TYPE_AGENT
+      - RESOURCE_TYPE_ENVIRONMENT_SESSION
+      - RESOURCE_TYPE_USER_SECRET
+      - RESOURCE_TYPE_ORGANIZATION_POLICY
+      - RESOURCE_TYPE_ORGANIZATION_SECRET
+      - RESOURCE_TYPE_PROJECT_ENVIRONMENT_CLASS
+      - RESOURCE_TYPE_BILLING
+      - RESOURCE_TYPE_PROMPT
+      - RESOURCE_TYPE_COUPON
+      - RESOURCE_TYPE_COUPON_REDEMPTION
+      - RESOURCE_TYPE_ACCOUNT
+      - RESOURCE_TYPE_INTEGRATION
+      - RESOURCE_TYPE_WORKFLOW
+      - RESOURCE_TYPE_WORKFLOW_EXECUTION
+      - RESOURCE_TYPE_WORKFLOW_EXECUTION_ACTION
+      - RESOURCE_TYPE_SNAPSHOT
+      - RESOURCE_TYPE_PREBUILD
+      - RESOURCE_TYPE_ORGANIZATION_LLM_INTEGRATION
+      - RESOURCE_TYPE_CUSTOM_DOMAIN
+      - RESOURCE_TYPE_ROLE_ASSIGNMENT_CHANGED
+      - RESOURCE_TYPE_GROUP_MEMBERSHIP_CHANGED
+      - RESOURCE_TYPE_WEBHOOK
+      - RESOURCE_TYPE_SCIM_CONFIGURATION
+      - RESOURCE_TYPE_SERVICE_ACCOUNT_SECRET
+      - RESOURCE_TYPE_ANNOUNCEMENT_BANNER
+      - RESOURCE_TYPE_SERVICE_ACCOUNT_TOKEN
+      - RESOURCE_TYPE_ROLE_ASSIGNMENT
+      - RESOURCE_TYPE_WARM_POOL
+      - RESOURCE_TYPE_NOTIFICATION
+      title: ResourceType
+      type: string
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.SortOrder:
+      enum:
+      - SORT_ORDER_UNSPECIFIED
+      - SORT_ORDER_ASC
+      - SORT_ORDER_DESC
+      title: SortOrder
+      type: string
+    gitpod.v1.ListAuditLogsResponse.AuditLogEntry:
+      additionalProperties: false
+      properties:
+        action:
+          title: action
+          type: string
+        actorId:
+          title: actor_id
+          type: string
+        actorPrincipal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          title: actor_principal
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        id:
+          title: id
+          type: string
+        subjectId:
+          title: subject_id
+          type: string
+        subjectType:
+          $ref: '#/components/schemas/gitpod.v1.ResourceType'
+          title: subject_type
+      title: AuditLogEntry
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.Sort:
+      additionalProperties: false
+      properties:
+        field:
+          description: Field name to sort by, in camelCase.
+          title: field
+          type: string
+        order:
+          $ref: '#/components/schemas/gitpod.v1.SortOrder'
+          title: order
+      title: Sort
+      type: object
+    gitpod.v1.WatchEventsResponse:
+      additionalProperties: false
+      properties:
+        operation:
+          $ref: '#/components/schemas/gitpod.v1.ResourceOperation'
+          title: operation
+        resourceId:
+          format: uuid
+          title: resource_id
+          type: string
+        resourceType:
+          $ref: '#/components/schemas/gitpod.v1.ResourceType'
+          title: resource_type
+      title: WatchEventsResponse
+      type: object
+    gitpod.v1.WatchEventsRequest:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - organization
+        required:
+        - environmentId
+      - not:
+          anyOf:
+          - required:
+            - environmentId
+        required:
+        - organization
+      properties:
+        environmentId:
+          description: "Environment scope produces events for the environment itself, all tasks, task executions,\n and services associated with that environment."
+          title: environment_id
+          type: string
+        organization:
+          description: "Organization scope produces events for all projects, runners and environments\n the caller can see within their organization. No task, task execution or service events\n are produed."
+          title: organization
+          type: boolean
+        resourceTypeFilters:
+          description: "Filters to limit which events are delivered on organization-scoped streams.\n When empty, all events for the scope are delivered.\n When populated, only events matching at least one filter entry are forwarded.\n Not supported for environment-scoped streams; setting this field returns an error."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.WatchEventsRequest.ResourceTypeFilter'
+          maxItems: 50
+          title: resource_type_filters
+          type: array
+      title: WatchEventsRequest
+      type: object
+    gitpod.v1.ListAuditLogsRequest.Filter:
+      additionalProperties: false
+      properties:
+        actorIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: actor_ids
+          type: array
+        actorPrincipals:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Principal'
+          maxItems: 25
+          title: actor_principals
+          type: array
+        from:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: from filters audit logs created at or after this timestamp (inclusive).
+          nullable: true
+          title: from
+        subjectIds:
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: subject_ids
+          type: array
+        subjectTypes:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ResourceType'
+          maxItems: 25
+          title: subject_types
+          type: array
+        to:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: to filters audit logs created before this timestamp (exclusive).
+          nullable: true
+          title: to
+      title: Filter
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

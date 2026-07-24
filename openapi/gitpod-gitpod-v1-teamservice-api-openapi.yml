@@ -1,0 +1,723 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.TeamService API
+  version: v1.0.0
+  description: "TeamService manages teams and team memberships within an organization.\n A team is an organizational unit that users can belong to.\n Each user can belong to at most one team per organization."
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- description: "TeamService manages teams and team memberships within an organization.\n A team is an organizational unit that users can belong to.\n Each user can belong to at most one team per organization."
+  name: gitpod.v1.TeamService
+  x-displayName: gitpod.v1.TeamService
+paths:
+  /gitpod.v1.TeamService/AddTeamMember:
+    servers: []
+    post:
+      description: "Adds a user to a team.\n\n Each user can belong to at most one team per organization.\n\n Use this method to:\n - Assign users to teams\n\n ### Examples\n\n - Add a user to a team:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```\n\n ### Authorization\n\n Requires `teammembership:create` permission on the team."
+      operationId: gitpod.v1.TeamService.AddTeamMember
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              add_a_user_to_a_team:
+                description: 'teamId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+                  userId: "f53d2330-3795-4c5d-a1f3-453121af9c60"
+
+                  '
+                value:
+                  teamId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  userId: f53d2330-3795-4c5d-a1f3-453121af9c60
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.AddTeamMemberRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.AddTeamMemberResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: AddTeamMember
+      tags:
+      - gitpod.v1.TeamService
+  /gitpod.v1.TeamService/CreateTeam:
+    servers: []
+    post:
+      description: "Creates a new team within an organization.\n\n Use this method to:\n - Organize users into teams\n - Set up team-based workflows\n\n ### Examples\n\n - Create a team:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"Backend Team\"\n   ```\n\n ### Authorization\n\n Requires `team:create` permission on the organization."
+      operationId: gitpod.v1.TeamService.CreateTeam
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create_a_team:
+                description: 'organizationId: "b0e12f6c-4c67-429d-a4a6-d9838b5da047"
+
+                  name: "Backend Team"
+
+                  '
+                value:
+                  name: Backend Team
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateTeamRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateTeamResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateTeam
+      tags:
+      - gitpod.v1.TeamService
+  /gitpod.v1.TeamService/DeleteTeam:
+    servers: []
+    post:
+      description: "Deletes a team and all its memberships.\n\n Use this method to:\n - Remove unused teams\n - Clean up after team reorganization\n\n ### Examples\n\n - Delete a team:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `team:delete` permission on the team."
+      operationId: gitpod.v1.TeamService.DeleteTeam
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_a_team:
+                description: 'teamId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+                  '
+                value:
+                  teamId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteTeamRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteTeamResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteTeam
+      tags:
+      - gitpod.v1.TeamService
+  /gitpod.v1.TeamService/GetTeam:
+    servers: []
+    post:
+      description: "Gets information about a specific team.\n\n Use this method to:\n - Retrieve team details and metadata\n - View member count\n\n ### Examples\n\n - Get team details:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `team:read` permission on the team."
+      operationId: gitpod.v1.TeamService.GetTeam
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_team_details:
+                description: 'teamId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+                  '
+                value:
+                  teamId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetTeamRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetTeamResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetTeam
+      tags:
+      - gitpod.v1.TeamService
+  /gitpod.v1.TeamService/ListTeamMembers:
+    servers: []
+    post:
+      description: "Lists members of a team with optional pagination.\n\n Use this method to:\n - View all members of a team\n\n ### Examples\n\n - List team members:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```\n\n ### Authorization\n\n Requires `teammembership:read` permission on the team."
+      operationId: gitpod.v1.TeamService.ListTeamMembers
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_team_members:
+                description: "teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\npagination:\n  pageSize: 20\n"
+                value:
+                  pagination:
+                    pageSize: 20
+                  teamId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListTeamMembersRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListTeamMembersResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListTeamMembers
+      tags:
+      - gitpod.v1.TeamService
+  /gitpod.v1.TeamService/ListTeams:
+    servers: []
+    post:
+      description: "Lists teams with optional pagination and filtering.\n\n Use this method to:\n - View all teams in an organization\n - Search for teams by name\n\n ### Examples\n\n - List all teams:\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - Search for teams by name:\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   filter:\n     search: \"backend\"\n   ```\n\n ### Authorization\n\n Results are filtered by `team:read` permission."
+      operationId: gitpod.v1.TeamService.ListTeams
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_teams:
+                description: "pagination:\n  pageSize: 20\n"
+                value:
+                  pagination:
+                    pageSize: 20
+              search_for_teams_by_name:
+                description: "pagination:\n  pageSize: 20\nfilter:\n  search: \"backend\"\n"
+                value:
+                  filter:
+                    search: backend
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListTeamsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListTeamsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListTeams
+      tags:
+      - gitpod.v1.TeamService
+  /gitpod.v1.TeamService/RemoveTeamMember:
+    servers: []
+    post:
+      description: "Removes a user from a team.\n\n Use this method to:\n - Remove users from teams\n\n ### Examples\n\n - Remove a team member:\n\n   ```yaml\n   teamMemberId: \"a1b2c3d4-5678-90ab-cdef-1234567890ab\"\n   ```\n\n ### Authorization\n\n Requires `teammembership:delete` permission on the team."
+      operationId: gitpod.v1.TeamService.RemoveTeamMember
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              remove_a_team_member:
+                description: 'teamMemberId: "a1b2c3d4-5678-90ab-cdef-1234567890ab"
+
+                  '
+                value:
+                  teamMemberId: a1b2c3d4-5678-90ab-cdef-1234567890ab
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.RemoveTeamMemberRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.RemoveTeamMemberResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: RemoveTeamMember
+      tags:
+      - gitpod.v1.TeamService
+  /gitpod.v1.TeamService/UpdateTeam:
+    servers: []
+    post:
+      description: "Updates a team's properties.\n\n Use this method to:\n - Rename a team\n\n ### Examples\n\n - Update team name:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   name: \"Platform Team\"\n   ```\n\n ### Authorization\n\n Requires `team:update` permission on the team."
+      operationId: gitpod.v1.TeamService.UpdateTeam
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              update_team_name:
+                description: 'teamId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+                  name: "Platform Team"
+
+                  '
+                value:
+                  name: Platform Team
+                  teamId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UpdateTeamRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UpdateTeamResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UpdateTeam
+      tags:
+      - gitpod.v1.TeamService
+components:
+  schemas:
+    gitpod.v1.AddTeamMemberRequest:
+      additionalProperties: false
+      properties:
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      title: AddTeamMemberRequest
+      type: object
+    gitpod.v1.ListTeamMembersRequest:
+      additionalProperties: false
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountRequest'
+          description: count controls whether the response includes a bounded total count.
+          title: count
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+      title: ListTeamMembersRequest
+      type: object
+    gitpod.v1.DeleteTeamRequest:
+      additionalProperties: false
+      properties:
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+      title: DeleteTeamRequest
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.AddTeamMemberResponse:
+      additionalProperties: false
+      properties:
+        member:
+          $ref: '#/components/schemas/gitpod.v1.TeamMember'
+          title: member
+      title: AddTeamMemberResponse
+      type: object
+    gitpod.v1.CountResponseRelation:
+      enum:
+      - COUNT_RESPONSE_RELATION_UNSPECIFIED
+      - COUNT_RESPONSE_RELATION_EQ
+      - COUNT_RESPONSE_RELATION_GTE
+      title: CountResponseRelation
+      type: string
+    gitpod.v1.ListTeamsResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        teams:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Team'
+          title: teams
+          type: array
+      title: ListTeamsResponse
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.RemoveTeamMemberResponse:
+      additionalProperties: false
+      title: RemoveTeamMemberResponse
+      type: object
+    gitpod.v1.Team:
+      additionalProperties: false
+      description: Team represents a team within an organization.
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        creatorId:
+          description: "creator_id is the ID of the user who created this team.\n May be empty for system-created or migrated teams."
+          format: uuid
+          nullable: true
+          title: creator_id
+          type: string
+        id:
+          format: uuid
+          title: id
+          type: string
+        memberCount:
+          description: member_count is the total number of members in this team.
+          format: int32
+          title: member_count
+          type: integer
+        name:
+          maxLength: 80
+          minLength: 3
+          title: name
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+      title: Team
+      type: object
+    gitpod.v1.ListTeamMembersResponse:
+      additionalProperties: false
+      properties:
+        count:
+          $ref: '#/components/schemas/gitpod.v1.CountResponse'
+          description: "count is the bounded total count of matching team members, present only when\n requested via CountRequest.include on the first page."
+          title: count
+        members:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TeamMember'
+          title: members
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      title: ListTeamMembersResponse
+      type: object
+    gitpod.v1.ListTeamsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListTeamsRequest.Filter'
+          description: filter contains options for filtering the list of teams.
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListTeamsRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.CountRequest:
+      additionalProperties: false
+      description: "CountRequest controls whether the response should include a bounded\n count of matching records."
+      properties:
+        include:
+          description: "When true, the first page of results will include a CountResponse with\n the bounded total. Subsequent pages (requests with a pagination token)\n will not contain the count."
+          title: include
+          type: boolean
+      title: CountRequest
+      type: object
+    gitpod.v1.RemoveTeamMemberRequest:
+      additionalProperties: false
+      properties:
+        teamMemberId:
+          format: uuid
+          title: team_member_id
+          type: string
+      title: RemoveTeamMemberRequest
+      type: object
+    gitpod.v1.UpdateTeamRequest:
+      additionalProperties: false
+      properties:
+        name:
+          maxLength: 80
+          minLength: 3
+          nullable: true
+          title: name
+          type: string
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+      title: UpdateTeamRequest
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.GetTeamResponse:
+      additionalProperties: false
+      properties:
+        team:
+          $ref: '#/components/schemas/gitpod.v1.Team'
+          title: team
+      title: GetTeamResponse
+      type: object
+    gitpod.v1.DeleteTeamResponse:
+      additionalProperties: false
+      title: DeleteTeamResponse
+      type: object
+    gitpod.v1.ListTeamsRequest.Filter:
+      additionalProperties: false
+      properties:
+        search:
+          description: search filters teams by name (case-insensitive substring match).
+          maxLength: 256
+          title: search
+          type: string
+      title: Filter
+      type: object
+    gitpod.v1.CreateTeamRequest:
+      additionalProperties: false
+      properties:
+        name:
+          maxLength: 80
+          minLength: 3
+          title: name
+          type: string
+        organizationId:
+          format: uuid
+          title: organization_id
+          type: string
+      title: CreateTeamRequest
+      type: object
+    gitpod.v1.CountResponse:
+      additionalProperties: false
+      description: "CountResponse represents a bounded count of matching records.\n When the actual count exceeds the counting limit, value is capped and\n relation is set to GREATER_THAN_OR_EQUAL."
+      properties:
+        relation:
+          $ref: '#/components/schemas/gitpod.v1.CountResponseRelation'
+          description: Indicates whether value is the exact total or a lower bound.
+          title: relation
+        value:
+          description: The count of matching records, capped at the server's counting limit.
+          format: int32
+          title: value
+          type: integer
+      title: CountResponse
+      type: object
+    gitpod.v1.UpdateTeamResponse:
+      additionalProperties: false
+      properties:
+        team:
+          $ref: '#/components/schemas/gitpod.v1.Team'
+          title: team
+      title: UpdateTeamResponse
+      type: object
+    gitpod.v1.TeamMember:
+      additionalProperties: false
+      description: TeamMember represents a user's membership in a team.
+      properties:
+        avatarUrl:
+          description: avatar_url is the user's avatar URL, populated at query time.
+          title: avatar_url
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        id:
+          description: Unique identifier for the team membership.
+          format: uuid
+          title: id
+          type: string
+        name:
+          description: name is the user's display name, populated at query time.
+          title: name
+          type: string
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      title: TeamMember
+      type: object
+    gitpod.v1.GetTeamRequest:
+      additionalProperties: false
+      properties:
+        teamId:
+          format: uuid
+          title: team_id
+          type: string
+      title: GetTeamRequest
+      type: object
+    gitpod.v1.CreateTeamResponse:
+      additionalProperties: false
+      properties:
+        team:
+          $ref: '#/components/schemas/gitpod.v1.Team'
+          title: team
+      title: CreateTeamResponse
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

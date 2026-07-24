@@ -1,0 +1,290 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.IdentityService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.IdentityService
+  x-displayName: gitpod.v1.IdentityService
+paths:
+  /gitpod.v1.IdentityService/ExchangeToken:
+    servers: []
+    post:
+      description: "Exchanges an exchange token for a new access token.\n\n Use this method to:\n - Convert exchange tokens to access tokens\n - Obtain new access credentials\n - Complete token exchange flows\n\n ### Examples\n\n - Exchange token:\n\n   Trades an exchange token for an access token.\n\n   ```yaml\n   exchangeToken: \"exchange-token-value\"\n   ```"
+      operationId: gitpod.v1.IdentityService.ExchangeToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              exchange_token:
+                description: Trades an exchange token for an access token.
+                value:
+                  exchangeToken: exchange-token-value
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ExchangeTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ExchangeTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ExchangeToken
+      tags:
+      - gitpod.v1.IdentityService
+  /gitpod.v1.IdentityService/GetAuthenticatedIdentity:
+    servers: []
+    post:
+      description: "Retrieves information about the currently authenticated identity.\n\n Use this method to:\n - Get current user information\n - Check authentication status\n - Retrieve organization context\n - Validate authentication principal\n\n ### Examples\n\n - Get current identity:\n\n   Retrieves details about the authenticated user.\n\n   ```yaml\n   {}\n   ```"
+      operationId: gitpod.v1.IdentityService.GetAuthenticatedIdentity
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_current_identity:
+                description: Retrieves details about the authenticated user.
+                value: {}
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetAuthenticatedIdentityRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetAuthenticatedIdentityResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetAuthenticatedIdentity
+      tags:
+      - gitpod.v1.IdentityService
+  /gitpod.v1.IdentityService/GetIDToken:
+    servers: []
+    post:
+      description: "Gets an ID token for authenticating with other services.\n\n Use this method to:\n - Obtain authentication tokens for service-to-service calls\n - Access protected resources\n - Generate scoped access tokens\n\n ### Examples\n\n - Get token for single service:\n\n   Retrieves a token for authenticating with one service.\n\n   ```yaml\n   audience:\n     - \"https://api.gitpod.io\"\n   ```\n\n - Get token for multiple services:\n\n   Retrieves a token valid for multiple services.\n\n   ```yaml\n   audience:\n     - \"https://api.gitpod.io\"\n     - \"https://ws.gitpod.io\"\n   ```"
+      operationId: gitpod.v1.IdentityService.GetIDToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_token_for_multiple_services:
+                description: Retrieves a token valid for multiple services.
+                value:
+                  audience:
+                  - https://api.gitpod.io
+                  - https://ws.gitpod.io
+              get_token_for_single_service:
+                description: Retrieves a token for authenticating with one service.
+                value:
+                  audience:
+                  - https://api.gitpod.io
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetIDTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetIDTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetIDToken
+      tags:
+      - gitpod.v1.IdentityService
+components:
+  schemas:
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.GetAuthenticatedIdentityResponse:
+      additionalProperties: false
+      properties:
+        organizationId:
+          title: organization_id
+          type: string
+        organizationTier:
+          title: organization_tier
+          type: string
+        subject:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: subject is the identity of the current user
+          title: subject
+      title: GetAuthenticatedIdentityResponse
+      type: object
+    gitpod.v1.ExchangeTokenRequest:
+      additionalProperties: false
+      properties:
+        exchangeToken:
+          description: exchange_token is the token to exchange
+          title: exchange_token
+          type: string
+      title: ExchangeTokenRequest
+      type: object
+    gitpod.v1.GetIDTokenResponse:
+      additionalProperties: false
+      properties:
+        token:
+          title: token
+          type: string
+      title: GetIDTokenResponse
+      type: object
+    gitpod.v1.ExchangeTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          description: access_token is the new access token
+          title: access_token
+          type: string
+      title: ExchangeTokenResponse
+      type: object
+    gitpod.v1.GetIDTokenRequest:
+      additionalProperties: false
+      properties:
+        audience:
+          items:
+            minItems: 1
+            type: string
+          minItems: 1
+          title: audience
+          type: array
+        version:
+          $ref: '#/components/schemas/gitpod.v1.IDTokenVersion'
+          description: version is the version of the ID token.
+          title: version
+      title: GetIDTokenRequest
+      type: object
+    gitpod.v1.IDTokenVersion:
+      enum:
+      - ID_TOKEN_VERSION_UNSPECIFIED
+      - ID_TOKEN_VERSION_V1
+      - ID_TOKEN_VERSION_V2
+      title: IDTokenVersion
+      type: string
+    gitpod.v1.GetAuthenticatedIdentityRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: GetAuthenticatedIdentityRequest
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

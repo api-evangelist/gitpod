@@ -1,0 +1,383 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.EditorService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.EditorService
+  x-displayName: gitpod.v1.EditorService
+paths:
+  /gitpod.v1.EditorService/GetEditor:
+    servers: []
+    post:
+      description: "Gets details about a specific editor.\n\n Use this method to:\n - View editor information\n - Get editor configuration\n\n ### Examples\n\n - Get editor details:\n\n   Retrieves information about a specific editor.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      operationId: gitpod.v1.EditorService.GetEditor
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_editor_details:
+                description: Retrieves information about a specific editor.
+                value:
+                  id: d2c94c27-3b76-4a42-b88c-95a85e392c68
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetEditorRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetEditorResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetEditor
+      tags:
+      - gitpod.v1.EditorService
+  /gitpod.v1.EditorService/ListEditors:
+    servers: []
+    post:
+      description: "Lists all available code editors, optionally filtered to those allowed in an organization.\n\n Use this method to:\n - View supported editors\n - Get editor capabilities\n - Browse editor options\n - Check editor availability\n\n ### Examples\n\n - List editors:\n\n   Shows all available editors with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - List editors available to the organization:\n\n   Shows all available editors that are allowed by the policies enforced in the organization with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   filter:\n     allowedByPolicy: true\n   ```"
+      operationId: gitpod.v1.EditorService.ListEditors
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_editors:
+                description: Shows all available editors with pagination.
+                value:
+                  pagination:
+                    pageSize: 20
+              list_editors_available_to_the_organization:
+                description: Shows all available editors that are allowed by the policies enforced in the organization with pagination.
+                value:
+                  filter:
+                    allowedByPolicy: true
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListEditorsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListEditorsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListEditors
+      tags:
+      - gitpod.v1.EditorService
+  /gitpod.v1.EditorService/ResolveEditorURL:
+    servers: []
+    post:
+      description: "Resolves the URL for accessing an editor in a specific environment.\n\n Use this method to:\n - Get editor access URLs\n - Launch editors for environments\n - Set up editor connections\n - Configure editor access\n\n ### Examples\n\n - Resolve editor URL:\n\n   Gets the URL for accessing an editor in an environment.\n\n   ```yaml\n   editorId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+      operationId: gitpod.v1.EditorService.ResolveEditorURL
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              resolve_editor_url:
+                description: Gets the URL for accessing an editor in an environment.
+                value:
+                  editorId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  environmentId: 07e03a28-65a5-4d98-b532-8ea67b188048
+                  organizationId: b0e12f6c-4c67-429d-a4a6-d9838b5da047
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ResolveEditorURLRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ResolveEditorURLResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ResolveEditorURL
+      tags:
+      - gitpod.v1.EditorService
+components:
+  schemas:
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.Editor:
+      additionalProperties: false
+      properties:
+        alias:
+          title: alias
+          type: string
+        iconUrl:
+          title: icon_url
+          type: string
+        id:
+          format: uuid
+          title: id
+          type: string
+        installationInstructions:
+          title: installation_instructions
+          type: string
+        name:
+          title: name
+          type: string
+        shortDescription:
+          title: short_description
+          type: string
+        urlTemplate:
+          title: url_template
+          type: string
+        versions:
+          description: versions contains the list of available versions for this editor
+          items:
+            $ref: '#/components/schemas/gitpod.v1.EditorVersion'
+          title: versions
+          type: array
+      required:
+      - id
+      - name
+      - installationInstructions
+      - urlTemplate
+      title: Editor
+      type: object
+    gitpod.v1.ListEditorsResponse:
+      additionalProperties: false
+      properties:
+        editors:
+          description: editors contains the list of editors
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Editor'
+          title: editors
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing environments
+          title: pagination
+      required:
+      - editors
+      title: ListEditorsResponse
+      type: object
+    gitpod.v1.ListEditorsRequest.Filter:
+      additionalProperties: false
+      properties:
+        allowedByPolicy:
+          description: allowed_by_policy filters the response to only editors that are allowed by the policies enforced in the organization
+          title: allowed_by_policy
+          type: boolean
+      title: Filter
+      type: object
+    gitpod.v1.ResolveEditorURLRequest:
+      additionalProperties: false
+      properties:
+        editorId:
+          description: editorId is the ID of the editor to resolve the URL for
+          format: uuid
+          title: editor_id
+          type: string
+        environmentId:
+          description: environmentId is the ID of the environment to resolve the URL for
+          format: uuid
+          title: environment_id
+          type: string
+        organizationId:
+          description: organizationId is the ID of the organization to resolve the URL for
+          format: uuid
+          title: organization_id
+          type: string
+        version:
+          description: "version is the editor version to use\n If not provided, the latest version will be installed\n\n Examples for JetBrains: 2025.2"
+          title: version
+          type: string
+      required:
+      - editorId
+      - environmentId
+      - organizationId
+      title: ResolveEditorURLRequest
+      type: object
+    gitpod.v1.GetEditorResponse:
+      additionalProperties: false
+      properties:
+        editor:
+          $ref: '#/components/schemas/gitpod.v1.Editor'
+          description: editor contains the editor
+          title: editor
+      required:
+      - editor
+      title: GetEditorResponse
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.GetEditorRequest:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the ID of the editor to get
+          title: id
+          type: string
+      required:
+      - id
+      title: GetEditorRequest
+      type: object
+    gitpod.v1.ListEditorsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListEditorsRequest.Filter'
+          description: filter contains the filter options for listing editors
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing environments
+          title: pagination
+      title: ListEditorsRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.ResolveEditorURLResponse:
+      additionalProperties: false
+      properties:
+        url:
+          description: url is the resolved editor URL
+          title: url
+          type: string
+      required:
+      - url
+      title: ResolveEditorURLResponse
+      type: object
+    gitpod.v1.EditorVersion:
+      additionalProperties: false
+      properties:
+        version:
+          description: "version is the version string of the editor\n Examples for JetBrains: 2025.2"
+          title: version
+          type: string
+      required:
+      - version
+      title: EditorVersion
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService

@@ -1,0 +1,930 @@
+openapi: 3.0.0
+info:
+  title: gitpod.v1 gitpod.v1.AccountService API
+  version: v1.0.0
+servers:
+- url: https://api.gitpod.io
+  description: Gitpod API
+tags:
+- name: gitpod.v1.AccountService
+  x-displayName: gitpod.v1.AccountService
+paths:
+  /gitpod.v1.AccountService/BlockAccount:
+    servers: []
+    post:
+      description: "Blocks an account, preventing all API access.\n\n Use this method to:\n - Revoke access for policy violations\n - Handle abuse cases\n - Enforce compliance requirements\n\n When an account is blocked:\n - All API requests return 403 PERMISSION_DENIED\n - All running environments are stopped\n - All active subscriptions are cancelled\n\n Requires the `block_account` permission.\n\n ### Examples\n\n - Block account for policy violation:\n\n   ```yaml\n   accountId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   reason: \"Terms of Service violation - spam\"\n   ```"
+      operationId: gitpod.v1.AccountService.BlockAccount
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              block_account_for_policy_violation:
+                description: 'accountId: "f53d2330-3795-4c5d-a1f3-453121af9c60"
+
+                  reason: "Terms of Service violation - spam"
+
+                  '
+                value:
+                  accountId: f53d2330-3795-4c5d-a1f3-453121af9c60
+                  reason: Terms of Service violation - spam
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.BlockAccountRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.BlockAccountResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: BlockAccount
+      tags:
+      - gitpod.v1.AccountService
+  /gitpod.v1.AccountService/CreateMagicLink:
+    servers: []
+    post:
+      operationId: gitpod.v1.AccountService.CreateMagicLink
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.CreateMagicLinkRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.CreateMagicLinkResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: CreateMagicLink
+      tags:
+      - gitpod.v1.AccountService
+  /gitpod.v1.AccountService/DeleteAccount:
+    servers: []
+    post:
+      description: "Deletes an account permanently.\n\n Use this method to:\n - Remove unused accounts\n - Clean up test accounts\n - Complete account deletion requests\n\n The account must not be an active member of any organization.\n\n ### Examples\n\n - Delete account:\n\n   Permanently removes an account.\n\n   ```yaml\n   accountId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+      operationId: gitpod.v1.AccountService.DeleteAccount
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              delete_account:
+                description: Permanently removes an account.
+                value:
+                  accountId: f53d2330-3795-4c5d-a1f3-453121af9c60
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.DeleteAccountRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.DeleteAccountResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: DeleteAccount
+      tags:
+      - gitpod.v1.AccountService
+  /gitpod.v1.AccountService/GetAccount:
+    servers: []
+    post:
+      description: "Gets information about the currently authenticated account.\n\n Use this method to:\n - Retrieve account profile information\n - Check organization memberships\n - View account settings\n - Get joinable organizations\n\n ### Examples\n\n - Get account details:\n\n   Retrieves information about the authenticated account.\n\n   ```yaml\n   {}\n   ```"
+      operationId: gitpod.v1.AccountService.GetAccount
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_account_details:
+                description: Retrieves information about the authenticated account.
+                value: {}
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetAccountRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetAccountResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetAccount
+      tags:
+      - gitpod.v1.AccountService
+  /gitpod.v1.AccountService/GetChatIdentityToken:
+    servers: []
+    post:
+      description: "Gets the chat identity token for the currently authenticated account.\n\n Use this method to:\n - Obtain a verification hash for in-app chat identity verification\n - Secure chat sessions against impersonation\n\n The returned hash is an HMAC-SHA256 signature of the account's email,\n used by the chat widget to verify user identity.\n\n ### Examples\n\n - Get chat identity token:\n\n   Retrieves the identity verification hash for the authenticated account.\n\n   ```yaml\n   {}\n   ```"
+      operationId: gitpod.v1.AccountService.GetChatIdentityToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_chat_identity_token:
+                description: Retrieves the identity verification hash for the authenticated account.
+                value: {}
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetChatIdentityTokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetChatIdentityTokenResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetChatIdentityToken
+      tags:
+      - gitpod.v1.AccountService
+  /gitpod.v1.AccountService/GetSSOLoginURL:
+    servers: []
+    post:
+      description: "Gets the SSO login URL for a specific email domain.\n\n Use this method to:\n - Initiate SSO authentication\n - Get organization-specific login URLs\n - Handle SSO redirects\n\n ### Examples\n\n - Get login URL:\n\n   Retrieves SSO URL for email domain.\n\n   ```yaml\n   email: \"user@company.com\"\n   ```\n\n - Get URL with return path:\n\n   Gets SSO URL with specific return location.\n\n   ```yaml\n   email: \"user@company.com\"\n   returnTo: \"https://gitpod.io/workspaces\"\n   ```"
+      operationId: gitpod.v1.AccountService.GetSSOLoginURL
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              get_login_url:
+                description: Retrieves SSO URL for email domain.
+                value:
+                  email: user@company.com
+              get_url_with_return_path:
+                description: Gets SSO URL with specific return location.
+                value:
+                  email: user@company.com
+                  returnTo: https://gitpod.io/workspaces
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.GetSSOLoginURLRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.GetSSOLoginURLResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: GetSSOLoginURL
+      tags:
+      - gitpod.v1.AccountService
+  /gitpod.v1.AccountService/ListJoinableOrganizations:
+    servers: []
+    post:
+      description: "Lists organizations that the currently authenticated account can join.\n\n Use this method to:\n - Discover organizations associated with the account's email domain.\n - Allow users to join existing organizations.\n - Display potential organizations during onboarding.\n\n ### Examples\n\n - List joinable organizations:\n\n   Retrieves a list of organizations the account can join.\n\n   ```yaml\n   {}\n   ```"
+      operationId: gitpod.v1.AccountService.ListJoinableOrganizations
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_joinable_organizations:
+                description: Retrieves a list of organizations the account can join.
+                value: {}
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListJoinableOrganizationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListJoinableOrganizationsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListJoinableOrganizations
+      tags:
+      - gitpod.v1.AccountService
+  /gitpod.v1.AccountService/ListLoginProviders:
+    servers: []
+    post:
+      description: "Lists available login providers with optional filtering.\n\n Use this method to:\n - View supported authentication methods\n - Get provider-specific login URLs\n - Filter providers by invite\n\n ### Examples\n\n - List all providers:\n\n   Shows all available login providers.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - List for specific invite:\n\n   Shows providers available for an invite.\n\n   ```yaml\n   filter:\n     inviteId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```"
+      operationId: gitpod.v1.AccountService.ListLoginProviders
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              list_all_providers:
+                description: Shows all available login providers.
+                value:
+                  pagination:
+                    pageSize: 20
+              list_for_specific_invite:
+                description: Shows providers available for an invite.
+                value:
+                  filter:
+                    inviteId: d2c94c27-3b76-4a42-b88c-95a85e392c68
+                  pagination:
+                    pageSize: 20
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListLoginProvidersRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListLoginProvidersResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListLoginProviders
+      tags:
+      - gitpod.v1.AccountService
+  /gitpod.v1.AccountService/ListSSOLogins:
+    servers: []
+    post:
+      operationId: gitpod.v1.AccountService.ListSSOLogins
+      parameters:
+      - in: query
+        name: pageSize
+        schema:
+          default: 25
+          maximum: 100
+          minimum: 0
+          type: integer
+      - in: query
+        name: token
+        schema:
+          default: ''
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.ListSSOLoginsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.ListSSOLoginsResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: ListSSOLogins
+      tags:
+      - gitpod.v1.AccountService
+  /gitpod.v1.AccountService/UnblockAccount:
+    servers: []
+    post:
+      description: "Unblocks a previously blocked account, restoring API access.\n\n Use this method to:\n - Restore access after resolving policy violations\n - Reinstate accounts after review\n\n Note: Unblocking does NOT restore:\n - Stopped environments (must be restarted manually)\n - Cancelled subscriptions (must be re-subscribed)\n - Deleted resources\n\n Requires the `block_account` permission.\n\n ### Examples\n\n - Unblock account:\n\n   ```yaml\n   accountId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+      operationId: gitpod.v1.AccountService.UnblockAccount
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            examples:
+              unblock_account:
+                description: 'accountId: "f53d2330-3795-4c5d-a1f3-453121af9c60"
+
+                  '
+                value:
+                  accountId: f53d2330-3795-4c5d-a1f3-453121af9c60
+            schema:
+              $ref: '#/components/schemas/gitpod.v1.UnblockAccountRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gitpod.v1.UnblockAccountResponse'
+          description: Success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+          description: Error
+      security:
+      - bearerAuth: []
+      summary: UnblockAccount
+      tags:
+      - gitpod.v1.AccountService
+components:
+  schemas:
+    gitpod.v1.ListSSOLoginsResponse:
+      additionalProperties: false
+      properties:
+        logins:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ListSSOLoginsResponse.Login'
+          title: logins
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      required:
+      - pagination
+      title: ListSSOLoginsResponse
+      type: object
+    gitpod.v1.UnblockAccountResponse:
+      additionalProperties: false
+      title: UnblockAccountResponse
+      type: object
+    gitpod.v1.LoginProvider:
+      additionalProperties: false
+      properties:
+        loginUrl:
+          description: login_url is the URL to redirect the browser agent to for login, when provider is "custom"
+          title: login_url
+          type: string
+        provider:
+          description: provider is the provider used by this login method, e.g. "github", "google", "custom"
+          title: provider
+          type: string
+      required:
+      - provider
+      title: LoginProvider
+      type: object
+    gitpod.v1.OrganizationRole:
+      enum:
+      - ORGANIZATION_ROLE_UNSPECIFIED
+      - ORGANIZATION_ROLE_ADMIN
+      - ORGANIZATION_ROLE_MEMBER
+      title: OrganizationRole
+      type: string
+    gitpod.v1.GetAccountResponse:
+      additionalProperties: false
+      properties:
+        account:
+          $ref: '#/components/schemas/gitpod.v1.Account'
+          title: account
+      required:
+      - account
+      title: GetAccountResponse
+      type: object
+    gitpod.v1.OrganizationTier:
+      enum:
+      - ORGANIZATION_TIER_UNSPECIFIED
+      - ORGANIZATION_TIER_FREE
+      - ORGANIZATION_TIER_ENTERPRISE
+      - ORGANIZATION_TIER_CORE
+      - ORGANIZATION_TIER_FREE_ONA
+      title: OrganizationTier
+      type: string
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.GetSSOLoginURLRequest:
+      additionalProperties: false
+      properties:
+        email:
+          description: email is the email the user wants to login with
+          format: email
+          title: email
+          type: string
+        returnTo:
+          description: return_to is the URL the user will be redirected to after login
+          format: uri
+          nullable: true
+          title: return_to
+          type: string
+      required:
+      - email
+      title: GetSSOLoginURLRequest
+      type: object
+    gitpod.v1.ListJoinableOrganizationsRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing joinable organizations
+          title: pagination
+      title: ListJoinableOrganizationsRequest
+      type: object
+    gitpod.v1.DeleteAccountRequest:
+      additionalProperties: false
+      properties:
+        accountId:
+          format: uuid
+          title: account_id
+          type: string
+        reason:
+          description: reason is an optional field for the reason for account deletion
+          maxLength: 256
+          nullable: true
+          title: reason
+          type: string
+      required:
+      - accountId
+      title: DeleteAccountRequest
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.JoinableOrganization:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the id of the organization the user can join
+          format: uuid
+          title: organization_id
+          type: string
+        organizationMemberCount:
+          description: organization_member_count is the member count of the organization the user can join
+          format: int32
+          title: organization_member_count
+          type: integer
+        organizationName:
+          description: organization_name is the name of the organization the user can join
+          title: organization_name
+          type: string
+      required:
+      - organizationId
+      - organizationName
+      title: JoinableOrganization
+      type: object
+    gitpod.v1.GetChatIdentityTokenRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: GetChatIdentityTokenRequest
+      type: object
+    gitpod.v1.ListSSOLoginsResponse.Login:
+      additionalProperties: false
+      properties:
+        displayName:
+          description: provider is the provider used by this login method, e.g. "github", "google", "custom"
+          title: display_name
+          type: string
+        loginUrl:
+          description: login_url is the URL to redirect the user to for SSO login
+          title: login_url
+          type: string
+      required:
+      - displayName
+      - loginUrl
+      title: Login
+      type: object
+    gitpod.v1.ListSSOLoginsRequest:
+      additionalProperties: false
+      properties:
+        email:
+          description: email is the email the user wants to login with
+          format: email
+          title: email
+          type: string
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing SSO logins
+          title: pagination
+        returnTo:
+          description: return_to is the URL the user will be redirected to after login
+          format: uri
+          nullable: true
+          title: return_to
+          type: string
+      required:
+      - email
+      title: ListSSOLoginsRequest
+      type: object
+    gitpod.v1.ListLoginProvidersResponse:
+      additionalProperties: false
+      properties:
+        allowCustom:
+          description: allow_custom indicates whether custom SSO is allowed for this domain
+          title: allow_custom
+          type: boolean
+        loginProviders:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.LoginProvider'
+          title: login_providers
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      required:
+      - pagination
+      title: ListLoginProvidersResponse
+      type: object
+    gitpod.v1.GetAccountRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: GetAccountRequest
+      type: object
+    gitpod.v1.CreateMagicLinkRequest:
+      additionalProperties: false
+      properties:
+        email:
+          format: email
+          title: email
+          type: string
+        name:
+          description: Name of the Account
+          title: name
+          type: string
+      required:
+      - email
+      title: CreateMagicLinkRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.UnblockAccountRequest:
+      additionalProperties: false
+      properties:
+        accountId:
+          description: account_id is the UUID of the account to unblock
+          format: uuid
+          title: account_id
+          type: string
+      required:
+      - accountId
+      title: UnblockAccountRequest
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.DeleteAccountResponse:
+      additionalProperties: false
+      title: DeleteAccountResponse
+      type: object
+    gitpod.v1.GetChatIdentityTokenResponse:
+      additionalProperties: false
+      properties:
+        emailHash:
+          description: "email_hash is the HMAC-SHA256 hash of the account's email address,\n used for chat widget identity verification"
+          title: email_hash
+          type: string
+      required:
+      - emailHash
+      title: GetChatIdentityTokenResponse
+      type: object
+    gitpod.v1.ListJoinableOrganizationsResponse:
+      additionalProperties: false
+      properties:
+        joinableOrganizations:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.JoinableOrganization'
+          title: joinable_organizations
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      required:
+      - pagination
+      title: ListJoinableOrganizationsResponse
+      type: object
+    gitpod.v1.GetSSOLoginURLResponse:
+      additionalProperties: false
+      properties:
+        loginUrl:
+          description: login_url is the URL to redirect the user to for SSO login
+          title: login_url
+          type: string
+      required:
+      - loginUrl
+      title: GetSSOLoginURLResponse
+      type: object
+    gitpod.v1.Account:
+      additionalProperties: false
+      properties:
+        avatarUrl:
+          title: avatar_url
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        email:
+          title: email
+          type: string
+        id:
+          format: uuid
+          title: id
+          type: string
+        joinables:
+          deprecated: true
+          description: joinables is deprecated. Use ListJoinableOrganizations instead.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.JoinableOrganization'
+          title: joinables
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AccountMembership'
+          title: memberships
+          type: array
+        name:
+          title: name
+          type: string
+        organizationId:
+          description: organization_id is the ID of the organization the account is owned by if it's created through custom SSO
+          nullable: true
+          title: organization_id
+          type: string
+        publicEmailProvider:
+          description: public_email_provider is true if the email for the Account matches a known public email provider
+          title: public_email_provider
+          type: boolean
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+      required:
+      - id
+      - name
+      - email
+      - createdAt
+      - updatedAt
+      title: Account
+      type: object
+    gitpod.v1.ListLoginProvidersRequest.Filter:
+      additionalProperties: false
+      properties:
+        email:
+          description: email is the email address to filter SSO providers by
+          nullable: true
+          title: email
+          type: string
+        inviteId:
+          description: invite_id is the ID of the invite URL the user wants to login with
+          format: uuid
+          nullable: true
+          title: invite_id
+          type: string
+      title: Filter
+      type: object
+    gitpod.v1.BlockAccountRequest:
+      additionalProperties: false
+      properties:
+        accountId:
+          description: account_id is the UUID of the account to block
+          format: uuid
+          title: account_id
+          type: string
+        reason:
+          description: reason is the reason for blocking the account (required for audit trail)
+          maxLength: 1024
+          minLength: 1
+          title: reason
+          type: string
+      required:
+      - accountId
+      - reason
+      title: BlockAccountRequest
+      type: object
+    gitpod.v1.CreateMagicLinkResponse:
+      additionalProperties: false
+      properties:
+        magicLink:
+          description: The magic link to send to the user
+          format: uri
+          title: magic_link
+          type: string
+      required:
+      - magicLink
+      title: CreateMagicLinkResponse
+      type: object
+    gitpod.v1.ListLoginProvidersRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListLoginProvidersRequest.Filter'
+          description: filter contains the filter options for listing login methods
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing login methods
+          title: pagination
+      title: ListLoginProvidersRequest
+      type: object
+    gitpod.v1.AccountMembership:
+      additionalProperties: false
+      properties:
+        organizationId:
+          description: organization_id is the id of the organization the user is a member of
+          format: uuid
+          title: organization_id
+          type: string
+        organizationMemberCount:
+          description: organization_member_count is the member count of the organization the user is a member of
+          format: int32
+          title: organization_member_count
+          type: integer
+        organizationName:
+          description: organization_name is the name of the organization the user is a member of
+          title: organization_name
+          type: string
+        organizationTier:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationTier'
+          description: organization_tier is the tier of the organization (Free, Core, Enterprise)
+          title: organization_tier
+        userId:
+          description: user_id is the ID the user has in the organization
+          format: uuid
+          title: user_id
+          type: string
+        userRole:
+          $ref: '#/components/schemas/gitpod.v1.OrganizationRole'
+          description: user_role is the role the user has in the organization
+          title: user_role
+      required:
+      - userId
+      - userRole
+      - organizationId
+      - organizationName
+      title: AccountMembership
+      type: object
+    gitpod.v1.BlockAccountResponse:
+      additionalProperties: false
+      properties:
+        environmentsStopped:
+          description: environments_stopped is the number of environments that were stopped
+          format: int32
+          title: environments_stopped
+          type: integer
+        subscriptionsCancelled:
+          description: subscriptions_cancelled is the number of subscriptions that were cancelled
+          format: int32
+          title: subscriptions_cancelled
+          type: integer
+      title: BlockAccountResponse
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+x-tagGroups:
+- name: gitpod.v1
+  tags:
+  - gitpod.v1.AccountService
+  - gitpod.v1.AgentService
+  - gitpod.v1.AgentSecurityService
+  - gitpod.v1.BillingService
+  - gitpod.v1.EditorService
+  - gitpod.v1.EnvironmentAutomationService
+  - gitpod.v1.EnvironmentService
+  - gitpod.v1.ErrorsService
+  - gitpod.v1.EventService
+  - gitpod.v1.GatewayService
+  - gitpod.v1.GroupService
+  - gitpod.v1.IdentityService
+  - gitpod.v1.InsightsService
+  - gitpod.v1.IntegrationService
+  - gitpod.v1.NotificationService
+  - gitpod.v1.OnaIntelligenceService
+  - gitpod.v1.OrganizationService
+  - gitpod.v1.PrebuildService
+  - gitpod.v1.ProjectService
+  - gitpod.v1.RunnerConfigurationService
+  - gitpod.v1.RunnerInteractionService
+  - gitpod.v1.RunnerManagerService
+  - gitpod.v1.RunnerService
+  - gitpod.v1.SecretService
+  - gitpod.v1.ServiceAccountService
+  - gitpod.v1.SessionService
+  - gitpod.v1.TeamService
+  - gitpod.v1.UsageService
+  - gitpod.v1.UserService
+  - gitpod.v1.WebhookService
+  - gitpod.v1.WorkflowService
