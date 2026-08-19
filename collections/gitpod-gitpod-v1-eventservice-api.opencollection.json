@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.EventService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.EventService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListAuditLogs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EventService/ListAuditLogs",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists audit logs with filtering and pagination options.\n\n Use this method to:\n - View audit history\n - Track user actions\n - Monitor system changes\n\n ### Examples\n\n - List all logs:\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by actor:\n\n   ```yaml\n   filter:\n     actorIds: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n     actorPrincipals: [\"PRINCIPAL_USER\"]\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by time range:\n\n   ```yaml\n   filter:\n     from: \"2024-01-01T00:00:00Z\"\n  "
+        },
+        {
+          "info": {
+            "name": "WatchEvents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EventService/WatchEvents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Streams events for all projects, runners, environments, tasks, and services based on the\n specified scope.\n\n Use this method to:\n - Monitor resource changes in real-time\n - Track system events\n - Receive notifications\n\n The scope parameter determines which events to watch:\n - Organization scope (default): Watch all organization-wide events including projects,\n   runners and environments. Task and service events are not included. Use by setting\n   organization=true or omitting the scope.\n - Envir"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

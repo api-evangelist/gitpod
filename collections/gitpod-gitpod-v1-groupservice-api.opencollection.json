@@ -1,0 +1,320 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.GroupService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.GroupService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreateGroup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/CreateGroup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new group within an organization.\n\n Use this method to:\n - Create teams for access control\n - Organize users by department or function\n - Set up role-based access groups\n\n ### Examples\n\n - Create a basic group:\n\n   Creates a group with name and description.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"Backend Team\"\n   description: \"Backend engineering team\"\n   ```\n\n ### Authorization\n\n Requires `org:admin` role on the organization."
+        },
+        {
+          "info": {
+            "name": "CreateMembership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/CreateMembership",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a membership for a user in a group.\n\n Use this method to:\n - Add users to groups\n - Grant group-based permissions to users\n\n ### Examples\n\n - Add a user to a group:\n\n   Creates a membership for a user in a group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   subject:\n     id: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n     principal: PRINCIPAL_USER\n   ```\n\n ### Authorization\n\n Requires `org:admin` permission on the organization or `group:admin` permission on the specific "
+        },
+        {
+          "info": {
+            "name": "CreateRoleAssignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/CreateRoleAssignment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a role assignment for a group on a resource.\n\n Use this method to:\n - Assign specific roles to groups on runners, projects, or environments\n - Grant group-based access to resources\n\n ### Examples\n\n - Assign admin role on a runner:\n\n   Grants the group admin access to a runner.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   resourceType: RESOURCE_TYPE_RUNNER\n   resourceId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   resourceRole: RESOURCE_ROLE_RUNNER_ADMIN\n   ```\n\n - Assi"
+        },
+        {
+          "info": {
+            "name": "DeleteGroup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/DeleteGroup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a group and removes all its resource assignments.\n\n When a group is deleted, all resource assignments revert to org-level scope.\n\n Use this method to:\n - Remove unused groups\n - Clean up after team reorganization\n\n ### Examples\n\n - Delete a group:\n\n   Permanently removes a group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `org:admin` role on the organization."
+        },
+        {
+          "info": {
+            "name": "DeleteMembership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/DeleteMembership",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a membership for a user in a group.\n\n Use this method to:\n - Remove users from groups\n - Revoke group-based permissions\n\n ### Examples\n\n - Remove a user from a group:\n\n   Deletes a membership by its ID.\n\n   ```yaml\n   membershipId: \"a1b2c3d4-5678-90ab-cdef-1234567890ab\"\n   ```\n\n ### Authorization\n\n Requires `org:admin` permission on the organization or `group:admin` permission on the specific group."
+        },
+        {
+          "info": {
+            "name": "DeleteRoleAssignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/DeleteRoleAssignment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a role assignment.\n\n Use this method to:\n - Remove group access to resources\n - Revoke role-based permissions\n\n ### Examples\n\n - Delete a role assignment:\n\n   Removes a role assignment by its ID.\n\n   ```yaml\n   assignmentId: \"a1b2c3d4-5678-90ab-cdef-1234567890ab\"\n   ```\n\n ### Authorization\n\n Requires admin role on the specific resource."
+        },
+        {
+          "info": {
+            "name": "GetGroup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/GetGroup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets information about a specific group by ID or name.\n\n Use this method to:\n - Retrieve group details and metadata\n - Check group configuration\n - View member count\n\n ### Examples\n\n - Get group by ID:\n\n   Retrieves information about a specific group by its unique ID.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n All organization members can view group information (transparency model)."
+        },
+        {
+          "info": {
+            "name": "GetMembership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/GetMembership",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a specific membership by group ID and subject.\n\n Use this method to:\n - Check if a user or service account is a member of a group\n - Verify group membership for access control\n\n ### Examples\n\n - Check user membership:\n\n   Checks if a user is a member of a specific group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   subject:\n     id: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n     principal: PRINCIPAL_USER\n   ```\n\n ### Authorization\n\n All organization members can check group"
+        },
+        {
+          "info": {
+            "name": "ListGroups",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/ListGroups",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists groups with optional pagination.\n\n Use this method to:\n - View all groups in an organization\n - Check group memberships\n - Monitor group configurations\n - Audit group access\n\n ### Examples\n\n - List all groups:\n\n   Shows all groups with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - List with custom page size:\n\n   Shows groups with specified page size.\n\n   ```yaml\n   pagination:\n     pageSize: 50\n     token: \"next-page-token-from-previous-response\"\n   ```\n\n ### Authoriz"
+        },
+        {
+          "info": {
+            "name": "ListMemberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/ListMemberships",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all memberships of a group.\n\n Use this method to:\n - View all members of a group\n - Audit group membership\n\n ### Examples\n\n - List group members:\n\n   Shows all members of a specific group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```\n\n ### Authorization\n\n All organization members can view group membership (transparency model)."
+        },
+        {
+          "info": {
+            "name": "ListRoleAssignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/ListRoleAssignments",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists role assignments for a group or resource.\n\n Use this method to:\n - View all role assignments for a group\n - Audit resource access\n - Check which groups have access to resources\n\n ### Examples\n\n - List role assignments for a group:\n\n   Shows all role assignments for a specific group.\n\n   ```yaml\n   filter:\n     groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```\n\n - List role assignments by resource type:\n\n   Shows all role assignments for runners.\n\n   ``"
+        },
+        {
+          "info": {
+            "name": "ShareResourceWithPrincipal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/ShareResourceWithPrincipal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Shares a resource directly with a principal (user or service account).\n\n Use this method to:\n - Grant a user or service account direct access to a runner, project, or other resource\n - Share resources without creating and managing groups manually\n\n ### Examples\n\n - Share a runner with a user:\n\n   Grants admin access to a runner for a specific user.\n\n   ```yaml\n   resourceType: RESOURCE_TYPE_RUNNER\n   resourceId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   principal: PRINCIPAL_USER\n   principalId: "
+        },
+        {
+          "info": {
+            "name": "UnshareResourceWithPrincipal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/UnshareResourceWithPrincipal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes direct access for a principal (user or service account) from a resource.\n\n Use this method to:\n - Revoke a principal's direct access to a resource\n - Remove sharing without affecting group-based access\n\n ### Examples\n\n - Remove user access from a runner:\n\n   Revokes a user's direct access to a runner.\n\n   ```yaml\n   resourceType: RESOURCE_TYPE_RUNNER\n   resourceId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   principal: PRINCIPAL_USER\n   principalId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n "
+        },
+        {
+          "info": {
+            "name": "UpdateGroup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.GroupService/UpdateGroup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates group information.\n\n Use this method to:\n - Rename a group\n - Update group description\n\n ### Examples\n\n - Update group name:\n\n   Changes the name of an existing group.\n\n   ```yaml\n   groupId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   name: \"Platform Team\"\n   description: \"Platform engineering team\"\n   ```\n\n ### Authorization\n\n Requires `org:admin` permission on the organization or `group:admin` permission on the specific group."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

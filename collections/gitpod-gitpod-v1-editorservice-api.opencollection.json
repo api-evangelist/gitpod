@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.EditorService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.EditorService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GetEditor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EditorService/GetEditor",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific editor.\n\n Use this method to:\n - View editor information\n - Get editor configuration\n\n ### Examples\n\n - Get editor details:\n\n   Retrieves information about a specific editor.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListEditors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EditorService/ListEditors",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all available code editors, optionally filtered to those allowed in an organization.\n\n Use this method to:\n - View supported editors\n - Get editor capabilities\n - Browse editor options\n - Check editor availability\n\n ### Examples\n\n - List editors:\n\n   Shows all available editors with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - List editors available to the organization:\n\n   Shows all available editors that are allowed by the policies enforced in the organization with"
+        },
+        {
+          "info": {
+            "name": "ResolveEditorURL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EditorService/ResolveEditorURL",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Resolves the URL for accessing an editor in a specific environment.\n\n Use this method to:\n - Get editor access URLs\n - Launch editors for environments\n - Set up editor connections\n - Configure editor access\n\n ### Examples\n\n - Resolve editor URL:\n\n   Gets the URL for accessing an editor in an environment.\n\n   ```yaml\n   editorId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,745 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.BillingService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.BillingService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CancelSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/CancelSubscription",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancels an existing subscription.\n\n Use this method to:\n - Cancel active subscription\n - Stop recurring billing\n - Maintain access until end of billing period\n\n ### Examples\n\n - Cancel subscription:\n\n   Cancels the specified subscription.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   subscriptionType: SUBSCRIPTION_TYPE_CORE\n   ```"
+        },
+        {
+          "info": {
+            "name": "ClearTopupFailure",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/ClearTopupFailure",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Clears a topup payment failure for an organization.\n\n Use this method to:\n - Acknowledge and clear a failed topup payment\n - Allow the UI to return to normal state after user acknowledges the failure\n\n Unlike subscription failures which auto-resolve when payment succeeds,\n topup failures need explicit user acknowledgment because the commit was\n voided by Metronome and the user needs to retry with a working payment method."
+        },
+        {
+          "info": {
+            "name": "CompleteBillingSetup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/CompleteBillingSetup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Completes the billing setup process after Stripe payment workflow completion.\n\n Use this method to:\n - Verify Stripe setup intent completion\n - Create Metronome contract for the organization\n - Grant free trial credits\n - Finalize billing configuration\n\n ### Examples\n\n - Complete billing setup:\n\n   Finalizes billing after successful Stripe payment setup.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   setupIntentId: \"seti_1234567890abcdef\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CorrectUsageEvents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/CorrectUsageEvents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Corrects previously-synced usage events by cancelling the originals and\n creating compensating negative-value events that flow through the normal\n sync pipeline to Stripe. Internal admin operation."
+        },
+        {
+          "info": {
+            "name": "CreateCardVerification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/CreateCardVerification",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a card verification entry for an account, allowing them to skip credit card verification.\n\n Use this method to:\n - Grant Ona for Open Source program participants immediate access\n - Mark pre-vetted accounts as credit card verified\n\n Requires the 'create_card_verification' account permission.\n\n ### Examples\n\n - Create card verification for open source maintainer:\n\n   ```yaml\n   email: \"maintainer@example.org\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateCoupon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/CreateCoupon",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new coupon for support staff to distribute to customers.\n\n Use this method to:\n - Create promotional coupons for marketing campaigns\n - Generate support coupons for customer service\n - Set up trial credit coupons for new users"
+        },
+        {
+          "info": {
+            "name": "CreateSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/CreateSubscription",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new subscription for an organization.\n\n Use this method to:\n - Create a new subscription with specified type\n - Add subscription to existing Metronome contract\n - Create new contract if none exists"
+        },
+        {
+          "info": {
+            "name": "CreateTeamCreditAllocation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/CreateTeamCreditAllocation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a credit allocation (budget) for a team.\n\n Allocations are soft budgets for reporting and alerting — not enforced at usage time.\n Over-allocation (sum of team budgets > org grant) is allowed.\n\n ### Examples\n\n - Create a team allocation:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   creditBudget: \"500\"\n   ```\n\n ### Authorization\n\n Requires `billing:create` permission on the organization."
+        },
+        {
+          "info": {
+            "name": "DeleteTeamCreditAllocation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/DeleteTeamCreditAllocation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the credit allocation for a team.\n\n ### Examples\n\n - Delete a team's allocation:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `billing:delete` permission on the organization."
+        },
+        {
+          "info": {
+            "name": "GetAutoTopupSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetAutoTopupSettings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves auto-topup settings for an organization."
+        },
+        {
+          "info": {
+            "name": "GetBillingInfo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetBillingInfo",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves billing information including credit balance for an organization.\n\n Use this method to:\n - Check available credits for the organization\n - Monitor credit usage and remaining balance\n - Display billing status in the dashboard\n - Implement usage-based alerts\n\n ### Examples\n\n - Get billing info:\n\n   Retrieves current credit balance and usage information.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetBillingRecord",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetBillingRecord",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific billing record."
+        },
+        {
+          "info": {
+            "name": "GetCoupon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetCoupon",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a specific coupon by its code.\n\n Use this method to:\n - Validate coupon codes during checkout\n - Display coupon details to users\n - Check coupon availability and expiration\n\n ### Examples\n\n - Get coupon by code:\n\n   Retrieves coupon details for validation.\n\n   ```yaml\n   couponCode: \"WELCOME2024\"\n   organizationId: \"123e4567-e89b-12d3-a456-426614174000\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetCreditConsumptionTimeSeries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetCreditConsumptionTimeSeries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns daily credit consumption (OCU) time series for an organization,\n broken down by metric category."
+        },
+        {
+          "info": {
+            "name": "GetCreditUsageExport",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetCreditUsageExport",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a signed download URL for a CSV export of per-user credit usage.\n The URL points to an HTTP endpoint that streams gzip-compressed CSV."
+        },
+        {
+          "info": {
+            "name": "GetCreditUsageReport",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetCreditUsageReport",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a daily credit usage report for an enterprise organization,\n broken down by usage type and by user."
+        },
+        {
+          "info": {
+            "name": "GetCumulativeCreditUsage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetCumulativeCreditUsage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns cumulative credit usage for an organization and its teams.\n\n Use this method to:\n - Get the total cumulative credit consumption as of a point in time\n - Get per-team cumulative usage with credit allocation (budget) comparison\n - Display team credit summaries on the usage page and team detail page\n\n ### Examples\n\n - Get current cumulative usage:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```\n\n - Get cumulative usage as of a specific date:\n\n   ```yaml\n   organ"
+        },
+        {
+          "info": {
+            "name": "GetEnterpriseBillingInfo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetEnterpriseBillingInfo",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns enterprise billing info for an organization."
+        },
+        {
+          "info": {
+            "name": "GetStripePortalUrl",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetStripePortalUrl",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the Stripe Customer Portal URL for an organization.\n\n Use this method to:\n - Get the Stripe Customer Portal URL for billing management\n - Allow customers to manage their payment methods and billing details\n - Provide access to billing history and invoices\n\n ### Examples\n\n - Get Stripe portal URL:\n\n   Retrieves the portal URL for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetStripePublishableKey",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetStripePublishableKey",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the Stripe publishable key for an organization.\n\n Use this method to:\n - Get the appropriate Stripe publishable key for frontend payment forms\n - Support different billing realms (production/sandbox)\n - Ensure proper isolation between organizations\n\n ### Examples\n\n - Get publishable key:\n\n   Retrieves the Stripe publishable key for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetTeamCreditAllocation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GetTeamCreditAllocation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the credit allocation for a team.\n\n ### Examples\n\n - Get a team's allocation:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `billing:read` permission on the organization."
+        },
+        {
+          "info": {
+            "name": "GrantCredits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/GrantCredits",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Grants additional credits to an organization.\n\n Use this method to:\n - Grant credits to existing customers\n - Add promotional credits\n - Provide customer service credits\n\n ### Examples\n\n - Grant credits:\n\n   Grants 80 credits to the organization for one year.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   creditsAmount: 80.0\n   ```"
+        },
+        {
+          "info": {
+            "name": "InsertUsageEvents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/InsertUsageEvents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Inserts usage events from an external source (e.g., backfilling missing\n LLM token usage from a provider console export). Internal admin operation."
+        },
+        {
+          "info": {
+            "name": "ListCoupons",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/ListCoupons",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists existing coupons with filtering and pagination support.\n\n Use this method to:\n - View all created coupons\n - Filter coupons by status or type\n - Monitor coupon usage and expiration"
+        },
+        {
+          "info": {
+            "name": "ListSubscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/ListSubscriptions",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists current subscriptions for an organization.\n\n Use this method to:\n - View all active subscriptions\n - Check subscription status and details\n - Monitor subscription lifecycle\n\n ### Examples\n\n - List subscriptions:\n\n   Retrieves all subscriptions for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ReconcileBilling",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/ReconcileBilling",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reconciles billing state for an organization.\n\n Use this method to:\n - Ensure billing state is up-to-date with external providers (Stripe, Metronome)\n - Sync organization tier based on active contracts\n - Update credit status and payment failure state\n\n Call this when the user navigates to the billing page to ensure\n they see the most current billing information.\n\n ### Examples\n\n - Reconcile billing:\n\n   Triggers billing reconciliation for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f"
+        },
+        {
+          "info": {
+            "name": "RequestRecoveryCredit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/RequestRecoveryCredit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Requests a one-time recovery credit grant for an organization that is out of credits.\n Grants a small amount of free credits so the user can start an environment and push\n uncommitted work. Can only be used once per organization."
+        },
+        {
+          "info": {
+            "name": "SetBillingAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/SetBillingAddress",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets or updates the billing address for an organization.\n\n Use this method to:\n - Set billing address for tax calculation and compliance\n - Update existing billing address information\n - Support international billing requirements\n\n ### Examples\n\n - Set billing address:\n\n   Sets a complete billing address for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"John Doe\"\n   address:\n     line1: \"123 Main St\"\n     line2: \"Suite 100\"\n     city: \"San Fran"
+        },
+        {
+          "info": {
+            "name": "SetBillingRealm",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/SetBillingRealm",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets the billing realm for an organization.\n\n Use this method to:\n - Change organization's billing realm between sandbox and production\n - Configure billing environment for the organization\n - Requires Account permissions to perform the operation\n\n ### Examples\n\n - Set billing realm:\n\n   Changes organization billing realm to production.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   realm: BILLING_REALM_PRODUCTION\n   ```"
+        },
+        {
+          "info": {
+            "name": "SetOrganizationCreditGrant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/SetOrganizationCreditGrant",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets the contracted credit grant for an organization.\n\n This is an admin-only operation for setting the total credit budget\n allocated to an enterprise organization under their contract.\n\n ### Examples\n\n - Set credit grant:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   creditGrant: \"10000\"\n   ```\n\n ### Authorization\n\n Requires `change_billing_realm` account permission."
+        },
+        {
+          "info": {
+            "name": "SetTaxID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/SetTaxID",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets or updates the tax ID for an organization.\n\n Use this method to:\n - Set tax ID for billing purposes\n - Update existing tax ID information\n - Support various tax ID types (VAT, GST, etc.)\n\n ### Examples\n\n - Set EU VAT ID:\n\n   Sets a VAT ID for an EU organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   taxIdType: \"eu_vat\"\n   taxIdValue: \"DE123456789\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "SetupBilling",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/SetupBilling",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "SetupBilling"
+        },
+        {
+          "info": {
+            "name": "SetupEnterpriseBilling",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/SetupEnterpriseBilling",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets up enterprise billing for an organization.\n\n Creates a Stripe customer, subscribes to the enterprise pricing plan,\n and updates the billing realm. Idempotent — safe to retry on failure.\n\n Requires the 'change_billing_realm' account permission.\n\n ### Examples\n\n - Setup enterprise billing (production):\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   email: \"billing@example.com\"\n   ```\n\n - Setup enterprise billing (sandbox):\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c6"
+        },
+        {
+          "info": {
+            "name": "UpdateAutoTopupSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/UpdateAutoTopupSettings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates auto-topup settings for an organization.\n\n Use this method to:\n - Enable or disable automatic credit top-ups\n - Configure the top-up amount and threshold\n - Set a daily safety cap on automatic top-ups\n\n Requires Core tier and the auto-topup feature flag."
+        },
+        {
+          "info": {
+            "name": "UpdateBillingRecord",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/UpdateBillingRecord",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a billing record"
+        },
+        {
+          "info": {
+            "name": "UpdateSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/UpdateSubscription",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing subscription's amount mid billing period, without cancellation.\n\n Use this method to:\n - Change the subscription amount without cancelling and re-subscribing\n - Switch between billing plans mid billing cycle"
+        },
+        {
+          "info": {
+            "name": "UpdateTeamCreditAllocation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.BillingService/UpdateTeamCreditAllocation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the credit allocation for a team.\n\n ### Examples\n\n - Update a team's budget:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   creditBudget: \"750\"\n   ```\n\n ### Authorization\n\n Requires `billing:update` permission on the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

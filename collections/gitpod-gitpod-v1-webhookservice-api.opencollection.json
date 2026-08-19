@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.WebhookService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.WebhookService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreateWebhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WebhookService/CreateWebhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new webhook for receiving SCM events.\n\n Use this method to:\n - Set up webhooks for repository or organization events\n - Configure webhook scopes and provider\n\n ### Examples\n\n - Create repository webhook with multiple scopes:\n\n   Creates a webhook scoped to specific repositories.\n\n   ```yaml\n   name: \"My Repo Webhook\"\n   type: WEBHOOK_TYPE_SCM_REPOSITORY\n   scopes:\n     - host: \"github.com\"\n       owner: \"gitpod-io\"\n       name: \"gitpod\"\n     - host: \"github.com\"\n       owner: \"gitpod-i"
+        },
+        {
+          "info": {
+            "name": "DeleteWebhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WebhookService/DeleteWebhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a webhook permanently.\n\n Use this method to:\n - Remove unused webhooks\n - Clean up webhook configurations\n\n ### Examples\n\n - Delete webhook:\n\n   Permanently removes a webhook.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetWebhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WebhookService/GetWebhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific webhook.\n\n Use this method to:\n - View webhook configuration\n - Check webhook URL\n - See bound workflow count\n\n ### Examples\n\n - Get webhook details:\n\n   Retrieves information about a specific webhook.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetWebhookSecret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WebhookService/GetWebhookSecret",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the webhook secret for signature validation.\n\n This operation is audited for security purposes.\n\n Use this method to:\n - Retrieve webhook secret for SCM configuration\n - Verify webhook signatures\n\n ### Examples\n\n - Get webhook secret:\n\n   Retrieves the webhook secret.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListWebhookWorkflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WebhookService/ListWebhookWorkflows",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists workflows bound to a webhook.\n\n Use this method to:\n - View all workflows triggered by a webhook\n - Check workflow bindings\n\n ### Examples\n\n - List webhook workflows:\n\n   Shows all workflows bound to a webhook.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListWebhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WebhookService/ListWebhooks",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists webhooks with optional filtering.\n\n Use this method to:\n - View all webhooks in an organization\n - Filter webhooks by type or provider\n\n ### Examples\n\n - List all webhooks:\n\n   Shows all webhooks with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "RotateWebhookSecret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WebhookService/RotateWebhookSecret",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Rotates the webhook secret.\n\n Use this method to:\n - Generate a new webhook secret\n - Invalidate the old webhook secret\n\n ### Examples\n\n - Rotate webhook secret:\n\n   Generates a new webhook secret.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateWebhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WebhookService/UpdateWebhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a webhook's configuration.\n\n Use this method to:\n - Change webhook name or description\n - Change webhook scopes (the target repositories or organization)\n\n Note: The webhook type and provider cannot be changed after creation.\n\n ### Examples\n\n - Update webhook name:\n\n   Changes the webhook's display name.\n\n   ```yaml\n   webhookId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"Updated Webhook Name\"\n   ```\n\n - Update webhook scopes:\n\n   Changes the webhook's target repositories.\n\n   ```y"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

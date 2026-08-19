@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.IdentityService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.IdentityService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ExchangeToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IdentityService/ExchangeToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Exchanges an exchange token for a new access token.\n\n Use this method to:\n - Convert exchange tokens to access tokens\n - Obtain new access credentials\n - Complete token exchange flows\n\n ### Examples\n\n - Exchange token:\n\n   Trades an exchange token for an access token.\n\n   ```yaml\n   exchangeToken: \"exchange-token-value\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetAuthenticatedIdentity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IdentityService/GetAuthenticatedIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves information about the currently authenticated identity.\n\n Use this method to:\n - Get current user information\n - Check authentication status\n - Retrieve organization context\n - Validate authentication principal\n\n ### Examples\n\n - Get current identity:\n\n   Retrieves details about the authenticated user.\n\n   ```yaml\n   {}\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetIDToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IdentityService/GetIDToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets an ID token for authenticating with other services.\n\n Use this method to:\n - Obtain authentication tokens for service-to-service calls\n - Access protected resources\n - Generate scoped access tokens\n\n ### Examples\n\n - Get token for single service:\n\n   Retrieves a token for authenticating with one service.\n\n   ```yaml\n   audience:\n     - \"https://api.gitpod.io\"\n   ```\n\n - Get token for multiple services:\n\n   Retrieves a token valid for multiple services.\n\n   ```yaml\n   audience:\n     - \"https"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

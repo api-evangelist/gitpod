@@ -1,0 +1,251 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.PrebuildService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.PrebuildService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CancelPrebuild",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/CancelPrebuild",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancels a running prebuild.\n\n Use this method to:\n - Stop prebuilds that are no longer needed\n - Free up resources for other operations\n\n ### Examples\n\n - Cancel prebuild:\n\n   Stops a running prebuild and cleans up resources.\n\n   ```yaml\n   prebuildId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreatePrebuild",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/CreatePrebuild",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a prebuild for a project.\n\n Use this method to:\n - Create on-demand prebuilds for faster environment startup\n - Trigger prebuilds after repository changes\n - Generate prebuilds for specific environment classes\n\n The prebuild process creates an environment, runs the devcontainer prebuild lifecycle,\n and creates a snapshot for future environment provisioning.\n\n ### Examples\n\n - Create basic prebuild:\n\n   Creates a prebuild for a project using default settings.\n\n   ```yaml\n   projectId: \"b0"
+        },
+        {
+          "info": {
+            "name": "CreatePrebuildLogsToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/CreatePrebuildLogsToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a logs access token for a prebuild.\n\n Use this method to:\n - Stream logs from a running prebuild\n - Access archived logs from completed prebuilds\n\n Generated tokens are valid for one hour.\n\n ### Examples\n\n - Create prebuild logs token:\n\n   Generates a token for accessing prebuild logs.\n\n   ```yaml\n   prebuildId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateWarmPool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/CreateWarmPool",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a warm pool for a project and environment class.\n\n A warm pool maintains pre-created environment instances from a prebuild snapshot\n so that new environments can start near-instantly.\n\n Only one warm pool is allowed per <project, environment_class> pair.\n The environment class must have prebuilds enabled on the project.\n\n The pool's snapshot is managed automatically: when a new prebuild completes\n for the same project and environment class, the pool's snapshot is updated\n and the runner "
+        },
+        {
+          "info": {
+            "name": "DeletePrebuild",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/DeletePrebuild",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a prebuild.\n\n Prebuilds are automatically deleted after some time. Use this method to\n manually delete a prebuild before automatic cleanup, for example to remove\n a prebuild that should no longer be used.\n\n Deletion is processed asynchronously. The prebuild will be marked for deletion\n and removed from the system in the background.\n\n ### Examples\n\n - Delete prebuild:\n\n   Marks a prebuild for deletion and removes it from the system.\n\n   ```yaml\n   prebuildId: \"07e03a28-65a5-4d98-b532-8ea6"
+        },
+        {
+          "info": {
+            "name": "DeleteWarmPool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/DeleteWarmPool",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a warm pool.\n\n Deletion is processed asynchronously. The pool is marked for deletion\n and the runner drains instances in the background.\n\n Warm pools are also automatically deleted when prebuilds are disabled\n on the project or the environment class is removed from the prebuild\n configuration.\n\n ### Examples\n\n - Delete warm pool:\n\n   ```yaml\n   warmPoolId: \"a1b2c3d4-5678-9abc-def0-1234567890ab\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetPrebuild",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/GetPrebuild",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific prebuild.\n\n Use this method to:\n - Check prebuild status and progress\n - Access prebuild logs for debugging\n\n ### Examples\n\n - Get prebuild details:\n\n   Retrieves comprehensive information about a prebuild.\n\n   ```yaml\n   prebuildId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetWarmPool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/GetWarmPool",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific warm pool.\n\n Use this method to:\n - Check warm pool status and phase\n - View the current snapshot being warmed\n - Monitor pool health\n\n ### Examples\n\n - Get warm pool:\n\n   ```yaml\n   warmPoolId: \"a1b2c3d4-5678-9abc-def0-1234567890ab\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListPrebuilds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/ListPrebuilds",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "ListPrebuilds"
+        },
+        {
+          "info": {
+            "name": "ListWarmPools",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/ListWarmPools",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists warm pools with optional filtering.\n\n Use this method to:\n - View all warm pools for a project\n - Monitor warm pool status across environment classes\n\n ### Examples\n\n - List warm pools for a project:\n\n   ```yaml\n   filter:\n     projectIds: [\"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"]\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateWarmPool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.PrebuildService/UpdateWarmPool",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a warm pool's configuration.\n\n Use this method to change the desired pool size.\n\n ### Examples\n\n - Update pool size:\n\n   ```yaml\n   warmPoolId: \"a1b2c3d4-5678-9abc-def0-1234567890ab\"\n   desiredSize: 5\n   ```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,251 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.IntegrationService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.IntegrationService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreateIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/CreateIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new integration instance within an organization.\n\n Use this method to:\n - Instantiate an integration for an organization\n - Configure integration-specific settings\n - Enable integration capabilities"
+        },
+        {
+          "info": {
+            "name": "CreateIntegrationDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/CreateIntegrationDefinition",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new integration definition.\n Requires service account authentication.\n\n Use this method to:\n - Add new integration types dynamically\n - Configure integration capabilities\n - Set up authentication requirements"
+        },
+        {
+          "info": {
+            "name": "DeleteIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/DeleteIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an integration instance.\n\n Use this method to:\n - Remove unused integrations\n - Clean up configurations\n - Revoke integration access"
+        },
+        {
+          "info": {
+            "name": "DeleteIntegrationDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/DeleteIntegrationDefinition",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an integration definition.\n Requires service account authentication.\n Fails if any integrations depend on this definition.\n\n Use this method to:\n - Remove unused integration types\n - Clean up deprecated integrations"
+        },
+        {
+          "info": {
+            "name": "GetIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/GetIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific integration instance.\n\n Use this method to:\n - View integration configuration\n - Check integration status\n - Verify enabled capabilities"
+        },
+        {
+          "info": {
+            "name": "GetIntegrationDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/GetIntegrationDefinition",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific integration definition.\n\n Use this method to:\n - View integration definition configuration\n - Check supported capabilities\n - Verify authentication requirements"
+        },
+        {
+          "info": {
+            "name": "ListIntegrationDefinitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/ListIntegrationDefinitions",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists available integration definitions.\n\n Use this method to:\n - View all available integrations\n - Check integration capabilities\n - Discover supported services"
+        },
+        {
+          "info": {
+            "name": "ListIntegrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/ListIntegrations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists integration instances for the organization.\n\n Use this method to:\n - View all integrations for an organization\n - Monitor integration configurations"
+        },
+        {
+          "info": {
+            "name": "UpdateIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/UpdateIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing integration instance.\n\n Use this method to:\n - Modify integration settings\n - Enable/disable capabilities\n - Change integration status"
+        },
+        {
+          "info": {
+            "name": "UpdateIntegrationDefinition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/UpdateIntegrationDefinition",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing integration definition.\n Requires service account authentication.\n\n Use this method to:\n - Modify integration capabilities\n - Update authentication configuration\n - Change integration metadata"
+        },
+        {
+          "info": {
+            "name": "ValidateIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.IntegrationService/ValidateIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Validates an integration's configuration and connectivity.\n\n Runs a set of checks (e.g. app token validity) and returns results for each.\n All checks are always returned; failing checks include a message and an optional action_hint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

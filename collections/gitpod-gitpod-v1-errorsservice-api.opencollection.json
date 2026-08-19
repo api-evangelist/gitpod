@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.ErrorsService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.ErrorsService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReportErrors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ErrorsService/ReportErrors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "ReportErrors allows clients to report batches of errors that will be sent to error reporting systems.\n The structure is fully compatible with Sentry's event payload format.\n\n Use this method to:\n - Report client-side errors and exceptions\n - Track application crashes and panics\n - Send error context and metadata for debugging\n\n ### Examples\n\n - Report a JavaScript error with Sentry-compatible structure:\n   The service accepts events with comprehensive error information\n   including stack traces,"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

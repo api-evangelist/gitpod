@@ -1,0 +1,396 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.EnvironmentAutomationService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.EnvironmentAutomationService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreateService",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/CreateService",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new automation service for an environment.\n\n Use this method to:\n - Set up long-running services\n - Configure service triggers\n - Define service dependencies\n - Specify runtime environments\n\n ### Examples\n\n - Create basic service:\n\n   Creates a simple service with start command.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   metadata:\n     reference: \"web-server\"\n     name: \"Web Server\"\n     description: \"Runs the development web server\"\n     triggeredBy:\n     "
+        },
+        {
+          "info": {
+            "name": "CreateTask",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/CreateTask",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new automation task.\n\n Use this method to:\n - Define one-off or scheduled tasks\n - Set up build or test automation\n - Configure task dependencies\n - Specify execution environments\n\n ### Examples\n\n - Create basic task:\n\n   Creates a simple build task.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   metadata:\n     reference: \"build\"\n     name: \"Build Project\"\n     description: \"Builds the project artifacts\"\n     triggeredBy:\n       - postEnvironmentStart: true\n   "
+        },
+        {
+          "info": {
+            "name": "DeleteService",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/DeleteService",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an automation service. This call does not block until the service is deleted.\n If the service is not stopped it will be stopped before deletion.\n\n Use this method to:\n - Remove unused services\n - Clean up service configurations\n - Stop and delete services\n\n ### Examples\n\n - Delete service:\n\n   Removes a service after stopping it.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   force: false\n   ```\n\n - Force delete:\n\n   Immediately removes a service.\n\n   ```yaml\n   id: \"d2c94c"
+        },
+        {
+          "info": {
+            "name": "DeleteTask",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/DeleteTask",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an automation task.\n\n Use this method to:\n - Remove unused tasks\n - Clean up task configurations\n - Delete obsolete automations\n\n ### Examples\n\n - Delete task:\n\n   Removes a task and its configuration.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetService",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/GetService",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific automation service.\n\n Use this method to:\n - Check service status\n - View service configuration\n - Monitor service health\n - Retrieve service metadata\n\n ### Examples\n\n - Get service details:\n\n   Retrieves information about a specific service.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetTask",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/GetTask",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific automation task.\n\n Use this method to:\n - Check task configuration\n - View task dependencies\n - Monitor task status\n\n ### Examples\n\n - Get task details:\n\n   Retrieves information about a specific task.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetTaskExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/GetTaskExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific task execution.\n\n Use this method to:\n - Monitor execution progress\n - View execution logs\n - Check execution status\n - Debug failed executions\n\n ### Examples\n\n - Get execution details:\n\n   Retrieves information about a specific task execution.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListServices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/ListServices",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists automation services with optional filtering.\n\n Use this method to:\n - View all services in an environment\n - Filter services by reference\n - Monitor service status\n\n ### Examples\n\n - List environment services:\n\n   Shows all services for an environment.\n\n   ```yaml\n   filter:\n     environmentIds: [\"07e03a28-65a5-4d98-b532-8ea67b188048\"]\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by reference:\n\n   Lists services matching specific references.\n\n   ```yaml\n   filter:\n     references: [\""
+        },
+        {
+          "info": {
+            "name": "ListTaskExecutions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/ListTaskExecutions",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists executions of automation tasks.\n\n Use this method to:\n - View task execution history\n - Monitor running tasks\n - Track task completion status\n\n ### Examples\n\n - List all executions:\n\n   Shows execution history for all tasks.\n\n   ```yaml\n   filter:\n     environmentIds: [\"07e03a28-65a5-4d98-b532-8ea67b188048\"]\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by phase:\n\n   Lists executions in specific phases.\n\n   ```yaml\n   filter:\n     phases: [\"TASK_EXECUTION_PHASE_RUNNING\", \"TASK_EXECUTI"
+        },
+        {
+          "info": {
+            "name": "ListTasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/ListTasks",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists automation tasks with optional filtering.\n\n Use this method to:\n - View all tasks in an environment\n - Filter tasks by reference\n - Monitor task status\n\n ### Examples\n\n - List environment tasks:\n\n   Shows all tasks for an environment.\n\n   ```yaml\n   filter:\n     environmentIds: [\"07e03a28-65a5-4d98-b532-8ea67b188048\"]\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by reference:\n\n   Lists tasks matching specific references.\n\n   ```yaml\n   filter:\n     references: [\"build\", \"test\"]\n   pa"
+        },
+        {
+          "info": {
+            "name": "StartService",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/StartService",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Starts an automation service. This call does not block until the service is started.\n This call will not error if the service is already running or has been started.\n\n Use this method to:\n - Start stopped services\n - Resume service operations\n - Trigger service initialization\n\n ### Examples\n\n - Start service:\n\n   Starts a previously stopped service.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "StartTask",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/StartTask",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Starts a task by creating a new task execution.\n This call does not block until the task is started; the task will be started asynchronously.\n\n Use this method to:\n - Trigger task execution\n - Run one-off tasks\n - Start scheduled tasks immediately\n\n ### Examples\n\n - Start task:\n\n   Creates a new execution of a task.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "StopService",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/StopService",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Stops an automation service. This call does not block until the service is stopped.\n This call will not error if the service is already stopped or has been stopped.\n\n Use this method to:\n - Pause service operations\n - Gracefully stop services\n - Prepare for updates\n\n ### Examples\n\n - Stop service:\n\n   Gracefully stops a running service.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "StopTaskExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/StopTaskExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Stops a running task execution.\n\n Use this method to:\n - Cancel long-running tasks\n - Stop failed executions\n - Interrupt task processing\n\n ### Examples\n\n - Stop execution:\n\n   Stops a running task execution.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateService",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/UpdateService",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an automation service configuration.\n\n Use this method to:\n - Modify service commands\n - Update triggers\n - Change runtime settings\n - Adjust dependencies\n\n ### Examples\n\n - Update commands:\n\n   Changes service start and ready commands.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   spec:\n     commands:\n       start: \"npm run start:dev\"\n       ready: \"curl -s http://localhost:8080\"\n   ```\n\n - Update triggers:\n\n   Modifies when the service starts.\n\n   ```yaml\n   id: \"d2c94c2"
+        },
+        {
+          "info": {
+            "name": "UpdateTask",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/UpdateTask",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an automation task configuration.\n\n Use this method to:\n - Modify task commands\n - Update task triggers\n - Change dependencies\n - Adjust execution settings\n\n ### Examples\n\n - Update command:\n\n   Changes the task's command.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   spec:\n     command: \"npm run test:coverage\"\n   ```\n\n - Update triggers:\n\n   Modifies when the task runs.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   metadata:\n     triggeredBy:\n       trigger"
+        },
+        {
+          "info": {
+            "name": "UpdateTaskExecutionStatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/UpdateTaskExecutionStatus",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the status of a task execution.\n Only the environment executing a task execution is expected to call this function.\n\n Use this method to:\n - Report execution progress\n - Update step status\n - Set failure messages\n - Provide log URLs\n\n ### Examples\n\n - Update execution status:\n\n   Updates status with step information.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   steps:\n     - id: \"step-1\"\n       phase: TASK_EXECUTION_PHASE_SUCCEEDED\n   logUrl: \"https://logs.gitpod.io/task-"
+        },
+        {
+          "info": {
+            "name": "UpsertAutomationsFile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.EnvironmentAutomationService/UpsertAutomationsFile",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upserts the automations file for the given environment.\n\n Use this method to:\n - Configure environment automations\n - Update automation settings\n - Manage automation files\n\n ### Examples\n\n - Update automations file:\n\n   Updates or creates the automations configuration.\n\n   ```yaml\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   automationsFile:\n     services:\n       web-server:\n         name: \"Web Server\"\n         description: \"Development web server\"\n         commands:\n           st"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

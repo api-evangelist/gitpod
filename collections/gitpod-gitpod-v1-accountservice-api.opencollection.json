@@ -1,0 +1,244 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.AccountService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "BlockAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/BlockAccount",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Blocks an account, preventing all API access.\n\n Use this method to:\n - Revoke access for policy violations\n - Handle abuse cases\n - Enforce compliance requirements\n\n When an account is blocked:\n - All API requests return 403 PERMISSION_DENIED\n - All running environments are stopped\n - All active subscriptions are cancelled\n\n Requires the `block_account` permission.\n\n ### Examples\n\n - Block account for policy violation:\n\n   ```yaml\n   accountId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   reason: \""
+        },
+        {
+          "info": {
+            "name": "CreateMagicLink",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/CreateMagicLink",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "CreateMagicLink"
+        },
+        {
+          "info": {
+            "name": "DeleteAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/DeleteAccount",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an account permanently.\n\n Use this method to:\n - Remove unused accounts\n - Clean up test accounts\n - Complete account deletion requests\n\n The account must not be an active member of any organization.\n\n ### Examples\n\n - Delete account:\n\n   Permanently removes an account.\n\n   ```yaml\n   accountId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/GetAccount",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets information about the currently authenticated account.\n\n Use this method to:\n - Retrieve account profile information\n - Check organization memberships\n - View account settings\n - Get joinable organizations\n\n ### Examples\n\n - Get account details:\n\n   Retrieves information about the authenticated account.\n\n   ```yaml\n   {}\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetChatIdentityToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/GetChatIdentityToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the chat identity token for the currently authenticated account.\n\n Use this method to:\n - Obtain a verification hash for in-app chat identity verification\n - Secure chat sessions against impersonation\n\n The returned hash is an HMAC-SHA256 signature of the account's email,\n used by the chat widget to verify user identity.\n\n ### Examples\n\n - Get chat identity token:\n\n   Retrieves the identity verification hash for the authenticated account.\n\n   ```yaml\n   {}\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetSSOLoginURL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/GetSSOLoginURL",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the SSO login URL for a specific email domain.\n\n Use this method to:\n - Initiate SSO authentication\n - Get organization-specific login URLs\n - Handle SSO redirects\n\n ### Examples\n\n - Get login URL:\n\n   Retrieves SSO URL for email domain.\n\n   ```yaml\n   email: \"user@company.com\"\n   ```\n\n - Get URL with return path:\n\n   Gets SSO URL with specific return location.\n\n   ```yaml\n   email: \"user@company.com\"\n   returnTo: \"https://gitpod.io/workspaces\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListJoinableOrganizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/ListJoinableOrganizations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists organizations that the currently authenticated account can join.\n\n Use this method to:\n - Discover organizations associated with the account's email domain.\n - Allow users to join existing organizations.\n - Display potential organizations during onboarding.\n\n ### Examples\n\n - List joinable organizations:\n\n   Retrieves a list of organizations the account can join.\n\n   ```yaml\n   {}\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListLoginProviders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/ListLoginProviders",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists available login providers with optional filtering.\n\n Use this method to:\n - View supported authentication methods\n - Get provider-specific login URLs\n - Filter providers by invite\n\n ### Examples\n\n - List all providers:\n\n   Shows all available login providers.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - List for specific invite:\n\n   Shows providers available for an invite.\n\n   ```yaml\n   filter:\n     inviteId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: "
+        },
+        {
+          "info": {
+            "name": "ListSSOLogins",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/ListSSOLogins",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "ListSSOLogins"
+        },
+        {
+          "info": {
+            "name": "UnblockAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AccountService/UnblockAccount",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Unblocks a previously blocked account, restoring API access.\n\n Use this method to:\n - Restore access after resolving policy violations\n - Reinstate accounts after review\n\n Note: Unblocking does NOT restore:\n - Stopped environments (must be restarted manually)\n - Cancelled subscriptions (must be re-subscribed)\n - Deleted resources\n\n Requires the `block_account` permission.\n\n ### Examples\n\n - Unblock account:\n\n   ```yaml\n   accountId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

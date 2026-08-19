@@ -1,0 +1,339 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.ProjectService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.ProjectService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreateProject",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/CreateProject",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new project with specified configuration.\n\n Use this method to:\n - Set up development projects\n - Configure project environments\n - Define project settings\n - Initialize project content\n\n ### Examples\n\n - Create basic project:\n\n   Creates a project with minimal configuration.\n\n   ```yaml\n   name: \"Web Application\"\n   initializer:\n     specs:\n       - git:\n           remoteUri: \"https://github.com/org/repo\"\n   ```\n\n - Create project with devcontainer:\n\n   Creates a project with custom d"
+        },
+        {
+          "info": {
+            "name": "CreateProjectFromEnvironment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/CreateProjectFromEnvironment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new project using an existing environment as a template.\n\n Use this method to:\n - Clone environment configurations\n - Create projects from templates\n - Share environment setups\n\n ### Examples\n\n - Create from environment:\n\n   Creates a project based on existing environment.\n\n   ```yaml\n   name: \"Frontend Project\"\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateProjectPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/CreateProjectPolicy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new policy for a project.\n\n Use this method to:\n - Set up access controls\n - Define group permissions\n - Configure role-based access\n\n ### Examples\n\n - Create admin policy:\n\n   Grants admin access to a group.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: PROJECT_ROLE_ADMIN\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateProjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/CreateProjects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates multiple projects in a single request.\n\n Use this method to:\n - Onboard multiple repositories at once\n - Import a batch of projects during initial setup\n\n Returns successfully created projects and details about any failures.\n Each project in the request is processed independently — partial success\n is possible.\n\n ### Examples\n\n - Create multiple projects:\n\n   Creates several projects in one request.\n\n   ```yaml\n   projects:\n     - name: \"Frontend\"\n       initializer:\n         specs:\n    "
+        },
+        {
+          "info": {
+            "name": "DeleteProject",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/DeleteProject",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a project permanently.\n\n Use this method to:\n - Remove unused projects\n - Clean up test projects\n - Delete obsolete configurations\n\n ### Examples\n\n - Delete project:\n\n   Permanently removes a project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteProjectPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/DeleteProjectPolicy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a project policy.\n\n Use this method to:\n - Remove access controls\n - Revoke permissions\n - Clean up policies\n\n ### Examples\n\n - Delete policy:\n\n   Removes a group's access policy.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteProjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/DeleteProjects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes multiple projects in a single request.\n\n Use this method to:\n - Remove multiple unused projects at once\n - Clean up projects in batch\n\n Returns successfully deleted project IDs and details about any failures.\n Each project in the request is processed independently — partial success\n is possible.\n\n ### Examples\n\n - Delete multiple projects:\n\n   Permanently removes several projects in one request.\n\n   ```yaml\n   projectIds:\n     - \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n     - \"c1f23g7d-5d7"
+        },
+        {
+          "info": {
+            "name": "GetProject",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/GetProject",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific project.\n\n Use this method to:\n - View project configuration\n - Check project status\n - Get project metadata\n\n ### Examples\n\n - Get project details:\n\n   Retrieves information about a specific project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListProjectEnvironmentClasses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/ListProjectEnvironmentClasses",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists environment classes of a project.\n\n Use this method to:\n - View all environment classes of a project\n\n ### Examples\n\n - List project environment classes:\n\n   Shows all environment classes of a project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListProjectPolicies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/ListProjectPolicies",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists policies for a project.\n\n Use this method to:\n - View access controls\n - Check policy configurations\n - Audit permissions\n\n ### Examples\n\n - List policies:\n\n   Shows all policies for a project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListProjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/ListProjects",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists projects with optional filtering.\n\n Use this method to:\n - View all accessible projects\n - Browse project configurations\n - Monitor project status\n\n ### Examples\n\n - List projects:\n\n   Shows all projects with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateProject",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/UpdateProject",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a project's configuration.\n\n Use this method to:\n - Modify project settings\n - Update environment class\n - Change project name\n - Configure initializers\n - Configure prebuild settings\n\n ### Examples\n\n - Update project name:\n\n   Changes the project's display name.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"New Project Name\"\n   ```\n\n - Enable prebuilds with daily schedule:\n\n   Configures prebuilds to run daily at 2 AM UTC.\n\n   ```yaml\n   projectId: \"b0e12f6c"
+        },
+        {
+          "info": {
+            "name": "UpdateProjectEnvironmentClasses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/UpdateProjectEnvironmentClasses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates all environment classes of a project.\n\n Use this method to:\n - Modify all environment classea of a project\n\n ### Examples\n\n - Update project environment classes:\n\n   Updates all environment classes for a project.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   projectEnvironmentClasses:\n     - environmentClassId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da041\"\n       order: 0\n     - localRunner: true\n       order: 1\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateProjectPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/UpdateProjectPolicy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing project policy.\n\n Use this method to:\n - Modify access levels\n - Change group roles\n - Update permissions\n\n ### Examples\n\n - Update policy role:\n\n   Changes a group's access level.\n\n   ```yaml\n   projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: PROJECT_ROLE_EDITOR\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateProjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.ProjectService/UpdateProjects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates multiple projects in a single request.\n\n Use this method to:\n - Modify settings across multiple projects at once\n - Apply configuration changes in batch\n\n Returns successfully updated projects and details about any failures.\n Each project in the request is processed independently — partial success\n is possible.\n\n ### Examples\n\n - Update multiple projects:\n\n   Updates several projects in one request.\n\n   ```yaml\n   projects:\n     - projectId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n       "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

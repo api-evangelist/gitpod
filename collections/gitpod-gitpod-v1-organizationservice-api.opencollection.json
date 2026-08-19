@@ -1,0 +1,807 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.OrganizationService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.OrganizationService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreateCustomDomain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/CreateCustomDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a custom domain configuration for an organization.\n\n Use this method to configure custom domains for organization workspaces\n\n ### Examples\n\n - Configure AWS custom domain:\n\n   Sets up a custom domain with AWS provider.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   domainName: \"workspaces.acme-corp.com\"\n   provider: CUSTOM_DOMAIN_PROVIDER_AWS\n   awsAccountId: \"123456789012\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateDomainVerification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/CreateDomainVerification",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Initiates domain verification process to enable organization features.\n\n Use this method to:\n - Start domain ownership verification\n - Enable automatic team joining\n - Set up SSO restrictions\n - Configure email-based policies\n\n ### Examples\n\n - Verify primary domain:\n\n   Starts verification for main company domain.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   domain: \"acme-corp.com\"\n   ```\n\n - Verify subsidiary domain:\n\n   Adds verification for additional company doma"
+        },
+        {
+          "info": {
+            "name": "CreateOrganization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/CreateOrganization",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new organization with the specified name and settings.\n\n Use this method to:\n - Create a new organization for team collaboration\n - Set up automatic domain-based invites for team members\n - Join the organization immediately upon creation\n\n ### Examples\n\n - Create a basic organization:\n\n   Creates an organization with just a name.\n\n   ```yaml\n   name: \"Acme Corp Engineering\"\n   joinOrganization: true\n   ```\n\n - Create with domain-based invites:\n\n   Creates an organization that automatic"
+        },
+        {
+          "info": {
+            "name": "CreateOrganizationInvite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/CreateOrganizationInvite",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an invite link for joining an organization.\n Any existing OrganizationInvites are invalidated and can no longer be used.\n\n Use this method to:\n - Generate shareable invite links\n - Manage team growth\n - Control organization access\n\n ### Examples\n\n - Create organization invite:\n\n   Generates a new invite link for the organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateSCIMConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/CreateSCIMConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new SCIM configuration for automated user provisioning.\n\n Use this method to:\n - Set up SCIM 2.0 provisioning from an identity provider\n - Generate a bearer token for SCIM API authentication\n - Link SCIM provisioning to an existing SSO configuration\n\n ### Examples\n\n - Create basic SCIM configuration:\n\n   Creates a SCIM configuration linked to an SSO provider with default 1 year token expiration.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ssoConfigurationId"
+        },
+        {
+          "info": {
+            "name": "CreateSSOConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/CreateSSOConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates or updates SSO configuration for organizational authentication.\n\n Use this method to:\n - Configure OIDC-based SSO providers\n - Set up built-in providers (Google, GitHub, etc.)\n - Define custom identity providers\n - Manage authentication policies\n\n ### Examples\n\n - Configure built-in Google SSO:\n\n   Sets up SSO using Google Workspace.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   clientId: \"012345678-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com\"\n   clie"
+        },
+        {
+          "info": {
+            "name": "DeleteCustomDomain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/DeleteCustomDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a custom domain configuration from an organization.\n\n Use this method to:\n - Disable custom domain functionality\n - Remove outdated configurations\n - Clean up unused domains\n\n ### Examples\n\n - Delete custom domain configuration:\n\n   Removes a specific custom domain configuration.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteDomainVerification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/DeleteDomainVerification",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a domain verification request.\n\n Use this method to:\n - Cancel pending verifications\n - Remove verified domains\n - Clean up unused domain records\n\n ### Examples\n\n - Delete verification:\n\n   Removes a domain verification request.\n\n   ```yaml\n   domainVerificationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteOrganization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/DeleteOrganization",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently deletes an organization.\n\n Use this method to:\n - Remove unused organizations\n - Clean up test organizations\n - Complete organization migration\n\n ### Examples\n\n - Delete organization:\n\n   Permanently removes an organization and all its data.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteSCIMConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/DeleteSCIMConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a SCIM configuration from an organization.\n\n Use this method to:\n - Disable SCIM provisioning completely\n - Remove unused configurations\n - Clean up after migration\n\n ### Examples\n\n - Delete SCIM configuration:\n\n   Removes a specific SCIM configuration.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteSSOConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/DeleteSSOConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes an SSO configuration from an organization.\n\n Use this method to:\n - Disable SSO authentication\n - Remove outdated providers\n - Clean up unused configurations\n\n ### Examples\n\n - Delete SSO configuration:\n\n   Removes a specific SSO configuration.\n\n   ```yaml\n   ssoConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetAnnouncementBanner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetAnnouncementBanner",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the announcement banner configuration for an organization.\n\n Use this method to fetch the current announcement banner settings.\n All organization members can read the banner configuration.\n\n ### Examples\n\n - Get announcement banner:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetCustomDomain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetCustomDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a specific custom domain configuration.\n\n Use this method to view custom domain details\n\n ### Examples\n\n - Get custom domain configuration:\n\n   Retrieves details of a specific custom domain.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetDomainVerification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetDomainVerification",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the status of a domain verification request.\n\n Use this method to:\n - Check verification progress\n - View verification requirements\n - Monitor domain status\n\n ### Examples\n\n - Get verification status:\n\n   Checks the current state of a domain verification.\n\n   ```yaml\n   domainVerificationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetOIDCConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetOIDCConfig",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the OIDC token configuration for an organization.\n\n Use this method to:\n - Check which OIDC token version is active (V2 or V3)\n - View extra sub claim fields (V3 only)\n\n ### Examples\n\n - Get OIDC config:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetOrganization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetOrganization",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific organization.\n\n Use this method to:\n - Retrieve organization settings and configuration\n - Check organization membership status\n - View domain verification settings\n\n ### Examples\n\n - Get organization details:\n\n   Retrieves information about a specific organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetOrganizationInvite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetOrganizationInvite",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "GetOrganizationInvite"
+        },
+        {
+          "info": {
+            "name": "GetOrganizationInviteSummary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetOrganizationInviteSummary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves organization details and membership info based on an invite link.\n\n Use this method to:\n - Preview organization details before joining\n - Validate invite link authenticity\n - Check organization size and activity\n - View team information before accepting\n\n ### Examples\n\n - Get invite summary:\n\n   Retrieves organization information from an invite.\n\n   ```yaml\n   inviteId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetOrganizationPolicies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetOrganizationPolicies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets organization policy settings by organization ID.\n\n Use this method to:\n - Retrieve current policy settings for an organization\n - View resource limits and restrictions\n - Check allowed editors and other configurations\n\n ### Examples\n\n - Get organization policies:\n\n   Retrieves policy settings for a specific organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetSCIMConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetSCIMConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a specific SCIM configuration.\n\n Use this method to:\n - View SCIM configuration details\n - Check if SCIM is enabled\n - Verify SSO linkage\n\n ### Examples\n\n - Get SCIM configuration:\n\n   Retrieves details of a specific SCIM configuration.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetSSOConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/GetSSOConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a specific SSO configuration.\n\n Use this method to:\n - View SSO provider details\n - Check configuration status\n - Verify SSO settings\n\n ### Examples\n\n - Get SSO configuration:\n\n   Retrieves details of a specific SSO configuration.\n\n   ```yaml\n   ssoConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "JoinOrganization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/JoinOrganization",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Allows users to join an organization through direct ID, invite link, or domain-based auto-join.\n\n Use this method to:\n - Join an organization via direct ID or invite\n - Join automatically based on email domain\n - Accept organization invitations\n\n ### Examples\n\n - Join via organization ID:\n\n   Joins an organization directly when you have the ID.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```\n\n - Join via invite:\n\n   Accepts an organization invitation link.\n\n   ```yam"
+        },
+        {
+          "info": {
+            "name": "LeaveOrganization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/LeaveOrganization",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a user from an organization while preserving organization data.\n\n Use this method to:\n - Remove yourself from an organization\n - Clean up inactive memberships\n - Transfer project ownership before leaving\n - Manage team transitions\n\n ### Examples\n\n - Leave organization:\n\n   Removes user from organization membership.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```\n\n Note: Ensure all projects and resources are transferred before leaving."
+        },
+        {
+          "info": {
+            "name": "ListDomainVerifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/ListDomainVerifications",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists and monitors domain verification status across an organization.\n\n Use this method to:\n - Track verification progress\n - View all verified domains\n - Monitor pending verifications\n - Audit domain settings\n\n ### Examples\n\n - List all verifications:\n\n   Shows all domain verifications regardless of status.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```\n\n - List with pagination:\n\n   Retrieves next page of verifications.\n\n   ```yaml\n"
+        },
+        {
+          "info": {
+            "name": "ListMembers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/ListMembers",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists and filters organization members with optional pagination.\n\n Use this method to:\n - View all organization members\n - Monitor member activity\n - Manage team membership\n\n ### Examples\n\n - List active members:\n\n   Retrieves active members with pagination.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```\n\n - List with pagination:\n\n   Retrieves next page of members.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\""
+        },
+        {
+          "info": {
+            "name": "ListSCIMConfigurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/ListSCIMConfigurations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists SCIM configurations for an organization.\n\n Use this method to:\n - View all SCIM configurations\n - Monitor provisioning status\n - Audit SCIM settings\n\n ### Examples\n\n - List SCIM configurations:\n\n   Shows all SCIM configurations for an organization.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListSSOConfigurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/ListSSOConfigurations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists and filters SSO configurations for an organization.\n\n Use this method to:\n - View all SSO providers\n - Monitor authentication status\n - Audit security settings\n - Manage provider configurations\n\n ### Examples\n\n - List active configurations:\n\n   Shows all active SSO providers.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   pagination:\n     pageSize: 20\n   ```\n\n - List by provider type:\n\n   Shows custom SSO configurations.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c"
+        },
+        {
+          "info": {
+            "name": "RegenerateSCIMToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/RegenerateSCIMToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Regenerates the bearer token for a SCIM configuration.\n\n Use this method to:\n - Rotate SCIM credentials\n - Recover from token compromise\n - Update IdP configuration\n\n ### Examples\n\n - Regenerate token:\n\n   Creates a new bearer token with the same expiration duration as the previous token.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n - Regenerate token with new expiration:\n\n   Creates a new bearer token with a custom 180-day expiration.\n\n   ```yaml\n   scimCo"
+        },
+        {
+          "info": {
+            "name": "SetRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/SetRole",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Manages organization membership and roles by setting a user's role within the organization.\n\n Use this method to:\n - Promote members to admin role\n - Change member permissions\n - Demote admins to regular members\n\n ### Examples\n\n - Promote to admin:\n\n   Makes a user an organization administrator.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: ORGANIZATION_ROLE_ADMIN\n   ```\n\n - Change to member:\n\n   Changes a user's "
+        },
+        {
+          "info": {
+            "name": "SetStripeCustomerID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/SetStripeCustomerID",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets the Stripe customer ID for an organization's billing configuration.\n\n Use this method to associate an existing Stripe customer with an organization\n during enterprise customer onboarding.\n\n ### Examples\n\n Deprecated: Use BillingService.SetupEnterpriseBilling instead.\n This method is no longer functional and will return an Unimplemented error.\n\n - Set Stripe customer ID:\n\n   Associates a Stripe customer with an organization.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da04"
+        },
+        {
+          "info": {
+            "name": "SetTier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/SetTier",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets the tier of an organization.\n\n Use this method to:\n - Change an organization's tier between free, core, and enterprise\n\n ### Examples\n\n - Set organization tier:\n\n   Changes organization tier to enterprise.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   tier: ORGANIZATION_TIER_ENTERPRISE\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateAnnouncementBanner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/UpdateAnnouncementBanner",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the announcement banner configuration for an organization.\n\n Use this method to configure the announcement banner displayed to all users.\n Only organization admins can update the banner. Requires Enterprise tier.\n\n ### Examples\n\n - Enable announcement banner:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   message: \"Scheduled maintenance on Saturday 10pm-2am UTC\"\n   enabled: true\n   ```\n\n - Disable announcement banner:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c6"
+        },
+        {
+          "info": {
+            "name": "UpdateCustomDomain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/UpdateCustomDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates custom domain configuration settings.\n\n Use this method to:\n - Update cloud provider settings\n - Change AWS account ID\n - Modify domain configuration\n\n ### Examples\n\n - Update AWS account ID:\n\n   Changes the AWS account ID for the custom domain.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   domainName: \"workspaces.acme-corp.com\"\n   awsAccountId: \"987654321098\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateOIDCConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/UpdateOIDCConfig",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the OIDC token configuration for an organization.\n\n Use this method to:\n - Switch between OIDC token versions (V2 or V3)\n - Configure extra sub claim fields (V3 only)\n\n ### Examples\n\n - Enable V3 tokens with extra sub fields:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   oidcConfig:\n     v3:\n       extraSubFields:\n         - \"environment_id\"\n         - \"creator_email\"\n   ```\n\n - Switch back to V2 tokens:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d"
+        },
+        {
+          "info": {
+            "name": "UpdateOrganization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/UpdateOrganization",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an organization's settings including name, invite domains, and member policies.\n\n Use this method to:\n - Modify organization display name\n - Configure email domain restrictions\n - Update organization-wide settings\n - Manage member access policies\n\n ### Examples\n\n - Update basic settings:\n\n   Changes organization name and invite domains.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"New Company Name\"\n   inviteDomains:\n     domains:\n       - \"company.com\"\n"
+        },
+        {
+          "info": {
+            "name": "UpdateOrganizationPolicies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/UpdateOrganizationPolicies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates organization policy settings.\n\n Use this method to:\n - Configure editor restrictions\n - Set environment resource limits\n - Define project creation permissions\n - Customize default configurations\n\n ### Examples\n\n - Update editor policies:\n\n   Restricts available editors and sets a default.\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   allowedEditorIds:\n     - \"vscode\"\n     - \"jetbrains\"\n   defaultEditorId: \"vscode\"\n   ```\n\n - Set environment limits:\n\n   Configur"
+        },
+        {
+          "info": {
+            "name": "UpdateSCIMConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/UpdateSCIMConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a SCIM configuration.\n\n Use this method to:\n - Enable or disable SCIM provisioning\n - Link or unlink SSO configuration\n - Update configuration name\n\n ### Examples\n\n - Disable SCIM:\n\n   Disables SCIM provisioning.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   enabled: false\n   ```\n\n - Link to SSO:\n\n   Links SCIM configuration to an SSO provider.\n\n   ```yaml\n   scimConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ssoConfigurationId: \"f53d2330-3795-"
+        },
+        {
+          "info": {
+            "name": "UpdateSSOConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/UpdateSSOConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates SSO provider settings and authentication rules.\n\n Use this method to:\n - Rotate client credentials\n - Update provider endpoints\n - Modify claim mappings\n - Change authentication policies\n - Toggle SSO enforcement\n\n ### Examples\n\n - Update credentials:\n\n   Rotates client ID and secret.\n\n   ```yaml\n   ssoConfigurationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   clientId: \"new-client-id\"\n   clientSecret: \"new-client-secret\"\n   ```\n\n - Update provider status:\n\n   Activates or deactivates SS"
+        },
+        {
+          "info": {
+            "name": "VerifyDomain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OrganizationService/VerifyDomain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Verifies domain ownership for an organization.\n\n Use this method to:\n - Complete domain verification process\n - Enable domain-based features\n - Validate DNS configuration\n\n ### Examples\n\n - Verify domain ownership:\n\n   Verifies ownership after DNS records are configured.\n\n   ```yaml\n   domainVerificationId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

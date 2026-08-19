@@ -1,0 +1,715 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.RunnerInteractionService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.RunnerInteractionService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GetHostAuthenticationTokenValue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/GetHostAuthenticationTokenValue",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves authentication token for accessing remote hosts.\n\n Use this method to:\n - Get host credentials\n - Access SCM tokens\n - Verify authentication\n\n ### Examples\n\n - Get token:\n\n   Retrieves authentication token for a host.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   principalId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   host: \"github.com\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetLatestVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/GetLatestVersion",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the latest version information for a runner.\n\n Use this method to:\n - Check for updates\n - Get version details\n - Verify compatibility\n\n ### Examples\n\n - Get version:\n\n   Retrieves latest version info.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   currentVersion: \"1.2.3\"\n   infrastructureVersion: \"4.5.6\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetManagedRunner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/GetManagedRunner",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "GetManagedRunner"
+        },
+        {
+          "info": {
+            "name": "GetRunnerAgentExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/GetRunnerAgentExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "GetRunnerAgentExecution"
+        },
+        {
+          "info": {
+            "name": "GetRunnerConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/GetRunnerConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "GetRunnerConfiguration"
+        },
+        {
+          "info": {
+            "name": "GetRunnerEnvironment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/GetRunnerEnvironment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves environment details for a specific runner.\n\n Use this method to:\n - Get environment configuration\n - Check environment status\n - Verify environment ownership\n\n ### Examples\n\n - Get environment:\n\n   Retrieves environment details.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   environmentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetRunnerEnvironmentSnapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/GetRunnerEnvironmentSnapshot",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific snapshot including its status, size, and metadata.\n\n Use this method to:\n - Check if a snapshot is ready for use\n - Monitor snapshot creation progress\n - Get snapshot size and creation details\n - Retrieve provider-specific snapshot information"
+        },
+        {
+          "info": {
+            "name": "GetRunnerLLMIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/GetRunnerLLMIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "GetRunnerLLMIntegration"
+        },
+        {
+          "info": {
+            "name": "GetRunnerWarmPool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/GetRunnerWarmPool",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific warm pool assigned to this runner.\n\n Use this method to read the full warm pool spec after receiving\n an EventWarmPoolSpecChange event."
+        },
+        {
+          "info": {
+            "name": "ListManagedRunners",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ListManagedRunners",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all runners managed by this runner manager."
+        },
+        {
+          "info": {
+            "name": "ListRunnerAgentExecutions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ListRunnerAgentExecutions",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "ListRunnerAgentExecutions"
+        },
+        {
+          "info": {
+            "name": "ListRunnerEnvironmentClasses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ListRunnerEnvironmentClasses",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists environment classes configured for a runner.\n\n Use this method to:\n - View available classes\n - Check class configurations\n - Monitor class status\n\n ### Examples\n\n - List classes:\n\n   Shows environment classes for a runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListRunnerEnvironmentSnapshots",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ListRunnerEnvironmentSnapshots",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all snapshots matching the specified criteria.\n\n Use this method to find and monitor snapshots across your organization.\n Results are ordered by creation time with newest snapshots first."
+        },
+        {
+          "info": {
+            "name": "ListRunnerEnvironments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ListRunnerEnvironments",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all environments managed by a runner.\n\n Use this method to:\n - View assigned environments\n - Monitor environment status\n - Check environment assignments\n\n ### Examples\n\n - List environments:\n\n   Shows all environments for a runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```\n\n - List specific environments:\n\n   Shows details for specific environment IDs.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   environment"
+        },
+        {
+          "info": {
+            "name": "ListRunnerIntegrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ListRunnerIntegrations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists integrations configured for a runner.\n\n Use this method to:\n - View available integrations\n - Check integration configurations\n - Monitor integration status\n\n ### Examples\n\n - List integrations:\n\n   Shows integrations for a runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListRunnerLLMIntegrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ListRunnerLLMIntegrations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "ListRunnerLLMIntegrations"
+        },
+        {
+          "info": {
+            "name": "ListRunnerSCMIntegrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ListRunnerSCMIntegrations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists SCM integrations configured for a runner.\n\n Use this method to:\n - View SCM configurations\n - Check integration status\n - Monitor available SCMs\n\n ### Examples\n\n - List integrations:\n\n   Shows SCM integrations for a runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListRunnerWarmPools",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ListRunnerWarmPools",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all warm pools assigned to this runner.\n\n Use this method on startup to discover all warm pools the runner\n should be managing."
+        },
+        {
+          "info": {
+            "name": "MarkRunnerActive",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/MarkRunnerActive",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Maintains the active status of a runner through periodic heartbeat signals. The runner must\n call this method every 30 seconds to indicate it's healthy and ready to accept workloads.\n\n Use this method to:\n - Keep runners marked as available in the system\n - Maintain health check status\n - Prevent automatic deregistration\n - Signal readiness for new workloads\n\n ### Examples\n\n - Send heartbeat:\n\n   Marks a runner as active and healthy.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68"
+        },
+        {
+          "info": {
+            "name": "ReportLLMUsage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ReportLLMUsage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "ReportLLMUsage"
+        },
+        {
+          "info": {
+            "name": "ReportRunnerMetrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/ReportRunnerMetrics",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reports runner operational metrics to the management plane for forwarding\n to Grafana Cloud. The runner gathers metrics from its local Prometheus\n registry, encodes them as a Prometheus WriteRequest protobuf, and\n Snappy-compresses the payload."
+        },
+        {
+          "info": {
+            "name": "SendResponse",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/SendResponse",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sends a response to a previously received request.\n\n Use this method to:\n - Respond to requests\n - Report operation results\n - Handle errors\n\n ### Examples\n\n - Send response:\n\n   Responds to a request.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   requestId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   callParseContext:\n     resp:\n       originalContextUrl: \"https://github.com/org/repo\"\n       git:\n         host: \"github.com\"\n         owner: \"org\"\n         repo: \"repo\"\n        "
+        },
+        {
+          "info": {
+            "name": "Signup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/Signup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Establishes initial connection between a runner and the Gitpod backend. This is the first\n call a runner makes to register itself and establish its identity.\n\n Use this method to:\n - Register new runners with the platform\n - Exchange cryptographic keys for secure communication\n - Declare supported environment classes and capabilities\n - Initialize runner configuration\n\n ### Examples\n\n - Register runner:\n\n   Registers a new runner with its public key and supported environment classes.\n\n   ```yaml"
+        },
+        {
+          "info": {
+            "name": "UpdateRunnerAgentExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/UpdateRunnerAgentExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "UpdateRunnerAgentExecution"
+        },
+        {
+          "info": {
+            "name": "UpdateRunnerConfigurationSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/UpdateRunnerConfigurationSchema",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the configuration schema for a runner.\n\n Use this method to:\n - Define configuration options\n - Update schema definitions\n - Set validation rules\n\n ### Examples\n\n - Update schema:\n\n   Updates runner configuration schema.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   configSchema:\n     version: \"1.0\"\n     runnerConfig:\n       - id: \"region\"\n         name: \"Region\"\n         description: \"Deployment region\"\n         required: true\n         string:\n           default: \"u"
+        },
+        {
+          "info": {
+            "name": "UpdateRunnerEnvironmentSnapshotStatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/UpdateRunnerEnvironmentSnapshotStatus",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the status of a snapshot during its lifecycle.\n\n Use this method to:\n - Report snapshot creation progress\n - Update completion percentage\n - Set snapshot phase (pending, creating, available, failed)\n - Provide provider-specific snapshot details\n - Report failure messages when snapshot creation fails"
+        },
+        {
+          "info": {
+            "name": "UpdateRunnerEnvironmentStatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/UpdateRunnerEnvironmentStatus",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Provides comprehensive status updates about a managed environment. This method allows\n runners to report detailed state information about environments they're managing.\n\n Use this method to:\n - Report current environment phase and health status\n - Update machine and container states\n - Signal content and devcontainer readiness\n - Provide access URLs and endpoints\n - Report warnings or failure conditions\n\n ### Examples\n\n - Update status:\n\n   Provides a detailed status update for an environment.\n\n"
+        },
+        {
+          "info": {
+            "name": "UpdateRunnerStatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/UpdateRunnerStatus",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the runner's status and capabilities.\n\n Use this method to:\n - Report runner health\n - Update version information\n - Signal system changes\n - Configure capabilities\n\n ### Examples\n\n - Update status:\n\n   Updates runner status and details.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   version: \"1.2.3\"\n   systemDetails: \"Linux x86_64\"\n   logUrl: \"https://logs.example.com/runner\"\n   region: \"us-west\"\n   capabilities: [\"RUNNER_CAPABILITY_SECRET_CONTAINER_REGISTRY\"]\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateRunnerWarmPoolStatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/UpdateRunnerWarmPoolStatus",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the status of a warm pool.\n\n Use this method to:\n - Report warm pool phase transitions (ready, degraded)\n - Report failure messages when pool instances cannot be created"
+        },
+        {
+          "info": {
+            "name": "WatchManagedRunners",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/WatchManagedRunners",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Watches for changes to managed runners."
+        },
+        {
+          "info": {
+            "name": "WatchRequests",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerInteractionService/WatchRequests",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Streams requests that need to be handled by the runner.\n\n Use this method to:\n - Receive configuration changes\n - Handle environment updates\n - Process integration events\n - Monitor real-time events"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

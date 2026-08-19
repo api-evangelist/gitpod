@@ -1,0 +1,465 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.RunnerConfigurationService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.RunnerConfigurationService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreateEnvironmentClass",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/CreateEnvironmentClass",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new environment class for a runner.\n\n Use this method to:\n - Define compute resources\n - Configure environment settings\n - Set up runtime options\n\n ### Examples\n\n - Create environment class:\n\n   Creates a new environment configuration.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   displayName: \"Large Instance\"\n   description: \"8 CPU, 16GB RAM\"\n   configuration:\n     - key: \"cpu\"\n       value: \"8\"\n     - key: \"memory\"\n       value: \"16384\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateHostAuthenticationToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/CreateHostAuthenticationToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new authentication token for accessing remote hosts.\n\n Use this method to:\n - Set up SCM authentication\n - Configure OAuth credentials\n - Manage PAT tokens\n\n ### Examples\n\n - Create OAuth token:\n\n   Creates a new OAuth-based authentication token.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   host: \"github.com\"\n   token: \"gho_xxxxxxxxxxxx\"\n   source: HOST_AUTHENTICATION_TOKEN_SOURCE_OAUTH\n   expiresAt: \"2024-12-31T23"
+        },
+        {
+          "info": {
+            "name": "CreateLLMIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/CreateLLMIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new LLM integration for a runner.\n\n Use this method to:\n - Configure LLM access\n - Set up LLM integrations\n - Enable LLM usage"
+        },
+        {
+          "info": {
+            "name": "CreateSCMIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/CreateSCMIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new SCM integration for a runner.\n\n Use this method to:\n - Configure source control access\n - Set up repository integrations\n - Enable code synchronization\n\n ### Examples\n\n - Create GitHub integration:\n\n   Sets up GitHub SCM integration.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   scmId: \"github\"\n   host: \"github.com\"\n   oauthClientId: \"client_id\"\n   oauthPlaintextClientSecret: \"client_secret\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteHostAuthenticationToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/DeleteHostAuthenticationToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a host authentication token.\n\n Use this method to:\n - Remove unused tokens\n - Revoke access\n - Clean up expired tokens\n\n ### Examples\n\n - Delete token:\n\n   Permanently removes a token.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteLLMIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/DeleteLLMIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an LLM integration.\n\n Use this method to:\n - Remove unused integrations\n - Clean up configurations\n - Revoke LLM access\n\n ### Examples\n\n - Delete integration:\n\n   Removes an LLM integration.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteSCMIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/DeleteSCMIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an SCM integration.\n\n Use this method to:\n - Remove unused integrations\n - Clean up configurations\n - Revoke SCM access\n\n ### Examples\n\n - Delete integration:\n\n   Removes an SCM integration.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetEnvironmentClass",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/GetEnvironmentClass",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific environment class.\n\n Use this method to:\n - View class configuration\n - Check resource settings\n - Verify availability\n\n ### Examples\n\n - Get class details:\n\n   Retrieves information about a specific class.\n\n   ```yaml\n   environmentClassId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetHostAuthenticationToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/GetHostAuthenticationToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific host authentication token.\n\n Use this method to:\n - View token information\n - Check token expiration\n - Verify token validity\n\n ### Examples\n\n - Get token details:\n\n   Retrieves information about a specific token.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetLLMIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/GetLLMIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific LLM integration.\n\n Use this method to:\n - View integration settings\n - Check integration status\n - Verify configuration\n\n ### Examples\n\n - Get integration details:\n\n   Retrieves information about a specific integration.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetRunnerConfigurationSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/GetRunnerConfigurationSchema",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the latest runner configuration schema.\n\n Use this method to:\n - View available settings\n - Check configuration options\n - Validate configurations\n\n ### Examples\n\n - Get schema:\n\n   Retrieves configuration schema for a runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetSCMIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/GetSCMIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific SCM integration.\n\n Use this method to:\n - View integration settings\n - Check integration status\n - Verify configuration\n\n ### Examples\n\n - Get integration details:\n\n   Retrieves information about a specific integration.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListEnvironmentClasses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/ListEnvironmentClasses",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists environment classes with optional filtering.\n\n Use this method to:\n - View available classes\n - Filter by capability\n - Check enabled status\n\n ### Examples\n\n - List all classes:\n\n   Shows all environment classes.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter enabled classes:\n\n   Lists only enabled environment classes.\n\n   ```yaml\n   filter:\n     enabled: true\n   pagination:\n     pageSize: 20\n   ```\n buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE"
+        },
+        {
+          "info": {
+            "name": "ListHostAuthenticationTokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/ListHostAuthenticationTokens",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists host authentication tokens with optional filtering.\n\n Use this method to:\n - View all tokens\n - Filter by runner or user\n - Monitor token status\n\n ### Examples\n\n - List all tokens:\n\n   Shows all tokens with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by runner:\n\n   Lists tokens for a specific runner.\n\n   ```yaml\n   filter:\n     runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListLLMIntegrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/ListLLMIntegrations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists LLM integrations for a runner.\n\n Use this method to:\n - View all integrations\n - Monitor integration status\n - Check available LLMs\n\n ### Examples\n\n - List integrations:\n\n   Shows all LLM integrations.\n\n   ```yaml\n   filter:\n     runnerIds: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListSCMIntegrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/ListSCMIntegrations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists SCM integrations for a runner.\n\n Use this method to:\n - View all integrations\n - Monitor integration status\n - Check available SCMs\n\n ### Examples\n\n - List integrations:\n\n   Shows all SCM integrations.\n\n   ```yaml\n   filter:\n     runnerIds: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateEnvironmentClass",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/UpdateEnvironmentClass",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an environment class.\n\n Use this method to:\n - Modify class settings\n - Update resource limits\n - Change availability\n\n ### Examples\n\n - Update class:\n\n   Changes class configuration.\n\n   ```yaml\n   environmentClassId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   displayName: \"Updated Large Instance\"\n   description: \"16 CPU, 32GB RAM\"\n   enabled: true\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateHostAuthenticationToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/UpdateHostAuthenticationToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing host authentication token.\n\n Use this method to:\n - Refresh token values\n - Update expiration\n - Modify token settings\n\n ### Examples\n\n - Update token:\n\n   Updates token value and expiration.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   token: \"gho_xxxxxxxxxxxx\"\n   expiresAt: \"2024-12-31T23:59:59Z\"\n   refreshToken: \"ghr_xxxxxxxxxxxx\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateLLMIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/UpdateLLMIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing LLM integration.\n\n Use this method to:\n - Modify integration settings\n - Update credentials\n - Change configuration\n\n ### Examples\n\n - Update integration:\n\n   Updates OAuth credentials.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   apiKey: \"sk-...\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateSCMIntegration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/UpdateSCMIntegration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing SCM integration.\n\n Use this method to:\n - Modify integration settings\n - Update credentials\n - Change configuration\n\n ### Examples\n\n - Update integration:\n\n   Updates OAuth credentials.\n\n   ```yaml\n   id: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   oauthClientId: \"new_client_id\"\n   oauthPlaintextClientSecret: \"new_client_secret\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ValidateRunnerConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerConfigurationService/ValidateRunnerConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Validates a runner configuration.\n\n Use this method to:\n - Check configuration validity\n - Verify integration settings\n - Validate environment classes\n\n ### Examples\n\n - Validate SCM integration:\n\n   Checks if an SCM integration is valid.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   scmIntegration:\n     id: \"integration-id\"\n     scmId: \"github\"\n     host: \"github.com\"\n     oauthClientId: \"client_id\"\n     oauthPlaintextClientSecret: \"client_secret\"\n   ```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

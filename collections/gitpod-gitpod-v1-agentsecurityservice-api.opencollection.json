@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.AgentSecurityService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.AgentSecurityService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ReportExecEvent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentSecurityService/ReportExecEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "ReportExecEvent reports a blocked or audited process execution.\n\n Use this method to:\n - Report process executions that were blocked or audited by security policy\n\n ### Examples\n\n - Report a blocked execution:\n\n   ```yaml\n   environmentId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   executable: \"sha256:a1b2c3d4...\"\n   filename: \"/usr/bin/curl\"\n   action: KERNEL_CONTROLS_ACTION_BLOCK\n   process:\n     pid: 1234\n     tid: 1234\n     name: \"curl\"\n     cmdline: \"curl https://example.com\"\n     startedAt:"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

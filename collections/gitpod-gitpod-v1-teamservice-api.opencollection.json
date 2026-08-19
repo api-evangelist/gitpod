@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.TeamService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.TeamService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "AddTeamMember",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.TeamService/AddTeamMember",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Adds a user to a team.\n\n Each user can belong to at most one team per organization.\n\n Use this method to:\n - Assign users to teams\n\n ### Examples\n\n - Add a user to a team:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```\n\n ### Authorization\n\n Requires `teammembership:create` permission on the team."
+        },
+        {
+          "info": {
+            "name": "CreateTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.TeamService/CreateTeam",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new team within an organization.\n\n Use this method to:\n - Organize users into teams\n - Set up team-based workflows\n\n ### Examples\n\n - Create a team:\n\n   ```yaml\n   organizationId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   name: \"Backend Team\"\n   ```\n\n ### Authorization\n\n Requires `team:create` permission on the organization."
+        },
+        {
+          "info": {
+            "name": "DeleteTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.TeamService/DeleteTeam",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a team and all its memberships.\n\n Use this method to:\n - Remove unused teams\n - Clean up after team reorganization\n\n ### Examples\n\n - Delete a team:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `team:delete` permission on the team."
+        },
+        {
+          "info": {
+            "name": "GetTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.TeamService/GetTeam",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets information about a specific team.\n\n Use this method to:\n - Retrieve team details and metadata\n - View member count\n\n ### Examples\n\n - Get team details:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n ### Authorization\n\n Requires `team:read` permission on the team."
+        },
+        {
+          "info": {
+            "name": "ListTeamMembers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.TeamService/ListTeamMembers",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists members of a team with optional pagination.\n\n Use this method to:\n - View all members of a team\n\n ### Examples\n\n - List team members:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```\n\n ### Authorization\n\n Requires `teammembership:read` permission on the team."
+        },
+        {
+          "info": {
+            "name": "ListTeams",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.TeamService/ListTeams",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists teams with optional pagination and filtering.\n\n Use this method to:\n - View all teams in an organization\n - Search for teams by name\n\n ### Examples\n\n - List all teams:\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - Search for teams by name:\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   filter:\n     search: \"backend\"\n   ```\n\n ### Authorization\n\n Results are filtered by `team:read` permission."
+        },
+        {
+          "info": {
+            "name": "RemoveTeamMember",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.TeamService/RemoveTeamMember",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a user from a team.\n\n Use this method to:\n - Remove users from teams\n\n ### Examples\n\n - Remove a team member:\n\n   ```yaml\n   teamMemberId: \"a1b2c3d4-5678-90ab-cdef-1234567890ab\"\n   ```\n\n ### Authorization\n\n Requires `teammembership:delete` permission on the team."
+        },
+        {
+          "info": {
+            "name": "UpdateTeam",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.TeamService/UpdateTeam",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a team's properties.\n\n Use this method to:\n - Rename a team\n\n ### Examples\n\n - Update team name:\n\n   ```yaml\n   teamId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   name: \"Platform Team\"\n   ```\n\n ### Authorization\n\n Requires `team:update` permission on the team."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

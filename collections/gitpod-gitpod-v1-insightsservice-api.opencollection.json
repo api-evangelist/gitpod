@@ -1,0 +1,208 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.InsightsService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.InsightsService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "DisableProjectInsights",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/DisableProjectInsights",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Disables co-author insights for a project. Idempotent.\n Removes the associated workflow (if any) and sets enabled to false."
+        },
+        {
+          "info": {
+            "name": "EnableProjectInsights",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/EnableProjectInsights",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Enables co-author insights for a project. Idempotent."
+        },
+        {
+          "info": {
+            "name": "GetAgentTraceStats",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/GetAgentTraceStats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deprecated: Use UsageService.GetAgentTraceSummary and\n UsageService.GetAgentTraceTimeSeries instead."
+        },
+        {
+          "info": {
+            "name": "GetCoAuthorStats",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/GetCoAuthorStats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deprecated: Use UsageService.GetCoAuthorSummary and\n UsageService.GetCoAuthorTimeSeries instead.\n This will later be removed."
+        },
+        {
+          "info": {
+            "name": "GetInsightsSummary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/GetInsightsSummary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns how many projects have insights enabled vs total projects in the org."
+        },
+        {
+          "info": {
+            "name": "GetPrStatsSummary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/GetPrStatsSummary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deprecated: Use UsageService.GetPrSummary and\n UsageService.GetPrTimeSeries instead."
+        },
+        {
+          "info": {
+            "name": "GetProjectInsightsStatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/GetProjectInsightsStatus",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns whether co-author insights is enabled for a project."
+        },
+        {
+          "info": {
+            "name": "ReportAgentTrace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/ReportAgentTrace",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reports an agent trace session for a project environment.\n Stores the raw trace alongside denormalized line-change totals."
+        },
+        {
+          "info": {
+            "name": "ReportCoAuthorStats",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/ReportCoAuthorStats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reports co-author analysis results from a project's git history.\n Accepts a batch of per-commit stats. Writes are idempotent: re-reporting\n the same commit (project_id + commit_hash) overwrites the previous row."
+        },
+        {
+          "info": {
+            "name": "ReportPrStats",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.InsightsService/ReportPrStats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reports PR speed metrics collected from SCM APIs.\n Accepts a batch of per-PR stats. Writes are idempotent: re-reporting\n the same PR (project_id + pr_number) overwrites the previous row."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

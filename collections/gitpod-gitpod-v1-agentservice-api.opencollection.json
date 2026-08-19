@@ -1,0 +1,541 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.AgentService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.AgentService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreateAgent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/CreateAgent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new agent.\n\n Use this method to:\n - Define new agents with custom prompts and tools"
+        },
+        {
+          "info": {
+            "name": "CreateAgentExecutionConversationToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/CreateAgentExecutionConversationToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a token for conversation access with a specific agent run.\n\n This method generates a temporary token that can be used to securely\n connect to an ongoing agent conversation, for example in a web UI.\n\n ### Examples\n\n - Create a token to join an agent run conversation in a front-end application:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateLLMAccessToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/CreateLLMAccessToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a token for LLM access with a specific agent run."
+        },
+        {
+          "info": {
+            "name": "CreateMCPAccessToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/CreateMCPAccessToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a token for MCP access.\n\n Use this method to generate an access token for MCP integrations."
+        },
+        {
+          "info": {
+            "name": "CreatePrompt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/CreatePrompt",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new prompt.\n\n Use this method to:\n - Define new prompts for templates or commands\n - Set up organization-wide prompt libraries"
+        },
+        {
+          "info": {
+            "name": "CreateSearchAccessToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/CreateSearchAccessToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a token for search access.\n\n Use this method to generate an access token for search proxy integrations."
+        },
+        {
+          "info": {
+            "name": "DeleteAgent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/DeleteAgent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an agent.\n\n Use this method to:\n - Remove custom agents"
+        },
+        {
+          "info": {
+            "name": "DeleteAgentExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/DeleteAgentExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an agent run.\n\n Use this method to:\n - Clean up agent runs that are no longer needed\n\n ### Examples\n\n - Delete an agent run by ID:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeletePrompt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/DeletePrompt",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a prompt.\n\n Use this method to:\n - Remove unused prompts"
+        },
+        {
+          "info": {
+            "name": "EmitAgentSessionActivity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/EmitAgentSessionActivity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Emits an activity to the external agent session (e.g., Linear) associated\n with this agent execution. The backend resolves the session ID from the\n execution's annotations and uses the org's app token to authenticate."
+        },
+        {
+          "info": {
+            "name": "GetAgent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/GetAgent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific agent including description,\n and required models.\n\n Use this method to:\n - Check if an agent is defined correctly\n - Understand which models are required for this agent\n\n ### Examples\n\n - Get agent details:\n\n   ```yaml\n   agentId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetAgentExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/GetAgentExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific agent run, including its metadata, specification,\n and status (phase, error messages, and usage statistics).\n\n Use this method to:\n - Monitor the run's progress\n - Retrieve the agent's conversation URL\n - Check if an agent run is actively producing output\n\n ### Examples\n\n - Get agent run details by ID:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetPrompt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/GetPrompt",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific prompt including name, description,\n and prompt content.\n\n Use this method to:\n - Retrieve prompt details for editing\n - Get prompt content for execution\n\n ### Examples\n\n - Get prompt details:\n\n   ```yaml\n   promptId: \"07e03a28-65a5-4d98-b532-8ea67b188048\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ImprovePromptForAgent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/ImprovePromptForAgent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Improves an agent's prompt.\n\n Use this method to:\n - Enhance the agent's understanding of the user's request\n - Refine the agent's response to be more accurate and relevant"
+        },
+        {
+          "info": {
+            "name": "ListAgentExecutions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/ListAgentExecutions",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all agent runs matching the specified filter.\n\n Use this method to track multiple agent runs and their associated resources. Results are ordered by their creation time with the newest first.\n\n ### Examples\n\n - List agent runs by agent ID:\n\n   ```yaml\n   filter:\n     agentIds: [\"b8a64cfa-43e2-4b9d-9fb3-07edc63f5971\"]\n   pagination:\n     pageSize: 10\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListAgents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/ListAgents",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all agents matching the specified criteria.\n\n Use this method to find and monitor agents across your organization.\n Results are ordered by their creation time with the newest first.\n\n ### Examples\n\n - List all agents:\n\n   Retrieves all agents with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 10\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListMCPIntegrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/ListMCPIntegrations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all MCP integrations.\n\n Use this method to retrieve all configured MCP integrations.\n\n ### Examples\n\n - List all MCP integrations:\n\n   ```yaml\n   pagination:\n     pageSize: 10\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListPrompts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/ListPrompts",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all prompts matching the specified criteria.\n\n Use this method to find and browse prompts across your organization.\n Results are ordered by their creation time with the newest first.\n\n ### Examples\n\n - List all prompts:\n\n   Retrieves all prompts with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 10\n   ```"
+        },
+        {
+          "info": {
+            "name": "ReportAgentExecutionOutputs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/ReportAgentExecutionOutputs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reports outputs for an agent execution.\n\n This method allows agents to report key-value outputs during execution.\n Similar to task execution outputs, but with typed values for structured data.\n Outputs are merged with any existing outputs. The API automatically infers\n the type (int, float, bool, or string) from the value.\n\n Use this method to:\n - Record execution outcomes and metrics\n - Track test results, coverage, or success indicators\n - Store any execution-related data as key-value pairs\n\n "
+        },
+        {
+          "info": {
+            "name": "SendToAgentExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/SendToAgentExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sends user input to an active agent run.\n\n This method is used to provide interactive or conversation-based input\n to an agent. The agent can respond with output blocks containing\n text, file changes, or tool usage requests.\n\n ### Examples\n\n - Send a text message to an agent:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   userInput:\n     text:\n       content: \"Generate a report based on the latest logs.\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "StartAgent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/StartAgent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Starts (or triggers) an agent run using a provided agent.\n\n Use this method to:\n - Launch an agent based on a known agent\n\n ### Examples\n\n - Start an agent with a project ID:\n\n   ```yaml\n   agentId: \"b8a64cfa-43e2-4b9d-9fb3-07edc63f5971\"\n   codeContext:\n     projectId: \"2d22e4eb-31da-467f-882c-27e21550992f\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "StopAgentExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/StopAgentExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Stops an active agent execution.\n\n Use this method to:\n - Stop an agent that is currently running\n - Prevent further processing or resource usage\n\n ### Examples\n\n - Stop an agent execution by ID:\n\n   ```yaml\n   agentExecutionId: \"6fa1a3c7-fbb7-49d1-ba56-1890dc7c4c35\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateAgent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/UpdateAgent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing agent.\n\n Use this method to:\n - Modify agent configuration\n - Update prompts or required tools"
+        },
+        {
+          "info": {
+            "name": "UpdateAgentExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/UpdateAgentExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an agent execution's spec.\n\n Use this method to:\n - Set or update loop conditions on an agent execution"
+        },
+        {
+          "info": {
+            "name": "UpdatePrompt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.AgentService/UpdatePrompt",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing prompt.\n\n Use this method to:\n - Modify prompt content or metadata\n - Change prompt type (template/command)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

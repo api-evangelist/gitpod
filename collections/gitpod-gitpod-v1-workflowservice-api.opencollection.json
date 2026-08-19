@@ -1,0 +1,370 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.WorkflowService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.WorkflowService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CancelWorkflowExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/CancelWorkflowExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancels a running workflow execution.\n\n Use this method to:\n - Stop long-running executions\n - Cancel failed executions\n - Manage resource usage\n\n ### Examples\n\n - Cancel execution:\n\n   Stops a running workflow execution.\n\n   ```yaml\n   workflowExecutionId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CancelWorkflowExecutionAction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/CancelWorkflowExecutionAction",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancels a running workflow execution action.\n\n Use this method to:\n - Stop long-running actions\n - Cancel failed actions\n - Manage resource usage\n\n ### Examples\n\n - Cancel execution action:\n\n   Stops a running workflow execution action.\n\n   ```yaml\n   workflowExecutionActionId: \"a1b2c3d4-5e6f-7890-abcd-ef1234567890\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateWorkflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/CreateWorkflow",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new workflow with specified configuration.\n\n Use this method to:\n - Set up automated workflows\n - Configure workflow triggers\n - Define workflow actions and steps\n - Set execution limits and constraints"
+        },
+        {
+          "info": {
+            "name": "DeleteWorkflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/DeleteWorkflow",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a workflow permanently.\n\n Use this method to:\n - Remove unused workflows\n - Clean up test workflows\n - Delete obsolete configurations\n\n ### Examples\n\n - Delete workflow:\n\n   Permanently removes a workflow.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetWorkflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/GetWorkflow",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific workflow.\n\n Use this method to:\n - View workflow configuration\n - Check workflow status\n - Get workflow metadata\n\n ### Examples\n\n - Get workflow details:\n\n   Retrieves information about a specific workflow.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetWorkflowExecution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/GetWorkflowExecution",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific workflow execution.\n\n Use this method to:\n - Check execution status\n - View execution results\n - Monitor execution progress\n\n ### Examples\n\n - Get execution details:\n\n   Retrieves information about a specific execution.\n\n   ```yaml\n   workflowExecutionId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetWorkflowExecutionAction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/GetWorkflowExecutionAction",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific workflow execution action.\n\n Use this method to:\n - Check execution action status\n - View execution action results\n - Monitor execution action progress\n\n ### Examples\n\n - Get execution action details:\n\n   Retrieves information about a specific execution action.\n\n   ```yaml\n   workflowExecutionActionId: \"a1b2c3d4-5e6f-7890-abcd-ef1234567890\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetWorkflowExecutionSummary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/GetWorkflowExecutionSummary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns aggregate counts of workflow executions within a time range.\n\n Use this method to:\n - Get a summary of successful, failed, and total executions\n - Build dashboard views of automation activity\n\n ### Examples\n\n - Get execution summary for the last 7 days:\n\n   ```yaml\n   filter:\n     dateRange:\n       startTime: \"2026-03-05T00:00:00Z\"\n       endTime: \"2026-03-12T00:00:00Z\"\n   ```\n\n - Get execution summary for specific workflows:\n\n   ```yaml\n   filter:\n     dateRange:\n       startTime: \"2026"
+        },
+        {
+          "info": {
+            "name": "GetWorkflowWebhookSecret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/GetWorkflowWebhookSecret",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the webhook secret for a workflow.\n\n This operation is audited for security purposes.\n\n Use this method to:\n - Retrieve webhook secret for configuration\n - Set up webhook integrations\n - Verify webhook signatures\n\n ### Examples\n\n - Get webhook secret:\n\n   Retrieves the webhook secret for a workflow.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListWorkflowExecutionActions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/ListWorkflowExecutionActions",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists workflow execution actions with optional filtering.\n\n Use this method to:\n - Monitor individual action execution status\n - Debug action failures\n - Track resource usage per action\n\n ### Examples\n\n - List execution actions for workflow execution:\n\n   Shows all execution actions for a specific workflow execution.\n\n   ```yaml\n   filter:\n     workflowExecutionIds: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListWorkflowExecutionOutputs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/ListWorkflowExecutionOutputs",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists outputs produced by workflow execution actions.\n\n Use this method to:\n - Retrieve test results, coverage metrics, or other structured data from executions\n - Aggregate outputs across multiple workflow executions\n - Build dashboards or reports from execution data\n\n ### Examples\n\n - List outputs for a workflow execution:\n\n   Retrieves all outputs produced by actions in the specified execution.\n\n   ```yaml\n   filter:\n     workflowExecutionIds: [\"d2c94c27-3b76-4a42-b88c-95a85e392c68\"]\n   pagin"
+        },
+        {
+          "info": {
+            "name": "ListWorkflowExecutions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/ListWorkflowExecutions",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists workflow executions with optional filtering.\n\n Use this method to:\n - Monitor workflow execution history\n - Track execution status\n - Debug workflow issues\n\n ### Examples\n\n - List executions for workflow:\n\n   Shows all executions for a specific workflow.\n\n   ```yaml\n   filter:\n     workflowIds: [\"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"]\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListWorkflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/ListWorkflows",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "ListWorkflows"
+        },
+        {
+          "info": {
+            "name": "RotateWorkflowWebhookSecret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/RotateWorkflowWebhookSecret",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Rotates the webhook secret for a workflow.\n\n Use this method to:\n - Generate a new webhook secret\n - Invalidate the old webhook secret\n\n ### Examples\n\n - Rotate webhook secret:\n\n   Generates a new webhook secret for the workflow.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "StartWorkflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/StartWorkflow",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Starts a workflow execution.\n\n Use this method to:\n - Start workflow execution on demand\n - Test workflow configurations\n - Run workflows outside of automatic triggers\n\n ### Examples\n\n - Start workflow:\n\n   Starts a workflow execution manually.\n\n   ```yaml\n   workflowId: \"b0e12f6c-4c67-429d-a4a6-d9838b5da047\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateWorkflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.WorkflowService/UpdateWorkflow",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a workflow's configuration using full replacement semantics.\n\n Update Behavior:\n - All provided fields completely replace existing values\n - Optional fields that are not provided remain unchanged\n - Complex fields (triggers, action) are replaced entirely, not merged\n - To remove optional fields, explicitly set them to empty/default values\n\n Use this method to:\n - Modify workflow settings\n - Update triggers and actions\n - Change execution limits\n - Update workflow steps\n\n ### Examples\n\n -"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

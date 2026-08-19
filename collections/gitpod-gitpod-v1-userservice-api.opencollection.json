@@ -1,0 +1,308 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.UserService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.UserService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreatePersonalAccessToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/CreatePersonalAccessToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new personal access token for API authentication.\n\n Use this method to:\n - Generate API access tokens\n - Create service account credentials\n - Set up automated access\n\n ### Examples\n\n - Create token:\n\n   Creates a new access token valid for 30 days.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   description: \"CI/CD Pipeline Token\"\n   validFor: \"2592000s\"  # 30 days\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeletePersonalAccessToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/DeletePersonalAccessToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a personal access token.\n\n Use this method to:\n - Revoke token access\n - Remove unused tokens\n - Rotate credentials\n\n ### Examples\n\n - Delete token:\n\n   Permanently revokes a token.\n\n   ```yaml\n   personalAccessTokenId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeletePreference",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/DeletePreference",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a user preference.\n\n Use this method to:\n - Remove settings\n - Reset preferences\n - Clean up configurations\n\n ### Examples\n\n - Delete preference:\n\n   Removes a specific preference.\n\n   ```yaml\n   userPreferenceId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/DeleteUser",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a user. If the User comes from an organization's SSO provider, the Account will also be deleted."
+        },
+        {
+          "info": {
+            "name": "GetAuthenticatedUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/GetAuthenticatedUser",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets information about the currently authenticated user.\n\n Use this method to:\n - Get user profile information\n - Check authentication status\n - Retrieve user settings\n - Verify account details\n\n ### Examples\n\n - Get current user:\n\n   Retrieves details about the authenticated user.\n\n   ```yaml\n   {}\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetDotfilesConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/GetDotfilesConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the dotfiles for a user.\n\n Use this method to:\n - Retrieve user dotfiles\n\n ### Examples\n\n - Get dotfiles:\n\n   Retrieves the dotfiles for the current user.\n\n   ```yaml\n   {}\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetPersonalAccessToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/GetPersonalAccessToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific personal access token.\n\n Use this method to:\n - View token metadata\n - Check token expiration\n - Monitor token usage\n\n ### Examples\n\n - Get token details:\n\n   Retrieves information about a specific token.\n\n   ```yaml\n   personalAccessTokenId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetPreference",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/GetPreference",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a specific user preference value.\n\n Use this method to:\n - Retrieve user settings\n - Read preference values\n - Check configurations\n\n ### Examples\n\n - Get preference:\n\n   Retrieves a specific preference value.\n\n   ```yaml\n   preferenceId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/GetUser",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets basic information about a specific user by their ID.\n\n Use this method to:\n - Retrieve user profile information\n - Get user details for display purposes\n - Fetch user metadata for administrative tasks\n\n ### Examples\n\n - Get user by ID:\n\n   Retrieves basic user information by user ID.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListPersonalAccessTokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/ListPersonalAccessTokens",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists personal access tokens with optional filtering.\n\n Use this method to:\n - View all active tokens\n - Audit token usage\n - Manage token lifecycle\n\n ### Examples\n\n - List user tokens:\n\n   Shows all tokens for specific users.\n\n   ```yaml\n   filter:\n     userIds: [\"f53d2330-3795-4c5d-a1f3-453121af9c60\"]\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListPreferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/ListPreferences",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all user preferences.\n\n Use this method to:\n - View all user settings\n - Export preferences\n - Audit configurations\n\n ### Examples\n\n - List preferences:\n\n   Shows all preferences with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "SetDotfilesConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/SetDotfilesConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets the dotfiles configuration for a user.\n\n Use this method to:\n - Configure user dotfiles\n - Update dotfiles settings\n\n ### Examples\n\n - Set dotfiles configuration:\n\n   Sets the dotfiles configuration for the current user.\n\n   ```yaml\n   {\n     \"repository\": \"https://github.com/gitpod-io/dotfiles\",\n   }\n   ```\n\n - Remove dotfiles:\n\n   Removes the dotfiles for the current user.\n\n   ```yaml\n   {}\n   ```"
+        },
+        {
+          "info": {
+            "name": "SetPreference",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/SetPreference",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets a user preference value.\n\n Use this method to:\n - Store user settings\n - Update preferences\n - Configure user experience\n\n ### Examples\n\n - Set preference:\n\n   Updates a user preference setting.\n\n   ```yaml\n   key: \"theme\"\n   value: \"dark\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "SetSuspended",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UserService/SetSuspended",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets whether a user account is suspended.\n\n Use this method to:\n - Suspend problematic users\n - Reactivate suspended accounts\n - Manage user access\n\n ### Examples\n\n - Suspend user:\n\n   Suspends a user account.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   suspended: true\n   ```\n\n - Reactivate user:\n\n   Removes suspension from a user account.\n\n   ```yaml\n   userId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   suspended: false\n   ```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

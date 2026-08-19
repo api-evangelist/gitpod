@@ -1,0 +1,372 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.UsageService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.UsageService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GetActiveEnvironmentsCount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetActiveEnvironmentsCount",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the count of active environments in the specified date range."
+        },
+        {
+          "info": {
+            "name": "GetActiveEnvironmentsTimeSeries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetActiveEnvironmentsTimeSeries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the active environments time series in the specified date range, aggregated by the specified resolution."
+        },
+        {
+          "info": {
+            "name": "GetActiveUsersCount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetActiveUsersCount",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the count of active users.\n\n Returns the count of unique users who were active within the specified date range."
+        },
+        {
+          "info": {
+            "name": "GetActiveUsersTimeSeries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetActiveUsersTimeSeries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets active users time series in the specified date range, aggregated by the specified resolution.\n\n Returns a time series of active user counts within the specified date range, aggregated by the specified resolution.\n Each data point includes the timestamp and the count of unique users who were active at that time."
+        },
+        {
+          "info": {
+            "name": "GetAdoptionUsageSummary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetAdoptionUsageSummary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a summary of adoption and usage metrics for the insight card.\n\n Returns all scalar values, trends, and a sparkline for the Adoption & Usage\n insight category. Designed for the Project Home page card and similar summary\n views. For full-resolution time series, use the individual time series RPCs."
+        },
+        {
+          "info": {
+            "name": "GetAgentTraceSummary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetAgentTraceSummary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets aggregated agent trace summary for the organization or a specific project."
+        },
+        {
+          "info": {
+            "name": "GetAgentTraceTimeSeries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetAgentTraceTimeSeries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets agent trace data as a time series."
+        },
+        {
+          "info": {
+            "name": "GetCoAuthorSummary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetCoAuthorSummary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets aggregated co-author summary for the organization or a specific project."
+        },
+        {
+          "info": {
+            "name": "GetCoAuthorTimeSeries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetCoAuthorTimeSeries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets co-author contribution data as a time series."
+        },
+        {
+          "info": {
+            "name": "GetEnvironmentRuntime",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetEnvironmentRuntime",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the total runtime of all environments in the specified date range."
+        },
+        {
+          "info": {
+            "name": "GetEnvironmentRuntimeTimeSeries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetEnvironmentRuntimeTimeSeries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the total runtime time series in the specified date range, aggregated by the specified resolution."
+        },
+        {
+          "info": {
+            "name": "GetEnvironmentSessionsTimeSeries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetEnvironmentSessionsTimeSeries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the environment sessions time series in the specified date range, aggregated by the specified resolution.\n\n Environment sessions count total environment starts (environment.started events),\n as opposed to GetActiveEnvironmentsTimeSeries which counts distinct environment IDs."
+        },
+        {
+          "info": {
+            "name": "GetPrSummary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetPrSummary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets aggregated PR speed summary for the organization or a specific project."
+        },
+        {
+          "info": {
+            "name": "GetPrTimeSeries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetPrTimeSeries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets PR speed metrics as a time series."
+        },
+        {
+          "info": {
+            "name": "GetTopActiveUsers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetTopActiveUsers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the top active users based on total runtime.\n\n Returns a list of users sorted by their total environment runtime within the specified date range.\n Each result includes the user ID, name (if available), and their total environment runtime in seconds."
+        },
+        {
+          "info": {
+            "name": "GetTopEnvironmentClasses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetTopEnvironmentClasses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the top environment classes by total runtime in the specified date range."
+        },
+        {
+          "info": {
+            "name": "GetTopProjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/GetTopProjects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the top projects by total environment runtime in the specified date range."
+        },
+        {
+          "info": {
+            "name": "ListEnvironmentUsageRecords",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.UsageService/ListEnvironmentUsageRecords",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists completed environment runtime records within a specified date range.\n\n Returns a list of environment runtime records that were completed within the specified date range. Records of currently running environments are not included.\n\n Use this method to:\n - View environment runtime records\n - Filter by project\n - Create custom usage reports\n\n ### Example\n\n ```yaml\n filter:\n   projectId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   dateRange:\n     startTime: \"2024-01-01T00:00:00Z\"\n     endTime: \""
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,358 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.RunnerService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.RunnerService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CheckAuthenticationForHost",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/CheckAuthenticationForHost",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Checks if a user is authenticated for a specific host.\n\n Use this method to:\n - Verify authentication status\n - Get authentication URLs\n - Check PAT support\n\n ### Examples\n\n - Check authentication:\n\n   Verifies authentication for a host.\n\n   ```yaml\n   host: \"github.com\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CheckRepositoryAccess",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/CheckRepositoryAccess",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Checks if a principal has read access to a repository.\n\n Use this method to:\n - Validate repository access before workflow execution\n - Verify executor credentials for automation bindings\n\n Returns:\n - has_access: true if the principal can read the repository\n - FAILED_PRECONDITION if authentication is required\n - INVALID_ARGUMENT if the repository URL is invalid\n\n ### Examples\n\n - Check access:\n\n   Verifies read access to a repository.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392"
+        },
+        {
+          "info": {
+            "name": "CreateRunner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/CreateRunner",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new runner registration with the server. Registrations are very short-lived and must be renewed every 30 seconds.\n\n Use this method to:\n - Register organization runners\n - Set up runner configurations\n - Initialize runner credentials\n - Configure auto-updates\n\n ### Examples\n\n - Create cloud runner:\n\n   Creates a new runner in AWS EC2.\n\n   ```yaml\n   name: \"Production Runner\"\n   provider: RUNNER_PROVIDER_AWS_EC2\n   spec:\n     desiredPhase: RUNNER_PHASE_ACTIVE\n     configuration:\n       "
+        },
+        {
+          "info": {
+            "name": "CreateRunnerLogsToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/CreateRunnerLogsToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an access token for runner logs and debug information.\n\n Generated tokens are valid for one hour and provide runner-specific access permissions.\n The token is scoped to a specific runner and can be used to access support bundles.\n\n ### Examples\n\n - Generate runner logs token:\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateRunnerPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/CreateRunnerPolicy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new policy for a runner.\n\n Use this method to:\n - Set up access controls\n - Define group permissions\n - Configure role-based access\n\n ### Examples\n\n - Create admin policy:\n\n   Grants admin access to a group.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: RUNNER_ROLE_ADMIN\n   ```"
+        },
+        {
+          "info": {
+            "name": "CreateRunnerToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/CreateRunnerToken",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new authentication token for a runner.\n\n Use this method to:\n - Generate runner credentials\n - Renew expired tokens\n - Set up runner authentication\n\n Note: This does not expire previously issued tokens.\n\n ### Examples\n\n - Create token:\n\n   Creates a new token for runner authentication.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteRunner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/DeleteRunner",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a runner permanently.\n\n Use this method to:\n - Remove unused runners\n - Clean up runner registrations\n - Delete obsolete runners\n\n ### Examples\n\n - Delete runner:\n\n   Permanently removes a runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "DeleteRunnerPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/DeleteRunnerPolicy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a runner policy.\n\n Use this method to:\n - Remove access controls\n - Revoke permissions\n - Clean up policies\n\n ### Examples\n\n - Delete policy:\n\n   Removes a group's access policy.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "GetRunner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/GetRunner",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets details about a specific runner.\n\n Use this method to:\n - Check runner status\n - View runner configuration\n - Monitor runner health\n - Verify runner capabilities\n\n ### Examples\n\n - Get runner details:\n\n   Retrieves information about a specific runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListRunnerPolicies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/ListRunnerPolicies",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists policies for a runner.\n\n Use this method to:\n - View access controls\n - Check policy configurations\n - Audit permissions\n\n ### Examples\n\n - List policies:\n\n   Shows all policies for a runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListRunners",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/ListRunners",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all registered runners with optional filtering.\n\n Use this method to:\n - View all available runners\n - Filter by runner type\n - Monitor runner status\n - Check runner availability\n\n ### Examples\n\n - List all runners:\n\n   Shows all runners with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by provider:\n\n   Lists only AWS EC2 runners.\n\n   ```yaml\n   filter:\n     providers: [\"RUNNER_PROVIDER_AWS_EC2\"]\n   pagination:\n     pageSize: 20\n   ```"
+        },
+        {
+          "info": {
+            "name": "ListSCMOrganizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/ListSCMOrganizations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists SCM organizations the user belongs to.\n\n Use this method to:\n - Get all organizations for a user on a specific SCM host\n - Check organization admin permissions for webhook creation\n\n ### Examples\n\n - List GitHub organizations:\n\n   Lists all organizations the user belongs to on GitHub.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   scmHost: \"github.com\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "ParseContextURL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/ParseContextURL",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Parses a context URL and returns the parsed result.\n\n Use this method to:\n - Validate context URLs\n - Check repository access\n - Verify branch existence\n\n Returns:\n - FAILED_PRECONDITION if authentication is required\n - PERMISSION_DENIED if access is not allowed\n - INVALID_ARGUMENT if URL is invalid\n - NOT_FOUND if repository/branch doesn't exist\n\n ### Examples\n\n - Parse URL:\n\n   Parses and validates a context URL.\n\n   ```yaml\n   contextUrl: \"https://github.com/org/repo/tree/main\"\n   ```"
+        },
+        {
+          "info": {
+            "name": "SearchRepositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/SearchRepositories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Searches for repositories across all authenticated SCM hosts.\n\n Use this method to:\n - List available repositories\n - Search repositories by name or content\n - Discover repositories for environment creation\n\n Returns repositories from all authenticated SCM hosts in natural sort order.\n If no repositories are found, returns an empty list.\n\n ### Examples\n\n - List all repositories:\n\n   Returns up to 25 repositories from all authenticated hosts.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a8"
+        },
+        {
+          "info": {
+            "name": "UpdateRunner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/UpdateRunner",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a runner's configuration.\n\n Use this method to:\n - Modify runner settings\n - Update release channels\n - Change runner status\n - Configure auto-update settings\n\n ### Examples\n\n - Update configuration:\n\n   Changes runner settings.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   name: \"Updated Runner Name\"\n   spec:\n     configuration:\n       releaseChannel: RUNNER_RELEASE_CHANNEL_LATEST\n       autoUpdate: true\n   ```"
+        },
+        {
+          "info": {
+            "name": "UpdateRunnerPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.RunnerService/UpdateRunnerPolicy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing runner policy.\n\n Use this method to:\n - Modify access levels\n - Change group roles\n - Update permissions\n\n ### Examples\n\n - Update policy role:\n\n   Changes a group's access level.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: RUNNER_ROLE_USER\n   ```"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

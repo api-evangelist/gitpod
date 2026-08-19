@@ -1,0 +1,144 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "gitpod.v1 gitpod.v1.AccountService gitpod.v1.OnaIntelligenceService API",
+    "version": "v1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gitpod.v1.OnaIntelligenceService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CreateOrganizationLLMConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OnaIntelligenceService/CreateOrganizationLLMConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates or updates the Anthropic API key configuration for an organization.\n\n Use this method to:\n - Configure Anthropic API access for an organization\n - Rotate existing API keys\n\n The API key is encrypted before storage using organization-scoped encryption."
+        },
+        {
+          "info": {
+            "name": "DeleteOrganizationLLMConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OnaIntelligenceService/DeleteOrganizationLLMConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the organization's LLM API key configuration.\n\n Use this method to:\n - Remove API key access for an organization\n - Clean up unused configurations"
+        },
+        {
+          "info": {
+            "name": "GetOrganizationLLMConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OnaIntelligenceService/GetOrganizationLLMConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets metadata about the organization's LLM configuration.\n\n Use this method to:\n - Check if an organization has an API key configured\n - View when the key was last updated\n\n For security reasons, this method does not return the actual API key,\n only metadata including the last 4 characters for identification."
+        },
+        {
+          "info": {
+            "name": "GetOrganizationLLMUsage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OnaIntelligenceService/GetOrganizationLLMUsage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets credit usage summary for the caller's organization.\n\n The organization is inferred from the caller's identity.\n\n Use this method to:\n - View Ona credit consumption for your organization\n - Track usage over time\n - Display usage data to organization admins\n\n Returns pre-aggregated summaries for week, month, and year."
+        },
+        {
+          "info": {
+            "name": "ListOrganizationLLMConfigurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OnaIntelligenceService/ListOrganizationLLMConfigurations",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all organization LLM configurations.\n\n Use this method to:\n - View all organizations with LLM configurations\n - Audit API key usage"
+        },
+        {
+          "info": {
+            "name": "UpdateOrganizationLLMConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.gitpod.io/gitpod.v1.OnaIntelligenceService/UpdateOrganizationLLMConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the Anthropic API key configuration for an organization.\n\n Use this method to:\n - Update existing API key\n - Modify configuration settings\n\n Only provided fields will be updated (partial update)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
