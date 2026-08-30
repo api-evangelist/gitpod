@@ -584,8 +584,6 @@ common:
     url: vocabulary/gitpod-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/gitpod-context.jsonld
-  - type: Blog
-    url: blogs/blogs.json
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
