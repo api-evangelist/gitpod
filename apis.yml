@@ -1,16 +1,12 @@
----
 aid: gitpod
 name: Gitpod
-description: >-
-  Gitpod is a cloud development environment platform that provides on-demand,
-  ephemeral workspaces spun up from git repositories, enabling developers to
-  write, review, and ship code from any device without local setup. Originally
-  focused on browser-based IDEs, the platform evolved into Gitpod Flex, offering
-  REST APIs and SDKs for workspace lifecycle management, environment automation,
-  and organization administration. The Gitpod API supports TypeScript, Python,
-  and Go SDKs and uses bearer token authentication via API keys. In September
-  2025 Gitpod rebranded to Ona, shifting focus to AI software engineering agents
-  built on top of its secure, isolated environment infrastructure.
+description: Gitpod is a cloud development environment platform that provides on-demand, ephemeral workspaces
+  spun up from git repositories, enabling developers to write, review, and ship code from any device without
+  local setup. Originally focused on browser-based IDEs, the platform evolved into Gitpod Flex, offering
+  REST APIs and SDKs for workspace lifecycle management, environment automation, and organization administration.
+  The Gitpod API supports TypeScript, Python, and Go SDKs and uses bearer token authentication via API
+  keys. In September 2025 Gitpod rebranded to Ona, shifting focus to AI software engineering agents built
+  on top of its secure, isolated environment infrastructure.
 type: Index
 deliveryModel:
   model: saas
@@ -36,27 +32,29 @@ accessModel:
   - plans
   - authentication
   - security
-  - {url: 'https://www.gitpod.io', status: 308, note: 'declared website redirects to https://ona.com/ — a different registrable domain (gitpod.io -> ona.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
+  - url: https://www.gitpod.io
+    status: 308
+    note: declared website redirects to https://ona.com/ — a different registrable domain (gitpod.io ->
+      ona.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)
   generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/gitpod.png
 tags:
-  - Developer Tools
-  - Cloud Development Environments
-  - Workspaces
-  - AI Agents
-  - DevOps
+- Developer Tools
+- Cloud Development Environments
+- Workspaces
+- AI Agents
+- DevOps
 url: https://raw.githubusercontent.com/api-evangelist/gitpod/refs/heads/main/apis.yml
 created: '2026-06-12'
-modified: '2026-06-12'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - aid: gitpod:organizations-api
   name: Gitpod Organizations API
-  description: >-
-    REST API for managing organizations, groups, members, role assignments, permissions, and organization-level
-    policies. Supports SSO login providers, secrets scoped to organizations, and audit trails for enterprise
-    compliance.
+  description: REST API for managing organizations, groups, members, role assignments, permissions, and
+    organization-level policies. Supports SSO login providers, secrets scoped to organizations, and audit
+    trails for enterprise compliance.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags:
@@ -72,10 +70,9 @@ apis:
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:projects-api
   name: Gitpod Projects API
-  description: >-
-    REST API for managing projects and repositories within a Gitpod organization. Supports creating and
-    listing projects, associating repositories, and configuring project-level policies for environment
-    automation and access control.
+  description: REST API for managing projects and repositories within a Gitpod organization. Supports
+    creating and listing projects, associating repositories, and configuring project-level policies for
+    environment automation and access control.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags:
@@ -91,10 +88,9 @@ apis:
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:accounts-billing-api
   name: Gitpod Accounts and Billing API
-  description: >-
-    REST API for managing user accounts, SSO login sessions, and billing information including invoices
-    and spending data. Supports listing joinable organizations, deleting accounts, and retrieving billing
-    usage metrics for FinOps visibility.
+  description: REST API for managing user accounts, SSO login sessions, and billing information including
+    invoices and spending data. Supports listing joinable organizations, deleting accounts, and retrieving
+    billing usage metrics for FinOps visibility.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags:
@@ -109,9 +105,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-accountservice-api
-  name: Gitpod gitpod.v1.AccountService API
-  description: >-
-    The gitpod.v1.AccountService API from Gitpod — 10 operation(s) for gitpod.v1.accountservice.
+  name: Gitpod.v1.AccountService API
+  description: The gitpod.v1.AccountService API from Gitpod — 10 operation(s) for gitpod.v1.accountservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -123,10 +118,9 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-agentsecurityservice-api
-  name: Gitpod gitpod.v1.AgentSecurityService API
-  description: >-
-    AgentSecurityService receives agent security events from runners.
-     Authenticated with runner tokens (same as RunnerInteractionService).
+  name: Gitpod.v1.AgentSecurityService API
+  description: "AgentSecurityService receives agent security events from runners.\n Authenticated with\
+    \ runner tokens (same as RunnerInteractionService)."
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -138,7 +132,7 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-agentservice-api
-  name: Gitpod gitpod.v1.AgentService API
+  name: Gitpod.v1.AgentService API
   description: The gitpod.v1.AgentService API from Gitpod — 25 operation(s) for gitpod.v1.agentservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
@@ -151,7 +145,7 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-billingservice-api
-  name: Gitpod gitpod.v1.BillingService API
+  name: Gitpod.v1.BillingService API
   description: BillingService provides billing and subscription management functionality.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
@@ -164,9 +158,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-editorservice-api
-  name: Gitpod gitpod.v1.EditorService API
-  description: >-
-    The gitpod.v1.EditorService API from Gitpod — 3 operation(s) for gitpod.v1.editorservice.
+  name: Gitpod.v1.EditorService API
+  description: The gitpod.v1.EditorService API from Gitpod — 3 operation(s) for gitpod.v1.editorservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -178,9 +171,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-environmentautomationservice-api
-  name: Gitpod gitpod.v1.EnvironmentAutomationService API
-  description: >-
-    The gitpod.v1.EnvironmentAutomationService API from Gitpod — 18 operation(s) for gitpod.v1.environmentautomationservice.
+  name: Gitpod.v1.EnvironmentAutomationService API
+  description: The gitpod.v1.EnvironmentAutomationService API from Gitpod — 18 operation(s) for gitpod.v1.environmentautomationservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -192,9 +184,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-environmentservice-api
-  name: Gitpod gitpod.v1.EnvironmentService API
-  description: >-
-    The gitpod.v1.EnvironmentService API from Gitpod — 15 operation(s) for gitpod.v1.environmentservice.
+  name: Gitpod.v1.EnvironmentService API
+  description: The gitpod.v1.EnvironmentService API from Gitpod — 15 operation(s) for gitpod.v1.environmentservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -206,10 +197,9 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-errorsservice-api
-  name: Gitpod gitpod.v1.ErrorsService API
-  description: >-
-    ErrorsService provides endpoints for clients to report errors
-     that will be sent to error reporting systems.
+  name: Gitpod.v1.ErrorsService API
+  description: "ErrorsService provides endpoints for clients to report errors\n that will be sent to error\
+    \ reporting systems."
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -221,7 +211,7 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-eventservice-api
-  name: Gitpod gitpod.v1.EventService API
+  name: Gitpod.v1.EventService API
   description: The gitpod.v1.EventService API from Gitpod — 2 operation(s) for gitpod.v1.eventservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
@@ -234,9 +224,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-gatewayservice-api
-  name: Gitpod gitpod.v1.GatewayService API
-  description: >-
-    The gitpod.v1.GatewayService API from Gitpod — 1 operation(s) for gitpod.v1.gatewayservice.
+  name: Gitpod.v1.GatewayService API
+  description: The gitpod.v1.GatewayService API from Gitpod — 1 operation(s) for gitpod.v1.gatewayservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -248,7 +237,7 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-groupservice-api
-  name: Gitpod gitpod.v1.GroupService API
+  name: Gitpod.v1.GroupService API
   description: The gitpod.v1.GroupService API from Gitpod — 14 operation(s) for gitpod.v1.groupservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
@@ -261,9 +250,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-identityservice-api
-  name: Gitpod gitpod.v1.IdentityService API
-  description: >-
-    The gitpod.v1.IdentityService API from Gitpod — 3 operation(s) for gitpod.v1.identityservice.
+  name: Gitpod.v1.IdentityService API
+  description: The gitpod.v1.IdentityService API from Gitpod — 3 operation(s) for gitpod.v1.identityservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -275,11 +263,9 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-insightsservice-api
-  name: Gitpod gitpod.v1.InsightsService API
-  description: >-
-    InsightsService provides AI code attribution analytics for projects.
-     The CLI reports per-commit co-author data from git history, and the
-     dashboard reads aggregated stats.
+  name: Gitpod.v1.InsightsService API
+  description: "InsightsService provides AI code attribution analytics for projects.\n The CLI reports\
+    \ per-commit co-author data from git history, and the\n dashboard reads aggregated stats."
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -291,9 +277,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-integrationservice-api
-  name: Gitpod gitpod.v1.IntegrationService API
-  description: >-
-    The gitpod.v1.IntegrationService API from Gitpod — 11 operation(s) for gitpod.v1.integrationservice.
+  name: Gitpod.v1.IntegrationService API
+  description: The gitpod.v1.IntegrationService API from Gitpod — 11 operation(s) for gitpod.v1.integrationservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -305,7 +290,7 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-notificationservice-api
-  name: Gitpod gitpod.v1.NotificationService API
+  name: Gitpod.v1.NotificationService API
   description: NotificationService manages in-app notifications for users.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
@@ -318,10 +303,9 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-onaintelligenceservice-api
-  name: Gitpod gitpod.v1.OnaIntelligenceService API
-  description: >-
-    OnaIntelligenceService manages organization-level LLM configurations for Ona Intelligence.
-     This service is restricted to Ona employees with the OnaIntelligenceAdmin role.
+  name: Gitpod.v1.OnaIntelligenceService API
+  description: "OnaIntelligenceService manages organization-level LLM configurations for Ona Intelligence.\n\
+    \ This service is restricted to Ona employees with the OnaIntelligenceAdmin role."
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -333,9 +317,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-organizationservice-api
-  name: Gitpod gitpod.v1.OrganizationService API
-  description: >-
-    The gitpod.v1.OrganizationService API from Gitpod — 39 operation(s) for gitpod.v1.organizationservice.
+  name: Gitpod.v1.OrganizationService API
+  description: The gitpod.v1.OrganizationService API from Gitpod — 39 operation(s) for gitpod.v1.organizationservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -347,10 +330,9 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-prebuildservice-api
-  name: Gitpod gitpod.v1.PrebuildService API
-  description: >-
-    PrebuildService manages prebuilds for projects to enable faster environment startup times.
-     Prebuilds create snapshots of environments that can be used to provision new environments quickly.
+  name: Gitpod.v1.PrebuildService API
+  description: "PrebuildService manages prebuilds for projects to enable faster environment startup times.\n\
+    \ Prebuilds create snapshots of environments that can be used to provision new environments quickly."
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -362,9 +344,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-projectservice-api
-  name: Gitpod gitpod.v1.ProjectService API
-  description: >-
-    The gitpod.v1.ProjectService API from Gitpod — 15 operation(s) for gitpod.v1.projectservice.
+  name: Gitpod.v1.ProjectService API
+  description: The gitpod.v1.ProjectService API from Gitpod — 15 operation(s) for gitpod.v1.projectservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -376,9 +357,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-runnerconfigurationservice-api
-  name: Gitpod gitpod.v1.RunnerConfigurationService API
-  description: >-
-    The gitpod.v1.RunnerConfigurationService API from Gitpod — 21 operation(s) for gitpod.v1.runnerconfigurationservice.
+  name: Gitpod.v1.RunnerConfigurationService API
+  description: The gitpod.v1.RunnerConfigurationService API from Gitpod — 21 operation(s) for gitpod.v1.runnerconfigurationservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -390,9 +370,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-runnerinteractionservice-api
-  name: Gitpod gitpod.v1.RunnerInteractionService API
-  description: >-
-    RunnerInteractionService provides a way for the backend to interact with environment runners.
+  name: Gitpod.v1.RunnerInteractionService API
+  description: RunnerInteractionService provides a way for the backend to interact with environment runners.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -404,9 +383,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-runnermanagerservice-api
-  name: Gitpod gitpod.v1.RunnerManagerService API
-  description: >-
-    The gitpod.v1.RunnerManagerService API from Gitpod — 6 operation(s) for gitpod.v1.runnermanagerservice.
+  name: Gitpod.v1.RunnerManagerService API
+  description: The gitpod.v1.RunnerManagerService API from Gitpod — 6 operation(s) for gitpod.v1.runnermanagerservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -418,9 +396,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-runnerservice-api
-  name: Gitpod gitpod.v1.RunnerService API
-  description: >-
-    The gitpod.v1.RunnerService API from Gitpod — 16 operation(s) for gitpod.v1.runnerservice.
+  name: Gitpod.v1.RunnerService API
+  description: The gitpod.v1.RunnerService API from Gitpod — 16 operation(s) for gitpod.v1.runnerservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -432,9 +409,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-secretservice-api
-  name: Gitpod gitpod.v1.SecretService API
-  description: >-
-    The gitpod.v1.SecretService API from Gitpod — 5 operation(s) for gitpod.v1.secretservice.
+  name: Gitpod.v1.SecretService API
+  description: The gitpod.v1.SecretService API from Gitpod — 5 operation(s) for gitpod.v1.secretservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -446,9 +422,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-serviceaccountservice-api
-  name: Gitpod gitpod.v1.ServiceAccountService API
-  description: >-
-    The gitpod.v1.ServiceAccountService API from Gitpod — 10 operation(s) for gitpod.v1.serviceaccountservice.
+  name: Gitpod.v1.ServiceAccountService API
+  description: The gitpod.v1.ServiceAccountService API from Gitpod — 10 operation(s) for gitpod.v1.serviceaccountservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -460,9 +435,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-sessionservice-api
-  name: Gitpod gitpod.v1.SessionService API
-  description: >-
-    The gitpod.v1.SessionService API from Gitpod — 9 operation(s) for gitpod.v1.sessionservice.
+  name: Gitpod.v1.SessionService API
+  description: The gitpod.v1.SessionService API from Gitpod — 9 operation(s) for gitpod.v1.sessionservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -474,11 +448,9 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-teamservice-api
-  name: Gitpod gitpod.v1.TeamService API
-  description: >-
-    TeamService manages teams and team memberships within an organization.
-     A team is an organizational unit that users can belong to.
-     Each user can belong to at most one team per organization.
+  name: Gitpod.v1.TeamService API
+  description: "TeamService manages teams and team memberships within an organization.\n A team is an\
+    \ organizational unit that users can belong to.\n Each user can belong to at most one team per organization."
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -490,7 +462,7 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-usageservice-api
-  name: Gitpod gitpod.v1.UsageService API
+  name: Gitpod.v1.UsageService API
   description: UsageService provides usage information about environments, users, and projects.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
@@ -503,7 +475,7 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-userservice-api
-  name: Gitpod gitpod.v1.UserService API
+  name: Gitpod.v1.UserService API
   description: The gitpod.v1.UserService API from Gitpod — 14 operation(s) for gitpod.v1.userservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
@@ -516,9 +488,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-webhookservice-api
-  name: Gitpod gitpod.v1.WebhookService API
-  description: >-
-    The gitpod.v1.WebhookService API from Gitpod — 8 operation(s) for gitpod.v1.webhookservice.
+  name: Gitpod.v1.WebhookService API
+  description: The gitpod.v1.WebhookService API from Gitpod — 8 operation(s) for gitpod.v1.webhookservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -530,9 +501,8 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 - aid: gitpod:gitpod-gitpod-v1-workflowservice-api
-  name: Gitpod gitpod.v1.WorkflowService API
-  description: >-
-    The gitpod.v1.WorkflowService API from Gitpod — 16 operation(s) for gitpod.v1.workflowservice.
+  name: Gitpod.v1.WorkflowService API
+  description: The gitpod.v1.WorkflowService API from Gitpod — 16 operation(s) for gitpod.v1.workflowservice.
   humanURL: https://www.gitpod.io/docs/references/gitpod-public-api
   baseURL: https://api.gitpod.io
   tags: []
@@ -544,51 +514,51 @@ apis:
   - type: Documentation
     url: https://www.gitpod.io/docs/references/gitpod-public-api
 common:
-  - type: CapabilityMap
-    url: capabilities/gitpod-capability-edges.yml
-    name: Gitpod Business Capability Map
-  - type: AgenticAccess
-    url: agentic-access/gitpod-agentic-access.yml
-  - type: TrustCenter
-    url: security/gitpod-trust-center.yml
-  - type: DomainSecurity
-    url: security/gitpod-domain-security.yml
-  - type: Authentication
-    url: authentication/gitpod-authentication.yml
-  - type: Website
-    url: https://www.gitpod.io
-  - type: Documentation
-    url: https://www.gitpod.io/docs/references/gitpod-public-api
-  - type: GitHubOrganization
-    url: https://github.com/gitpod-io
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/gitpod/
-  - type: Blog
-    url: https://www.gitpod.io/blog
-  - type: Pricing
-    url: https://www.gitpod.io/pricing
-  - type: StatusPage
-    url: https://status.gitpod.io/
-  - type: X
-    url: https://x.com/gitpod
-  - type: ChangeLog
-    url: https://www.gitpod.io/changelog
-  - type: SDKTypeScript
-    url: https://github.com/gitpod-io/gitpod-sdk-typescript
-  - type: SDKPython
-    url: https://github.com/gitpod-io/gitpod-sdk-python
-  - type: SDKGo
-    url: https://github.com/gitpod-io/gitpod-sdk-go
-  - type: Plans
-    url: plans/gitpod-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/gitpod-rate-limits.yml
-  - type: FinOps
-    url: finops/gitpod-finops.yml
-  - type: Vocabulary
-    url: vocabulary/gitpod-vocabulary.yml
-  - type: JSONLDContext
-    url: json-ld/gitpod-context.jsonld
+- type: CapabilityMap
+  url: capabilities/gitpod-capability-edges.yml
+  name: Gitpod Business Capability Map
+- type: AgenticAccess
+  url: agentic-access/gitpod-agentic-access.yml
+- type: TrustCenter
+  url: security/gitpod-trust-center.yml
+- type: DomainSecurity
+  url: security/gitpod-domain-security.yml
+- type: Authentication
+  url: authentication/gitpod-authentication.yml
+- type: Website
+  url: https://www.gitpod.io
+- type: Documentation
+  url: https://www.gitpod.io/docs/references/gitpod-public-api
+- type: GitHubOrganization
+  url: https://github.com/gitpod-io
+- type: LinkedIn
+  url: https://www.linkedin.com/company/gitpod/
+- type: Blog
+  url: https://www.gitpod.io/blog
+- type: Pricing
+  url: https://www.gitpod.io/pricing
+- type: StatusPage
+  url: https://status.gitpod.io/
+- type: X
+  url: https://x.com/gitpod
+- type: ChangeLog
+  url: https://www.gitpod.io/changelog
+- type: SDKTypeScript
+  url: https://github.com/gitpod-io/gitpod-sdk-typescript
+- type: SDKPython
+  url: https://github.com/gitpod-io/gitpod-sdk-python
+- type: SDKGo
+  url: https://github.com/gitpod-io/gitpod-sdk-go
+- type: Plans
+  url: plans/gitpod-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/gitpod-rate-limits.yml
+- type: FinOps
+  url: finops/gitpod-finops.yml
+- type: Vocabulary
+  url: vocabulary/gitpod-vocabulary.yml
+- type: JSONLDContext
+  url: json-ld/gitpod-context.jsonld
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
