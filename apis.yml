@@ -42,6 +42,12 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/gitpod.png
 tags:
 - Developer Tools
 - Cloud Development Environments
+- Workspace
+- AI Agents
+- DevOps
+tags_raw:
+- Developer Tools
+- Cloud Development Environments
 - Workspaces
 - AI Agents
 - DevOps
