@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.IdentityService API
+  title: Gitpod.v1.Identity Service API
   version: v1.0.0
 servers:
 - url: https://api.gitpod.io
@@ -12,7 +12,32 @@ paths:
   /gitpod.v1.IdentityService/ExchangeToken:
     servers: []
     post:
-      description: "Exchanges an exchange token for a new access token.\n\n Use this method to:\n - Convert exchange tokens to access tokens\n - Obtain new access credentials\n - Complete token exchange flows\n\n ### Examples\n\n - Exchange token:\n\n   Trades an exchange token for an access token.\n\n   ```yaml\n   exchangeToken: \"exchange-token-value\"\n   ```"
+      description: 'Exchanges an exchange token for a new access token.
+
+
+        Use this method to:
+
+        - Convert exchange tokens to access tokens
+
+        - Obtain new access credentials
+
+        - Complete token exchange flows
+
+
+        ### Examples
+
+
+        - Exchange token:
+
+
+        Trades an exchange token for an access token.
+
+
+        ```yaml
+
+        exchangeToken: "exchange-token-value"
+
+        ```'
       operationId: gitpod.v1.IdentityService.ExchangeToken
       parameters: []
       requestBody:
@@ -47,7 +72,34 @@ paths:
   /gitpod.v1.IdentityService/GetAuthenticatedIdentity:
     servers: []
     post:
-      description: "Retrieves information about the currently authenticated identity.\n\n Use this method to:\n - Get current user information\n - Check authentication status\n - Retrieve organization context\n - Validate authentication principal\n\n ### Examples\n\n - Get current identity:\n\n   Retrieves details about the authenticated user.\n\n   ```yaml\n   {}\n   ```"
+      description: 'Retrieves information about the currently authenticated identity.
+
+
+        Use this method to:
+
+        - Get current user information
+
+        - Check authentication status
+
+        - Retrieve organization context
+
+        - Validate authentication principal
+
+
+        ### Examples
+
+
+        - Get current identity:
+
+
+        Retrieves details about the authenticated user.
+
+
+        ```yaml
+
+        {}
+
+        ```'
       operationId: gitpod.v1.IdentityService.GetAuthenticatedIdentity
       parameters: []
       requestBody:
@@ -81,7 +133,51 @@ paths:
   /gitpod.v1.IdentityService/GetIDToken:
     servers: []
     post:
-      description: "Gets an ID token for authenticating with other services.\n\n Use this method to:\n - Obtain authentication tokens for service-to-service calls\n - Access protected resources\n - Generate scoped access tokens\n\n ### Examples\n\n - Get token for single service:\n\n   Retrieves a token for authenticating with one service.\n\n   ```yaml\n   audience:\n     - \"https://api.gitpod.io\"\n   ```\n\n - Get token for multiple services:\n\n   Retrieves a token valid for multiple services.\n\n   ```yaml\n   audience:\n     - \"https://api.gitpod.io\"\n     - \"https://ws.gitpod.io\"\n   ```"
+      description: 'Gets an ID token for authenticating with other services.
+
+
+        Use this method to:
+
+        - Obtain authentication tokens for service-to-service calls
+
+        - Access protected resources
+
+        - Generate scoped access tokens
+
+
+        ### Examples
+
+
+        - Get token for single service:
+
+
+        Retrieves a token for authenticating with one service.
+
+
+        ```yaml
+
+        audience:
+
+        - "https://api.gitpod.io"
+
+        ```
+
+
+        - Get token for multiple services:
+
+
+        Retrieves a token valid for multiple services.
+
+
+        ```yaml
+
+        audience:
+
+        - "https://api.gitpod.io"
+
+        - "https://ws.gitpod.io"
+
+        ```'
       operationId: gitpod.v1.IdentityService.GetIDToken
       parameters: []
       requestBody:
@@ -122,6 +218,54 @@ paths:
       - gitpod.v1.IdentityService
 components:
   schemas:
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.GetIDTokenRequest:
+      additionalProperties: false
+      properties:
+        audience:
+          items:
+            minItems: 1
+            type: string
+          minItems: 1
+          title: audience
+          type: array
+        version:
+          $ref: '#/components/schemas/gitpod.v1.IDTokenVersion'
+          description: version is the version of the ID token.
+          title: version
+      title: GetIDTokenRequest
+      type: object
+    gitpod.v1.GetAuthenticatedIdentityRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: GetAuthenticatedIdentityRequest
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
     connect.error:
       additionalProperties: true
       description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
@@ -153,30 +297,21 @@ components:
           type: string
       title: Connect Error
       type: object
-    gitpod.v1.Subject:
+    gitpod.v1.ExchangeTokenRequest:
       additionalProperties: false
       properties:
-        id:
-          description: id is the UUID of the subject
-          format: uuid
-          title: id
+        exchangeToken:
+          description: exchange_token is the token to exchange
+          title: exchange_token
           type: string
-        principal:
-          $ref: '#/components/schemas/gitpod.v1.Principal'
-          description: Principal is the principal of the subject
-          title: principal
-      title: Subject
+      title: ExchangeTokenRequest
       type: object
-    gitpod.v1.Principal:
+    gitpod.v1.IDTokenVersion:
       enum:
-      - PRINCIPAL_UNSPECIFIED
-      - PRINCIPAL_ACCOUNT
-      - PRINCIPAL_USER
-      - PRINCIPAL_RUNNER
-      - PRINCIPAL_ENVIRONMENT
-      - PRINCIPAL_SERVICE_ACCOUNT
-      - PRINCIPAL_RUNNER_MANAGER
-      title: Principal
+      - ID_TOKEN_VERSION_UNSPECIFIED
+      - ID_TOKEN_VERSION_V1
+      - ID_TOKEN_VERSION_V2
+      title: IDTokenVersion
       type: string
     gitpod.v1.GetAuthenticatedIdentityResponse:
       additionalProperties: false
@@ -193,23 +328,6 @@ components:
           title: subject
       title: GetAuthenticatedIdentityResponse
       type: object
-    gitpod.v1.ExchangeTokenRequest:
-      additionalProperties: false
-      properties:
-        exchangeToken:
-          description: exchange_token is the token to exchange
-          title: exchange_token
-          type: string
-      title: ExchangeTokenRequest
-      type: object
-    gitpod.v1.GetIDTokenResponse:
-      additionalProperties: false
-      properties:
-        token:
-          title: token
-          type: string
-      title: GetIDTokenResponse
-      type: object
     gitpod.v1.ExchangeTokenResponse:
       additionalProperties: false
       properties:
@@ -219,35 +337,13 @@ components:
           type: string
       title: ExchangeTokenResponse
       type: object
-    gitpod.v1.GetIDTokenRequest:
+    gitpod.v1.GetIDTokenResponse:
       additionalProperties: false
       properties:
-        audience:
-          items:
-            minItems: 1
-            type: string
-          minItems: 1
-          title: audience
-          type: array
-        version:
-          $ref: '#/components/schemas/gitpod.v1.IDTokenVersion'
-          description: version is the version of the ID token.
-          title: version
-      title: GetIDTokenRequest
-      type: object
-    gitpod.v1.IDTokenVersion:
-      enum:
-      - ID_TOKEN_VERSION_UNSPECIFIED
-      - ID_TOKEN_VERSION_V1
-      - ID_TOKEN_VERSION_V2
-      title: IDTokenVersion
-      type: string
-    gitpod.v1.GetAuthenticatedIdentityRequest:
-      additionalProperties: false
-      properties:
-        empty:
-          type: boolean
-      title: GetAuthenticatedIdentityRequest
+        token:
+          title: token
+          type: string
+      title: GetIDTokenResponse
       type: object
   securitySchemes:
     bearerAuth:

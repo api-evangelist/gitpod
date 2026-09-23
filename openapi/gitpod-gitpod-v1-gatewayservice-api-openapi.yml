@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.GatewayService API
+  title: Gitpod.v1.Gateway Service API
   version: v1.0.0
 servers:
 - url: https://api.gitpod.io
@@ -52,6 +52,30 @@ paths:
       - gitpod.v1.GatewayService
 components:
   schemas:
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
     connect.error:
       additionalProperties: true
       description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
@@ -83,15 +107,6 @@ components:
           type: string
       title: Connect Error
       type: object
-    gitpod.v1.PaginationResponse:
-      additionalProperties: false
-      properties:
-        nextToken:
-          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
-          title: next_token
-          type: string
-      title: PaginationResponse
-      type: object
     gitpod.v1.Gateway:
       additionalProperties: false
       description: Gateway represents a system gateway that provides access to services
@@ -113,30 +128,6 @@ components:
       - url
       title: Gateway
       type: object
-    gitpod.v1.PaginationRequest:
-      additionalProperties: false
-      properties:
-        pageSize:
-          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
-          format: int32
-          maximum: 100
-          title: page_size
-          type: integer
-        token:
-          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
-          title: token
-          type: string
-      title: PaginationRequest
-      type: object
-    gitpod.v1.ListGatewaysRequest:
-      additionalProperties: false
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: pagination contains the pagination options for listing gateways
-          title: pagination
-      title: ListGatewaysRequest
-      type: object
     gitpod.v1.ListGatewaysResponse:
       additionalProperties: false
       properties:
@@ -153,6 +144,15 @@ components:
       required:
       - gateways
       title: ListGatewaysResponse
+      type: object
+    gitpod.v1.ListGatewaysRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing gateways
+          title: pagination
+      title: ListGatewaysRequest
       type: object
   securitySchemes:
     bearerAuth:

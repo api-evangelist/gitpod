@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.UsageService API
+  title: Gitpod.v1.Usage Service API
   version: v1.0.0
   description: UsageService provides usage information about environments, users, and projects.
 servers:
@@ -74,7 +74,10 @@ paths:
   /gitpod.v1.UsageService/GetActiveUsersCount:
     servers: []
     post:
-      description: "Gets the count of active users.\n\n Returns the count of unique users who were active within the specified date range."
+      description: 'Gets the count of active users.
+
+
+        Returns the count of unique users who were active within the specified date range.'
       operationId: gitpod.v1.UsageService.GetActiveUsersCount
       parameters: []
       requestBody:
@@ -104,7 +107,12 @@ paths:
   /gitpod.v1.UsageService/GetActiveUsersTimeSeries:
     servers: []
     post:
-      description: "Gets active users time series in the specified date range, aggregated by the specified resolution.\n\n Returns a time series of active user counts within the specified date range, aggregated by the specified resolution.\n Each data point includes the timestamp and the count of unique users who were active at that time."
+      description: 'Gets active users time series in the specified date range, aggregated by the specified resolution.
+
+
+        Returns a time series of active user counts within the specified date range, aggregated by the specified resolution.
+
+        Each data point includes the timestamp and the count of unique users who were active at that time.'
       operationId: gitpod.v1.UsageService.GetActiveUsersTimeSeries
       parameters: []
       requestBody:
@@ -134,7 +142,14 @@ paths:
   /gitpod.v1.UsageService/GetAdoptionUsageSummary:
     servers: []
     post:
-      description: "Gets a summary of adoption and usage metrics for the insight card.\n\n Returns all scalar values, trends, and a sparkline for the Adoption & Usage\n insight category. Designed for the Project Home page card and similar summary\n views. For full-resolution time series, use the individual time series RPCs."
+      description: 'Gets a summary of adoption and usage metrics for the insight card.
+
+
+        Returns all scalar values, trends, and a sparkline for the Adoption & Usage
+
+        insight category. Designed for the Project Home page card and similar summary
+
+        views. For full-resolution time series, use the individual time series RPCs.'
       operationId: gitpod.v1.UsageService.GetAdoptionUsageSummary
       parameters: []
       requestBody:
@@ -344,7 +359,12 @@ paths:
   /gitpod.v1.UsageService/GetEnvironmentSessionsTimeSeries:
     servers: []
     post:
-      description: "Gets the environment sessions time series in the specified date range, aggregated by the specified resolution.\n\n Environment sessions count total environment starts (environment.started events),\n as opposed to GetActiveEnvironmentsTimeSeries which counts distinct environment IDs."
+      description: 'Gets the environment sessions time series in the specified date range, aggregated by the specified resolution.
+
+
+        Environment sessions count total environment starts (environment.started events),
+
+        as opposed to GetActiveEnvironmentsTimeSeries which counts distinct environment IDs.'
       operationId: gitpod.v1.UsageService.GetEnvironmentSessionsTimeSeries
       parameters: []
       requestBody:
@@ -434,7 +454,12 @@ paths:
   /gitpod.v1.UsageService/GetTopActiveUsers:
     servers: []
     post:
-      description: "Gets the top active users based on total runtime.\n\n Returns a list of users sorted by their total environment runtime within the specified date range.\n Each result includes the user ID, name (if available), and their total environment runtime in seconds."
+      description: 'Gets the top active users based on total runtime.
+
+
+        Returns a list of users sorted by their total environment runtime within the specified date range.
+
+        Each result includes the user ID, name (if available), and their total environment runtime in seconds.'
       operationId: gitpod.v1.UsageService.GetTopActiveUsers
       parameters: []
       requestBody:
@@ -524,7 +549,41 @@ paths:
   /gitpod.v1.UsageService/ListEnvironmentUsageRecords:
     servers: []
     post:
-      description: "Lists completed environment runtime records within a specified date range.\n\n Returns a list of environment runtime records that were completed within the specified date range. Records of currently running environments are not included.\n\n Use this method to:\n - View environment runtime records\n - Filter by project\n - Create custom usage reports\n\n ### Example\n\n ```yaml\n filter:\n   projectId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   dateRange:\n     startTime: \"2024-01-01T00:00:00Z\"\n     endTime: \"2024-01-02T00:00:00Z\"\n pagination:\n   pageSize: 100\n ```"
+      description: 'Lists completed environment runtime records within a specified date range.
+
+
+        Returns a list of environment runtime records that were completed within the specified date range. Records of currently running environments are not included.
+
+
+        Use this method to:
+
+        - View environment runtime records
+
+        - Filter by project
+
+        - Create custom usage reports
+
+
+        ### Example
+
+
+        ```yaml
+
+        filter:
+
+        projectId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        dateRange:
+
+        startTime: "2024-01-01T00:00:00Z"
+
+        endTime: "2024-01-02T00:00:00Z"
+
+        pagination:
+
+        pageSize: 100
+
+        ```'
       operationId: gitpod.v1.UsageService.ListEnvironmentUsageRecords
       parameters:
       - in: query
@@ -576,6 +635,20 @@ paths:
       - gitpod.v1.UsageService
 components:
   schemas:
+    gitpod.v1.TimeSeriesPoint:
+      additionalProperties: false
+      properties:
+        time:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Timestamp for this data point.
+          title: time
+        value:
+          description: The numerical value for this data point.
+          format: int32
+          title: value
+          type: integer
+      title: TimeSeriesPoint
+      type: object
     gitpod.v1.GetAgentTraceTimeSeriesResponse:
       additionalProperties: false
       properties:
@@ -586,78 +659,6 @@ components:
           title: time_series
           type: array
       title: GetAgentTraceTimeSeriesResponse
-      type: object
-    gitpod.v1.AgentTraceTimeBucket:
-      additionalProperties: false
-      description: AgentTraceTimeBucket contains stats for a single time period.
-      properties:
-        byModel:
-          description: Per-model breakdown for this bucket.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.AgentTraceModelBreakdown'
-          title: by_model
-          type: array
-        startTime:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Start of this time bucket.
-          title: start_time
-        totalLinesAdded:
-          description: Total lines added in this bucket.
-          title: total_lines_added
-          type: string
-        totalLinesRemoved:
-          description: Total lines removed in this bucket.
-          title: total_lines_removed
-          type: string
-        totalSessions:
-          description: Number of agent trace sessions in this bucket.
-          title: total_sessions
-          type: string
-      title: AgentTraceTimeBucket
-      type: object
-    gitpod.v1.GetTopEnvironmentClassesResponse.EnvironmentClassRuntimeInfo:
-      additionalProperties: false
-      properties:
-        environmentClassId:
-          description: Environment class ID. Not set for local runners.
-          title: environment_class_id
-          type: string
-        environmentClassName:
-          description: Environment class name if available.
-          title: environment_class_name
-          type: string
-        runnerKind:
-          $ref: '#/components/schemas/gitpod.v1.RunnerKind'
-          description: Type of runner that created the environment class.
-          title: runner_kind
-        runnerName:
-          description: Name of the runner that created the environment class.
-          title: runner_name
-          type: string
-        totalRuntimeSeconds:
-          description: Total runtime in seconds.
-          title: total_runtime_seconds
-          type: string
-      title: EnvironmentClassRuntimeInfo
-      type: object
-    gitpod.v1.GetTopEnvironmentClassesRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query metrics within.
-          title: date_range
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: Pagination options.
-          title: pagination
-        projectId:
-          description: Optional project ID to filter metrics by.
-          title: project_id
-          type: string
-      required:
-      - dateRange
-      title: GetTopEnvironmentClassesRequest
       type: object
     gitpod.v1.CoAuthorTimeBucket:
       additionalProperties: false
@@ -696,19 +697,411 @@ components:
           type: string
       title: CoAuthorTimeBucket
       type: object
-    gitpod.v1.GetActiveEnvironmentsCountResponse:
+    gitpod.v1.AgentTraceTimeBucket:
+      additionalProperties: false
+      description: AgentTraceTimeBucket contains stats for a single time period.
+      properties:
+        byModel:
+          description: Per-model breakdown for this bucket.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentTraceModelBreakdown'
+          title: by_model
+          type: array
+        startTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Start of this time bucket.
+          title: start_time
+        totalLinesAdded:
+          description: Total lines added in this bucket.
+          title: total_lines_added
+          type: string
+        totalLinesRemoved:
+          description: Total lines removed in this bucket.
+          title: total_lines_removed
+          type: string
+        totalSessions:
+          description: Number of agent trace sessions in this bucket.
+          title: total_sessions
+          type: string
+      title: AgentTraceTimeBucket
+      type: object
+    gitpod.v1.ListEnvironmentUsageRecordsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListEnvironmentUsageRecordsRequest.Filter'
+          description: Filter options.
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: Pagination options.
+          title: pagination
+      title: ListEnvironmentUsageRecordsRequest
+      type: object
+    gitpod.v1.GetEnvironmentRuntimeTimeSeriesRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query metrics within.
+          title: date_range
+        projectId:
+          description: Optional project ID to filter metrics by.
+          title: project_id
+          type: string
+        resolution:
+          $ref: '#/components/schemas/gitpod.v1.Resolution'
+          description: Time resolution for the series data.
+          title: resolution
+      required:
+      - dateRange
+      title: GetEnvironmentRuntimeTimeSeriesRequest
+      type: object
+    gitpod.v1.GetTopActiveUsersRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query metrics within.
+          title: date_range
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+        projectId:
+          description: Optional project ID to filter metrics by.
+          title: project_id
+          type: string
+      required:
+      - dateRange
+      title: GetTopActiveUsersRequest
+      type: object
+    gitpod.v1.GetTopActiveUsersResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        users:
+          description: List of users sorted by total runtime (descending).
+          items:
+            $ref: '#/components/schemas/gitpod.v1.GetTopActiveUsersResponse.UserRuntimeInfo'
+          title: users
+          type: array
+      title: GetTopActiveUsersResponse
+      type: object
+    gitpod.v1.GetPrSummaryRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query within.
+          title: date_range
+        projectId:
+          description: Optional project ID to scope results.
+          title: project_id
+          type: string
+        teamId:
+          description: "Optional team ID to scope results to a specific team.\n Mutually exclusive with user_id."
+          title: team_id
+          type: string
+        userId:
+          description: "Optional user ID to scope results to a specific user.\n Mutually exclusive with team_id."
+          title: user_id
+          type: string
+      required:
+      - dateRange
+      title: GetPrSummaryRequest
+      type: object
+    gitpod.v1.GetCoAuthorTimeSeriesResponse:
+      additionalProperties: false
+      properties:
+        timeSeries:
+          description: Time series of contribution stats, bucketed by the requested resolution.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CoAuthorTimeBucket'
+          title: time_series
+          type: array
+      title: GetCoAuthorTimeSeriesResponse
+      type: object
+    gitpod.v1.EnvironmentUsageRecord:
+      additionalProperties: false
+      description: EnvironmentUsageRecord represents a record of an environment from start to stop.
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Time when the environment was created.
+          title: created_at
+        environmentClassId:
+          description: Environment class ID associated with the record.
+          title: environment_class_id
+          type: string
+        environmentId:
+          description: Environment ID associated with the record.
+          title: environment_id
+          type: string
+        id:
+          description: Environment usage record ID.
+          title: id
+          type: string
+        projectId:
+          description: Project ID associated with the environment (if available).
+          title: project_id
+          type: string
+        runnerId:
+          description: Runner ID associated with the environment.
+          title: runner_id
+          type: string
+        stoppedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Time when the environment was stopped.
+          title: stopped_at
+        userId:
+          description: User ID is the ID of the user who created the environment associated with the record.
+          title: user_id
+          type: string
+      title: EnvironmentUsageRecord
+      type: object
+    gitpod.v1.GetTopEnvironmentClassesResponse:
+      additionalProperties: false
+      properties:
+        environmentClasses:
+          description: List of environment classes sorted by total runtime (descending). All environment classes belonging to local runners are grouped together.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.GetTopEnvironmentClassesResponse.EnvironmentClassRuntimeInfo'
+          title: environment_classes
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      title: GetTopEnvironmentClassesResponse
+      type: object
+    gitpod.v1.GetEnvironmentRuntimeRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query metrics within.
+          title: date_range
+        projectId:
+          description: Optional project ID to filter metrics by.
+          title: project_id
+          type: string
+      required:
+      - dateRange
+      title: GetEnvironmentRuntimeRequest
+      type: object
+    gitpod.v1.GetPrSummaryResponse:
+      additionalProperties: false
+      properties:
+        sparkline:
+          description: Sparkline data for card rendering.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
+          title: sparkline
+          type: array
+        summary:
+          $ref: '#/components/schemas/gitpod.v1.PrSummary'
+          description: Summary totals and trends for the requested date range.
+          title: summary
+      title: GetPrSummaryResponse
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.Resolution:
+      description: Resolution specifies the time granularity for time series data.
+      enum:
+      - RESOLUTION_UNSPECIFIED
+      - RESOLUTION_HOURLY
+      - RESOLUTION_DAILY
+      - RESOLUTION_WEEKLY
+      - RESOLUTION_MONTHLY
+      title: Resolution
+      type: string
+    gitpod.v1.GetAgentTraceSummaryRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query within.
+          title: date_range
+        projectId:
+          description: Optional project ID to scope results.
+          title: project_id
+          type: string
+        teamId:
+          description: "Optional team ID to scope results to a specific team.\n Mutually exclusive with user_id."
+          title: team_id
+          type: string
+        userId:
+          description: "Optional user ID to scope results to a specific user.\n Mutually exclusive with team_id."
+          title: user_id
+          type: string
+      required:
+      - dateRange
+      title: GetAgentTraceSummaryRequest
+      type: object
+    gitpod.v1.GetEnvironmentSessionsTimeSeriesRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query metrics within.
+          title: date_range
+        projectId:
+          description: Optional project ID to filter metrics by.
+          title: project_id
+          type: string
+        resolution:
+          $ref: '#/components/schemas/gitpod.v1.Resolution'
+          description: Time resolution for the series data.
+          title: resolution
+      required:
+      - dateRange
+      title: GetEnvironmentSessionsTimeSeriesRequest
+      type: object
+    gitpod.v1.GetAdoptionUsageSummaryRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query metrics within.
+          title: date_range
+        projectId:
+          description: Optional project ID to filter metrics by.
+          title: project_id
+          type: string
+        userId:
+          description: Optional user ID to filter metrics for a specific user (personal insights view).
+          title: user_id
+          type: string
+      required:
+      - dateRange
+      title: GetAdoptionUsageSummaryRequest
+      type: object
+    gitpod.v1.GetPrTimeSeriesResponse:
+      additionalProperties: false
+      properties:
+        timeSeries:
+          description: Time series of PR speed metrics, bucketed by the requested resolution.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.PrTimeBucket'
+          title: time_series
+          type: array
+      title: GetPrTimeSeriesResponse
+      type: object
+    gitpod.v1.GetAgentTraceSummaryResponse:
+      additionalProperties: false
+      properties:
+        sparkline:
+          description: Sparkline data for card rendering.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
+          title: sparkline
+          type: array
+        summary:
+          $ref: '#/components/schemas/gitpod.v1.AgentTraceSummary'
+          description: Summary totals and trends for the requested date range.
+          title: summary
+      title: GetAgentTraceSummaryResponse
+      type: object
+    gitpod.v1.GetActiveUsersCountResponse:
       additionalProperties: false
       properties:
         count:
-          description: Count of active environments in the date range.
+          description: Count of active users in the date range.
           title: count
           type: string
         trend:
-          description: "Fractional change in active environments vs previous period.\n Computed as (current - previous) / previous."
+          description: "Fractional change in active users vs previous period.\n Computed as (current - previous) / previous."
           format: double
           title: trend
           type: number
-      title: GetActiveEnvironmentsCountResponse
+      title: GetActiveUsersCountResponse
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.GetTopEnvironmentClassesResponse.EnvironmentClassRuntimeInfo:
+      additionalProperties: false
+      properties:
+        environmentClassId:
+          description: Environment class ID. Not set for local runners.
+          title: environment_class_id
+          type: string
+        environmentClassName:
+          description: Environment class name if available.
+          title: environment_class_name
+          type: string
+        runnerKind:
+          $ref: '#/components/schemas/gitpod.v1.RunnerKind'
+          description: Type of runner that created the environment class.
+          title: runner_kind
+        runnerName:
+          description: Name of the runner that created the environment class.
+          title: runner_name
+          type: string
+        totalRuntimeSeconds:
+          description: Total runtime in seconds.
+          title: total_runtime_seconds
+          type: string
+      title: EnvironmentClassRuntimeInfo
+      type: object
+    gitpod.v1.GetActiveEnvironmentsCountRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query metrics within.
+          title: date_range
+        projectId:
+          description: Optional project ID to filter metrics by.
+          title: project_id
+          type: string
+      required:
+      - dateRange
+      title: GetActiveEnvironmentsCountRequest
+      type: object
+    gitpod.v1.GetActiveEnvironmentsTimeSeriesRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query metrics within.
+          title: date_range
+        projectId:
+          description: Optional project ID to filter metrics by.
+          title: project_id
+          type: string
+        resolution:
+          $ref: '#/components/schemas/gitpod.v1.Resolution'
+          description: Time resolution for the series data.
+          title: resolution
+      required:
+      - dateRange
+      title: GetActiveEnvironmentsTimeSeriesRequest
       type: object
     gitpod.v1.PrTimeBucket:
       additionalProperties: false
@@ -738,26 +1131,18 @@ components:
           type: number
       title: PrTimeBucket
       type: object
-    gitpod.v1.GetActiveEnvironmentsTimeSeriesRequest:
+    gitpod.v1.GetEnvironmentSessionsTimeSeriesResponse:
       additionalProperties: false
       properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query metrics within.
-          title: date_range
-        projectId:
-          description: Optional project ID to filter metrics by.
-          title: project_id
-          type: string
-        resolution:
-          $ref: '#/components/schemas/gitpod.v1.Resolution'
-          description: Time resolution for the series data.
-          title: resolution
-      required:
-      - dateRange
-      title: GetActiveEnvironmentsTimeSeriesRequest
+        sessions:
+          description: "Environment sessions time series. Counts total environment starts per time bucket,\n as opposed to GetActiveEnvironmentsTimeSeries which counts distinct environment IDs."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
+          title: sessions
+          type: array
+      title: GetEnvironmentSessionsTimeSeriesResponse
       type: object
-    gitpod.v1.GetEnvironmentSessionsTimeSeriesRequest:
+    gitpod.v1.GetActiveUsersCountRequest:
       additionalProperties: false
       properties:
         dateRange:
@@ -768,13 +1153,36 @@ components:
           description: Optional project ID to filter metrics by.
           title: project_id
           type: string
+      required:
+      - dateRange
+      title: GetActiveUsersCountRequest
+      type: object
+    gitpod.v1.GetCoAuthorTimeSeriesRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query within.
+          title: date_range
+        projectId:
+          description: Optional project ID to scope results.
+          title: project_id
+          type: string
         resolution:
           $ref: '#/components/schemas/gitpod.v1.Resolution'
           description: Time resolution for the series data.
           title: resolution
+        teamId:
+          description: "Optional team ID to scope results to a specific team.\n Mutually exclusive with user_id."
+          title: team_id
+          type: string
+        userId:
+          description: "Optional user ID to scope results to a specific user.\n Mutually exclusive with team_id."
+          title: user_id
+          type: string
       required:
       - dateRange
-      title: GetEnvironmentSessionsTimeSeriesRequest
+      title: GetCoAuthorTimeSeriesRequest
       type: object
     connect.error:
       additionalProperties: true
@@ -807,395 +1215,6 @@ components:
           type: string
       title: Connect Error
       type: object
-    gitpod.v1.AgentTraceSummary:
-      additionalProperties: false
-      description: AgentTraceSummary contains aggregate totals for a date range.
-      properties:
-        byModel:
-          description: Per-model breakdown of session stats.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.AgentTraceModelBreakdown'
-          title: by_model
-          type: array
-        totalLinesAdded:
-          description: Total lines added across all sessions.
-          title: total_lines_added
-          type: string
-        totalLinesAddedTrend:
-          description: Fractional change in total_lines_added compared to the previous period.
-          format: double
-          title: total_lines_added_trend
-          type: number
-        totalLinesRemoved:
-          description: Total lines removed across all sessions.
-          title: total_lines_removed
-          type: string
-        totalLinesRemovedTrend:
-          description: Fractional change in total_lines_removed compared to the previous period.
-          format: double
-          title: total_lines_removed_trend
-          type: number
-        totalSessions:
-          description: Total number of agent trace sessions in the date range.
-          title: total_sessions
-          type: string
-        totalSessionsTrend:
-          description: "Fractional change in total_sessions compared to the previous period of\n equal length. Computed as (current - previous) / previous. Zero when there\n is no previous data."
-          format: double
-          title: total_sessions_trend
-          type: number
-      title: AgentTraceSummary
-      type: object
-    gitpod.v1.GetTopEnvironmentClassesResponse:
-      additionalProperties: false
-      properties:
-        environmentClasses:
-          description: List of environment classes sorted by total runtime (descending). All environment classes belonging to local runners are grouped together.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.GetTopEnvironmentClassesResponse.EnvironmentClassRuntimeInfo'
-          title: environment_classes
-          type: array
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          title: pagination
-      title: GetTopEnvironmentClassesResponse
-      type: object
-    gitpod.v1.GetPrSummaryRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query within.
-          title: date_range
-        projectId:
-          description: Optional project ID to scope results.
-          title: project_id
-          type: string
-        teamId:
-          description: "Optional team ID to scope results to a specific team.\n Mutually exclusive with user_id."
-          title: team_id
-          type: string
-        userId:
-          description: "Optional user ID to scope results to a specific user.\n Mutually exclusive with team_id."
-          title: user_id
-          type: string
-      required:
-      - dateRange
-      title: GetPrSummaryRequest
-      type: object
-    gitpod.v1.GetAgentTraceSummaryRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query within.
-          title: date_range
-        projectId:
-          description: Optional project ID to scope results.
-          title: project_id
-          type: string
-        teamId:
-          description: "Optional team ID to scope results to a specific team.\n Mutually exclusive with user_id."
-          title: team_id
-          type: string
-        userId:
-          description: "Optional user ID to scope results to a specific user.\n Mutually exclusive with team_id."
-          title: user_id
-          type: string
-      required:
-      - dateRange
-      title: GetAgentTraceSummaryRequest
-      type: object
-    gitpod.v1.ListEnvironmentUsageRecordsRequest.Filter:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query runtime records within.
-          title: date_range
-        projectId:
-          description: Optional project ID to filter runtime records by.
-          title: project_id
-          type: string
-      required:
-      - dateRange
-      title: Filter
-      type: object
-    gitpod.v1.PaginationRequest:
-      additionalProperties: false
-      properties:
-        pageSize:
-          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
-          format: int32
-          maximum: 100
-          title: page_size
-          type: integer
-        token:
-          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
-          title: token
-          type: string
-      title: PaginationRequest
-      type: object
-    gitpod.v1.TimeSeriesPoint:
-      additionalProperties: false
-      properties:
-        time:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Timestamp for this data point.
-          title: time
-        value:
-          description: The numerical value for this data point.
-          format: int32
-          title: value
-          type: integer
-      title: TimeSeriesPoint
-      type: object
-    gitpod.v1.GetEnvironmentRuntimeTimeSeriesRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query metrics within.
-          title: date_range
-        projectId:
-          description: Optional project ID to filter metrics by.
-          title: project_id
-          type: string
-        resolution:
-          $ref: '#/components/schemas/gitpod.v1.Resolution'
-          description: Time resolution for the series data.
-          title: resolution
-      required:
-      - dateRange
-      title: GetEnvironmentRuntimeTimeSeriesRequest
-      type: object
-    gitpod.v1.GetCoAuthorTimeSeriesRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query within.
-          title: date_range
-        projectId:
-          description: Optional project ID to scope results.
-          title: project_id
-          type: string
-        resolution:
-          $ref: '#/components/schemas/gitpod.v1.Resolution'
-          description: Time resolution for the series data.
-          title: resolution
-        teamId:
-          description: "Optional team ID to scope results to a specific team.\n Mutually exclusive with user_id."
-          title: team_id
-          type: string
-        userId:
-          description: "Optional user ID to scope results to a specific user.\n Mutually exclusive with team_id."
-          title: user_id
-          type: string
-      required:
-      - dateRange
-      title: GetCoAuthorTimeSeriesRequest
-      type: object
-    gitpod.v1.GetEnvironmentRuntimeRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query metrics within.
-          title: date_range
-        projectId:
-          description: Optional project ID to filter metrics by.
-          title: project_id
-          type: string
-      required:
-      - dateRange
-      title: GetEnvironmentRuntimeRequest
-      type: object
-    gitpod.v1.GetAdoptionUsageSummaryRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query metrics within.
-          title: date_range
-        projectId:
-          description: Optional project ID to filter metrics by.
-          title: project_id
-          type: string
-        userId:
-          description: Optional user ID to filter metrics for a specific user (personal insights view).
-          title: user_id
-          type: string
-      required:
-      - dateRange
-      title: GetAdoptionUsageSummaryRequest
-      type: object
-    gitpod.v1.GetTopActiveUsersRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query metrics within.
-          title: date_range
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          title: pagination
-        projectId:
-          description: Optional project ID to filter metrics by.
-          title: project_id
-          type: string
-      required:
-      - dateRange
-      title: GetTopActiveUsersRequest
-      type: object
-    gitpod.v1.GetAgentTraceSummaryResponse:
-      additionalProperties: false
-      properties:
-        sparkline:
-          description: Sparkline data for card rendering.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
-          title: sparkline
-          type: array
-        summary:
-          $ref: '#/components/schemas/gitpod.v1.AgentTraceSummary'
-          description: Summary totals and trends for the requested date range.
-          title: summary
-      title: GetAgentTraceSummaryResponse
-      type: object
-    gitpod.v1.GetTopProjectsRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query metrics within.
-          title: date_range
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: Pagination options.
-          title: pagination
-      required:
-      - dateRange
-      title: GetTopProjectsRequest
-      type: object
-    gitpod.v1.GetCoAuthorSummaryResponse:
-      additionalProperties: false
-      properties:
-        sparkline:
-          description: Sparkline data for card rendering.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
-          title: sparkline
-          type: array
-        summary:
-          $ref: '#/components/schemas/gitpod.v1.CoAuthorSummary'
-          description: Summary totals and trends for the requested date range.
-          title: summary
-      title: GetCoAuthorSummaryResponse
-      type: object
-    gitpod.v1.GetActiveEnvironmentsTimeSeriesResponse:
-      additionalProperties: false
-      properties:
-        activeEnvironments:
-          description: Active environments time series
-          items:
-            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
-          title: active_environments
-          type: array
-      title: GetActiveEnvironmentsTimeSeriesResponse
-      type: object
-    gitpod.v1.GetActiveUsersTimeSeriesRequest:
-      additionalProperties: false
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query metrics within.
-          title: date_range
-        projectId:
-          description: Optional project ID to filter metrics by.
-          title: project_id
-          type: string
-        resolution:
-          $ref: '#/components/schemas/gitpod.v1.Resolution'
-          description: Time resolution for the series data.
-          title: resolution
-      required:
-      - dateRange
-      title: GetActiveUsersTimeSeriesRequest
-      type: object
-    gitpod.v1.GetTopProjectsResponse.ProjectRuntimeInfo:
-      additionalProperties: false
-      properties:
-        projectId:
-          description: Project ID.
-          title: project_id
-          type: string
-        projectName:
-          description: Project name if available.
-          title: project_name
-          type: string
-        totalRuntimeSeconds:
-          description: Total runtime in seconds.
-          title: total_runtime_seconds
-          type: string
-      title: ProjectRuntimeInfo
-      type: object
-    gitpod.v1.DateRange:
-      additionalProperties: false
-      description: DateRange specifies a time period for queries.
-      properties:
-        endTime:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: End time of the date range (exclusive).
-          title: end_time
-        startTime:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Start time of the date range (inclusive).
-          title: start_time
-      required:
-      - startTime
-      - endTime
-      title: DateRange
-      type: object
-    gitpod.v1.PaginationResponse:
-      additionalProperties: false
-      properties:
-        nextToken:
-          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
-          title: next_token
-          type: string
-      title: PaginationResponse
-      type: object
-    gitpod.v1.GetEnvironmentRuntimeTimeSeriesResponse:
-      additionalProperties: false
-      properties:
-        totalRuntime:
-          description: Total runtime time series
-          items:
-            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
-          title: total_runtime
-          type: array
-      title: GetEnvironmentRuntimeTimeSeriesResponse
-      type: object
-    gitpod.v1.GetTopProjectsResponse:
-      additionalProperties: false
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          description: Pagination response.
-          title: pagination
-        projects:
-          description: List of projects sorted by total runtime (descending).
-          items:
-            $ref: '#/components/schemas/gitpod.v1.GetTopProjectsResponse.ProjectRuntimeInfo'
-          title: projects
-          type: array
-      title: GetTopProjectsResponse
-      type: object
-    google.protobuf.Timestamp:
-      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
-      format: date-time
-      type: string
     gitpod.v1.GetTopActiveUsersResponse.UserRuntimeInfo:
       additionalProperties: false
       properties:
@@ -1218,21 +1237,22 @@ components:
           type: string
       title: UserRuntimeInfo
       type: object
-    gitpod.v1.GetEnvironmentRuntimeResponse:
+    gitpod.v1.GetTopProjectsResponse:
       additionalProperties: false
       properties:
-        totalRuntimeSeconds:
-          description: Total runtime in seconds.
-          title: total_runtime_seconds
-          type: string
-        trend:
-          description: "Fractional change in total runtime vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: trend
-          type: number
-      title: GetEnvironmentRuntimeResponse
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: Pagination response.
+          title: pagination
+        projects:
+          description: List of projects sorted by total runtime (descending).
+          items:
+            $ref: '#/components/schemas/gitpod.v1.GetTopProjectsResponse.ProjectRuntimeInfo'
+          title: projects
+          type: array
+      title: GetTopProjectsResponse
       type: object
-    gitpod.v1.GetActiveEnvironmentsCountRequest:
+    gitpod.v1.GetActiveUsersTimeSeriesRequest:
       additionalProperties: false
       properties:
         dateRange:
@@ -1243,77 +1263,128 @@ components:
           description: Optional project ID to filter metrics by.
           title: project_id
           type: string
+        resolution:
+          $ref: '#/components/schemas/gitpod.v1.Resolution'
+          description: Time resolution for the series data.
+          title: resolution
       required:
       - dateRange
-      title: GetActiveEnvironmentsCountRequest
+      title: GetActiveUsersTimeSeriesRequest
       type: object
-    gitpod.v1.GetActiveUsersTimeSeriesResponse:
+    gitpod.v1.GetTopEnvironmentClassesRequest:
       additionalProperties: false
       properties:
-        weeklyActiveReturningUsers:
-          description: Weekly active returning users time series [WAU2+]
-          items:
-            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
-          title: weekly_active_returning_users
-          type: array
-        weeklyActiveUsers:
-          description: Weekly active users time series [WAU]
-          items:
-            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
-          title: weekly_active_users
-          type: array
-      title: GetActiveUsersTimeSeriesResponse
-      type: object
-    gitpod.v1.GetTopActiveUsersResponse:
-      additionalProperties: false
-      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query metrics within.
+          title: date_range
         pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: Pagination options.
           title: pagination
-        users:
-          description: List of users sorted by total runtime (descending).
-          items:
-            $ref: '#/components/schemas/gitpod.v1.GetTopActiveUsersResponse.UserRuntimeInfo'
-          title: users
-          type: array
-      title: GetTopActiveUsersResponse
+        projectId:
+          description: Optional project ID to filter metrics by.
+          title: project_id
+          type: string
+      required:
+      - dateRange
+      title: GetTopEnvironmentClassesRequest
       type: object
-    gitpod.v1.GetPrTimeSeriesResponse:
+    gitpod.v1.CoAuthorTool:
+      description: "CoAuthorTool identifies the AI tool that co-authored a commit.\n UNSPECIFIED (0) is the proto default and must not appear in reported data.\n Use HUMAN for commits with no AI co-author."
+      enum:
+      - CO_AUTHOR_TOOL_UNSPECIFIED
+      - CO_AUTHOR_TOOL_NO_COAUTHOR
+      - CO_AUTHOR_TOOL_HUMAN_COAUTHOR
+      - CO_AUTHOR_TOOL_ONA
+      - CO_AUTHOR_TOOL_GITHUB_COPILOT
+      - CO_AUTHOR_TOOL_CURSOR
+      - CO_AUTHOR_TOOL_OTHER
+      - CO_AUTHOR_TOOL_CLAUDE
+      title: CoAuthorTool
+      type: string
+    gitpod.v1.AgentTraceModelBreakdown:
+      additionalProperties: false
+      description: AgentTraceModelBreakdown contains stats for a single LLM model.
+      properties:
+        linesAdded:
+          description: Lines added by sessions using this model.
+          title: lines_added
+          type: string
+        linesRemoved:
+          description: Lines removed by sessions using this model.
+          title: lines_removed
+          type: string
+        model:
+          $ref: '#/components/schemas/gitpod.v1.SupportedModel'
+          description: The model these stats are for.
+          title: model
+        sessions:
+          description: Number of sessions that used this model.
+          title: sessions
+          type: string
+      title: AgentTraceModelBreakdown
+      type: object
+    gitpod.v1.PrSummary:
+      additionalProperties: false
+      description: PrSummary contains aggregate PR speed metrics for a date range.
+      properties:
+        deploymentFrequency:
+          description: PRs merged to the default branch per week.
+          format: double
+          title: deployment_frequency
+          type: number
+        deploymentFrequencyTrend:
+          description: "Fractional change in deployment_frequency vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: deployment_frequency_trend
+          type: number
+        leadTimeSeconds:
+          description: Median lead time for changes in seconds (first commit → merge).
+          format: double
+          title: lead_time_seconds
+          type: number
+        leadTimeTrend:
+          description: "Fractional change in lead_time_seconds vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: lead_time_trend
+          type: number
+        prsMergedCount:
+          description: Total PRs merged in the date range.
+          title: prs_merged_count
+          type: string
+        prsMergedTrend:
+          description: "Fractional change in prs_merged_count vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: prs_merged_trend
+          type: number
+        timeToFirstApprovalSeconds:
+          description: "Median time to first approval in seconds.\n Zero when no PRs in the range had approvals."
+          format: double
+          title: time_to_first_approval_seconds
+          type: number
+        timeToFirstApprovalTrend:
+          description: "Fractional change in time_to_first_approval_seconds vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: time_to_first_approval_trend
+          type: number
+      title: PrSummary
+      type: object
+    gitpod.v1.GetTopProjectsRequest:
       additionalProperties: false
       properties:
-        timeSeries:
-          description: Time series of PR speed metrics, bucketed by the requested resolution.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.PrTimeBucket'
-          title: time_series
-          type: array
-      title: GetPrTimeSeriesResponse
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query metrics within.
+          title: date_range
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: Pagination options.
+          title: pagination
+      required:
+      - dateRange
+      title: GetTopProjectsRequest
       type: object
-    gitpod.v1.SupportedModel:
-      enum:
-      - SUPPORTED_MODEL_UNSPECIFIED
-      - SUPPORTED_MODEL_SONNET_3_5
-      - SUPPORTED_MODEL_SONNET_3_7
-      - SUPPORTED_MODEL_SONNET_3_7_EXTENDED
-      - SUPPORTED_MODEL_SONNET_4
-      - SUPPORTED_MODEL_SONNET_4_EXTENDED
-      - SUPPORTED_MODEL_SONNET_4_5
-      - SUPPORTED_MODEL_SONNET_4_5_EXTENDED
-      - SUPPORTED_MODEL_SONNET_4_6
-      - SUPPORTED_MODEL_SONNET_4_6_EXTENDED
-      - SUPPORTED_MODEL_OPUS_4
-      - SUPPORTED_MODEL_OPUS_4_EXTENDED
-      - SUPPORTED_MODEL_OPUS_4_5
-      - SUPPORTED_MODEL_OPUS_4_5_EXTENDED
-      - SUPPORTED_MODEL_OPUS_4_6
-      - SUPPORTED_MODEL_OPUS_4_6_EXTENDED
-      - SUPPORTED_MODEL_HAIKU_4_5
-      - SUPPORTED_MODEL_OPENAI_4O
-      - SUPPORTED_MODEL_OPENAI_4O_MINI
-      - SUPPORTED_MODEL_OPENAI_O1
-      - SUPPORTED_MODEL_OPENAI_O1_MINI
-      title: SupportedModel
-      type: string
     gitpod.v1.CoAuthorSummary:
       additionalProperties: false
       description: CoAuthorSummary contains aggregate totals for a date range.
@@ -1362,59 +1433,84 @@ components:
           type: number
       title: CoAuthorSummary
       type: object
-    gitpod.v1.GetEnvironmentSessionsTimeSeriesResponse:
+    gitpod.v1.GetActiveUsersTimeSeriesResponse:
       additionalProperties: false
       properties:
-        sessions:
-          description: "Environment sessions time series. Counts total environment starts per time bucket,\n as opposed to GetActiveEnvironmentsTimeSeries which counts distinct environment IDs."
+        weeklyActiveReturningUsers:
+          description: Weekly active returning users time series [WAU2+]
           items:
             $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
-          title: sessions
+          title: weekly_active_returning_users
           type: array
-      title: GetEnvironmentSessionsTimeSeriesResponse
-      type: object
-    gitpod.v1.ListEnvironmentUsageRecordsResponse:
-      additionalProperties: false
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          description: Pagination response.
-          title: pagination
-        records:
-          description: List of environment runtime records.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.EnvironmentUsageRecord'
-          title: records
-          type: array
-      title: ListEnvironmentUsageRecordsResponse
-      type: object
-    gitpod.v1.ListEnvironmentUsageRecordsRequest:
-      additionalProperties: false
-      properties:
-        filter:
-          $ref: '#/components/schemas/gitpod.v1.ListEnvironmentUsageRecordsRequest.Filter'
-          description: Filter options.
-          title: filter
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: Pagination options.
-          title: pagination
-      title: ListEnvironmentUsageRecordsRequest
-      type: object
-    gitpod.v1.GetPrSummaryResponse:
-      additionalProperties: false
-      properties:
-        sparkline:
-          description: Sparkline data for card rendering.
+        weeklyActiveUsers:
+          description: Weekly active users time series [WAU]
           items:
             $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
-          title: sparkline
+          title: weekly_active_users
           type: array
-        summary:
-          $ref: '#/components/schemas/gitpod.v1.PrSummary'
-          description: Summary totals and trends for the requested date range.
-          title: summary
-      title: GetPrSummaryResponse
+      title: GetActiveUsersTimeSeriesResponse
+      type: object
+    gitpod.v1.GetEnvironmentRuntimeResponse:
+      additionalProperties: false
+      properties:
+        totalRuntimeSeconds:
+          description: Total runtime in seconds.
+          title: total_runtime_seconds
+          type: string
+        trend:
+          description: "Fractional change in total runtime vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: trend
+          type: number
+      title: GetEnvironmentRuntimeResponse
+      type: object
+    gitpod.v1.DateRange:
+      additionalProperties: false
+      description: DateRange specifies a time period for queries.
+      properties:
+        endTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: End time of the date range (exclusive).
+          title: end_time
+        startTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Start time of the date range (inclusive).
+          title: start_time
+      required:
+      - startTime
+      - endTime
+      title: DateRange
+      type: object
+    gitpod.v1.GetTopProjectsResponse.ProjectRuntimeInfo:
+      additionalProperties: false
+      properties:
+        projectId:
+          description: Project ID.
+          title: project_id
+          type: string
+        projectName:
+          description: Project name if available.
+          title: project_name
+          type: string
+        totalRuntimeSeconds:
+          description: Total runtime in seconds.
+          title: total_runtime_seconds
+          type: string
+      title: ProjectRuntimeInfo
+      type: object
+    gitpod.v1.GetActiveEnvironmentsCountResponse:
+      additionalProperties: false
+      properties:
+        count:
+          description: Count of active environments in the date range.
+          title: count
+          type: string
+        trend:
+          description: "Fractional change in active environments vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: trend
+          type: number
+      title: GetActiveEnvironmentsCountResponse
       type: object
     gitpod.v1.GetAdoptionUsageSummaryResponse:
       additionalProperties: false
@@ -1468,42 +1564,60 @@ components:
           type: array
       title: GetAdoptionUsageSummaryResponse
       type: object
-    gitpod.v1.GetActiveUsersCountRequest:
+    gitpod.v1.ListEnvironmentUsageRecordsResponse:
       additionalProperties: false
       properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query metrics within.
-          title: date_range
-        projectId:
-          description: Optional project ID to filter metrics by.
-          title: project_id
-          type: string
-      required:
-      - dateRange
-      title: GetActiveUsersCountRequest
-      type: object
-    gitpod.v1.GetCoAuthorTimeSeriesResponse:
-      additionalProperties: false
-      properties:
-        timeSeries:
-          description: Time series of contribution stats, bucketed by the requested resolution.
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: Pagination response.
+          title: pagination
+        records:
+          description: List of environment runtime records.
           items:
-            $ref: '#/components/schemas/gitpod.v1.CoAuthorTimeBucket'
-          title: time_series
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentUsageRecord'
+          title: records
           type: array
-      title: GetCoAuthorTimeSeriesResponse
+      title: ListEnvironmentUsageRecordsResponse
       type: object
-    gitpod.v1.Resolution:
-      description: Resolution specifies the time granularity for time series data.
-      enum:
-      - RESOLUTION_UNSPECIFIED
-      - RESOLUTION_HOURLY
-      - RESOLUTION_DAILY
-      - RESOLUTION_WEEKLY
-      - RESOLUTION_MONTHLY
-      title: Resolution
-      type: string
+    gitpod.v1.AgentTraceSummary:
+      additionalProperties: false
+      description: AgentTraceSummary contains aggregate totals for a date range.
+      properties:
+        byModel:
+          description: Per-model breakdown of session stats.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentTraceModelBreakdown'
+          title: by_model
+          type: array
+        totalLinesAdded:
+          description: Total lines added across all sessions.
+          title: total_lines_added
+          type: string
+        totalLinesAddedTrend:
+          description: Fractional change in total_lines_added compared to the previous period.
+          format: double
+          title: total_lines_added_trend
+          type: number
+        totalLinesRemoved:
+          description: Total lines removed across all sessions.
+          title: total_lines_removed
+          type: string
+        totalLinesRemovedTrend:
+          description: Fractional change in total_lines_removed compared to the previous period.
+          format: double
+          title: total_lines_removed_trend
+          type: number
+        totalSessions:
+          description: Total number of agent trace sessions in the date range.
+          title: total_sessions
+          type: string
+        totalSessionsTrend:
+          description: "Fractional change in total_sessions compared to the previous period of\n equal length. Computed as (current - previous) / previous. Zero when there\n is no previous data."
+          format: double
+          title: total_sessions_trend
+          type: number
+      title: AgentTraceSummary
+      type: object
     gitpod.v1.GetPrTimeSeriesRequest:
       additionalProperties: false
       properties:
@@ -1531,70 +1645,6 @@ components:
       - dateRange
       title: GetPrTimeSeriesRequest
       type: object
-    gitpod.v1.ToolBreakdown:
-      additionalProperties: false
-      description: ToolBreakdown contains stats for a single AI tool (or human).
-      properties:
-        commits:
-          description: Number of commits attributed to this tool.
-          title: commits
-          type: string
-        distinctAuthors:
-          description: Distinct authors who used this tool.
-          title: distinct_authors
-          type: string
-        linesAdded:
-          description: Lines added by this tool.
-          title: lines_added
-          type: string
-        linesRemoved:
-          description: Lines removed by this tool.
-          title: lines_removed
-          type: string
-        tool:
-          $ref: '#/components/schemas/gitpod.v1.CoAuthorTool'
-          description: The tool these stats are for.
-          title: tool
-      title: ToolBreakdown
-      type: object
-    gitpod.v1.EnvironmentUsageRecord:
-      additionalProperties: false
-      description: EnvironmentUsageRecord represents a record of an environment from start to stop.
-      properties:
-        createdAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Time when the environment was created.
-          title: created_at
-        environmentClassId:
-          description: Environment class ID associated with the record.
-          title: environment_class_id
-          type: string
-        environmentId:
-          description: Environment ID associated with the record.
-          title: environment_id
-          type: string
-        id:
-          description: Environment usage record ID.
-          title: id
-          type: string
-        projectId:
-          description: Project ID associated with the environment (if available).
-          title: project_id
-          type: string
-        runnerId:
-          description: Runner ID associated with the environment.
-          title: runner_id
-          type: string
-        stoppedAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Time when the environment was stopped.
-          title: stopped_at
-        userId:
-          description: User ID is the ID of the user who created the environment associated with the record.
-          title: user_id
-          type: string
-      title: EnvironmentUsageRecord
-      type: object
     gitpod.v1.RunnerKind:
       description: RunnerKind represents the kind of a runner
       enum:
@@ -1604,77 +1654,20 @@ components:
       - RUNNER_KIND_LOCAL_CONFIGURATION
       title: RunnerKind
       type: string
-    gitpod.v1.AgentTraceModelBreakdown:
-      additionalProperties: false
-      description: AgentTraceModelBreakdown contains stats for a single LLM model.
-      properties:
-        linesAdded:
-          description: Lines added by sessions using this model.
-          title: lines_added
-          type: string
-        linesRemoved:
-          description: Lines removed by sessions using this model.
-          title: lines_removed
-          type: string
-        model:
-          $ref: '#/components/schemas/gitpod.v1.SupportedModel'
-          description: The model these stats are for.
-          title: model
-        sessions:
-          description: Number of sessions that used this model.
-          title: sessions
-          type: string
-      title: AgentTraceModelBreakdown
-      type: object
-    gitpod.v1.GetCoAuthorSummaryRequest:
+    gitpod.v1.ListEnvironmentUsageRecordsRequest.Filter:
       additionalProperties: false
       properties:
         dateRange:
           $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query within.
+          description: Date range to query runtime records within.
           title: date_range
         projectId:
-          description: Optional project ID to scope results.
+          description: Optional project ID to filter runtime records by.
           title: project_id
-          type: string
-        teamId:
-          description: "Optional team ID to scope results to a specific team.\n Mutually exclusive with user_id."
-          title: team_id
-          type: string
-        userId:
-          description: "Optional user ID to scope results to a specific user.\n Mutually exclusive with team_id."
-          title: user_id
           type: string
       required:
       - dateRange
-      title: GetCoAuthorSummaryRequest
-      type: object
-    gitpod.v1.CoAuthorTool:
-      description: "CoAuthorTool identifies the AI tool that co-authored a commit.\n UNSPECIFIED (0) is the proto default and must not appear in reported data.\n Use HUMAN for commits with no AI co-author."
-      enum:
-      - CO_AUTHOR_TOOL_UNSPECIFIED
-      - CO_AUTHOR_TOOL_NO_COAUTHOR
-      - CO_AUTHOR_TOOL_HUMAN_COAUTHOR
-      - CO_AUTHOR_TOOL_ONA
-      - CO_AUTHOR_TOOL_GITHUB_COPILOT
-      - CO_AUTHOR_TOOL_CURSOR
-      - CO_AUTHOR_TOOL_OTHER
-      - CO_AUTHOR_TOOL_CLAUDE
-      title: CoAuthorTool
-      type: string
-    gitpod.v1.GetActiveUsersCountResponse:
-      additionalProperties: false
-      properties:
-        count:
-          description: Count of active users in the date range.
-          title: count
-          type: string
-        trend:
-          description: "Fractional change in active users vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: trend
-          type: number
-      title: GetActiveUsersCountResponse
+      title: Filter
       type: object
     gitpod.v1.GetAgentTraceTimeSeriesRequest:
       additionalProperties: false
@@ -1703,50 +1696,116 @@ components:
       - dateRange
       title: GetAgentTraceTimeSeriesRequest
       type: object
-    gitpod.v1.PrSummary:
+    gitpod.v1.GetActiveEnvironmentsTimeSeriesResponse:
       additionalProperties: false
-      description: PrSummary contains aggregate PR speed metrics for a date range.
       properties:
-        deploymentFrequency:
-          description: PRs merged to the default branch per week.
-          format: double
-          title: deployment_frequency
-          type: number
-        deploymentFrequencyTrend:
-          description: "Fractional change in deployment_frequency vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: deployment_frequency_trend
-          type: number
-        leadTimeSeconds:
-          description: Median lead time for changes in seconds (first commit → merge).
-          format: double
-          title: lead_time_seconds
-          type: number
-        leadTimeTrend:
-          description: "Fractional change in lead_time_seconds vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: lead_time_trend
-          type: number
-        prsMergedCount:
-          description: Total PRs merged in the date range.
-          title: prs_merged_count
+        activeEnvironments:
+          description: Active environments time series
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
+          title: active_environments
+          type: array
+      title: GetActiveEnvironmentsTimeSeriesResponse
+      type: object
+    gitpod.v1.GetEnvironmentRuntimeTimeSeriesResponse:
+      additionalProperties: false
+      properties:
+        totalRuntime:
+          description: Total runtime time series
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
+          title: total_runtime
+          type: array
+      title: GetEnvironmentRuntimeTimeSeriesResponse
+      type: object
+    gitpod.v1.GetCoAuthorSummaryRequest:
+      additionalProperties: false
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query within.
+          title: date_range
+        projectId:
+          description: Optional project ID to scope results.
+          title: project_id
           type: string
-        prsMergedTrend:
-          description: "Fractional change in prs_merged_count vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: prs_merged_trend
-          type: number
-        timeToFirstApprovalSeconds:
-          description: "Median time to first approval in seconds.\n Zero when no PRs in the range had approvals."
-          format: double
-          title: time_to_first_approval_seconds
-          type: number
-        timeToFirstApprovalTrend:
-          description: "Fractional change in time_to_first_approval_seconds vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: time_to_first_approval_trend
-          type: number
-      title: PrSummary
+        teamId:
+          description: "Optional team ID to scope results to a specific team.\n Mutually exclusive with user_id."
+          title: team_id
+          type: string
+        userId:
+          description: "Optional user ID to scope results to a specific user.\n Mutually exclusive with team_id."
+          title: user_id
+          type: string
+      required:
+      - dateRange
+      title: GetCoAuthorSummaryRequest
+      type: object
+    gitpod.v1.ToolBreakdown:
+      additionalProperties: false
+      description: ToolBreakdown contains stats for a single AI tool (or human).
+      properties:
+        commits:
+          description: Number of commits attributed to this tool.
+          title: commits
+          type: string
+        distinctAuthors:
+          description: Distinct authors who used this tool.
+          title: distinct_authors
+          type: string
+        linesAdded:
+          description: Lines added by this tool.
+          title: lines_added
+          type: string
+        linesRemoved:
+          description: Lines removed by this tool.
+          title: lines_removed
+          type: string
+        tool:
+          $ref: '#/components/schemas/gitpod.v1.CoAuthorTool'
+          description: The tool these stats are for.
+          title: tool
+      title: ToolBreakdown
+      type: object
+    gitpod.v1.SupportedModel:
+      enum:
+      - SUPPORTED_MODEL_UNSPECIFIED
+      - SUPPORTED_MODEL_SONNET_3_5
+      - SUPPORTED_MODEL_SONNET_3_7
+      - SUPPORTED_MODEL_SONNET_3_7_EXTENDED
+      - SUPPORTED_MODEL_SONNET_4
+      - SUPPORTED_MODEL_SONNET_4_EXTENDED
+      - SUPPORTED_MODEL_SONNET_4_5
+      - SUPPORTED_MODEL_SONNET_4_5_EXTENDED
+      - SUPPORTED_MODEL_SONNET_4_6
+      - SUPPORTED_MODEL_SONNET_4_6_EXTENDED
+      - SUPPORTED_MODEL_OPUS_4
+      - SUPPORTED_MODEL_OPUS_4_EXTENDED
+      - SUPPORTED_MODEL_OPUS_4_5
+      - SUPPORTED_MODEL_OPUS_4_5_EXTENDED
+      - SUPPORTED_MODEL_OPUS_4_6
+      - SUPPORTED_MODEL_OPUS_4_6_EXTENDED
+      - SUPPORTED_MODEL_HAIKU_4_5
+      - SUPPORTED_MODEL_OPENAI_4O
+      - SUPPORTED_MODEL_OPENAI_4O_MINI
+      - SUPPORTED_MODEL_OPENAI_O1
+      - SUPPORTED_MODEL_OPENAI_O1_MINI
+      title: SupportedModel
+      type: string
+    gitpod.v1.GetCoAuthorSummaryResponse:
+      additionalProperties: false
+      properties:
+        sparkline:
+          description: Sparkline data for card rendering.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
+          title: sparkline
+          type: array
+        summary:
+          $ref: '#/components/schemas/gitpod.v1.CoAuthorSummary'
+          description: Summary totals and trends for the requested date range.
+          title: summary
+      title: GetCoAuthorSummaryResponse
       type: object
   securitySchemes:
     bearerAuth:

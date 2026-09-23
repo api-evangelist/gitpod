@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: gitpod.v1 gitpod.v1.AccountService gitpod.v1.RunnerService API
+  title: Gitpod.v1.Runner Service API
   version: v1.0.0
 servers:
 - url: https://api.gitpod.io
@@ -12,7 +12,32 @@ paths:
   /gitpod.v1.RunnerService/CheckAuthenticationForHost:
     servers: []
     post:
-      description: "Checks if a user is authenticated for a specific host.\n\n Use this method to:\n - Verify authentication status\n - Get authentication URLs\n - Check PAT support\n\n ### Examples\n\n - Check authentication:\n\n   Verifies authentication for a host.\n\n   ```yaml\n   host: \"github.com\"\n   ```"
+      description: 'Checks if a user is authenticated for a specific host.
+
+
+        Use this method to:
+
+        - Verify authentication status
+
+        - Get authentication URLs
+
+        - Check PAT support
+
+
+        ### Examples
+
+
+        - Check authentication:
+
+
+        Verifies authentication for a host.
+
+
+        ```yaml
+
+        host: "github.com"
+
+        ```'
       operationId: gitpod.v1.RunnerService.CheckAuthenticationForHost
       parameters: []
       requestBody:
@@ -47,7 +72,41 @@ paths:
   /gitpod.v1.RunnerService/CheckRepositoryAccess:
     servers: []
     post:
-      description: "Checks if a principal has read access to a repository.\n\n Use this method to:\n - Validate repository access before workflow execution\n - Verify executor credentials for automation bindings\n\n Returns:\n - has_access: true if the principal can read the repository\n - FAILED_PRECONDITION if authentication is required\n - INVALID_ARGUMENT if the repository URL is invalid\n\n ### Examples\n\n - Check access:\n\n   Verifies read access to a repository.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   repositoryUrl: \"https://github.com/org/repo\"\n   ```"
+      description: 'Checks if a principal has read access to a repository.
+
+
+        Use this method to:
+
+        - Validate repository access before workflow execution
+
+        - Verify executor credentials for automation bindings
+
+
+        Returns:
+
+        - has_access: true if the principal can read the repository
+
+        - FAILED_PRECONDITION if authentication is required
+
+        - INVALID_ARGUMENT if the repository URL is invalid
+
+
+        ### Examples
+
+
+        - Check access:
+
+
+        Verifies read access to a repository.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        repositoryUrl: "https://github.com/org/repo"
+
+        ```'
       operationId: gitpod.v1.RunnerService.CheckRepositoryAccess
       parameters: []
       requestBody:
@@ -83,7 +142,73 @@ paths:
   /gitpod.v1.RunnerService/CreateRunner:
     servers: []
     post:
-      description: "Creates a new runner registration with the server. Registrations are very short-lived and must be renewed every 30 seconds.\n\n Use this method to:\n - Register organization runners\n - Set up runner configurations\n - Initialize runner credentials\n - Configure auto-updates\n\n ### Examples\n\n - Create cloud runner:\n\n   Creates a new runner in AWS EC2.\n\n   ```yaml\n   name: \"Production Runner\"\n   provider: RUNNER_PROVIDER_AWS_EC2\n   spec:\n     desiredPhase: RUNNER_PHASE_ACTIVE\n     configuration:\n       region: \"us-west\"\n       releaseChannel: RUNNER_RELEASE_CHANNEL_STABLE\n       autoUpdate: true\n   ```\n\n - Create local runner:\n\n   Creates a new local runner on Linux.\n\n   ```yaml\n   name: \"Local Development Runner\"\n   provider: RUNNER_PROVIDER_LINUX_HOST\n   spec:\n     desiredPhase: RUNNER_PHASE_ACTIVE\n     configuration:\n       releaseChannel: RUNNER_RELEASE_CHANNEL_LATEST\n       autoUpdate: true\n   ```"
+      description: 'Creates a new runner registration with the server. Registrations are very short-lived and must be renewed every 30 seconds.
+
+
+        Use this method to:
+
+        - Register organization runners
+
+        - Set up runner configurations
+
+        - Initialize runner credentials
+
+        - Configure auto-updates
+
+
+        ### Examples
+
+
+        - Create cloud runner:
+
+
+        Creates a new runner in AWS EC2.
+
+
+        ```yaml
+
+        name: "Production Runner"
+
+        provider: RUNNER_PROVIDER_AWS_EC2
+
+        spec:
+
+        desiredPhase: RUNNER_PHASE_ACTIVE
+
+        configuration:
+
+        region: "us-west"
+
+        releaseChannel: RUNNER_RELEASE_CHANNEL_STABLE
+
+        autoUpdate: true
+
+        ```
+
+
+        - Create local runner:
+
+
+        Creates a new local runner on Linux.
+
+
+        ```yaml
+
+        name: "Local Development Runner"
+
+        provider: RUNNER_PROVIDER_LINUX_HOST
+
+        spec:
+
+        desiredPhase: RUNNER_PHASE_ACTIVE
+
+        configuration:
+
+        releaseChannel: RUNNER_RELEASE_CHANNEL_LATEST
+
+        autoUpdate: true
+
+        ```'
       operationId: gitpod.v1.RunnerService.CreateRunner
       parameters: []
       requestBody:
@@ -135,7 +260,25 @@ paths:
   /gitpod.v1.RunnerService/CreateRunnerLogsToken:
     servers: []
     post:
-      description: "Creates an access token for runner logs and debug information.\n\n Generated tokens are valid for one hour and provide runner-specific access permissions.\n The token is scoped to a specific runner and can be used to access support bundles.\n\n ### Examples\n\n - Generate runner logs token:\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      description: 'Creates an access token for runner logs and debug information.
+
+
+        Generated tokens are valid for one hour and provide runner-specific access permissions.
+
+        The token is scoped to a specific runner and can be used to access support bundles.
+
+
+        ### Examples
+
+
+        - Generate runner logs token:
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        ```'
       operationId: gitpod.v1.RunnerService.CreateRunnerLogsToken
       parameters: []
       requestBody:
@@ -172,7 +315,36 @@ paths:
   /gitpod.v1.RunnerService/CreateRunnerPolicy:
     servers: []
     post:
-      description: "Creates a new policy for a runner.\n\n Use this method to:\n - Set up access controls\n - Define group permissions\n - Configure role-based access\n\n ### Examples\n\n - Create admin policy:\n\n   Grants admin access to a group.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: RUNNER_ROLE_ADMIN\n   ```"
+      description: 'Creates a new policy for a runner.
+
+
+        Use this method to:
+
+        - Set up access controls
+
+        - Define group permissions
+
+        - Configure role-based access
+
+
+        ### Examples
+
+
+        - Create admin policy:
+
+
+        Grants admin access to a group.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        groupId: "f53d2330-3795-4c5d-a1f3-453121af9c60"
+
+        role: RUNNER_ROLE_ADMIN
+
+        ```'
       operationId: gitpod.v1.RunnerService.CreateRunnerPolicy
       parameters: []
       requestBody:
@@ -209,7 +381,35 @@ paths:
   /gitpod.v1.RunnerService/CreateRunnerToken:
     servers: []
     post:
-      description: "Creates a new authentication token for a runner.\n\n Use this method to:\n - Generate runner credentials\n - Renew expired tokens\n - Set up runner authentication\n\n Note: This does not expire previously issued tokens.\n\n ### Examples\n\n - Create token:\n\n   Creates a new token for runner authentication.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      description: 'Creates a new authentication token for a runner.
+
+
+        Use this method to:
+
+        - Generate runner credentials
+
+        - Renew expired tokens
+
+        - Set up runner authentication
+
+
+        Note: This does not expire previously issued tokens.
+
+
+        ### Examples
+
+
+        - Create token:
+
+
+        Creates a new token for runner authentication.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        ```'
       operationId: gitpod.v1.RunnerService.CreateRunnerToken
       parameters: []
       requestBody:
@@ -244,7 +444,32 @@ paths:
   /gitpod.v1.RunnerService/DeleteRunner:
     servers: []
     post:
-      description: "Deletes a runner permanently.\n\n Use this method to:\n - Remove unused runners\n - Clean up runner registrations\n - Delete obsolete runners\n\n ### Examples\n\n - Delete runner:\n\n   Permanently removes a runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      description: 'Deletes a runner permanently.
+
+
+        Use this method to:
+
+        - Remove unused runners
+
+        - Clean up runner registrations
+
+        - Delete obsolete runners
+
+
+        ### Examples
+
+
+        - Delete runner:
+
+
+        Permanently removes a runner.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        ```'
       operationId: gitpod.v1.RunnerService.DeleteRunner
       parameters: []
       requestBody:
@@ -279,7 +504,34 @@ paths:
   /gitpod.v1.RunnerService/DeleteRunnerPolicy:
     servers: []
     post:
-      description: "Deletes a runner policy.\n\n Use this method to:\n - Remove access controls\n - Revoke permissions\n - Clean up policies\n\n ### Examples\n\n - Delete policy:\n\n   Removes a group's access policy.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   ```"
+      description: 'Deletes a runner policy.
+
+
+        Use this method to:
+
+        - Remove access controls
+
+        - Revoke permissions
+
+        - Clean up policies
+
+
+        ### Examples
+
+
+        - Delete policy:
+
+
+        Removes a group''s access policy.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        groupId: "f53d2330-3795-4c5d-a1f3-453121af9c60"
+
+        ```'
       operationId: gitpod.v1.RunnerService.DeleteRunnerPolicy
       parameters: []
       requestBody:
@@ -315,7 +567,34 @@ paths:
   /gitpod.v1.RunnerService/GetRunner:
     servers: []
     post:
-      description: "Gets details about a specific runner.\n\n Use this method to:\n - Check runner status\n - View runner configuration\n - Monitor runner health\n - Verify runner capabilities\n\n ### Examples\n\n - Get runner details:\n\n   Retrieves information about a specific runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```"
+      description: 'Gets details about a specific runner.
+
+
+        Use this method to:
+
+        - Check runner status
+
+        - View runner configuration
+
+        - Monitor runner health
+
+        - Verify runner capabilities
+
+
+        ### Examples
+
+
+        - Get runner details:
+
+
+        Retrieves information about a specific runner.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        ```'
       operationId: gitpod.v1.RunnerService.GetRunner
       parameters: []
       requestBody:
@@ -350,7 +629,36 @@ paths:
   /gitpod.v1.RunnerService/ListRunnerPolicies:
     servers: []
     post:
-      description: "Lists policies for a runner.\n\n Use this method to:\n - View access controls\n - Check policy configurations\n - Audit permissions\n\n ### Examples\n\n - List policies:\n\n   Shows all policies for a runner.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   pagination:\n     pageSize: 20\n   ```"
+      description: 'Lists policies for a runner.
+
+
+        Use this method to:
+
+        - View access controls
+
+        - Check policy configurations
+
+        - Audit permissions
+
+
+        ### Examples
+
+
+        - List policies:
+
+
+        Shows all policies for a runner.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        pagination:
+
+        pageSize: 20
+
+        ```'
       operationId: gitpod.v1.RunnerService.ListRunnerPolicies
       parameters:
       - in: query
@@ -399,7 +707,55 @@ paths:
   /gitpod.v1.RunnerService/ListRunners:
     servers: []
     post:
-      description: "Lists all registered runners with optional filtering.\n\n Use this method to:\n - View all available runners\n - Filter by runner type\n - Monitor runner status\n - Check runner availability\n\n ### Examples\n\n - List all runners:\n\n   Shows all runners with pagination.\n\n   ```yaml\n   pagination:\n     pageSize: 20\n   ```\n\n - Filter by provider:\n\n   Lists only AWS EC2 runners.\n\n   ```yaml\n   filter:\n     providers: [\"RUNNER_PROVIDER_AWS_EC2\"]\n   pagination:\n     pageSize: 20\n   ```"
+      description: 'Lists all registered runners with optional filtering.
+
+
+        Use this method to:
+
+        - View all available runners
+
+        - Filter by runner type
+
+        - Monitor runner status
+
+        - Check runner availability
+
+
+        ### Examples
+
+
+        - List all runners:
+
+
+        Shows all runners with pagination.
+
+
+        ```yaml
+
+        pagination:
+
+        pageSize: 20
+
+        ```
+
+
+        - Filter by provider:
+
+
+        Lists only AWS EC2 runners.
+
+
+        ```yaml
+
+        filter:
+
+        providers: ["RUNNER_PROVIDER_AWS_EC2"]
+
+        pagination:
+
+        pageSize: 20
+
+        ```'
       operationId: gitpod.v1.RunnerService.ListRunners
       parameters:
       - in: query
@@ -455,7 +811,32 @@ paths:
   /gitpod.v1.RunnerService/ListSCMOrganizations:
     servers: []
     post:
-      description: "Lists SCM organizations the user belongs to.\n\n Use this method to:\n - Get all organizations for a user on a specific SCM host\n - Check organization admin permissions for webhook creation\n\n ### Examples\n\n - List GitHub organizations:\n\n   Lists all organizations the user belongs to on GitHub.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   scmHost: \"github.com\"\n   ```"
+      description: 'Lists SCM organizations the user belongs to.
+
+
+        Use this method to:
+
+        - Get all organizations for a user on a specific SCM host
+
+        - Check organization admin permissions for webhook creation
+
+
+        ### Examples
+
+
+        - List GitHub organizations:
+
+
+        Lists all organizations the user belongs to on GitHub.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        scmHost: "github.com"
+
+        ```'
       operationId: gitpod.v1.RunnerService.ListSCMOrganizations
       parameters:
       - in: query
@@ -503,7 +884,43 @@ paths:
   /gitpod.v1.RunnerService/ParseContextURL:
     servers: []
     post:
-      description: "Parses a context URL and returns the parsed result.\n\n Use this method to:\n - Validate context URLs\n - Check repository access\n - Verify branch existence\n\n Returns:\n - FAILED_PRECONDITION if authentication is required\n - PERMISSION_DENIED if access is not allowed\n - INVALID_ARGUMENT if URL is invalid\n - NOT_FOUND if repository/branch doesn't exist\n\n ### Examples\n\n - Parse URL:\n\n   Parses and validates a context URL.\n\n   ```yaml\n   contextUrl: \"https://github.com/org/repo/tree/main\"\n   ```"
+      description: 'Parses a context URL and returns the parsed result.
+
+
+        Use this method to:
+
+        - Validate context URLs
+
+        - Check repository access
+
+        - Verify branch existence
+
+
+        Returns:
+
+        - FAILED_PRECONDITION if authentication is required
+
+        - PERMISSION_DENIED if access is not allowed
+
+        - INVALID_ARGUMENT if URL is invalid
+
+        - NOT_FOUND if repository/branch doesn''t exist
+
+
+        ### Examples
+
+
+        - Parse URL:
+
+
+        Parses and validates a context URL.
+
+
+        ```yaml
+
+        contextUrl: "https://github.com/org/repo/tree/main"
+
+        ```'
       operationId: gitpod.v1.RunnerService.ParseContextURL
       parameters: []
       requestBody:
@@ -538,7 +955,54 @@ paths:
   /gitpod.v1.RunnerService/SearchRepositories:
     servers: []
     post:
-      description: "Searches for repositories across all authenticated SCM hosts.\n\n Use this method to:\n - List available repositories\n - Search repositories by name or content\n - Discover repositories for environment creation\n\n Returns repositories from all authenticated SCM hosts in natural sort order.\n If no repositories are found, returns an empty list.\n\n ### Examples\n\n - List all repositories:\n\n   Returns up to 25 repositories from all authenticated hosts.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   ```\n\n - Search repositories:\n\n   Searches for repositories matching the query across all hosts.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   searchString: \"my-project\"\n   limit: 10\n   ```"
+      description: 'Searches for repositories across all authenticated SCM hosts.
+
+
+        Use this method to:
+
+        - List available repositories
+
+        - Search repositories by name or content
+
+        - Discover repositories for environment creation
+
+
+        Returns repositories from all authenticated SCM hosts in natural sort order.
+
+        If no repositories are found, returns an empty list.
+
+
+        ### Examples
+
+
+        - List all repositories:
+
+
+        Returns up to 25 repositories from all authenticated hosts.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        ```
+
+
+        - Search repositories:
+
+
+        Searches for repositories matching the query across all hosts.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        searchString: "my-project"
+
+        limit: 10
+
+        ```'
       operationId: gitpod.v1.RunnerService.SearchRepositories
       parameters: []
       requestBody:
@@ -579,7 +1043,44 @@ paths:
   /gitpod.v1.RunnerService/UpdateRunner:
     servers: []
     post:
-      description: "Updates a runner's configuration.\n\n Use this method to:\n - Modify runner settings\n - Update release channels\n - Change runner status\n - Configure auto-update settings\n\n ### Examples\n\n - Update configuration:\n\n   Changes runner settings.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   name: \"Updated Runner Name\"\n   spec:\n     configuration:\n       releaseChannel: RUNNER_RELEASE_CHANNEL_LATEST\n       autoUpdate: true\n   ```"
+      description: 'Updates a runner''s configuration.
+
+
+        Use this method to:
+
+        - Modify runner settings
+
+        - Update release channels
+
+        - Change runner status
+
+        - Configure auto-update settings
+
+
+        ### Examples
+
+
+        - Update configuration:
+
+
+        Changes runner settings.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        name: "Updated Runner Name"
+
+        spec:
+
+        configuration:
+
+        releaseChannel: RUNNER_RELEASE_CHANNEL_LATEST
+
+        autoUpdate: true
+
+        ```'
       operationId: gitpod.v1.RunnerService.UpdateRunner
       parameters: []
       requestBody:
@@ -619,7 +1120,36 @@ paths:
   /gitpod.v1.RunnerService/UpdateRunnerPolicy:
     servers: []
     post:
-      description: "Updates an existing runner policy.\n\n Use this method to:\n - Modify access levels\n - Change group roles\n - Update permissions\n\n ### Examples\n\n - Update policy role:\n\n   Changes a group's access level.\n\n   ```yaml\n   runnerId: \"d2c94c27-3b76-4a42-b88c-95a85e392c68\"\n   groupId: \"f53d2330-3795-4c5d-a1f3-453121af9c60\"\n   role: RUNNER_ROLE_USER\n   ```"
+      description: 'Updates an existing runner policy.
+
+
+        Use this method to:
+
+        - Modify access levels
+
+        - Change group roles
+
+        - Update permissions
+
+
+        ### Examples
+
+
+        - Update policy role:
+
+
+        Changes a group''s access level.
+
+
+        ```yaml
+
+        runnerId: "d2c94c27-3b76-4a42-b88c-95a85e392c68"
+
+        groupId: "f53d2330-3795-4c5d-a1f3-453121af9c60"
+
+        role: RUNNER_ROLE_USER
+
+        ```'
       operationId: gitpod.v1.RunnerService.UpdateRunnerPolicy
       parameters: []
       requestBody:
@@ -655,24 +1185,217 @@ paths:
       - gitpod.v1.RunnerService
 components:
   schemas:
-    gitpod.v1.RunnerRole:
-      enum:
-      - RUNNER_ROLE_UNSPECIFIED
-      - RUNNER_ROLE_ADMIN
-      - RUNNER_ROLE_USER
-      title: RunnerRole
-      type: string
-    gitpod.v1.Principal:
-      enum:
-      - PRINCIPAL_UNSPECIFIED
-      - PRINCIPAL_ACCOUNT
-      - PRINCIPAL_USER
-      - PRINCIPAL_RUNNER
-      - PRINCIPAL_ENVIRONMENT
-      - PRINCIPAL_SERVICE_ACCOUNT
-      - PRINCIPAL_RUNNER_MANAGER
-      title: Principal
-      type: string
+    gitpod.v1.PullRequest.Repository:
+      additionalProperties: false
+      description: Repository information
+      properties:
+        cloneUrl:
+          title: clone_url
+          type: string
+        host:
+          title: host
+          type: string
+        name:
+          title: name
+          type: string
+        owner:
+          title: owner
+          type: string
+      title: Repository
+      type: object
+    gitpod.v1.PullRequest:
+      additionalProperties: false
+      description: "PullRequest represents pull request metadata from source control systems.\n This message is used across workflow triggers, executions, and agent contexts\n to maintain consistent PR information throughout the system."
+      properties:
+        author:
+          description: Author name as provided by the SCM system
+          title: author
+          type: string
+        draft:
+          description: Whether this is a draft pull request
+          title: draft
+          type: boolean
+        fromBranch:
+          description: Source branch name (the branch being merged from)
+          title: from_branch
+          type: string
+        id:
+          description: 'Unique identifier from the source system (e.g., "123" for GitHub PR #123)'
+          title: id
+          type: string
+        repository:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest.Repository'
+          title: repository
+        state:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest.State'
+          title: state
+        title:
+          description: Pull request title
+          title: title
+          type: string
+        toBranch:
+          description: Target branch name (the branch being merged into)
+          title: to_branch
+          type: string
+        url:
+          description: Pull request URL (e.g., "https://github.com/owner/repo/pull/123")
+          title: url
+          type: string
+      title: PullRequest
+      type: object
+    gitpod.v1.CreateRunnerResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          deprecated: true
+          description: deprecated, will be removed. Use exchange_token instead.
+          title: access_token
+          type: string
+        exchangeToken:
+          description: "exchange_token is a one-time use token that should be exchanged by the runner for an access token,\n using the IdentityService.ExchangeToken rpc. The token expires after 24 hours."
+          title: exchange_token
+          type: string
+        runner:
+          $ref: '#/components/schemas/gitpod.v1.Runner'
+          title: runner
+      required:
+      - runner
+      title: CreateRunnerResponse
+      type: object
+    gitpod.v1.ParseContextURLResponse:
+      additionalProperties: false
+      properties:
+        git:
+          $ref: '#/components/schemas/gitpod.v1.ParseContextURLResponse.GitContext'
+          title: git
+        issue:
+          $ref: '#/components/schemas/gitpod.v1.ParseContextURLResponse.Issue'
+          title: issue
+        originalContextUrl:
+          title: original_context_url
+          type: string
+        pr:
+          $ref: '#/components/schemas/gitpod.v1.ParseContextURLResponse.PullRequest'
+          deprecated: true
+          title: pr
+        projectIds:
+          description: project_ids is a list of projects to which the context URL belongs to.
+          items:
+            type: string
+          title: project_ids
+          type: array
+        pullRequest:
+          $ref: '#/components/schemas/gitpod.v1.PullRequest'
+          title: pull_request
+        scmId:
+          description: scm_id is the unique identifier of the SCM provider (e.g., "github", "gitlab", "bitbucket")
+          title: scm_id
+          type: string
+      title: ParseContextURLResponse
+      type: object
+    gitpod.v1.CheckAuthenticationForHostResponse.AuthenticationMethodPersonalAccessToken:
+      additionalProperties: false
+      properties:
+        createUrl:
+          description: create_url is the URL where users can create a new Personal Access Token
+          title: create_url
+          type: string
+        docsUrl:
+          description: docs_url is the URL to the documentation explaining PAT usage for this host
+          title: docs_url
+          type: string
+        example:
+          description: example is an example of a Personal Access Token
+          title: example
+          type: string
+        requiredScopes:
+          description: required_scopes is the list of permissions required for the Personal Access Token
+          items:
+            type: string
+          title: required_scopes
+          type: array
+      title: AuthenticationMethodPersonalAccessToken
+      type: object
+    gitpod.v1.GatewayInfo:
+      additionalProperties: false
+      properties:
+        gateway:
+          $ref: '#/components/schemas/gitpod.v1.Gateway'
+          title: gateway
+        latency:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          description: latency is the round-trip time of the runner to the gateway in milliseconds.
+          title: latency
+      title: GatewayInfo
+      type: object
+    gitpod.v1.CheckRepositoryAccessResponse:
+      additionalProperties: false
+      properties:
+        errorMessage:
+          description: "error_message provides details when access check fails.\n Empty when has_access is true."
+          title: error_message
+          type: string
+        hasAccess:
+          description: has_access indicates whether the principal has read access to the repository.
+          title: has_access
+          type: boolean
+      title: CheckRepositoryAccessResponse
+      type: object
+    gitpod.v1.UpdateRunnerRequest:
+      additionalProperties: false
+      properties:
+        name:
+          description: The runner's name which is shown to users
+          maxLength: 127
+          minLength: 3
+          title: name
+          type:
+          - string
+          - 'null'
+        runnerId:
+          description: "runner_id specifies which runner to be updated.\n\n +required"
+          format: uuid
+          title: runner_id
+          type: string
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.UpdateRunnerRequest.Spec'
+          title: spec
+      title: UpdateRunnerRequest
+      type: object
+    gitpod.v1.ParseContextURLRequest:
+      additionalProperties: false
+      properties:
+        contextUrl:
+          format: uri
+          title: context_url
+          type: string
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+      title: ParseContextURLRequest
+      type: object
+    gitpod.v1.RunnerPolicy:
+      additionalProperties: false
+      properties:
+        groupId:
+          format: uuid
+          title: group_id
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.RunnerRole'
+          description: role is the role assigned to the group
+          title: role
+      title: RunnerPolicy
+      type: object
+    gitpod.v1.DeleteRunnerPolicyResponse:
+      additionalProperties: false
+      title: DeleteRunnerPolicyResponse
+      type: object
+    gitpod.v1.UpdateRunnerResponse:
+      additionalProperties: false
+      title: UpdateRunnerResponse
+      type: object
     gitpod.v1.RunnerCapability:
       enum:
       - RUNNER_CAPABILITY_UNSPECIFIED
@@ -690,6 +1413,17 @@ components:
       - RUNNER_CAPABILITY_ASG_WARM_POOL
       title: RunnerCapability
       type: string
+    gitpod.v1.CreateRunnerLogsTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          description: access_token is the token that can be used to access the logs and support bundle of the runner
+          title: access_token
+          type: string
+      required:
+      - accessToken
+      title: CreateRunnerLogsTokenResponse
+      type: object
     gitpod.v1.GetRunnerRequest:
       additionalProperties: false
       properties:
@@ -698,6 +1432,36 @@ components:
           title: runner_id
           type: string
       title: GetRunnerRequest
+      type: object
+    gitpod.v1.DeleteRunnerRequest:
+      additionalProperties: false
+      properties:
+        force:
+          description: "force indicates whether the runner should be deleted forcefully.\n When force deleting a Runner, all Environments on the runner are also force deleted and\n regular Runner lifecycle is not respected.\n Force deleting can result in data loss."
+          title: force
+          type: boolean
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+      title: DeleteRunnerRequest
+      type: object
+    google.protobuf.Duration:
+      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
+      format: regex
+      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
+      type: string
+    gitpod.v1.UpdateRunnerRequest.Spec:
+      additionalProperties: false
+      properties:
+        configuration:
+          $ref: '#/components/schemas/gitpod.v1.UpdateRunnerRequest.RunnerConfiguration'
+          title: configuration
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.RunnerPhase'
+          description: "desired_phase can currently only be updated on local-configuration runners,\n to toggle whether local runners are allowed for running environments in the\n organization.\n Set to:\n - ACTIVE to enable local runners.\n - INACTIVE to disable all local runners. Existing local runners and their\n   environments will stop, and cannot be started again until the desired_phase\n   is set to ACTIVE. Use this carefully, as it will affect all users in the\n   organization who use local runners."
+          title: desired_phase
+      title: Spec
       type: object
     gitpod.v1.PullRequest.State:
       description: Current state of the pull request
@@ -708,6 +1472,169 @@ components:
       - STATE_MERGED
       title: State
       type: string
+    gitpod.v1.ListSCMOrganizationsResponse.SCMOrganization:
+      additionalProperties: false
+      properties:
+        isAdmin:
+          description: "Whether the user has admin permissions in this organization.\n Admin permissions typically allow creating organization-level webhooks."
+          title: is_admin
+          type: boolean
+        name:
+          description: Organization name/slug (e.g., "gitpod-io")
+          title: name
+          type: string
+        url:
+          description: Organization URL (e.g., "https://github.com/gitpod-io")
+          title: url
+          type: string
+      title: SCMOrganization
+      type: object
+    gitpod.v1.ListRunnersResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing runners
+          title: pagination
+        runners:
+          description: The runners registered in the scope
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Runner'
+          title: runners
+          type: array
+      title: ListRunnersResponse
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.UpdateRunnerRequest.RunnerConfiguration:
+      additionalProperties: false
+      properties:
+        autoUpdate:
+          description: auto_update indicates whether the runner should automatically update itself.
+          title: auto_update
+          type:
+          - boolean
+          - 'null'
+        continuousProfiling:
+          description: "continuous_profiling enables continuous profiling on the runner.\n This is an internal-only field used for debugging."
+          title: continuous_profiling
+          type:
+          - boolean
+          - 'null'
+          x-stainless-skip: true
+        devcontainerImageCacheEnabled:
+          description: devcontainer_image_cache_enabled controls whether the shared devcontainer build cache is enabled for this runner.
+          title: devcontainer_image_cache_enabled
+          type:
+          - boolean
+          - 'null'
+        honeycombApiKey:
+          description: "honeycomb_api_key is the plaintext API key for Honeycomb tracing.\n The backend encrypts it with the runner's public key before storing.\n This is an internal-only field used for debugging."
+          title: honeycomb_api_key
+          type:
+          - string
+          - 'null'
+          x-stainless-skip: true
+        logLevel:
+          $ref: '#/components/schemas/gitpod.v1.LogLevel'
+          description: log_level is the log level for the runner
+          title: log_level
+        metrics:
+          $ref: '#/components/schemas/gitpod.v1.UpdateRunnerRequest.MetricsConfiguration'
+          description: metrics contains configuration for the runner's metrics collection
+          title: metrics
+        releaseChannel:
+          $ref: '#/components/schemas/gitpod.v1.RunnerReleaseChannel'
+          description: The release channel the runner is on
+          title: release_channel
+        updateWindow:
+          $ref: '#/components/schemas/gitpod.v1.UpdateWindow'
+          description: "update_window defines the daily time window (UTC) during which auto-updates are allowed.\n start_hour is required. If end_hour is omitted, it defaults to start_hour + 2.\n Send an empty UpdateWindow (no start_hour or end_hour) to clear a custom window\n and allow updates at any time."
+          title: update_window
+      title: RunnerConfiguration
+      type: object
+    gitpod.v1.RunnerVariant:
+      enum:
+      - RUNNER_VARIANT_UNSPECIFIED
+      - RUNNER_VARIANT_STANDARD
+      - RUNNER_VARIANT_ENTERPRISE
+      title: RunnerVariant
+      type: string
+    gitpod.v1.UpdateRunnerRequest.MetricsConfiguration:
+      additionalProperties: false
+      properties:
+        enabled:
+          description: enabled indicates whether the runner should collect metrics
+          title: enabled
+          type:
+          - boolean
+          - 'null'
+        managedMetricsEnabled:
+          description: "When true, the runner pushes metrics to the management plane via\n ReportRunnerMetrics instead of directly to the remote_write endpoint."
+          title: managed_metrics_enabled
+          type:
+          - boolean
+          - 'null'
+        password:
+          description: password is the password to use for the metrics collector
+          title: password
+          type:
+          - string
+          - 'null'
+        url:
+          description: url is the URL of the metrics collector
+          title: url
+          type:
+          - string
+          - 'null'
+        username:
+          description: username is the username to use for the metrics collector
+          title: username
+          type:
+          - string
+          - 'null'
+      title: MetricsConfiguration
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.CheckRepositoryAccessRequest:
+      additionalProperties: false
+      properties:
+        repositoryUrl:
+          description: "repository_url is the URL of the repository to check access for.\n Can be a clone URL (https://github.com/org/repo.git) or web URL (https://github.com/org/repo)."
+          format: uri
+          title: repository_url
+          type: string
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+      title: CheckRepositoryAccessRequest
+      type: object
     gitpod.v1.CreateRunnerLogsTokenRequest:
       additionalProperties: false
       properties:
@@ -717,6 +1644,363 @@ components:
           title: runner_id
           type: string
       title: CreateRunnerLogsTokenRequest
+      type: object
+    gitpod.v1.ListRunnerPoliciesRequest:
+      additionalProperties: false
+      description: ListRunnerPoliciesRequest lists policies for a project.
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing project policies
+          title: pagination
+        runnerId:
+          description: runner_id specifies the project identifier
+          format: uuid
+          title: runner_id
+          type: string
+      title: ListRunnerPoliciesRequest
+      type: object
+    gitpod.v1.Runner:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Time when the Runner was created.
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: creator is the identity of the creator of the environment
+          title: creator
+        kind:
+          $ref: '#/components/schemas/gitpod.v1.RunnerKind'
+          description: The runner's kind
+          title: kind
+        name:
+          description: The runner's name which is shown to users
+          title: name
+          type: string
+        provider:
+          $ref: '#/components/schemas/gitpod.v1.RunnerProvider'
+          description: The runner's provider
+          title: provider
+        runnerId:
+          title: runner_id
+          type: string
+        runnerManagerId:
+          description: "The runner manager id specifies the runner manager for the managed runner.\n This field is only set for managed runners."
+          format: uuid
+          title: runner_manager_id
+          type: string
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.RunnerSpec'
+          description: The runner's specification
+          title: spec
+        status:
+          $ref: '#/components/schemas/gitpod.v1.RunnerStatus'
+          description: The runner's status
+          title: status
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Time when the Runner was last udpated.
+          title: updated_at
+      title: Runner
+      type: object
+    gitpod.v1.FieldValue:
+      additionalProperties: false
+      properties:
+        key:
+          title: key
+          type: string
+        value:
+          title: value
+          type: string
+      title: FieldValue
+      type: object
+    gitpod.v1.CheckAuthenticationForHostResponse:
+      additionalProperties: false
+      properties:
+        authenticated:
+          title: authenticated
+          type: boolean
+        authenticationUrl:
+          deprecated: true
+          title: authentication_url
+          type: string
+        patSupported:
+          deprecated: true
+          title: pat_supported
+          type: boolean
+        scmId:
+          description: scm_id is the unique identifier of the SCM provider
+          title: scm_id
+          type: string
+        scmName:
+          description: scm_name is the human-readable name of the SCM provider (e.g., "GitHub", "GitLab")
+          title: scm_name
+          type: string
+        supportsOauth2:
+          $ref: '#/components/schemas/gitpod.v1.CheckAuthenticationForHostResponse.AuthenticationMethodOAuth2'
+          description: supports_oauth2 indicates that the host supports OAuth2 authentication
+          title: supports_oauth2
+        supportsPat:
+          $ref: '#/components/schemas/gitpod.v1.CheckAuthenticationForHostResponse.AuthenticationMethodPersonalAccessToken'
+          description: supports_pat indicates that the host supports Personal Access Token authentication
+          title: supports_pat
+      title: CheckAuthenticationForHostResponse
+      type: object
+    gitpod.v1.RunnerReleaseChannel:
+      enum:
+      - RUNNER_RELEASE_CHANNEL_UNSPECIFIED
+      - RUNNER_RELEASE_CHANNEL_STABLE
+      - RUNNER_RELEASE_CHANNEL_LATEST
+      title: RunnerReleaseChannel
+      type: string
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.UpdateRunnerPolicyRequest:
+      additionalProperties: false
+      description: UpdateRunnerPolicyRequest updates a Project Policy.
+      properties:
+        groupId:
+          description: group_id specifies the group_id identifier
+          format: uuid
+          title: group_id
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.RunnerRole'
+          title: role
+        runnerId:
+          description: runner_id specifies the project identifier
+          format: uuid
+          title: runner_id
+          type: string
+      title: UpdateRunnerPolicyRequest
+      type: object
+    gitpod.v1.DeleteRunnerResponse:
+      additionalProperties: false
+      title: DeleteRunnerResponse
+      type: object
+    gitpod.v1.ParseContextURLResponse.Issue:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the source system's ID of this issue, e.g. BNFRD-6100
+          title: id
+          type: string
+        title:
+          title: title
+          type: string
+      title: Issue
+      type: object
+    gitpod.v1.CreateRunnerPolicyResponse:
+      additionalProperties: false
+      properties:
+        policy:
+          $ref: '#/components/schemas/gitpod.v1.RunnerPolicy'
+          title: policy
+      required:
+      - policy
+      title: CreateRunnerPolicyResponse
+      type: object
+    gitpod.v1.ParseContextURLResponse.GitContext:
+      additionalProperties: false
+      properties:
+        branch:
+          title: branch
+          type: string
+        cloneUrl:
+          title: clone_url
+          type: string
+        commit:
+          title: commit
+          type: string
+        host:
+          title: host
+          type: string
+        owner:
+          title: owner
+          type: string
+        repo:
+          title: repo
+          type: string
+        tag:
+          title: tag
+          type: string
+        upstreamRemoteUrl:
+          title: upstream_remote_url
+          type: string
+      title: GitContext
+      type: object
+    gitpod.v1.RunnerConfiguration:
+      additionalProperties: false
+      properties:
+        autoUpdate:
+          description: auto_update indicates whether the runner should automatically update itself.
+          title: auto_update
+          type: boolean
+        continuousProfiling:
+          description: "continuous_profiling indicates whether continuous profiling is enabled.\n This is an internal-only field used for debugging and is not exposed in the dashboard UI."
+          title: continuous_profiling
+          type: boolean
+          x-stainless-skip: true
+        devcontainerImageCacheEnabled:
+          description: "devcontainer_image_cache_enabled controls whether the devcontainer build cache is\n enabled for this runner.\n Only takes effect on supported runners, currently only AWS EC2 and Gitpod-managed runners."
+          title: devcontainer_image_cache_enabled
+          type: boolean
+        encryptedHoneycombApiKey:
+          description: "encrypted_honeycomb_api_key is the Honeycomb API key encrypted with the runner's public key.\n This is an internal-only field used for debugging and is not exposed in the dashboard UI."
+          format: byte
+          title: encrypted_honeycomb_api_key
+          type: string
+          x-stainless-skip: true
+        logLevel:
+          $ref: '#/components/schemas/gitpod.v1.LogLevel'
+          description: log_level is the log level for the runner
+          title: log_level
+        metrics:
+          $ref: '#/components/schemas/gitpod.v1.MetricsConfiguration'
+          description: metrics contains configuration for the runner's metrics collection
+          title: metrics
+        region:
+          description: "Region to deploy the runner in, if applicable.\n This is mainly used for remote runners, and is only a hint. The runner may be\n deployed in a different region. See the runner's status for the actual region."
+          title: region
+          type: string
+        releaseChannel:
+          $ref: '#/components/schemas/gitpod.v1.RunnerReleaseChannel'
+          description: The release channel the runner is on
+          title: release_channel
+        updateWindow:
+          $ref: '#/components/schemas/gitpod.v1.UpdateWindow'
+          description: "update_window defines the daily time window (UTC) during which auto-updates are allowed.\n If not set, updates are allowed at any time."
+          title: update_window
+      title: RunnerConfiguration
+      type: object
+    gitpod.v1.RunnerPhase:
+      description: RunnerPhase represents the phase a runner is in
+      enum:
+      - RUNNER_PHASE_UNSPECIFIED
+      - RUNNER_PHASE_CREATED
+      - RUNNER_PHASE_INACTIVE
+      - RUNNER_PHASE_ACTIVE
+      - RUNNER_PHASE_DELETING
+      - RUNNER_PHASE_DELETED
+      - RUNNER_PHASE_DEGRADED
+      title: RunnerPhase
+      type: string
+    gitpod.v1.SearchRepositoriesRequest:
+      additionalProperties: false
+      properties:
+        limit:
+          deprecated: true
+          description: "Maximum number of repositories to return.\n Default: 25, Maximum: 100\n Deprecated: Use pagination.page_size instead"
+          format: int32
+          maximum: 100
+          minimum: 1
+          title: limit
+          type: integer
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: Pagination parameters for repository search
+          title: pagination
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+        scmHost:
+          description: The SCM's host to retrieve repositories from
+          title: scm_host
+          type: string
+        searchMode:
+          $ref: '#/components/schemas/gitpod.v1.SearchMode'
+          description: Search mode determines how search_string is interpreted
+          title: search_mode
+        searchString:
+          description: Search query - interpretation depends on search_mode
+          title: search_string
+          type: string
+      title: SearchRepositoriesRequest
+      type: object
+    gitpod.v1.ListSCMOrganizationsResponse:
+      additionalProperties: false
+      properties:
+        organizations:
+          description: List of organizations the user belongs to
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ListSCMOrganizationsResponse.SCMOrganization'
+          title: organizations
+          type: array
+      title: ListSCMOrganizationsResponse
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.CreateRunnerTokenRequest:
+      additionalProperties: false
+      properties:
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+      title: CreateRunnerTokenRequest
+      type: object
+    gitpod.v1.CreateRunnerPolicyRequest:
+      additionalProperties: false
+      description: CreateRunnerPolicyRequest creates a Runner Policy.
+      properties:
+        groupId:
+          description: group_id specifies the group_id identifier
+          format: uuid
+          title: group_id
+          type: string
+        role:
+          $ref: '#/components/schemas/gitpod.v1.RunnerRole'
+          title: role
+        runnerId:
+          description: runner_id specifies the project identifier
+          format: uuid
+          title: runner_id
+          type: string
+      title: CreateRunnerPolicyRequest
       type: object
     gitpod.v1.ListSCMOrganizationsRequest:
       additionalProperties: false
@@ -732,6 +2016,13 @@ components:
           type: string
       title: ListSCMOrganizationsRequest
       type: object
+    gitpod.v1.RunnerRole:
+      enum:
+      - RUNNER_ROLE_UNSPECIFIED
+      - RUNNER_ROLE_ADMIN
+      - RUNNER_ROLE_USER
+      title: RunnerRole
+      type: string
     gitpod.v1.DeleteRunnerPolicyRequest:
       additionalProperties: false
       description: DeleteRunnerPolicyRequest deletes a Project Policy.
@@ -748,101 +2039,35 @@ components:
           type: string
       title: DeleteRunnerPolicyRequest
       type: object
-    gitpod.v1.ParseContextURLResponse.Issue:
-      additionalProperties: false
-      properties:
-        id:
-          description: id is the source system's ID of this issue, e.g. BNFRD-6100
-          title: id
-          type: string
-        title:
-          title: title
-          type: string
-      title: Issue
-      type: object
-    gitpod.v1.RunnerVariant:
+    gitpod.v1.SearchMode:
       enum:
-      - RUNNER_VARIANT_UNSPECIFIED
-      - RUNNER_VARIANT_STANDARD
-      - RUNNER_VARIANT_ENTERPRISE
-      title: RunnerVariant
+      - SEARCH_MODE_UNSPECIFIED
+      - SEARCH_MODE_KEYWORD
+      - SEARCH_MODE_NATIVE
+      title: SearchMode
       type: string
-    gitpod.v1.CheckRepositoryAccessResponse:
+    gitpod.v1.CheckAuthenticationForHostResponse.AuthenticationMethodOAuth2:
       additionalProperties: false
       properties:
-        errorMessage:
-          description: "error_message provides details when access check fails.\n Empty when has_access is true."
-          title: error_message
+        authUrl:
+          description: auth_url is the URL where users can authenticate
+          title: auth_url
           type: string
-        hasAccess:
-          description: has_access indicates whether the principal has read access to the repository.
-          title: has_access
-          type: boolean
-      title: CheckRepositoryAccessResponse
-      type: object
-    gitpod.v1.Subject:
-      additionalProperties: false
-      properties:
-        id:
-          description: id is the UUID of the subject
-          format: uuid
-          title: id
+        docsUrl:
+          description: docs_url is the URL to the documentation explaining this authentication method
+          title: docs_url
           type: string
-        principal:
-          $ref: '#/components/schemas/gitpod.v1.Principal'
-          description: Principal is the principal of the subject
-          title: principal
-      title: Subject
+      title: AuthenticationMethodOAuth2
       type: object
-    gitpod.v1.RunnerPhase:
-      description: RunnerPhase represents the phase a runner is in
+    gitpod.v1.LogLevel:
       enum:
-      - RUNNER_PHASE_UNSPECIFIED
-      - RUNNER_PHASE_CREATED
-      - RUNNER_PHASE_INACTIVE
-      - RUNNER_PHASE_ACTIVE
-      - RUNNER_PHASE_DELETING
-      - RUNNER_PHASE_DELETED
-      - RUNNER_PHASE_DEGRADED
-      title: RunnerPhase
+      - LOG_LEVEL_UNSPECIFIED
+      - LOG_LEVEL_DEBUG
+      - LOG_LEVEL_INFO
+      - LOG_LEVEL_WARN
+      - LOG_LEVEL_ERROR
+      title: LogLevel
       type: string
-    gitpod.v1.CreateRunnerRequest:
-      additionalProperties: false
-      properties:
-        kind:
-          $ref: '#/components/schemas/gitpod.v1.RunnerKind'
-          description: "The runner's kind\n This field is optional and here for backwards-compatibility. Use the provider field instead.\n If provider is set, the runner's kind will be deduced from the provider.\n Only one of kind and provider must be set."
-          title: kind
-        name:
-          description: The runner name for humans
-          maxLength: 127
-          minLength: 3
-          title: name
-          type: string
-        provider:
-          $ref: '#/components/schemas/gitpod.v1.RunnerProvider'
-          description: "The specific implementation type of the runner\n This field is optional for backwards compatibility but will be required in the future.\n When specified, kind must not be specified (will be deduced from provider)"
-          title: provider
-        runnerManagerId:
-          description: "The runner manager id specifies the runner manager for the managed runner.\n This field is mandatory for managed runners, otheriwse should not be set."
-          format: uuid
-          title: runner_manager_id
-          type: string
-        spec:
-          $ref: '#/components/schemas/gitpod.v1.RunnerSpec'
-          title: spec
-      title: CreateRunnerRequest
-      type: object
-    gitpod.v1.GetRunnerResponse:
-      additionalProperties: false
-      properties:
-        runner:
-          $ref: '#/components/schemas/gitpod.v1.Runner'
-          title: runner
-      required:
-      - runner
-      title: GetRunnerResponse
-      type: object
     gitpod.v1.MetricsConfiguration:
       additionalProperties: false
       properties:
@@ -868,53 +2093,55 @@ components:
           type: string
       title: MetricsConfiguration
       type: object
-    gitpod.v1.UpdateRunnerRequest.RunnerConfiguration:
+    gitpod.v1.SearchRepositoriesResponse:
       additionalProperties: false
       properties:
-        autoUpdate:
-          description: auto_update indicates whether the runner should automatically update itself.
-          nullable: true
-          title: auto_update
-          type: boolean
-        continuousProfiling:
-          description: "continuous_profiling enables continuous profiling on the runner.\n This is an internal-only field used for debugging."
-          nullable: true
-          title: continuous_profiling
-          type: boolean
-          x-stainless-skip: true
-        devcontainerImageCacheEnabled:
-          description: devcontainer_image_cache_enabled controls whether the shared devcontainer build cache is enabled for this runner.
-          nullable: true
-          title: devcontainer_image_cache_enabled
-          type: boolean
-        honeycombApiKey:
-          description: "honeycomb_api_key is the plaintext API key for Honeycomb tracing.\n The backend encrypts it with the runner's public key before storing.\n This is an internal-only field used for debugging."
-          nullable: true
-          title: honeycomb_api_key
-          type: string
-          x-stainless-skip: true
-        logLevel:
-          $ref: '#/components/schemas/gitpod.v1.LogLevel'
-          description: log_level is the log level for the runner
-          nullable: true
-          title: log_level
-        metrics:
-          $ref: '#/components/schemas/gitpod.v1.UpdateRunnerRequest.MetricsConfiguration'
-          description: metrics contains configuration for the runner's metrics collection
-          nullable: true
-          title: metrics
-        releaseChannel:
-          $ref: '#/components/schemas/gitpod.v1.RunnerReleaseChannel'
-          description: The release channel the runner is on
-          nullable: true
-          title: release_channel
-        updateWindow:
-          $ref: '#/components/schemas/gitpod.v1.UpdateWindow'
-          description: "update_window defines the daily time window (UTC) during which auto-updates are allowed.\n start_hour is required. If end_hour is omitted, it defaults to start_hour + 2.\n Send an empty UpdateWindow (no start_hour or end_hour) to clear a custom window\n and allow updates at any time."
-          nullable: true
-          title: update_window
-      title: RunnerConfiguration
+        lastPage:
+          description: 'Deprecated: Use pagination token instead. Total pages can be extracted from token.'
+          format: int32
+          title: last_page
+          type: integer
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: "Pagination information for the response.\n Token format: \"NEXT_PAGE/TOTAL_PAGES/TOTAL_COUNT\" (e.g., \"2/40/1000\").\n Use -1 for unknown values (e.g., \"2/-1/-1\" when totals unavailable).\n Empty token means no more pages."
+          title: pagination
+        repositories:
+          description: List of repositories matching the search criteria
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SearchRepositoriesResponse.Repository'
+          title: repositories
+          type: array
+      title: SearchRepositoriesResponse
       type: object
+    gitpod.v1.UpdateWindow:
+      additionalProperties: false
+      description: "UpdateWindow defines a daily time window (UTC) during which auto-updates are allowed.\n The window must be at least 2 hours long.\n Overnight windows are supported (e.g., start_hour=22, end_hour=4)."
+      properties:
+        endHour:
+          description: "end_hour is the end of the update window as a UTC hour (0-23).\n If not set, defaults to start_hour + 2."
+          title: end_hour
+          type:
+          - integer
+          - 'null'
+        startHour:
+          description: "start_hour is the beginning of the update window as a UTC hour (0-23).\n +required"
+          title: start_hour
+          type:
+          - integer
+          - 'null'
+      title: UpdateWindow
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
     gitpod.v1.RunnerStatus:
       additionalProperties: false
       description: RunnerStatus represents the status of a runner
@@ -977,391 +2204,15 @@ components:
           type: string
       title: RunnerStatus
       type: object
-    connect.error:
-      additionalProperties: true
-      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
-      properties:
-        code:
-          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-          enum:
-          - canceled
-          - unknown
-          - invalid_argument
-          - deadline_exceeded
-          - not_found
-          - already_exists
-          - permission_denied
-          - resource_exhausted
-          - failed_precondition
-          - aborted
-          - out_of_range
-          - unimplemented
-          - internal
-          - unavailable
-          - data_loss
-          - unauthenticated
-          example:
-          - not_found
-          type: string
-        message:
-          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-          type: string
-      title: Connect Error
-      type: object
-    gitpod.v1.UpdateRunnerRequest:
-      additionalProperties: false
-      properties:
-        name:
-          description: The runner's name which is shown to users
-          maxLength: 127
-          minLength: 3
-          nullable: true
-          title: name
-          type: string
-        runnerId:
-          description: "runner_id specifies which runner to be updated.\n\n +required"
-          format: uuid
-          title: runner_id
-          type: string
-        spec:
-          $ref: '#/components/schemas/gitpod.v1.UpdateRunnerRequest.Spec'
-          nullable: true
-          title: spec
-      title: UpdateRunnerRequest
-      type: object
-    gitpod.v1.ParseContextURLResponse:
-      additionalProperties: false
-      properties:
-        git:
-          $ref: '#/components/schemas/gitpod.v1.ParseContextURLResponse.GitContext'
-          title: git
-        issue:
-          $ref: '#/components/schemas/gitpod.v1.ParseContextURLResponse.Issue'
-          title: issue
-        originalContextUrl:
-          title: original_context_url
-          type: string
-        pr:
-          $ref: '#/components/schemas/gitpod.v1.ParseContextURLResponse.PullRequest'
-          deprecated: true
-          title: pr
-        projectIds:
-          description: project_ids is a list of projects to which the context URL belongs to.
-          items:
-            type: string
-          title: project_ids
-          type: array
-        pullRequest:
-          $ref: '#/components/schemas/gitpod.v1.PullRequest'
-          title: pull_request
-        scmId:
-          description: scm_id is the unique identifier of the SCM provider (e.g., "github", "gitlab", "bitbucket")
-          title: scm_id
-          type: string
-      title: ParseContextURLResponse
-      type: object
-    gitpod.v1.Runner:
-      additionalProperties: false
-      properties:
-        createdAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Time when the Runner was created.
-          title: created_at
-        creator:
-          $ref: '#/components/schemas/gitpod.v1.Subject'
-          description: creator is the identity of the creator of the environment
-          title: creator
-        kind:
-          $ref: '#/components/schemas/gitpod.v1.RunnerKind'
-          description: The runner's kind
-          title: kind
-        name:
-          description: The runner's name which is shown to users
-          title: name
-          type: string
-        provider:
-          $ref: '#/components/schemas/gitpod.v1.RunnerProvider'
-          description: The runner's provider
-          title: provider
-        runnerId:
-          title: runner_id
-          type: string
-        runnerManagerId:
-          description: "The runner manager id specifies the runner manager for the managed runner.\n This field is only set for managed runners."
-          format: uuid
-          title: runner_manager_id
-          type: string
-        spec:
-          $ref: '#/components/schemas/gitpod.v1.RunnerSpec'
-          description: The runner's specification
-          title: spec
-        status:
-          $ref: '#/components/schemas/gitpod.v1.RunnerStatus'
-          description: The runner's status
-          title: status
-        updatedAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Time when the Runner was last udpated.
-          title: updated_at
-      title: Runner
-      type: object
-    gitpod.v1.ListSCMOrganizationsResponse:
-      additionalProperties: false
-      properties:
-        organizations:
-          description: List of organizations the user belongs to
-          items:
-            $ref: '#/components/schemas/gitpod.v1.ListSCMOrganizationsResponse.SCMOrganization'
-          title: organizations
-          type: array
-      title: ListSCMOrganizationsResponse
-      type: object
-    gitpod.v1.PaginationRequest:
-      additionalProperties: false
-      properties:
-        pageSize:
-          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
-          format: int32
-          maximum: 100
-          title: page_size
-          type: integer
-        token:
-          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
-          title: token
-          type: string
-      title: PaginationRequest
-      type: object
-    gitpod.v1.DeleteRunnerPolicyResponse:
-      additionalProperties: false
-      title: DeleteRunnerPolicyResponse
-      type: object
-    gitpod.v1.FieldValue:
-      additionalProperties: false
-      properties:
-        key:
-          title: key
-          type: string
-        value:
-          title: value
-          type: string
-      title: FieldValue
-      type: object
-    gitpod.v1.SearchRepositoriesResponse:
-      additionalProperties: false
-      properties:
-        lastPage:
-          description: 'Deprecated: Use pagination token instead. Total pages can be extracted from token.'
-          format: int32
-          title: last_page
-          type: integer
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          description: "Pagination information for the response.\n Token format: \"NEXT_PAGE/TOTAL_PAGES/TOTAL_COUNT\" (e.g., \"2/40/1000\").\n Use -1 for unknown values (e.g., \"2/-1/-1\" when totals unavailable).\n Empty token means no more pages."
-          title: pagination
-        repositories:
-          description: List of repositories matching the search criteria
-          items:
-            $ref: '#/components/schemas/gitpod.v1.SearchRepositoriesResponse.Repository'
-          title: repositories
-          type: array
-      title: SearchRepositoriesResponse
-      type: object
-    gitpod.v1.GatewayInfo:
-      additionalProperties: false
-      properties:
-        gateway:
-          $ref: '#/components/schemas/gitpod.v1.Gateway'
-          title: gateway
-        latency:
-          $ref: '#/components/schemas/google.protobuf.Duration'
-          description: latency is the round-trip time of the runner to the gateway in milliseconds.
-          title: latency
-      title: GatewayInfo
-      type: object
-    google.protobuf.Duration:
-      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
-      format: regex
-      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
-      type: string
-    gitpod.v1.CheckAuthenticationForHostRequest:
-      additionalProperties: false
-      properties:
-        host:
-          title: host
-          type: string
-        runnerId:
-          format: uuid
-          title: runner_id
-          type: string
-      title: CheckAuthenticationForHostRequest
-      type: object
-    gitpod.v1.CheckAuthenticationForHostResponse.AuthenticationMethodOAuth2:
-      additionalProperties: false
-      properties:
-        authUrl:
-          description: auth_url is the URL where users can authenticate
-          title: auth_url
-          type: string
-        docsUrl:
-          description: docs_url is the URL to the documentation explaining this authentication method
-          title: docs_url
-          type: string
-      title: AuthenticationMethodOAuth2
-      type: object
-    gitpod.v1.SearchMode:
+    gitpod.v1.RunnerKind:
+      description: RunnerKind represents the kind of a runner
       enum:
-      - SEARCH_MODE_UNSPECIFIED
-      - SEARCH_MODE_KEYWORD
-      - SEARCH_MODE_NATIVE
-      title: SearchMode
+      - RUNNER_KIND_UNSPECIFIED
+      - RUNNER_KIND_LOCAL
+      - RUNNER_KIND_REMOTE
+      - RUNNER_KIND_LOCAL_CONFIGURATION
+      title: RunnerKind
       type: string
-    gitpod.v1.RunnerSpec:
-      additionalProperties: false
-      properties:
-        configuration:
-          $ref: '#/components/schemas/gitpod.v1.RunnerConfiguration'
-          description: The runner's configuration
-          title: configuration
-        desiredPhase:
-          $ref: '#/components/schemas/gitpod.v1.RunnerPhase'
-          title: desired_phase
-        variant:
-          $ref: '#/components/schemas/gitpod.v1.RunnerVariant'
-          description: The runner's variant
-          title: variant
-      title: RunnerSpec
-      type: object
-    gitpod.v1.UpdateRunnerPolicyRequest:
-      additionalProperties: false
-      description: UpdateRunnerPolicyRequest updates a Project Policy.
-      properties:
-        groupId:
-          description: group_id specifies the group_id identifier
-          format: uuid
-          title: group_id
-          type: string
-        role:
-          $ref: '#/components/schemas/gitpod.v1.RunnerRole'
-          title: role
-        runnerId:
-          description: runner_id specifies the project identifier
-          format: uuid
-          title: runner_id
-          type: string
-      title: UpdateRunnerPolicyRequest
-      type: object
-    gitpod.v1.CreateRunnerPolicyResponse:
-      additionalProperties: false
-      properties:
-        policy:
-          $ref: '#/components/schemas/gitpod.v1.RunnerPolicy'
-          title: policy
-      required:
-      - policy
-      title: CreateRunnerPolicyResponse
-      type: object
-    gitpod.v1.CheckAuthenticationForHostResponse.AuthenticationMethodPersonalAccessToken:
-      additionalProperties: false
-      properties:
-        createUrl:
-          description: create_url is the URL where users can create a new Personal Access Token
-          title: create_url
-          type: string
-        docsUrl:
-          description: docs_url is the URL to the documentation explaining PAT usage for this host
-          title: docs_url
-          type: string
-        example:
-          description: example is an example of a Personal Access Token
-          title: example
-          type: string
-        requiredScopes:
-          description: required_scopes is the list of permissions required for the Personal Access Token
-          items:
-            type: string
-          title: required_scopes
-          type: array
-      title: AuthenticationMethodPersonalAccessToken
-      type: object
-    gitpod.v1.LogLevel:
-      enum:
-      - LOG_LEVEL_UNSPECIFIED
-      - LOG_LEVEL_DEBUG
-      - LOG_LEVEL_INFO
-      - LOG_LEVEL_WARN
-      - LOG_LEVEL_ERROR
-      title: LogLevel
-      type: string
-    gitpod.v1.UpdateRunnerPolicyResponse:
-      additionalProperties: false
-      properties:
-        policy:
-          $ref: '#/components/schemas/gitpod.v1.RunnerPolicy'
-          title: policy
-      required:
-      - policy
-      title: UpdateRunnerPolicyResponse
-      type: object
-    gitpod.v1.DeleteRunnerRequest:
-      additionalProperties: false
-      properties:
-        force:
-          description: "force indicates whether the runner should be deleted forcefully.\n When force deleting a Runner, all Environments on the runner are also force deleted and\n regular Runner lifecycle is not respected.\n Force deleting can result in data loss."
-          title: force
-          type: boolean
-        runnerId:
-          format: uuid
-          title: runner_id
-          type: string
-      title: DeleteRunnerRequest
-      type: object
-    gitpod.v1.UpdateRunnerRequest.Spec:
-      additionalProperties: false
-      properties:
-        configuration:
-          $ref: '#/components/schemas/gitpod.v1.UpdateRunnerRequest.RunnerConfiguration'
-          nullable: true
-          title: configuration
-        desiredPhase:
-          $ref: '#/components/schemas/gitpod.v1.RunnerPhase'
-          description: "desired_phase can currently only be updated on local-configuration runners,\n to toggle whether local runners are allowed for running environments in the\n organization.\n Set to:\n - ACTIVE to enable local runners.\n - INACTIVE to disable all local runners. Existing local runners and their\n   environments will stop, and cannot be started again until the desired_phase\n   is set to ACTIVE. Use this carefully, as it will affect all users in the\n   organization who use local runners."
-          nullable: true
-          title: desired_phase
-      title: Spec
-      type: object
-    gitpod.v1.SearchRepositoriesResponse.Repository:
-      additionalProperties: false
-      properties:
-        name:
-          description: Repository name (e.g., "my-project")
-          title: name
-          type: string
-        url:
-          description: Repository URL (e.g., "https://github.com/owner/my-project")
-          title: url
-          type: string
-      title: Repository
-      type: object
-    gitpod.v1.CreateRunnerLogsTokenResponse:
-      additionalProperties: false
-      properties:
-        accessToken:
-          description: access_token is the token that can be used to access the logs and support bundle of the runner
-          title: access_token
-          type: string
-      required:
-      - accessToken
-      title: CreateRunnerLogsTokenResponse
-      type: object
-    gitpod.v1.PaginationResponse:
-      additionalProperties: false
-      properties:
-        nextToken:
-          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
-          title: next_token
-          type: string
-      title: PaginationResponse
-      type: object
     gitpod.v1.Gateway:
       additionalProperties: false
       description: Gateway represents a system gateway that provides access to services
@@ -1383,7 +2234,109 @@ components:
       - url
       title: Gateway
       type: object
-    gitpod.v1.CreateRunnerResponse:
+    gitpod.v1.ListRunnersRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListRunnersRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing runners
+          title: pagination
+      title: ListRunnersRequest
+      type: object
+    gitpod.v1.CheckAuthenticationForHostRequest:
+      additionalProperties: false
+      properties:
+        host:
+          title: host
+          type: string
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+      title: CheckAuthenticationForHostRequest
+      type: object
+    gitpod.v1.CreateRunnerRequest:
+      additionalProperties: false
+      properties:
+        kind:
+          $ref: '#/components/schemas/gitpod.v1.RunnerKind'
+          description: "The runner's kind\n This field is optional and here for backwards-compatibility. Use the provider field instead.\n If provider is set, the runner's kind will be deduced from the provider.\n Only one of kind and provider must be set."
+          title: kind
+        name:
+          description: The runner name for humans
+          maxLength: 127
+          minLength: 3
+          title: name
+          type: string
+        provider:
+          $ref: '#/components/schemas/gitpod.v1.RunnerProvider'
+          description: "The specific implementation type of the runner\n This field is optional for backwards compatibility but will be required in the future.\n When specified, kind must not be specified (will be deduced from provider)"
+          title: provider
+        runnerManagerId:
+          description: "The runner manager id specifies the runner manager for the managed runner.\n This field is mandatory for managed runners, otheriwse should not be set."
+          format: uuid
+          title: runner_manager_id
+          type: string
+        spec:
+          $ref: '#/components/schemas/gitpod.v1.RunnerSpec'
+          title: spec
+      title: CreateRunnerRequest
+      type: object
+    gitpod.v1.SearchRepositoriesResponse.Repository:
+      additionalProperties: false
+      properties:
+        name:
+          description: Repository name (e.g., "my-project")
+          title: name
+          type: string
+        url:
+          description: Repository URL (e.g., "https://github.com/owner/my-project")
+          title: url
+          type: string
+      title: Repository
+      type: object
+    gitpod.v1.RunnerProvider:
+      description: "RunnerProvider identifies the specific implementation type of a runner.\n Each provider maps to a specific kind of runner (local or remote), as\n specified below for each provider."
+      enum:
+      - RUNNER_PROVIDER_UNSPECIFIED
+      - RUNNER_PROVIDER_AWS_EC2
+      - RUNNER_PROVIDER_LINUX_HOST
+      - RUNNER_PROVIDER_DESKTOP_MAC
+      - RUNNER_PROVIDER_MANAGED
+      - RUNNER_PROVIDER_GCP
+      - RUNNER_PROVIDER_DEV_AGENT
+      title: RunnerProvider
+      type: string
+    gitpod.v1.UpdateRunnerPolicyResponse:
+      additionalProperties: false
+      properties:
+        policy:
+          $ref: '#/components/schemas/gitpod.v1.RunnerPolicy'
+          title: policy
+      required:
+      - policy
+      title: UpdateRunnerPolicyResponse
+      type: object
+    gitpod.v1.RunnerSpec:
+      additionalProperties: false
+      properties:
+        configuration:
+          $ref: '#/components/schemas/gitpod.v1.RunnerConfiguration'
+          description: The runner's configuration
+          title: configuration
+        desiredPhase:
+          $ref: '#/components/schemas/gitpod.v1.RunnerPhase'
+          title: desired_phase
+        variant:
+          $ref: '#/components/schemas/gitpod.v1.RunnerVariant'
+          description: The runner's variant
+          title: variant
+      title: RunnerSpec
+      type: object
+    gitpod.v1.CreateRunnerTokenResponse:
       additionalProperties: false
       properties:
         accessToken:
@@ -1395,211 +2348,17 @@ components:
           description: "exchange_token is a one-time use token that should be exchanged by the runner for an access token,\n using the IdentityService.ExchangeToken rpc. The token expires after 24 hours."
           title: exchange_token
           type: string
+      title: CreateRunnerTokenResponse
+      type: object
+    gitpod.v1.GetRunnerResponse:
+      additionalProperties: false
+      properties:
         runner:
           $ref: '#/components/schemas/gitpod.v1.Runner'
           title: runner
       required:
       - runner
-      title: CreateRunnerResponse
-      type: object
-    gitpod.v1.PullRequest:
-      additionalProperties: false
-      description: "PullRequest represents pull request metadata from source control systems.\n This message is used across workflow triggers, executions, and agent contexts\n to maintain consistent PR information throughout the system."
-      properties:
-        author:
-          description: Author name as provided by the SCM system
-          title: author
-          type: string
-        draft:
-          description: Whether this is a draft pull request
-          title: draft
-          type: boolean
-        fromBranch:
-          description: Source branch name (the branch being merged from)
-          title: from_branch
-          type: string
-        id:
-          description: 'Unique identifier from the source system (e.g., "123" for GitHub PR #123)'
-          title: id
-          type: string
-        repository:
-          $ref: '#/components/schemas/gitpod.v1.PullRequest.Repository'
-          title: repository
-        state:
-          $ref: '#/components/schemas/gitpod.v1.PullRequest.State'
-          title: state
-        title:
-          description: Pull request title
-          title: title
-          type: string
-        toBranch:
-          description: Target branch name (the branch being merged into)
-          title: to_branch
-          type: string
-        url:
-          description: Pull request URL (e.g., "https://github.com/owner/repo/pull/123")
-          title: url
-          type: string
-      title: PullRequest
-      type: object
-    gitpod.v1.PullRequest.Repository:
-      additionalProperties: false
-      description: Repository information
-      properties:
-        cloneUrl:
-          title: clone_url
-          type: string
-        host:
-          title: host
-          type: string
-        name:
-          title: name
-          type: string
-        owner:
-          title: owner
-          type: string
-      title: Repository
-      type: object
-    google.protobuf.Timestamp:
-      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
-      format: date-time
-      type: string
-    gitpod.v1.ListRunnersResponse:
-      additionalProperties: false
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          description: pagination contains the pagination options for listing runners
-          title: pagination
-        runners:
-          description: The runners registered in the scope
-          items:
-            $ref: '#/components/schemas/gitpod.v1.Runner'
-          title: runners
-          type: array
-      title: ListRunnersResponse
-      type: object
-    gitpod.v1.UpdateRunnerRequest.MetricsConfiguration:
-      additionalProperties: false
-      properties:
-        enabled:
-          description: enabled indicates whether the runner should collect metrics
-          nullable: true
-          title: enabled
-          type: boolean
-        managedMetricsEnabled:
-          description: "When true, the runner pushes metrics to the management plane via\n ReportRunnerMetrics instead of directly to the remote_write endpoint."
-          nullable: true
-          title: managed_metrics_enabled
-          type: boolean
-        password:
-          description: password is the password to use for the metrics collector
-          nullable: true
-          title: password
-          type: string
-        url:
-          description: url is the URL of the metrics collector
-          nullable: true
-          title: url
-          type: string
-        username:
-          description: username is the username to use for the metrics collector
-          nullable: true
-          title: username
-          type: string
-      title: MetricsConfiguration
-      type: object
-    gitpod.v1.DeleteRunnerResponse:
-      additionalProperties: false
-      title: DeleteRunnerResponse
-      type: object
-    gitpod.v1.RunnerConfiguration:
-      additionalProperties: false
-      properties:
-        autoUpdate:
-          description: auto_update indicates whether the runner should automatically update itself.
-          title: auto_update
-          type: boolean
-        continuousProfiling:
-          description: "continuous_profiling indicates whether continuous profiling is enabled.\n This is an internal-only field used for debugging and is not exposed in the dashboard UI."
-          title: continuous_profiling
-          type: boolean
-          x-stainless-skip: true
-        devcontainerImageCacheEnabled:
-          description: "devcontainer_image_cache_enabled controls whether the devcontainer build cache is\n enabled for this runner.\n Only takes effect on supported runners, currently only AWS EC2 and Gitpod-managed runners."
-          title: devcontainer_image_cache_enabled
-          type: boolean
-        encryptedHoneycombApiKey:
-          description: "encrypted_honeycomb_api_key is the Honeycomb API key encrypted with the runner's public key.\n This is an internal-only field used for debugging and is not exposed in the dashboard UI."
-          format: byte
-          title: encrypted_honeycomb_api_key
-          type: string
-          x-stainless-skip: true
-        logLevel:
-          $ref: '#/components/schemas/gitpod.v1.LogLevel'
-          description: log_level is the log level for the runner
-          title: log_level
-        metrics:
-          $ref: '#/components/schemas/gitpod.v1.MetricsConfiguration'
-          description: metrics contains configuration for the runner's metrics collection
-          title: metrics
-        region:
-          description: "Region to deploy the runner in, if applicable.\n This is mainly used for remote runners, and is only a hint. The runner may be\n deployed in a different region. See the runner's status for the actual region."
-          title: region
-          type: string
-        releaseChannel:
-          $ref: '#/components/schemas/gitpod.v1.RunnerReleaseChannel'
-          description: The release channel the runner is on
-          title: release_channel
-        updateWindow:
-          $ref: '#/components/schemas/gitpod.v1.UpdateWindow'
-          description: "update_window defines the daily time window (UTC) during which auto-updates are allowed.\n If not set, updates are allowed at any time."
-          title: update_window
-      title: RunnerConfiguration
-      type: object
-    gitpod.v1.RunnerReleaseChannel:
-      enum:
-      - RUNNER_RELEASE_CHANNEL_UNSPECIFIED
-      - RUNNER_RELEASE_CHANNEL_STABLE
-      - RUNNER_RELEASE_CHANNEL_LATEST
-      title: RunnerReleaseChannel
-      type: string
-    gitpod.v1.UpdateRunnerResponse:
-      additionalProperties: false
-      title: UpdateRunnerResponse
-      type: object
-    gitpod.v1.SearchRepositoriesRequest:
-      additionalProperties: false
-      properties:
-        limit:
-          deprecated: true
-          description: "Maximum number of repositories to return.\n Default: 25, Maximum: 100\n Deprecated: Use pagination.page_size instead"
-          format: int32
-          maximum: 100
-          minimum: 1
-          title: limit
-          type: integer
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: Pagination parameters for repository search
-          title: pagination
-        runnerId:
-          format: uuid
-          title: runner_id
-          type: string
-        scmHost:
-          description: The SCM's host to retrieve repositories from
-          title: scm_host
-          type: string
-        searchMode:
-          $ref: '#/components/schemas/gitpod.v1.SearchMode'
-          description: Search mode determines how search_string is interpreted
-          title: search_mode
-        searchString:
-          description: Search query - interpretation depends on search_mode
-          title: search_string
-          type: string
-      title: SearchRepositoriesRequest
+      title: GetRunnerResponse
       type: object
     gitpod.v1.ParseContextURLResponse.PullRequest:
       additionalProperties: false
@@ -1618,168 +2377,6 @@ components:
           title: to_branch
           type: string
       title: PullRequest
-      type: object
-    gitpod.v1.ListRunnersRequest:
-      additionalProperties: false
-      properties:
-        filter:
-          $ref: '#/components/schemas/gitpod.v1.ListRunnersRequest.Filter'
-          title: filter
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: pagination contains the pagination options for listing runners
-          title: pagination
-      title: ListRunnersRequest
-      type: object
-    gitpod.v1.RunnerProvider:
-      description: "RunnerProvider identifies the specific implementation type of a runner.\n Each provider maps to a specific kind of runner (local or remote), as\n specified below for each provider."
-      enum:
-      - RUNNER_PROVIDER_UNSPECIFIED
-      - RUNNER_PROVIDER_AWS_EC2
-      - RUNNER_PROVIDER_LINUX_HOST
-      - RUNNER_PROVIDER_DESKTOP_MAC
-      - RUNNER_PROVIDER_MANAGED
-      - RUNNER_PROVIDER_GCP
-      - RUNNER_PROVIDER_DEV_AGENT
-      title: RunnerProvider
-      type: string
-    gitpod.v1.ParseContextURLRequest:
-      additionalProperties: false
-      properties:
-        contextUrl:
-          format: uri
-          title: context_url
-          type: string
-        runnerId:
-          format: uuid
-          title: runner_id
-          type: string
-      title: ParseContextURLRequest
-      type: object
-    gitpod.v1.CreateRunnerTokenRequest:
-      additionalProperties: false
-      properties:
-        runnerId:
-          format: uuid
-          title: runner_id
-          type: string
-      title: CreateRunnerTokenRequest
-      type: object
-    gitpod.v1.ListSCMOrganizationsResponse.SCMOrganization:
-      additionalProperties: false
-      properties:
-        isAdmin:
-          description: "Whether the user has admin permissions in this organization.\n Admin permissions typically allow creating organization-level webhooks."
-          title: is_admin
-          type: boolean
-        name:
-          description: Organization name/slug (e.g., "gitpod-io")
-          title: name
-          type: string
-        url:
-          description: Organization URL (e.g., "https://github.com/gitpod-io")
-          title: url
-          type: string
-      title: SCMOrganization
-      type: object
-    gitpod.v1.RunnerPolicy:
-      additionalProperties: false
-      properties:
-        groupId:
-          format: uuid
-          title: group_id
-          type: string
-        role:
-          $ref: '#/components/schemas/gitpod.v1.RunnerRole'
-          description: role is the role assigned to the group
-          title: role
-      title: RunnerPolicy
-      type: object
-    gitpod.v1.CreateRunnerTokenResponse:
-      additionalProperties: false
-      properties:
-        accessToken:
-          deprecated: true
-          description: deprecated, will be removed. Use exchange_token instead.
-          title: access_token
-          type: string
-        exchangeToken:
-          description: "exchange_token is a one-time use token that should be exchanged by the runner for an access token,\n using the IdentityService.ExchangeToken rpc. The token expires after 24 hours."
-          title: exchange_token
-          type: string
-      title: CreateRunnerTokenResponse
-      type: object
-    gitpod.v1.RunnerKind:
-      description: RunnerKind represents the kind of a runner
-      enum:
-      - RUNNER_KIND_UNSPECIFIED
-      - RUNNER_KIND_LOCAL
-      - RUNNER_KIND_REMOTE
-      - RUNNER_KIND_LOCAL_CONFIGURATION
-      title: RunnerKind
-      type: string
-    gitpod.v1.CreateRunnerPolicyRequest:
-      additionalProperties: false
-      description: CreateRunnerPolicyRequest creates a Runner Policy.
-      properties:
-        groupId:
-          description: group_id specifies the group_id identifier
-          format: uuid
-          title: group_id
-          type: string
-        role:
-          $ref: '#/components/schemas/gitpod.v1.RunnerRole'
-          title: role
-        runnerId:
-          description: runner_id specifies the project identifier
-          format: uuid
-          title: runner_id
-          type: string
-      title: CreateRunnerPolicyRequest
-      type: object
-    gitpod.v1.ListRunnerPoliciesRequest:
-      additionalProperties: false
-      description: ListRunnerPoliciesRequest lists policies for a project.
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: pagination contains the pagination options for listing project policies
-          title: pagination
-        runnerId:
-          description: runner_id specifies the project identifier
-          format: uuid
-          title: runner_id
-          type: string
-      title: ListRunnerPoliciesRequest
-      type: object
-    gitpod.v1.ParseContextURLResponse.GitContext:
-      additionalProperties: false
-      properties:
-        branch:
-          title: branch
-          type: string
-        cloneUrl:
-          title: clone_url
-          type: string
-        commit:
-          title: commit
-          type: string
-        host:
-          title: host
-          type: string
-        owner:
-          title: owner
-          type: string
-        repo:
-          title: repo
-          type: string
-        tag:
-          title: tag
-          type: string
-        upstreamRemoteUrl:
-          title: upstream_remote_url
-          type: string
-      title: GitContext
       type: object
     gitpod.v1.ListRunnersRequest.Filter:
       additionalProperties: false
@@ -1808,68 +2405,6 @@ components:
           title: providers
           type: array
       title: Filter
-      type: object
-    gitpod.v1.UpdateWindow:
-      additionalProperties: false
-      description: "UpdateWindow defines a daily time window (UTC) during which auto-updates are allowed.\n The window must be at least 2 hours long.\n Overnight windows are supported (e.g., start_hour=22, end_hour=4)."
-      properties:
-        endHour:
-          description: "end_hour is the end of the update window as a UTC hour (0-23).\n If not set, defaults to start_hour + 2."
-          nullable: true
-          title: end_hour
-          type: integer
-        startHour:
-          description: "start_hour is the beginning of the update window as a UTC hour (0-23).\n +required"
-          nullable: true
-          title: start_hour
-          type: integer
-      title: UpdateWindow
-      type: object
-    gitpod.v1.CheckAuthenticationForHostResponse:
-      additionalProperties: false
-      properties:
-        authenticated:
-          title: authenticated
-          type: boolean
-        authenticationUrl:
-          deprecated: true
-          title: authentication_url
-          type: string
-        patSupported:
-          deprecated: true
-          title: pat_supported
-          type: boolean
-        scmId:
-          description: scm_id is the unique identifier of the SCM provider
-          title: scm_id
-          type: string
-        scmName:
-          description: scm_name is the human-readable name of the SCM provider (e.g., "GitHub", "GitLab")
-          title: scm_name
-          type: string
-        supportsOauth2:
-          $ref: '#/components/schemas/gitpod.v1.CheckAuthenticationForHostResponse.AuthenticationMethodOAuth2'
-          description: supports_oauth2 indicates that the host supports OAuth2 authentication
-          title: supports_oauth2
-        supportsPat:
-          $ref: '#/components/schemas/gitpod.v1.CheckAuthenticationForHostResponse.AuthenticationMethodPersonalAccessToken'
-          description: supports_pat indicates that the host supports Personal Access Token authentication
-          title: supports_pat
-      title: CheckAuthenticationForHostResponse
-      type: object
-    gitpod.v1.CheckRepositoryAccessRequest:
-      additionalProperties: false
-      properties:
-        repositoryUrl:
-          description: "repository_url is the URL of the repository to check access for.\n Can be a clone URL (https://github.com/org/repo.git) or web URL (https://github.com/org/repo)."
-          format: uri
-          title: repository_url
-          type: string
-        runnerId:
-          format: uuid
-          title: runner_id
-          type: string
-      title: CheckRepositoryAccessRequest
       type: object
     gitpod.v1.ListRunnerPoliciesResponse:
       additionalProperties: false
