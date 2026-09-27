@@ -218,6 +218,24 @@ paths:
       - gitpod.v1.IdentityService
 components:
   schemas:
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.IDTokenVersion:
+      enum:
+      - ID_TOKEN_VERSION_UNSPECIFIED
+      - ID_TOKEN_VERSION_V1
+      - ID_TOKEN_VERSION_V2
+      title: IDTokenVersion
+      type: string
     gitpod.v1.Subject:
       additionalProperties: false
       properties:
@@ -231,6 +249,15 @@ components:
           description: Principal is the principal of the subject
           title: principal
       title: Subject
+      type: object
+    gitpod.v1.ExchangeTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          description: access_token is the new access token
+          title: access_token
+          type: string
+      title: ExchangeTokenResponse
       type: object
     gitpod.v1.GetIDTokenRequest:
       additionalProperties: false
@@ -248,6 +275,14 @@ components:
           title: version
       title: GetIDTokenRequest
       type: object
+    gitpod.v1.GetIDTokenResponse:
+      additionalProperties: false
+      properties:
+        token:
+          title: token
+          type: string
+      title: GetIDTokenResponse
+      type: object
     gitpod.v1.GetAuthenticatedIdentityRequest:
       additionalProperties: false
       properties:
@@ -255,17 +290,15 @@ components:
           type: boolean
       title: GetAuthenticatedIdentityRequest
       type: object
-    gitpod.v1.Principal:
-      enum:
-      - PRINCIPAL_UNSPECIFIED
-      - PRINCIPAL_ACCOUNT
-      - PRINCIPAL_USER
-      - PRINCIPAL_RUNNER
-      - PRINCIPAL_ENVIRONMENT
-      - PRINCIPAL_SERVICE_ACCOUNT
-      - PRINCIPAL_RUNNER_MANAGER
-      title: Principal
-      type: string
+    gitpod.v1.ExchangeTokenRequest:
+      additionalProperties: false
+      properties:
+        exchangeToken:
+          description: exchange_token is the token to exchange
+          title: exchange_token
+          type: string
+      title: ExchangeTokenRequest
+      type: object
     connect.error:
       additionalProperties: true
       description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
@@ -297,22 +330,6 @@ components:
           type: string
       title: Connect Error
       type: object
-    gitpod.v1.ExchangeTokenRequest:
-      additionalProperties: false
-      properties:
-        exchangeToken:
-          description: exchange_token is the token to exchange
-          title: exchange_token
-          type: string
-      title: ExchangeTokenRequest
-      type: object
-    gitpod.v1.IDTokenVersion:
-      enum:
-      - ID_TOKEN_VERSION_UNSPECIFIED
-      - ID_TOKEN_VERSION_V1
-      - ID_TOKEN_VERSION_V2
-      title: IDTokenVersion
-      type: string
     gitpod.v1.GetAuthenticatedIdentityResponse:
       additionalProperties: false
       properties:
@@ -327,23 +344,6 @@ components:
           description: subject is the identity of the current user
           title: subject
       title: GetAuthenticatedIdentityResponse
-      type: object
-    gitpod.v1.ExchangeTokenResponse:
-      additionalProperties: false
-      properties:
-        accessToken:
-          description: access_token is the new access token
-          title: access_token
-          type: string
-      title: ExchangeTokenResponse
-      type: object
-    gitpod.v1.GetIDTokenResponse:
-      additionalProperties: false
-      properties:
-        token:
-          title: token
-          type: string
-      title: GetIDTokenResponse
       type: object
   securitySchemes:
     bearerAuth:

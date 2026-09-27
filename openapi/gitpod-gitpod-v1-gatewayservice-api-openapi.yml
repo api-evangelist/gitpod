@@ -52,6 +52,15 @@ paths:
       - gitpod.v1.GatewayService
 components:
   schemas:
+    gitpod.v1.ListGatewaysRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing gateways
+          title: pagination
+      title: ListGatewaysRequest
+      type: object
     gitpod.v1.PaginationRequest:
       additionalProperties: false
       properties:
@@ -144,15 +153,6 @@ components:
       required:
       - gateways
       title: ListGatewaysResponse
-      type: object
-    gitpod.v1.ListGatewaysRequest:
-      additionalProperties: false
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: pagination contains the pagination options for listing gateways
-          title: pagination
-      title: ListGatewaysRequest
       type: object
   securitySchemes:
     bearerAuth:
