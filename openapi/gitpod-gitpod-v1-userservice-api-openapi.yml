@@ -904,338 +904,12 @@ paths:
       - gitpod.v1.UserService
 components:
   schemas:
-    gitpod.v1.Principal:
-      enum:
-      - PRINCIPAL_UNSPECIFIED
-      - PRINCIPAL_ACCOUNT
-      - PRINCIPAL_USER
-      - PRINCIPAL_RUNNER
-      - PRINCIPAL_ENVIRONMENT
-      - PRINCIPAL_SERVICE_ACCOUNT
-      - PRINCIPAL_RUNNER_MANAGER
-      title: Principal
-      type: string
-    gitpod.v1.PaginationRequest:
-      additionalProperties: false
-      properties:
-        pageSize:
-          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
-          format: int32
-          maximum: 100
-          title: page_size
-          type: integer
-        token:
-          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
-          title: token
-          type: string
-      title: PaginationRequest
-      type: object
     gitpod.v1.GetDotfilesConfigurationRequest:
       additionalProperties: false
       properties:
         empty:
           type: boolean
       title: GetDotfilesConfigurationRequest
-      type: object
-    gitpod.v1.GetPersonalAccessTokenRequest:
-      additionalProperties: false
-      properties:
-        personalAccessTokenId:
-          format: uuid
-          title: personal_access_token_id
-          type: string
-      title: GetPersonalAccessTokenRequest
-      type: object
-    google.protobuf.Timestamp:
-      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
-      format: date-time
-      type: string
-    gitpod.v1.DeleteUserResponse:
-      additionalProperties: false
-      title: DeleteUserResponse
-      type: object
-    gitpod.v1.SetPreferenceRequest:
-      additionalProperties: false
-      properties:
-        key:
-          maxLength: 255
-          minLength: 1
-          title: key
-          type: string
-        value:
-          description: "omitting value field will cause an error due to min_len validation,\n to unset a preference use DeletePreference instead"
-          maxLength: 10240
-          minLength: 1
-          title: value
-          type: string
-      title: SetPreferenceRequest
-      type: object
-    gitpod.v1.ListPreferencesRequest:
-      additionalProperties: false
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          title: pagination
-      title: ListPreferencesRequest
-      type: object
-    gitpod.v1.CreatePersonalAccessTokenResponse:
-      additionalProperties: false
-      properties:
-        token:
-          title: token
-          type: string
-      required:
-      - token
-      title: CreatePersonalAccessTokenResponse
-      type: object
-    gitpod.v1.PersonalAccessToken:
-      additionalProperties: false
-      properties:
-        createdAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          title: created_at
-        creator:
-          $ref: '#/components/schemas/gitpod.v1.Subject'
-          title: creator
-        description:
-          title: description
-          type: string
-        expiresAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          title: expires_at
-        id:
-          format: uuid
-          title: id
-          type: string
-        lastUsed:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          title: last_used
-        readOnly:
-          description: "When true, the token can only be used for read operations.\n Mutations will be denied at the data layer."
-          title: read_only
-          type: boolean
-        userId:
-          format: uuid
-          title: user_id
-          type: string
-      title: PersonalAccessToken
-      type: object
-    gitpod.v1.DeletePersonalAccessTokenRequest:
-      additionalProperties: false
-      properties:
-        personalAccessTokenId:
-          format: uuid
-          title: personal_access_token_id
-          type: string
-      title: DeletePersonalAccessTokenRequest
-      type: object
-    gitpod.v1.GetPreferenceResponse:
-      additionalProperties: false
-      properties:
-        preference:
-          $ref: '#/components/schemas/gitpod.v1.UserPreference'
-          title: preference
-      title: GetPreferenceResponse
-      type: object
-    gitpod.v1.DeletePreferenceRequest:
-      additionalProperties: false
-      properties:
-        userPreferenceId:
-          format: uuid
-          title: user_preference_id
-          type: string
-      title: DeletePreferenceRequest
-      type: object
-    gitpod.v1.SetPreferenceResponse:
-      additionalProperties: false
-      title: SetPreferenceResponse
-      type: object
-    google.protobuf.Duration:
-      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
-      format: regex
-      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
-      type: string
-    gitpod.v1.SetSuspendedResponse:
-      additionalProperties: false
-      title: SetSuspendedResponse
-      type: object
-    gitpod.v1.PaginationResponse:
-      additionalProperties: false
-      properties:
-        nextToken:
-          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
-          title: next_token
-          type: string
-      title: PaginationResponse
-      type: object
-    gitpod.v1.ListPersonalAccessTokensRequest.Filter:
-      additionalProperties: false
-      properties:
-        userIds:
-          description: creator_ids filters the response to only Environments created by specified members
-          items:
-            format: uuid
-            maxItems: 25
-            type: string
-          maxItems: 25
-          title: user_ids
-          type: array
-      title: Filter
-      type: object
-    gitpod.v1.SetDotfilesConfigurationRequest:
-      additionalProperties: false
-      properties:
-        repository:
-          format: uri
-          maxLength: 255
-          title: repository
-          type: string
-      title: SetDotfilesConfigurationRequest
-      type: object
-    gitpod.v1.GetDotfilesConfigurationResponse:
-      additionalProperties: false
-      properties:
-        dotfilesConfiguration:
-          $ref: '#/components/schemas/gitpod.v1.DotfilesConfiguration'
-          title: dotfiles_configuration
-      required:
-      - dotfilesConfiguration
-      title: GetDotfilesConfigurationResponse
-      type: object
-    gitpod.v1.DeletePreferenceResponse:
-      additionalProperties: false
-      title: DeletePreferenceResponse
-      type: object
-    gitpod.v1.ListPersonalAccessTokensRequest:
-      additionalProperties: false
-      properties:
-        filter:
-          $ref: '#/components/schemas/gitpod.v1.ListPersonalAccessTokensRequest.Filter'
-          title: filter
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          title: pagination
-      title: ListPersonalAccessTokensRequest
-      type: object
-    gitpod.v1.GetUserResponse:
-      additionalProperties: false
-      properties:
-        user:
-          $ref: '#/components/schemas/gitpod.v1.User'
-          title: user
-      required:
-      - user
-      title: GetUserResponse
-      type: object
-    gitpod.v1.GetPreferenceRequest:
-      additionalProperties: false
-      oneOf:
-      - not:
-          anyOf:
-          - required:
-            - preferenceKey
-        required:
-        - preferenceId
-      - not:
-          anyOf:
-          - required:
-            - preferenceId
-        required:
-        - preferenceKey
-      properties:
-        preferenceId:
-          title: preference_id
-          type: string
-        preferenceKey:
-          maxLength: 255
-          minLength: 1
-          title: preference_key
-          type: string
-        userPreferenceId:
-          deprecated: true
-          title: user_preference_id
-          type: string
-      title: GetPreferenceRequest
-      type: object
-    gitpod.v1.DeleteUserRequest:
-      additionalProperties: false
-      properties:
-        userId:
-          format: uuid
-          title: user_id
-          type: string
-      title: DeleteUserRequest
-      type: object
-    gitpod.v1.GetUserRequest:
-      additionalProperties: false
-      properties:
-        userId:
-          format: uuid
-          title: user_id
-          type: string
-      title: GetUserRequest
-      type: object
-    gitpod.v1.Subject:
-      additionalProperties: false
-      properties:
-        id:
-          description: id is the UUID of the subject
-          format: uuid
-          title: id
-          type: string
-        principal:
-          $ref: '#/components/schemas/gitpod.v1.Principal'
-          description: Principal is the principal of the subject
-          title: principal
-      title: Subject
-      type: object
-    gitpod.v1.CreatePersonalAccessTokenRequest:
-      additionalProperties: false
-      properties:
-        description:
-          title: description
-          type: string
-        readOnly:
-          description: "When true, the token can only be used for read operations.\n Mutations will be denied at the data layer."
-          title: read_only
-          type: boolean
-        userId:
-          format: uuid
-          title: user_id
-          type: string
-        validFor:
-          $ref: '#/components/schemas/google.protobuf.Duration'
-          title: valid_for
-      title: CreatePersonalAccessTokenRequest
-      type: object
-    gitpod.v1.ListPreferencesResponse:
-      additionalProperties: false
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          title: pagination
-        preferences:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.UserPreference'
-          title: preferences
-          type: array
-      title: ListPreferencesResponse
-      type: object
-    gitpod.v1.UserStatus:
-      enum:
-      - USER_STATUS_UNSPECIFIED
-      - USER_STATUS_ACTIVE
-      - USER_STATUS_SUSPENDED
-      - USER_STATUS_LEFT
-      title: UserStatus
-      type: string
-    gitpod.v1.SetDotfilesConfigurationResponse:
-      additionalProperties: false
-      title: SetDotfilesConfigurationResponse
-      type: object
-    gitpod.v1.DeletePersonalAccessTokenResponse:
-      additionalProperties: false
-      title: DeletePersonalAccessTokenResponse
       type: object
     gitpod.v1.User:
       additionalProperties: false
@@ -1274,27 +948,126 @@ components:
       - id
       title: User
       type: object
-    gitpod.v1.GetAuthenticatedUserResponse:
+    gitpod.v1.SetSuspendedResponse:
       additionalProperties: false
-      properties:
-        user:
-          $ref: '#/components/schemas/gitpod.v1.User'
-          title: user
-      required:
-      - user
-      title: GetAuthenticatedUserResponse
+      title: SetSuspendedResponse
       type: object
-    gitpod.v1.SetSuspendedRequest:
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.DeletePersonalAccessTokenRequest:
       additionalProperties: false
       properties:
-        suspended:
-          title: suspended
+        personalAccessTokenId:
+          format: uuid
+          title: personal_access_token_id
+          type: string
+      title: DeletePersonalAccessTokenRequest
+      type: object
+    gitpod.v1.GetPreferenceRequest:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - preferenceKey
+        required:
+        - preferenceId
+      - not:
+          anyOf:
+          - required:
+            - preferenceId
+        required:
+        - preferenceKey
+      properties:
+        preferenceId:
+          title: preference_id
+          type: string
+        preferenceKey:
+          maxLength: 255
+          minLength: 1
+          title: preference_key
+          type: string
+        userPreferenceId:
+          deprecated: true
+          title: user_preference_id
+          type: string
+      title: GetPreferenceRequest
+      type: object
+    gitpod.v1.PersonalAccessToken:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        creator:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          title: creator
+        description:
+          title: description
+          type: string
+        expiresAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: expires_at
+        id:
+          format: uuid
+          title: id
+          type: string
+        lastUsed:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: last_used
+        readOnly:
+          description: "When true, the token can only be used for read operations.\n Mutations will be denied at the data layer."
+          title: read_only
           type: boolean
         userId:
           format: uuid
           title: user_id
           type: string
-      title: SetSuspendedRequest
+      title: PersonalAccessToken
+      type: object
+    gitpod.v1.GetPreferenceResponse:
+      additionalProperties: false
+      properties:
+        preference:
+          $ref: '#/components/schemas/gitpod.v1.UserPreference'
+          title: preference
+      title: GetPreferenceResponse
+      type: object
+    gitpod.v1.GetAuthenticatedUserRequest:
+      additionalProperties: false
+      properties:
+        empty:
+          type: boolean
+      title: GetAuthenticatedUserRequest
+      type: object
+    gitpod.v1.GetUserRequest:
+      additionalProperties: false
+      properties:
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      title: GetUserRequest
+      type: object
+    gitpod.v1.SetDotfilesConfigurationResponse:
+      additionalProperties: false
+      title: SetDotfilesConfigurationResponse
+      type: object
+    google.protobuf.Duration:
+      description: "A Duration represents a signed, fixed-length span of time represented\n as a count of seconds and fractions of seconds at nanosecond\n resolution. It is independent of any calendar and concepts like \"day\"\n or \"month\". It is related to Timestamp in that the difference between\n two Timestamp values is a Duration and it can be added or subtracted\n from a Timestamp. Range is approximately +-10,000 years.\n\n # Examples\n\n Example 1: Compute Duration from two Timestamps in pseudo code.\n\n     Timestamp start = ...;\n     Timestamp end = ...;\n     Duration duration = ...;\n\n     duration.seconds = end.seconds - start.seconds;\n     duration.nanos = end.nanos - start.nanos;\n\n     if (duration.seconds < 0 && duration.nanos > 0) {\n       duration.seconds += 1;\n       duration.nanos -= 1000000000;\n     } else if (duration.seconds > 0 && duration.nanos < 0) {\n       duration.seconds -= 1;\n       duration.nanos += 1000000000;\n     }\n\n Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.\n\n     Timestamp start = ...;\n     Duration duration = ...;\n     Timestamp end = ...;\n\n     end.seconds = start.seconds + duration.seconds;\n     end.nanos = start.nanos + duration.nanos;\n\n     if (end.nanos < 0) {\n       end.seconds -= 1;\n       end.nanos += 1000000000;\n     } else if (end.nanos >= 1000000000) {\n       end.seconds += 1;\n       end.nanos -= 1000000000;\n     }\n\n Example 3: Compute Duration from datetime.timedelta in Python.\n\n     td = datetime.timedelta(days=3, minutes=10)\n     duration = Duration()\n     duration.FromTimedelta(td)\n\n # JSON Mapping\n\n In JSON format, the Duration type is encoded as a string rather than an\n object, where the string ends in the suffix \"s\" (indicating seconds) and\n is preceded by the number of seconds, with nanoseconds expressed as\n fractional seconds. For example, 3 seconds with 0 nanoseconds should be\n encoded in JSON format as \"3s\", while 3 seconds and 1 nanosecond should\n be expressed in JSON format as \"3.000000001s\", and 3 seconds and 1\n microsecond should be expressed in JSON format as \"3.000001s\"."
+      format: regex
+      pattern: ^[-\+]?([0-9]+\.?[0-9]*|\.[0-9]+)s$
+      type: string
+    gitpod.v1.DeleteUserRequest:
+      additionalProperties: false
+      properties:
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      title: DeleteUserRequest
       type: object
     gitpod.v1.DotfilesConfiguration:
       additionalProperties: false
@@ -1306,54 +1079,37 @@ components:
           type: string
       title: DotfilesConfiguration
       type: object
-    gitpod.v1.UserPreference:
+    gitpod.v1.DeletePreferenceResponse:
+      additionalProperties: false
+      title: DeletePreferenceResponse
+      type: object
+    gitpod.v1.DeletePreferenceRequest:
       additionalProperties: false
       properties:
-        createdAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          title: created_at
-        id:
+        userPreferenceId:
           format: uuid
-          title: id
+          title: user_preference_id
           type: string
-        key:
-          maxLength: 255
-          minLength: 1
-          title: key
-          type: string
-        updatedAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          title: updated_at
-        value:
-          description: "omitting value field will cause an error due to min_len validation,\n to unset a preference use DeletePreference instead"
-          maxLength: 2480
-          minLength: 1
-          title: value
-          type: string
-      title: UserPreference
+      title: DeletePreferenceRequest
       type: object
-    gitpod.v1.GetPersonalAccessTokenResponse:
+    gitpod.v1.CreatePersonalAccessTokenRequest:
       additionalProperties: false
       properties:
-        pat:
-          $ref: '#/components/schemas/gitpod.v1.PersonalAccessToken'
-          title: pat
-      required:
-      - pat
-      title: GetPersonalAccessTokenResponse
-      type: object
-    gitpod.v1.ListPersonalAccessTokensResponse:
-      additionalProperties: false
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          title: pagination
-        personalAccessTokens:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.PersonalAccessToken'
-          title: personal_access_tokens
-          type: array
-      title: ListPersonalAccessTokensResponse
+        description:
+          title: description
+          type: string
+        readOnly:
+          description: "When true, the token can only be used for read operations.\n Mutations will be denied at the data layer."
+          title: read_only
+          type: boolean
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+        validFor:
+          $ref: '#/components/schemas/google.protobuf.Duration'
+          title: valid_for
+      title: CreatePersonalAccessTokenRequest
       type: object
     connect.error:
       additionalProperties: true
@@ -1386,12 +1142,256 @@ components:
           type: string
       title: Connect Error
       type: object
-    gitpod.v1.GetAuthenticatedUserRequest:
+    gitpod.v1.PaginationResponse:
       additionalProperties: false
       properties:
-        empty:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.GetUserResponse:
+      additionalProperties: false
+      properties:
+        user:
+          $ref: '#/components/schemas/gitpod.v1.User'
+          title: user
+      required:
+      - user
+      title: GetUserResponse
+      type: object
+    gitpod.v1.ListPersonalAccessTokensRequest.Filter:
+      additionalProperties: false
+      properties:
+        userIds:
+          description: creator_ids filters the response to only Environments created by specified members
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: user_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.SetSuspendedRequest:
+      additionalProperties: false
+      properties:
+        suspended:
+          title: suspended
           type: boolean
-      title: GetAuthenticatedUserRequest
+        userId:
+          format: uuid
+          title: user_id
+          type: string
+      title: SetSuspendedRequest
+      type: object
+    gitpod.v1.ListPreferencesRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListPreferencesRequest
+      type: object
+    gitpod.v1.ListPersonalAccessTokensRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListPersonalAccessTokensRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListPersonalAccessTokensRequest
+      type: object
+    gitpod.v1.GetPersonalAccessTokenResponse:
+      additionalProperties: false
+      properties:
+        pat:
+          $ref: '#/components/schemas/gitpod.v1.PersonalAccessToken'
+          title: pat
+      required:
+      - pat
+      title: GetPersonalAccessTokenResponse
+      type: object
+    gitpod.v1.Subject:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the UUID of the subject
+          format: uuid
+          title: id
+          type: string
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
+      type: object
+    gitpod.v1.SetDotfilesConfigurationRequest:
+      additionalProperties: false
+      properties:
+        repository:
+          format: uri
+          maxLength: 255
+          title: repository
+          type: string
+      title: SetDotfilesConfigurationRequest
+      type: object
+    gitpod.v1.UserPreference:
+      additionalProperties: false
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: created_at
+        id:
+          format: uuid
+          title: id
+          type: string
+        key:
+          maxLength: 255
+          minLength: 1
+          title: key
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: updated_at
+        value:
+          description: "omitting value field will cause an error due to min_len validation,\n to unset a preference use DeletePreference instead"
+          maxLength: 2480
+          minLength: 1
+          title: value
+          type: string
+      title: UserPreference
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.SetPreferenceRequest:
+      additionalProperties: false
+      properties:
+        key:
+          maxLength: 255
+          minLength: 1
+          title: key
+          type: string
+        value:
+          description: "omitting value field will cause an error due to min_len validation,\n to unset a preference use DeletePreference instead"
+          maxLength: 10240
+          minLength: 1
+          title: value
+          type: string
+      title: SetPreferenceRequest
+      type: object
+    gitpod.v1.DeleteUserResponse:
+      additionalProperties: false
+      title: DeleteUserResponse
+      type: object
+    gitpod.v1.GetPersonalAccessTokenRequest:
+      additionalProperties: false
+      properties:
+        personalAccessTokenId:
+          format: uuid
+          title: personal_access_token_id
+          type: string
+      title: GetPersonalAccessTokenRequest
+      type: object
+    gitpod.v1.UserStatus:
+      enum:
+      - USER_STATUS_UNSPECIFIED
+      - USER_STATUS_ACTIVE
+      - USER_STATUS_SUSPENDED
+      - USER_STATUS_LEFT
+      title: UserStatus
+      type: string
+    gitpod.v1.SetPreferenceResponse:
+      additionalProperties: false
+      title: SetPreferenceResponse
+      type: object
+    gitpod.v1.GetDotfilesConfigurationResponse:
+      additionalProperties: false
+      properties:
+        dotfilesConfiguration:
+          $ref: '#/components/schemas/gitpod.v1.DotfilesConfiguration'
+          title: dotfiles_configuration
+      required:
+      - dotfilesConfiguration
+      title: GetDotfilesConfigurationResponse
+      type: object
+    gitpod.v1.CreatePersonalAccessTokenResponse:
+      additionalProperties: false
+      properties:
+        token:
+          title: token
+          type: string
+      required:
+      - token
+      title: CreatePersonalAccessTokenResponse
+      type: object
+    gitpod.v1.ListPersonalAccessTokensResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        personalAccessTokens:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.PersonalAccessToken'
+          title: personal_access_tokens
+          type: array
+      title: ListPersonalAccessTokensResponse
+      type: object
+    gitpod.v1.GetAuthenticatedUserResponse:
+      additionalProperties: false
+      properties:
+        user:
+          $ref: '#/components/schemas/gitpod.v1.User'
+          title: user
+      required:
+      - user
+      title: GetAuthenticatedUserResponse
+      type: object
+    gitpod.v1.DeletePersonalAccessTokenResponse:
+      additionalProperties: false
+      title: DeletePersonalAccessTokenResponse
+      type: object
+    gitpod.v1.PaginationRequest:
+      additionalProperties: false
+      properties:
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
+      type: object
+    gitpod.v1.ListPreferencesResponse:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        preferences:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.UserPreference'
+          title: preferences
+          type: array
+      title: ListPreferencesResponse
       type: object
   securitySchemes:
     bearerAuth:

@@ -218,24 +218,21 @@ paths:
       - gitpod.v1.IdentityService
 components:
   schemas:
-    gitpod.v1.Principal:
-      enum:
-      - PRINCIPAL_UNSPECIFIED
-      - PRINCIPAL_ACCOUNT
-      - PRINCIPAL_USER
-      - PRINCIPAL_RUNNER
-      - PRINCIPAL_ENVIRONMENT
-      - PRINCIPAL_SERVICE_ACCOUNT
-      - PRINCIPAL_RUNNER_MANAGER
-      title: Principal
-      type: string
-    gitpod.v1.IDTokenVersion:
-      enum:
-      - ID_TOKEN_VERSION_UNSPECIFIED
-      - ID_TOKEN_VERSION_V1
-      - ID_TOKEN_VERSION_V2
-      title: IDTokenVersion
-      type: string
+    gitpod.v1.GetAuthenticatedIdentityResponse:
+      additionalProperties: false
+      properties:
+        organizationId:
+          title: organization_id
+          type: string
+        organizationTier:
+          title: organization_tier
+          type: string
+        subject:
+          $ref: '#/components/schemas/gitpod.v1.Subject'
+          description: subject is the identity of the current user
+          title: subject
+      title: GetAuthenticatedIdentityResponse
+      type: object
     gitpod.v1.Subject:
       additionalProperties: false
       properties:
@@ -249,55 +246,6 @@ components:
           description: Principal is the principal of the subject
           title: principal
       title: Subject
-      type: object
-    gitpod.v1.ExchangeTokenResponse:
-      additionalProperties: false
-      properties:
-        accessToken:
-          description: access_token is the new access token
-          title: access_token
-          type: string
-      title: ExchangeTokenResponse
-      type: object
-    gitpod.v1.GetIDTokenRequest:
-      additionalProperties: false
-      properties:
-        audience:
-          items:
-            minItems: 1
-            type: string
-          minItems: 1
-          title: audience
-          type: array
-        version:
-          $ref: '#/components/schemas/gitpod.v1.IDTokenVersion'
-          description: version is the version of the ID token.
-          title: version
-      title: GetIDTokenRequest
-      type: object
-    gitpod.v1.GetIDTokenResponse:
-      additionalProperties: false
-      properties:
-        token:
-          title: token
-          type: string
-      title: GetIDTokenResponse
-      type: object
-    gitpod.v1.GetAuthenticatedIdentityRequest:
-      additionalProperties: false
-      properties:
-        empty:
-          type: boolean
-      title: GetAuthenticatedIdentityRequest
-      type: object
-    gitpod.v1.ExchangeTokenRequest:
-      additionalProperties: false
-      properties:
-        exchangeToken:
-          description: exchange_token is the token to exchange
-          title: exchange_token
-          type: string
-      title: ExchangeTokenRequest
       type: object
     connect.error:
       additionalProperties: true
@@ -330,20 +278,72 @@ components:
           type: string
       title: Connect Error
       type: object
-    gitpod.v1.GetAuthenticatedIdentityResponse:
+    gitpod.v1.GetAuthenticatedIdentityRequest:
       additionalProperties: false
       properties:
-        organizationId:
-          title: organization_id
+        empty:
+          type: boolean
+      title: GetAuthenticatedIdentityRequest
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.GetIDTokenRequest:
+      additionalProperties: false
+      properties:
+        audience:
+          items:
+            minItems: 1
+            type: string
+          minItems: 1
+          title: audience
+          type: array
+        version:
+          $ref: '#/components/schemas/gitpod.v1.IDTokenVersion'
+          description: version is the version of the ID token.
+          title: version
+      title: GetIDTokenRequest
+      type: object
+    gitpod.v1.IDTokenVersion:
+      enum:
+      - ID_TOKEN_VERSION_UNSPECIFIED
+      - ID_TOKEN_VERSION_V1
+      - ID_TOKEN_VERSION_V2
+      title: IDTokenVersion
+      type: string
+    gitpod.v1.ExchangeTokenResponse:
+      additionalProperties: false
+      properties:
+        accessToken:
+          description: access_token is the new access token
+          title: access_token
           type: string
-        organizationTier:
-          title: organization_tier
+      title: ExchangeTokenResponse
+      type: object
+    gitpod.v1.GetIDTokenResponse:
+      additionalProperties: false
+      properties:
+        token:
+          title: token
           type: string
-        subject:
-          $ref: '#/components/schemas/gitpod.v1.Subject'
-          description: subject is the identity of the current user
-          title: subject
-      title: GetAuthenticatedIdentityResponse
+      title: GetIDTokenResponse
+      type: object
+    gitpod.v1.ExchangeTokenRequest:
+      additionalProperties: false
+      properties:
+        exchangeToken:
+          description: exchange_token is the token to exchange
+          title: exchange_token
+          type: string
+      title: ExchangeTokenRequest
       type: object
   securitySchemes:
     bearerAuth:

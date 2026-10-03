@@ -344,25 +344,181 @@ paths:
       - gitpod.v1.InsightsService
 components:
   schemas:
-    gitpod.v1.Resolution:
-      description: Resolution specifies the time granularity for time series data.
-      enum:
-      - RESOLUTION_UNSPECIFIED
-      - RESOLUTION_HOURLY
-      - RESOLUTION_DAILY
-      - RESOLUTION_WEEKLY
-      - RESOLUTION_MONTHLY
-      title: Resolution
+    gitpod.v1.ToolBreakdown:
+      additionalProperties: false
+      description: ToolBreakdown contains stats for a single AI tool (or human).
+      properties:
+        commits:
+          description: Number of commits attributed to this tool.
+          title: commits
+          type: string
+        distinctAuthors:
+          description: Distinct authors who used this tool.
+          title: distinct_authors
+          type: string
+        linesAdded:
+          description: Lines added by this tool.
+          title: lines_added
+          type: string
+        linesRemoved:
+          description: Lines removed by this tool.
+          title: lines_removed
+          type: string
+        tool:
+          $ref: '#/components/schemas/gitpod.v1.CoAuthorTool'
+          description: The tool these stats are for.
+          title: tool
+      title: ToolBreakdown
+      type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
       type: string
-    gitpod.v1.ScmProvider:
-      description: ScmProvider identifies the SCM platform a pull request was fetched from.
+    gitpod.v1.GetPrStatsSummaryResponse:
+      additionalProperties: false
+      properties:
+        deploymentFrequency:
+          description: 'Deployment frequency: PRs merged to the default branch per week.'
+          format: double
+          title: deployment_frequency
+          type: number
+        deploymentFrequencyTrend:
+          description: "Fractional change in deployment_frequency vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: deployment_frequency_trend
+          type: number
+        leadTimeSeconds:
+          description: Median lead time for changes in seconds (first commit → merge).
+          format: double
+          title: lead_time_seconds
+          type: number
+        leadTimeTrend:
+          description: "Fractional change in lead_time_seconds vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: lead_time_trend
+          type: number
+        prsMergedCount:
+          description: Total number of PRs merged in the date range.
+          title: prs_merged_count
+          type: string
+        prsMergedTrend:
+          description: "Fractional change in prs_merged_count vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: prs_merged_trend
+          type: number
+        sparkline:
+          description: "Sparkline data for the card's trend line (typically ~4 weekly points).\n Values represent PRs merged per bucket."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
+          title: sparkline
+          type: array
+        timeToFirstApprovalSeconds:
+          description: "Median time to first approval in seconds (PR opened → first approving review).\n Zero when no PRs in the range had approvals."
+          format: double
+          title: time_to_first_approval_seconds
+          type: number
+        timeToFirstApprovalTrend:
+          description: "Fractional change in time_to_first_approval_seconds vs previous period.\n Computed as (current - previous) / previous."
+          format: double
+          title: time_to_first_approval_trend
+          type: number
+      title: GetPrStatsSummaryResponse
+      type: object
+    gitpod.v1.SupportedModel:
       enum:
-      - SCM_PROVIDER_UNSPECIFIED
-      - SCM_PROVIDER_GITHUB
-      - SCM_PROVIDER_GITLAB
-      - SCM_PROVIDER_BITBUCKET
-      title: ScmProvider
+      - SUPPORTED_MODEL_UNSPECIFIED
+      - SUPPORTED_MODEL_SONNET_3_5
+      - SUPPORTED_MODEL_SONNET_3_7
+      - SUPPORTED_MODEL_SONNET_3_7_EXTENDED
+      - SUPPORTED_MODEL_SONNET_4
+      - SUPPORTED_MODEL_SONNET_4_EXTENDED
+      - SUPPORTED_MODEL_SONNET_4_5
+      - SUPPORTED_MODEL_SONNET_4_5_EXTENDED
+      - SUPPORTED_MODEL_SONNET_4_6
+      - SUPPORTED_MODEL_SONNET_4_6_EXTENDED
+      - SUPPORTED_MODEL_OPUS_4
+      - SUPPORTED_MODEL_OPUS_4_EXTENDED
+      - SUPPORTED_MODEL_OPUS_4_5
+      - SUPPORTED_MODEL_OPUS_4_5_EXTENDED
+      - SUPPORTED_MODEL_OPUS_4_6
+      - SUPPORTED_MODEL_OPUS_4_6_EXTENDED
+      - SUPPORTED_MODEL_HAIKU_4_5
+      - SUPPORTED_MODEL_OPENAI_4O
+      - SUPPORTED_MODEL_OPENAI_4O_MINI
+      - SUPPORTED_MODEL_OPENAI_O1
+      - SUPPORTED_MODEL_OPENAI_O1_MINI
+      title: SupportedModel
       type: string
+    gitpod.v1.ReportCoAuthorStatsRequest:
+      additionalProperties: false
+      description: ReportCoAuthorStatsRequest is sent by the CLI to push analysis results.
+      properties:
+        projectId:
+          description: Project that was analyzed.
+          minLength: 1
+          title: project_id
+          type: string
+        stats:
+          description: Per-commit co-author stats to upsert.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CommitCoAuthorStat'
+          maxItems: 10000
+          minItems: 1
+          title: stats
+          type: array
+      title: ReportCoAuthorStatsRequest
+      type: object
+    gitpod.v1.GetAgentTraceStatsResponse:
+      additionalProperties: false
+      properties:
+        summary:
+          $ref: '#/components/schemas/gitpod.v1.AgentTraceSummary'
+          description: Summary totals for the requested date range.
+          title: summary
+        timeSeries:
+          description: Time series of agent trace stats, bucketed by the requested resolution.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.AgentTraceTimeBucket'
+          title: time_series
+          type: array
+      title: GetAgentTraceStatsResponse
+      type: object
+    gitpod.v1.EnableProjectInsightsRequest:
+      additionalProperties: false
+      description: EnableProjectInsightsRequest enables co-author insights for a project.
+      properties:
+        projectId:
+          description: Project to enable insights for.
+          format: uuid
+          title: project_id
+          type: string
+      title: EnableProjectInsightsRequest
+      type: object
+    gitpod.v1.GetAgentTraceStatsRequest:
+      additionalProperties: false
+      description: "GetAgentTraceStatsRequest is used by the dashboard to read aggregated agent trace stats.\n When project_id is set, returns stats for that project only.\n When project_id is empty, aggregates across all projects in the org."
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query within.
+          title: date_range
+        organizationId:
+          description: Organization to query stats for.
+          format: uuid
+          title: organization_id
+          type: string
+        projectId:
+          description: "Optional. When set, scopes stats to this project only.\n When empty, aggregates across all projects in the org."
+          title: project_id
+          type: string
+        resolution:
+          $ref: '#/components/schemas/gitpod.v1.Resolution'
+          description: Time resolution for the time series. Defaults to WEEKLY if unspecified.
+          title: resolution
+      required:
+      - dateRange
+      title: GetAgentTraceStatsRequest
+      type: object
     gitpod.v1.AgentTraceTimeBucket:
       additionalProperties: false
       description: AgentTraceTimeBucket contains stats for a single time period.
@@ -390,6 +546,73 @@ components:
           title: total_sessions
           type: string
       title: AgentTraceTimeBucket
+      type: object
+    gitpod.v1.CoAuthorSummary:
+      additionalProperties: false
+      description: CoAuthorSummary contains aggregate totals for a date range.
+      properties:
+        byTool:
+          description: Per-tool breakdown of contribution stats.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ToolBreakdown'
+          title: by_tool
+          type: array
+        distinctAuthors:
+          description: Number of distinct authors (by author_hash).
+          title: distinct_authors
+          type: string
+        distinctAuthorsTrend:
+          description: Fractional change in distinct_authors compared to the previous period.
+          format: double
+          title: distinct_authors_trend
+          type: number
+        totalCommits:
+          description: Total number of commits in the date range.
+          title: total_commits
+          type: string
+        totalCommitsTrend:
+          description: "Fractional change in total_commits compared to the previous period of equal\n length. Computed as (current - previous) / previous. Zero when there is no\n previous data."
+          format: double
+          title: total_commits_trend
+          type: number
+        totalLinesAdded:
+          description: Total lines added across all commits.
+          title: total_lines_added
+          type: string
+        totalLinesAddedTrend:
+          description: Fractional change in total_lines_added compared to the previous period.
+          format: double
+          title: total_lines_added_trend
+          type: number
+        totalLinesRemoved:
+          description: Total lines removed across all commits.
+          title: total_lines_removed
+          type: string
+        totalLinesRemovedTrend:
+          description: Fractional change in total_lines_removed compared to the previous period.
+          format: double
+          title: total_lines_removed_trend
+          type: number
+      title: CoAuthorSummary
+      type: object
+    gitpod.v1.ReportPrStatsRequest:
+      additionalProperties: false
+      description: ReportPrStatsRequest is sent by the CLI to push PR speed metrics.
+      properties:
+        projectId:
+          description: Project that was analyzed.
+          format: uuid
+          title: project_id
+          type: string
+        stats:
+          description: Per-PR stats to upsert.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.PullRequestStat'
+          maxItems: 10000
+          minItems: 1
+          title: stats
+          type: array
+      title: ReportPrStatsRequest
       type: object
     gitpod.v1.AgentTraceSummary:
       additionalProperties: false
@@ -430,104 +653,102 @@ components:
           type: number
       title: AgentTraceSummary
       type: object
-    gitpod.v1.TimeSeriesPoint:
+    gitpod.v1.DateRange:
       additionalProperties: false
+      description: DateRange specifies a time period for queries.
       properties:
-        time:
+        endTime:
           $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Timestamp for this data point.
-          title: time
-        value:
-          description: The numerical value for this data point.
-          format: int32
-          title: value
-          type: integer
-      title: TimeSeriesPoint
-      type: object
-    google.protobuf.Timestamp:
-      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
-      format: date-time
-      type: string
-    gitpod.v1.GetAgentTraceStatsResponse:
-      additionalProperties: false
-      properties:
-        summary:
-          $ref: '#/components/schemas/gitpod.v1.AgentTraceSummary'
-          description: Summary totals for the requested date range.
-          title: summary
-        timeSeries:
-          description: Time series of agent trace stats, bucketed by the requested resolution.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.AgentTraceTimeBucket'
-          title: time_series
-          type: array
-      title: GetAgentTraceStatsResponse
-      type: object
-    gitpod.v1.GetProjectInsightsStatusRequest:
-      additionalProperties: false
-      description: GetProjectInsightsStatusRequest checks whether insights is enabled for a project.
-      properties:
-        projectId:
-          description: Project to check.
-          format: uuid
-          title: project_id
-          type: string
-      title: GetProjectInsightsStatusRequest
-      type: object
-    gitpod.v1.GetCoAuthorStatsRequest:
-      additionalProperties: false
-      description: "GetCoAuthorStatsRequest is used by the dashboard to read aggregated stats.\n When project_id is set, returns stats for that project only.\n When project_id is empty, aggregates across all projects in the org."
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query within.
-          title: date_range
-        organizationId:
-          description: Organization to query stats for.
-          format: uuid
-          title: organization_id
-          type: string
-        projectId:
-          description: "Optional. When set, scopes stats to this project only.\n When empty, aggregates across all projects in the org."
-          title: project_id
-          type: string
-        resolution:
-          $ref: '#/components/schemas/gitpod.v1.Resolution'
-          description: Time resolution for the time series. Defaults to WEEKLY if unspecified.
-          title: resolution
+          description: End time of the date range (exclusive).
+          title: end_time
+        startTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Start time of the date range (inclusive).
+          title: start_time
       required:
-      - dateRange
-      title: GetCoAuthorStatsRequest
+      - startTime
+      - endTime
+      title: DateRange
       type: object
-    gitpod.v1.ReportAgentTraceResponse:
+    gitpod.v1.DisableProjectInsightsRequest:
       additionalProperties: false
-      title: ReportAgentTraceResponse
+      description: DisableProjectInsightsRequest disables co-author insights for a project.
+      properties:
+        projectId:
+          description: Project to disable insights for.
+          format: uuid
+          title: project_id
+          type: string
+      title: DisableProjectInsightsRequest
       type: object
-    gitpod.v1.CoAuthorTool:
-      description: "CoAuthorTool identifies the AI tool that co-authored a commit.\n UNSPECIFIED (0) is the proto default and must not appear in reported data.\n Use HUMAN for commits with no AI co-author."
-      enum:
-      - CO_AUTHOR_TOOL_UNSPECIFIED
-      - CO_AUTHOR_TOOL_NO_COAUTHOR
-      - CO_AUTHOR_TOOL_HUMAN_COAUTHOR
-      - CO_AUTHOR_TOOL_ONA
-      - CO_AUTHOR_TOOL_GITHUB_COPILOT
-      - CO_AUTHOR_TOOL_CURSOR
-      - CO_AUTHOR_TOOL_OTHER
-      - CO_AUTHOR_TOOL_CLAUDE
-      title: CoAuthorTool
-      type: string
-    gitpod.v1.ReportPrStatsResponse:
+    gitpod.v1.ReportCoAuthorStatsResponse:
       additionalProperties: false
       properties:
         insertedCount:
-          description: Number of rows inserted (new PRs).
+          description: Number of rows inserted (new commits).
           title: inserted_count
           type: string
         updatedCount:
-          description: Number of rows updated (re-reported PRs).
+          description: Number of rows updated (re-reported commits).
           title: updated_count
           type: string
-      title: ReportPrStatsResponse
+      title: ReportCoAuthorStatsResponse
+      type: object
+    gitpod.v1.Resolution:
+      description: Resolution specifies the time granularity for time series data.
+      enum:
+      - RESOLUTION_UNSPECIFIED
+      - RESOLUTION_HOURLY
+      - RESOLUTION_DAILY
+      - RESOLUTION_WEEKLY
+      - RESOLUTION_MONTHLY
+      title: Resolution
+      type: string
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.GetCoAuthorStatsResponse:
+      additionalProperties: false
+      properties:
+        summary:
+          $ref: '#/components/schemas/gitpod.v1.CoAuthorSummary'
+          description: Summary totals for the requested date range.
+          title: summary
+        timeSeries:
+          description: Time series of contribution stats, bucketed by the requested resolution.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.CoAuthorTimeBucket'
+          title: time_series
+          type: array
+      title: GetCoAuthorStatsResponse
       type: object
     gitpod.v1.ReportAgentTraceRequest:
       additionalProperties: false
@@ -570,6 +791,17 @@ components:
           type: array
       title: ReportAgentTraceRequest
       type: object
+    gitpod.v1.GetInsightsSummaryRequest:
+      additionalProperties: false
+      description: GetInsightsSummaryRequest returns project-level insights adoption for the org.
+      properties:
+        organizationId:
+          description: Organization to query.
+          format: uuid
+          title: organization_id
+          type: string
+      title: GetInsightsSummaryRequest
+      type: object
     gitpod.v1.GetInsightsSummaryResponse:
       additionalProperties: false
       properties:
@@ -582,6 +814,45 @@ components:
           title: total_project_count
           type: string
       title: GetInsightsSummaryResponse
+      type: object
+    gitpod.v1.TimeSeriesPoint:
+      additionalProperties: false
+      properties:
+        time:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Timestamp for this data point.
+          title: time
+        value:
+          description: The numerical value for this data point.
+          format: int32
+          title: value
+          type: integer
+      title: TimeSeriesPoint
+      type: object
+    gitpod.v1.GetCoAuthorStatsRequest:
+      additionalProperties: false
+      description: "GetCoAuthorStatsRequest is used by the dashboard to read aggregated stats.\n When project_id is set, returns stats for that project only.\n When project_id is empty, aggregates across all projects in the org."
+      properties:
+        dateRange:
+          $ref: '#/components/schemas/gitpod.v1.DateRange'
+          description: Date range to query within.
+          title: date_range
+        organizationId:
+          description: Organization to query stats for.
+          format: uuid
+          title: organization_id
+          type: string
+        projectId:
+          description: "Optional. When set, scopes stats to this project only.\n When empty, aggregates across all projects in the org."
+          title: project_id
+          type: string
+        resolution:
+          $ref: '#/components/schemas/gitpod.v1.Resolution'
+          description: Time resolution for the time series. Defaults to WEEKLY if unspecified.
+          title: resolution
+      required:
+      - dateRange
+      title: GetCoAuthorStatsRequest
       type: object
     gitpod.v1.AgentTraceModelBreakdown:
       additionalProperties: false
@@ -605,137 +876,63 @@ components:
           type: string
       title: AgentTraceModelBreakdown
       type: object
-    gitpod.v1.EnableProjectInsightsRequest:
+    gitpod.v1.ReportPrStatsResponse:
       additionalProperties: false
-      description: EnableProjectInsightsRequest enables co-author insights for a project.
       properties:
-        projectId:
-          description: Project to enable insights for.
-          format: uuid
-          title: project_id
+        insertedCount:
+          description: Number of rows inserted (new PRs).
+          title: inserted_count
           type: string
-      title: EnableProjectInsightsRequest
+        updatedCount:
+          description: Number of rows updated (re-reported PRs).
+          title: updated_count
+          type: string
+      title: ReportPrStatsResponse
       type: object
-    gitpod.v1.GetInsightsSummaryRequest:
+    gitpod.v1.ReportAgentTraceResponse:
       additionalProperties: false
-      description: GetInsightsSummaryRequest returns project-level insights adoption for the org.
-      properties:
-        organizationId:
-          description: Organization to query.
-          format: uuid
-          title: organization_id
-          type: string
-      title: GetInsightsSummaryRequest
+      title: ReportAgentTraceResponse
       type: object
-    gitpod.v1.GetAgentTraceStatsRequest:
+    gitpod.v1.DisableProjectInsightsResponse:
       additionalProperties: false
-      description: "GetAgentTraceStatsRequest is used by the dashboard to read aggregated agent trace stats.\n When project_id is set, returns stats for that project only.\n When project_id is empty, aggregates across all projects in the org."
-      properties:
-        dateRange:
-          $ref: '#/components/schemas/gitpod.v1.DateRange'
-          description: Date range to query within.
-          title: date_range
-        organizationId:
-          description: Organization to query stats for.
-          format: uuid
-          title: organization_id
-          type: string
-        projectId:
-          description: "Optional. When set, scopes stats to this project only.\n When empty, aggregates across all projects in the org."
-          title: project_id
-          type: string
-        resolution:
-          $ref: '#/components/schemas/gitpod.v1.Resolution'
-          description: Time resolution for the time series. Defaults to WEEKLY if unspecified.
-          title: resolution
-      required:
-      - dateRange
-      title: GetAgentTraceStatsRequest
+      title: DisableProjectInsightsResponse
       type: object
-    gitpod.v1.ReportPrStatsRequest:
+    gitpod.v1.CoAuthorTimeBucket:
       additionalProperties: false
-      description: ReportPrStatsRequest is sent by the CLI to push PR speed metrics.
+      description: CoAuthorTimeBucket contains stats for a single time period.
       properties:
-        projectId:
-          description: Project that was analyzed.
-          format: uuid
-          title: project_id
-          type: string
-        stats:
-          description: Per-PR stats to upsert.
+        aiRatio:
+          description: Ratio of AI-assisted lines added to total lines added (0.0–1.0).
+          format: double
+          title: ai_ratio
+          type: number
+        byTool:
+          description: Per-tool breakdown for this bucket.
           items:
-            $ref: '#/components/schemas/gitpod.v1.PullRequestStat'
-          maxItems: 10000
-          minItems: 1
-          title: stats
+            $ref: '#/components/schemas/gitpod.v1.ToolBreakdown'
+          title: by_tool
           type: array
-      title: ReportPrStatsRequest
-      type: object
-    gitpod.v1.DisableProjectInsightsRequest:
-      additionalProperties: false
-      description: DisableProjectInsightsRequest disables co-author insights for a project.
-      properties:
-        projectId:
-          description: Project to disable insights for.
-          format: uuid
-          title: project_id
-          type: string
-      title: DisableProjectInsightsRequest
-      type: object
-    gitpod.v1.ToolBreakdown:
-      additionalProperties: false
-      description: ToolBreakdown contains stats for a single AI tool (or human).
-      properties:
-        commits:
-          description: Number of commits attributed to this tool.
-          title: commits
-          type: string
         distinctAuthors:
-          description: Distinct authors who used this tool.
+          description: Number of distinct authors (by author_hash) in this bucket.
           title: distinct_authors
           type: string
-        linesAdded:
-          description: Lines added by this tool.
-          title: lines_added
+        startTime:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: Start of this time bucket.
+          title: start_time
+        totalCommits:
+          description: Total number of commits in this bucket (across all tools).
+          title: total_commits
           type: string
-        linesRemoved:
-          description: Lines removed by this tool.
-          title: lines_removed
+        totalLinesAdded:
+          description: Total lines added in this bucket (across all tools).
+          title: total_lines_added
           type: string
-        tool:
-          $ref: '#/components/schemas/gitpod.v1.CoAuthorTool'
-          description: The tool these stats are for.
-          title: tool
-      title: ToolBreakdown
-      type: object
-    gitpod.v1.SupportedModel:
-      enum:
-      - SUPPORTED_MODEL_UNSPECIFIED
-      - SUPPORTED_MODEL_SONNET_3_5
-      - SUPPORTED_MODEL_SONNET_3_7
-      - SUPPORTED_MODEL_SONNET_3_7_EXTENDED
-      - SUPPORTED_MODEL_SONNET_4
-      - SUPPORTED_MODEL_SONNET_4_EXTENDED
-      - SUPPORTED_MODEL_SONNET_4_5
-      - SUPPORTED_MODEL_SONNET_4_5_EXTENDED
-      - SUPPORTED_MODEL_SONNET_4_6
-      - SUPPORTED_MODEL_SONNET_4_6_EXTENDED
-      - SUPPORTED_MODEL_OPUS_4
-      - SUPPORTED_MODEL_OPUS_4_EXTENDED
-      - SUPPORTED_MODEL_OPUS_4_5
-      - SUPPORTED_MODEL_OPUS_4_5_EXTENDED
-      - SUPPORTED_MODEL_OPUS_4_6
-      - SUPPORTED_MODEL_OPUS_4_6_EXTENDED
-      - SUPPORTED_MODEL_HAIKU_4_5
-      - SUPPORTED_MODEL_OPENAI_4O
-      - SUPPORTED_MODEL_OPENAI_4O_MINI
-      - SUPPORTED_MODEL_OPENAI_O1
-      - SUPPORTED_MODEL_OPENAI_O1_MINI
-      title: SupportedModel
-      type: string
-    gitpod.v1.EnableProjectInsightsResponse:
-      additionalProperties: false
-      title: EnableProjectInsightsResponse
+        totalLinesRemoved:
+          description: Total lines removed in this bucket (across all tools).
+          title: total_lines_removed
+          type: string
+      title: CoAuthorTimeBucket
       type: object
     gitpod.v1.PullRequestStat:
       additionalProperties: false
@@ -788,42 +985,6 @@ components:
       - firstCommitAt
       title: PullRequestStat
       type: object
-    gitpod.v1.DisableProjectInsightsResponse:
-      additionalProperties: false
-      title: DisableProjectInsightsResponse
-      type: object
-    gitpod.v1.GetProjectInsightsStatusResponse:
-      additionalProperties: false
-      properties:
-        enabled:
-          description: Whether co-author insights is enabled for the project.
-          title: enabled
-          type: boolean
-        lastRanAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: "When the insights workflow last completed successfully.\n Nil when enabled is true but no data has been collected yet (pending state)."
-          title: last_ran_at
-      title: GetProjectInsightsStatusResponse
-      type: object
-    gitpod.v1.ReportCoAuthorStatsRequest:
-      additionalProperties: false
-      description: ReportCoAuthorStatsRequest is sent by the CLI to push analysis results.
-      properties:
-        projectId:
-          description: Project that was analyzed.
-          minLength: 1
-          title: project_id
-          type: string
-        stats:
-          description: Per-commit co-author stats to upsert.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.CommitCoAuthorStat'
-          maxItems: 10000
-          minItems: 1
-          title: stats
-          type: array
-      title: ReportCoAuthorStatsRequest
-      type: object
     gitpod.v1.CommitCoAuthorStat:
       additionalProperties: false
       description: CommitCoAuthorStat represents co-author data for a single commit.
@@ -868,6 +1029,32 @@ components:
       - commitDate
       title: CommitCoAuthorStat
       type: object
+    gitpod.v1.EnableProjectInsightsResponse:
+      additionalProperties: false
+      title: EnableProjectInsightsResponse
+      type: object
+    gitpod.v1.GetProjectInsightsStatusResponse:
+      additionalProperties: false
+      properties:
+        enabled:
+          description: Whether co-author insights is enabled for the project.
+          title: enabled
+          type: boolean
+        lastRanAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          description: "When the insights workflow last completed successfully.\n Nil when enabled is true but no data has been collected yet (pending state)."
+          title: last_ran_at
+      title: GetProjectInsightsStatusResponse
+      type: object
+    gitpod.v1.ScmProvider:
+      description: ScmProvider identifies the SCM platform a pull request was fetched from.
+      enum:
+      - SCM_PROVIDER_UNSPECIFIED
+      - SCM_PROVIDER_GITHUB
+      - SCM_PROVIDER_GITLAB
+      - SCM_PROVIDER_BITBUCKET
+      title: ScmProvider
+      type: string
     gitpod.v1.GetPrStatsSummaryRequest:
       additionalProperties: false
       description: GetPrStatsSummaryRequest is used by the dashboard to read aggregated PR speed metrics.
@@ -885,216 +1072,29 @@ components:
       - dateRange
       title: GetPrStatsSummaryRequest
       type: object
-    gitpod.v1.GetCoAuthorStatsResponse:
+    gitpod.v1.CoAuthorTool:
+      description: "CoAuthorTool identifies the AI tool that co-authored a commit.\n UNSPECIFIED (0) is the proto default and must not appear in reported data.\n Use HUMAN for commits with no AI co-author."
+      enum:
+      - CO_AUTHOR_TOOL_UNSPECIFIED
+      - CO_AUTHOR_TOOL_NO_COAUTHOR
+      - CO_AUTHOR_TOOL_HUMAN_COAUTHOR
+      - CO_AUTHOR_TOOL_ONA
+      - CO_AUTHOR_TOOL_GITHUB_COPILOT
+      - CO_AUTHOR_TOOL_CURSOR
+      - CO_AUTHOR_TOOL_OTHER
+      - CO_AUTHOR_TOOL_CLAUDE
+      title: CoAuthorTool
+      type: string
+    gitpod.v1.GetProjectInsightsStatusRequest:
       additionalProperties: false
+      description: GetProjectInsightsStatusRequest checks whether insights is enabled for a project.
       properties:
-        summary:
-          $ref: '#/components/schemas/gitpod.v1.CoAuthorSummary'
-          description: Summary totals for the requested date range.
-          title: summary
-        timeSeries:
-          description: Time series of contribution stats, bucketed by the requested resolution.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.CoAuthorTimeBucket'
-          title: time_series
-          type: array
-      title: GetCoAuthorStatsResponse
-      type: object
-    gitpod.v1.CoAuthorSummary:
-      additionalProperties: false
-      description: CoAuthorSummary contains aggregate totals for a date range.
-      properties:
-        byTool:
-          description: Per-tool breakdown of contribution stats.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.ToolBreakdown'
-          title: by_tool
-          type: array
-        distinctAuthors:
-          description: Number of distinct authors (by author_hash).
-          title: distinct_authors
+        projectId:
+          description: Project to check.
+          format: uuid
+          title: project_id
           type: string
-        distinctAuthorsTrend:
-          description: Fractional change in distinct_authors compared to the previous period.
-          format: double
-          title: distinct_authors_trend
-          type: number
-        totalCommits:
-          description: Total number of commits in the date range.
-          title: total_commits
-          type: string
-        totalCommitsTrend:
-          description: "Fractional change in total_commits compared to the previous period of equal\n length. Computed as (current - previous) / previous. Zero when there is no\n previous data."
-          format: double
-          title: total_commits_trend
-          type: number
-        totalLinesAdded:
-          description: Total lines added across all commits.
-          title: total_lines_added
-          type: string
-        totalLinesAddedTrend:
-          description: Fractional change in total_lines_added compared to the previous period.
-          format: double
-          title: total_lines_added_trend
-          type: number
-        totalLinesRemoved:
-          description: Total lines removed across all commits.
-          title: total_lines_removed
-          type: string
-        totalLinesRemovedTrend:
-          description: Fractional change in total_lines_removed compared to the previous period.
-          format: double
-          title: total_lines_removed_trend
-          type: number
-      title: CoAuthorSummary
-      type: object
-    gitpod.v1.GetPrStatsSummaryResponse:
-      additionalProperties: false
-      properties:
-        deploymentFrequency:
-          description: 'Deployment frequency: PRs merged to the default branch per week.'
-          format: double
-          title: deployment_frequency
-          type: number
-        deploymentFrequencyTrend:
-          description: "Fractional change in deployment_frequency vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: deployment_frequency_trend
-          type: number
-        leadTimeSeconds:
-          description: Median lead time for changes in seconds (first commit → merge).
-          format: double
-          title: lead_time_seconds
-          type: number
-        leadTimeTrend:
-          description: "Fractional change in lead_time_seconds vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: lead_time_trend
-          type: number
-        prsMergedCount:
-          description: Total number of PRs merged in the date range.
-          title: prs_merged_count
-          type: string
-        prsMergedTrend:
-          description: "Fractional change in prs_merged_count vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: prs_merged_trend
-          type: number
-        sparkline:
-          description: "Sparkline data for the card's trend line (typically ~4 weekly points).\n Values represent PRs merged per bucket."
-          items:
-            $ref: '#/components/schemas/gitpod.v1.TimeSeriesPoint'
-          title: sparkline
-          type: array
-        timeToFirstApprovalSeconds:
-          description: "Median time to first approval in seconds (PR opened → first approving review).\n Zero when no PRs in the range had approvals."
-          format: double
-          title: time_to_first_approval_seconds
-          type: number
-        timeToFirstApprovalTrend:
-          description: "Fractional change in time_to_first_approval_seconds vs previous period.\n Computed as (current - previous) / previous."
-          format: double
-          title: time_to_first_approval_trend
-          type: number
-      title: GetPrStatsSummaryResponse
-      type: object
-    connect.error:
-      additionalProperties: true
-      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
-      properties:
-        code:
-          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-          enum:
-          - canceled
-          - unknown
-          - invalid_argument
-          - deadline_exceeded
-          - not_found
-          - already_exists
-          - permission_denied
-          - resource_exhausted
-          - failed_precondition
-          - aborted
-          - out_of_range
-          - unimplemented
-          - internal
-          - unavailable
-          - data_loss
-          - unauthenticated
-          example:
-          - not_found
-          type: string
-        message:
-          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-          type: string
-      title: Connect Error
-      type: object
-    gitpod.v1.CoAuthorTimeBucket:
-      additionalProperties: false
-      description: CoAuthorTimeBucket contains stats for a single time period.
-      properties:
-        aiRatio:
-          description: Ratio of AI-assisted lines added to total lines added (0.0–1.0).
-          format: double
-          title: ai_ratio
-          type: number
-        byTool:
-          description: Per-tool breakdown for this bucket.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.ToolBreakdown'
-          title: by_tool
-          type: array
-        distinctAuthors:
-          description: Number of distinct authors (by author_hash) in this bucket.
-          title: distinct_authors
-          type: string
-        startTime:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Start of this time bucket.
-          title: start_time
-        totalCommits:
-          description: Total number of commits in this bucket (across all tools).
-          title: total_commits
-          type: string
-        totalLinesAdded:
-          description: Total lines added in this bucket (across all tools).
-          title: total_lines_added
-          type: string
-        totalLinesRemoved:
-          description: Total lines removed in this bucket (across all tools).
-          title: total_lines_removed
-          type: string
-      title: CoAuthorTimeBucket
-      type: object
-    gitpod.v1.ReportCoAuthorStatsResponse:
-      additionalProperties: false
-      properties:
-        insertedCount:
-          description: Number of rows inserted (new commits).
-          title: inserted_count
-          type: string
-        updatedCount:
-          description: Number of rows updated (re-reported commits).
-          title: updated_count
-          type: string
-      title: ReportCoAuthorStatsResponse
-      type: object
-    gitpod.v1.DateRange:
-      additionalProperties: false
-      description: DateRange specifies a time period for queries.
-      properties:
-        endTime:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: End time of the date range (exclusive).
-          title: end_time
-        startTime:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          description: Start time of the date range (inclusive).
-          title: start_time
-      required:
-      - startTime
-      - endTime
-      title: DateRange
+      title: GetProjectInsightsStatusRequest
       type: object
   securitySchemes:
     bearerAuth:
