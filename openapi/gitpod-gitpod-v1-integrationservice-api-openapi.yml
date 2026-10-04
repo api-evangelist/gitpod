@@ -464,224 +464,20 @@ paths:
       - gitpod.v1.IntegrationService
 components:
   schemas:
-    gitpod.v1.ListIntegrationsRequest:
+    gitpod.v1.PaginationRequest:
       additionalProperties: false
       properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          title: pagination
-      title: ListIntegrationsRequest
-      type: object
-    gitpod.v1.ValidationCheck.Check:
-      enum:
-      - CHECK_UNSPECIFIED
-      - CHECK_APP_TOKEN
-      - CHECK_APP_INSTALLATION
-      title: Check
-      type: string
-    gitpod.v1.ValidateIntegrationResponse:
-      additionalProperties: false
-      properties:
-        checks:
-          description: "checks contains the result of every check performed.\n Passing checks have empty message and action_hint."
-          items:
-            $ref: '#/components/schemas/gitpod.v1.ValidationCheck'
-          title: checks
-          type: array
-        valid:
-          description: valid is true when all checks pass (convenience field).
-          title: valid
-          type: boolean
-      title: ValidateIntegrationResponse
-      type: object
-    gitpod.v1.IntegrationSourceCodeAccessCapability:
-      additionalProperties: false
-      description: IntegrationSourceCodeAccessCapability defines source code access capability Additional source code access configuration can be added here
-      title: IntegrationSourceCodeAccessCapability
-      type: object
-    gitpod.v1.DeleteIntegrationDefinitionRequest:
-      additionalProperties: false
-      properties:
-        id:
-          minLength: 1
-          title: id
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
           type: string
-      title: DeleteIntegrationDefinitionRequest
-      type: object
-    gitpod.v1.ValidateIntegrationRequest:
-      additionalProperties: false
-      properties:
-        integrationId:
-          minLength: 1
-          title: integration_id
-          type: string
-      title: ValidateIntegrationRequest
-      type: object
-    connect.error:
-      additionalProperties: true
-      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
-      properties:
-        code:
-          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-          enum:
-          - canceled
-          - unknown
-          - invalid_argument
-          - deadline_exceeded
-          - not_found
-          - already_exists
-          - permission_denied
-          - resource_exhausted
-          - failed_precondition
-          - aborted
-          - out_of_range
-          - unimplemented
-          - internal
-          - unavailable
-          - data_loss
-          - unauthenticated
-          example:
-          - not_found
-          type: string
-        message:
-          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-          type: string
-      title: Connect Error
-      type: object
-    gitpod.v1.PaginationResponse:
-      additionalProperties: false
-      properties:
-        nextToken:
-          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
-          title: next_token
-          type: string
-      title: PaginationResponse
-      type: object
-    gitpod.v1.GetIntegrationRequest:
-      additionalProperties: false
-      properties:
-        id:
-          format: uuid
-          title: id
-          type: string
-      title: GetIntegrationRequest
-      type: object
-    gitpod.v1.ValidationCheck:
-      additionalProperties: false
-      properties:
-        actionHint:
-          description: "Machine-readable hint the frontend uses to resolve the issue (e.g. \"app_installation_oauth\").\n Empty when the check passes or no automated fix is available."
-          title: action_hint
-          type: string
-        check:
-          $ref: '#/components/schemas/gitpod.v1.ValidationCheck.Check'
-          description: Which check this result is for.
-          title: check
-        documentationUrl:
-          description: "URL to documentation explaining this check failure and resolution steps.\n Empty when the check passes or no docs exist for this check."
-          title: documentation_url
-          type: string
-        message:
-          description: Human-readable description of the problem. Empty when the check passes.
-          title: message
-          type: string
-      title: ValidationCheck
-      type: object
-    gitpod.v1.UpdateIntegrationDefinitionResponse:
-      additionalProperties: false
-      properties:
-        definition:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationDefinition'
-          title: definition
-      required:
-      - definition
-      title: UpdateIntegrationDefinitionResponse
-      type: object
-    gitpod.v1.IntegrationAgentClientCapability:
-      additionalProperties: false
-      description: "IntegrationAgentClientCapability indicates the integration supports agent client functionality.\n The webhook signing secret is stored in IntegrationProprietaryAppConfig.webhook_secret. Empty - presence of this capability indicates agent client support"
-      title: IntegrationAgentClientCapability
-      type: object
-    gitpod.v1.GetIntegrationDefinitionResponse:
-      additionalProperties: false
-      properties:
-        definition:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationDefinition'
-          title: definition
-      required:
-      - definition
-      title: GetIntegrationDefinitionResponse
-      type: object
-    gitpod.v1.UpdateIntegrationRequest:
-      additionalProperties: false
-      properties:
-        auth:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationAuthentication'
-          description: auth defines which authentication methods are enabled for this integration
-          title: auth
-        capabilities:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationCapabilities'
-          description: capabilities defines which capabilities are enabled for this integration
-          title: capabilities
-        enabled:
-          description: enabled indicates if this integration is enabled
-          title: enabled
-          type:
-          - boolean
-          - 'null'
-        host:
-          description: host is the hostname for this integration (e.g., "linear.app") - optional, inherits from definition
-          title: host
-          type:
-          - string
-          - 'null'
-        id:
-          format: uuid
-          title: id
-          type: string
-      title: UpdateIntegrationRequest
-      type: object
-    gitpod.v1.Integration:
-      additionalProperties: false
-      description: Integration represents an instantiated integration within an organization
-      properties:
-        auth:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationAuthentication'
-          description: auth defines which authentication methods are enabled for this integration
-          title: auth
-        capabilities:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationCapabilities'
-          description: capabilities defines which capabilities are enabled for this integration
-          title: capabilities
-        enabled:
-          description: enabled indicates if this integration is currently enabled
-          title: enabled
-          type: boolean
-        host:
-          description: host is the hostname for this integration (e.g., "linear.app") - optional, inherits from definition
-          title: host
-          type: string
-        id:
-          description: id is the unique identifier for this integration instance
-          title: id
-          type: string
-        integrationDefinitionId:
-          description: integration_definition_id references the integration definition ID
-          title: integration_definition_id
-          type: string
-        organizationId:
-          description: organization_id is the organization this integration belongs to
-          title: organization_id
-          type: string
-        runnerId:
-          description: runner_id - if set, restricts integration to specific runner
-          title: runner_id
-          type: string
-      required:
-      - id
-      - organizationId
-      - integrationDefinitionId
-      title: Integration
+      title: PaginationRequest
       type: object
     gitpod.v1.ListIntegrationDefinitionsResponse:
       additionalProperties: false
@@ -698,146 +494,23 @@ components:
       - pagination
       title: ListIntegrationDefinitionsResponse
       type: object
-    gitpod.v1.DeleteIntegrationResponse:
+    gitpod.v1.DeleteIntegrationDefinitionResponse:
       additionalProperties: false
-      title: DeleteIntegrationResponse
+      title: DeleteIntegrationDefinitionResponse
       type: object
-    gitpod.v1.CreateIntegrationDefinitionRequest:
+    gitpod.v1.IntegrationAgentClientCapability:
       additionalProperties: false
-      properties:
-        auth:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationAuthentication'
-          description: auth defines the authentication requirements for this integration
-          title: auth
-        capabilities:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationCapabilities'
-          description: capabilities defines what this integration can do
-          title: capabilities
-        description:
-          description: description provides a human-readable description of the integration
-          title: description
-          type: string
-        experimental:
-          description: experimental indicates if this integration is experimental and requires feature flag
-          title: experimental
-          type: boolean
-        host:
-          description: host is the hostname for this integration (e.g., "linear.app")
-          title: host
-          type: string
-        iconUrl:
-          description: icon_url is the URL for this integration's icon
-          title: icon_url
-          type: string
-        name:
-          description: name is the human-readable name for this integration type
-          minLength: 1
-          title: name
-          type: string
-      title: CreateIntegrationDefinitionRequest
+      description: "IntegrationAgentClientCapability indicates the integration supports agent client functionality.\n The webhook signing secret is stored in IntegrationProprietaryAppConfig.webhook_secret. Empty - presence of this capability indicates agent client support"
+      title: IntegrationAgentClientCapability
       type: object
-    gitpod.v1.IntegrationOAuthConfig:
-      additionalProperties: false
-      description: IntegrationOAuthConfig defines OAuth-specific configuration
-      properties:
-        authParams:
-          additionalProperties:
-            title: value
-            type: string
-          description: "auth_params are additional query parameters to include in the OAuth\n authorization URL. Use comma-separated values for multi-value params\n (e.g., \"search:read,chat:write\" for Slack's user_scope)."
-          title: auth_params
-          type: object
-        authUrl:
-          description: auth_url is the OAuth authorization endpoint URL
-          title: auth_url
-          type: string
-        clientId:
-          description: client_id is the OAuth client ID (optional if dynamic_registration is enabled)
-          title: client_id
-          type: string
-        clientSecret:
-          description: client_secret is the OAuth client secret (optional for public clients)
-          title: client_secret
-          type: string
-        dynamicRegistration:
-          description: "dynamic_registration enables RFC 7591 OAuth 2.0 Dynamic Client Registration.\n When enabled, client credentials are obtained automatically from the authorization\n server's registration endpoint (discovered via RFC 8414 metadata).\n When disabled (default), client_id and client_secret must be pre-configured."
-          title: dynamic_registration
-          type: boolean
-        redirectUrl:
-          description: redirect_url is the OAuth callback/redirect URL
-          title: redirect_url
-          type: string
-        scopes:
-          description: scopes are the OAuth scopes to request
-          items:
-            type: string
-          title: scopes
-          type: array
-        tokenUrl:
-          description: token_url is the OAuth token endpoint URL
-          title: token_url
-          type: string
-      title: IntegrationOAuthConfig
-      type: object
-    gitpod.v1.IntegrationAPIKeyConfig:
-      additionalProperties: false
-      description: IntegrationAPIKeyConfig defines API key authentication configuration Additional API key configuration can be added here
-      title: IntegrationAPIKeyConfig
-      type: object
-    gitpod.v1.IntegrationLoginCapability:
-      additionalProperties: false
-      description: IntegrationLoginCapability defines login/authentication capability Additional login configuration can be added here
-      title: IntegrationLoginCapability
-      type: object
-    gitpod.v1.UpdateIntegrationResponse:
-      additionalProperties: false
-      properties:
-        integration:
-          $ref: '#/components/schemas/gitpod.v1.Integration'
-          title: integration
-      required:
-      - integration
-      title: UpdateIntegrationResponse
-      type: object
-    gitpod.v1.CreateIntegrationRequest:
-      additionalProperties: false
-      properties:
-        auth:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationAuthentication'
-          description: auth defines which authentication methods are enabled for this integration
-          title: auth
-        capabilities:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationCapabilities'
-          description: capabilities defines which capabilities are enabled for this integration
-          title: capabilities
-        enabled:
-          description: enabled indicates if this integration is enabled
-          title: enabled
-          type: boolean
-        host:
-          description: host is the hostname for this integration (e.g., "linear.app") - optional, inherits from definition
-          title: host
-          type: string
-        integrationDefinitionId:
-          description: integration_definition_id references the integration definition ID
-          minLength: 1
-          title: integration_definition_id
-          type: string
-        runnerId:
-          description: runner_id is optional and immutable - if provided, restricts integration to specific runner
-          format: uuid
-          title: runner_id
-          type: string
-      title: CreateIntegrationRequest
-      type: object
-    gitpod.v1.DeleteIntegrationRequest:
+    gitpod.v1.DeleteIntegrationDefinitionRequest:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          minLength: 1
           title: id
           type: string
-      title: DeleteIntegrationRequest
+      title: DeleteIntegrationDefinitionRequest
       type: object
     gitpod.v1.UpdateIntegrationDefinitionRequest:
       additionalProperties: false
@@ -886,6 +559,79 @@ components:
           - 'null'
       title: UpdateIntegrationDefinitionRequest
       type: object
+    gitpod.v1.Integration:
+      additionalProperties: false
+      description: Integration represents an instantiated integration within an organization
+      properties:
+        auth:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationAuthentication'
+          description: auth defines which authentication methods are enabled for this integration
+          title: auth
+        capabilities:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationCapabilities'
+          description: capabilities defines which capabilities are enabled for this integration
+          title: capabilities
+        enabled:
+          description: enabled indicates if this integration is currently enabled
+          title: enabled
+          type: boolean
+        host:
+          description: host is the hostname for this integration (e.g., "linear.app") - optional, inherits from definition
+          title: host
+          type: string
+        id:
+          description: id is the unique identifier for this integration instance
+          title: id
+          type: string
+        integrationDefinitionId:
+          description: integration_definition_id references the integration definition ID
+          title: integration_definition_id
+          type: string
+        organizationId:
+          description: organization_id is the organization this integration belongs to
+          title: organization_id
+          type: string
+        runnerId:
+          description: runner_id - if set, restricts integration to specific runner
+          title: runner_id
+          type: string
+      required:
+      - id
+      - organizationId
+      - integrationDefinitionId
+      title: Integration
+      type: object
+    gitpod.v1.CreateIntegrationRequest:
+      additionalProperties: false
+      properties:
+        auth:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationAuthentication'
+          description: auth defines which authentication methods are enabled for this integration
+          title: auth
+        capabilities:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationCapabilities'
+          description: capabilities defines which capabilities are enabled for this integration
+          title: capabilities
+        enabled:
+          description: enabled indicates if this integration is enabled
+          title: enabled
+          type: boolean
+        host:
+          description: host is the hostname for this integration (e.g., "linear.app") - optional, inherits from definition
+          title: host
+          type: string
+        integrationDefinitionId:
+          description: integration_definition_id references the integration definition ID
+          minLength: 1
+          title: integration_definition_id
+          type: string
+        runnerId:
+          description: runner_id is optional and immutable - if provided, restricts integration to specific runner
+          format: uuid
+          title: runner_id
+          type: string
+      title: CreateIntegrationRequest
+      type: object
     gitpod.v1.CreateIntegrationDefinitionResponse:
       additionalProperties: false
       properties:
@@ -895,6 +641,11 @@ components:
       required:
       - definition
       title: CreateIntegrationDefinitionResponse
+      type: object
+    gitpod.v1.IntegrationLoginCapability:
+      additionalProperties: false
+      description: IntegrationLoginCapability defines login/authentication capability Additional login configuration can be added here
+      title: IntegrationLoginCapability
       type: object
     gitpod.v1.IntegrationCapabilities:
       additionalProperties: false
@@ -922,76 +673,34 @@ components:
           title: source_code_access
       title: IntegrationCapabilities
       type: object
-    gitpod.v1.GetIntegrationResponse:
+    gitpod.v1.UpdateIntegrationRequest:
       additionalProperties: false
       properties:
-        integration:
-          $ref: '#/components/schemas/gitpod.v1.Integration'
-          title: integration
-      required:
-      - integration
-      title: GetIntegrationResponse
-      type: object
-    gitpod.v1.IntegrationAuthentication:
-      additionalProperties: false
-      description: IntegrationAuthentication defines authentication requirements and options
-      properties:
-        apiKey:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationAPIKeyConfig'
-          description: api_key configuration if API key authentication is supported
-          title: api_key
-        oauth:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationOAuthConfig'
-          description: oauth configuration if OAuth authentication is supported
-          title: oauth
-        proprietaryApp:
-          $ref: '#/components/schemas/gitpod.v1.IntegrationProprietaryAppConfig'
-          description: proprietary configuration if supported
-          title: proprietary_app
-        requiresAuth:
-          description: requires_auth indicates if authentication is required for this integration
-          title: requires_auth
-          type: boolean
-      title: IntegrationAuthentication
-      type: object
-    gitpod.v1.IntegrationContextParsingCapability:
-      additionalProperties: false
-      description: IntegrationContextParsingCapability defines context parsing capability Additional context parsing configuration can be added here
-      title: IntegrationContextParsingCapability
-      type: object
-    gitpod.v1.IntegrationMCPCapability:
-      additionalProperties: false
-      description: IntegrationMCPCapability defines Model Context Protocol capability
-      properties:
-        url:
-          description: url is the remote server URL for the MCP server
-          title: url
-          type: string
-      title: IntegrationMCPCapability
-      type: object
-    gitpod.v1.ListIntegrationsResponse:
-      additionalProperties: false
-      properties:
-        integrations:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.Integration'
-          title: integrations
-          type: array
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          title: pagination
-      required:
-      - pagination
-      title: ListIntegrationsResponse
-      type: object
-    gitpod.v1.GetIntegrationDefinitionRequest:
-      additionalProperties: false
-      properties:
+        auth:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationAuthentication'
+          description: auth defines which authentication methods are enabled for this integration
+          title: auth
+        capabilities:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationCapabilities'
+          description: capabilities defines which capabilities are enabled for this integration
+          title: capabilities
+        enabled:
+          description: enabled indicates if this integration is enabled
+          title: enabled
+          type:
+          - boolean
+          - 'null'
+        host:
+          description: host is the hostname for this integration (e.g., "linear.app") - optional, inherits from definition
+          title: host
+          type:
+          - string
+          - 'null'
         id:
-          minLength: 1
+          format: uuid
           title: id
           type: string
-      title: GetIntegrationDefinitionRequest
+      title: UpdateIntegrationRequest
       type: object
     gitpod.v1.IntegrationDefinition:
       additionalProperties: false
@@ -1044,6 +753,128 @@ components:
       - integration
       title: CreateIntegrationResponse
       type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.ValidationCheck:
+      additionalProperties: false
+      properties:
+        actionHint:
+          description: "Machine-readable hint the frontend uses to resolve the issue (e.g. \"app_installation_oauth\").\n Empty when the check passes or no automated fix is available."
+          title: action_hint
+          type: string
+        check:
+          $ref: '#/components/schemas/gitpod.v1.ValidationCheck.Check'
+          description: Which check this result is for.
+          title: check
+        documentationUrl:
+          description: "URL to documentation explaining this check failure and resolution steps.\n Empty when the check passes or no docs exist for this check."
+          title: documentation_url
+          type: string
+        message:
+          description: Human-readable description of the problem. Empty when the check passes.
+          title: message
+          type: string
+      title: ValidationCheck
+      type: object
+    gitpod.v1.DeleteIntegrationRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: DeleteIntegrationRequest
+      type: object
+    gitpod.v1.ListIntegrationsRequest:
+      additionalProperties: false
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          title: pagination
+      title: ListIntegrationsRequest
+      type: object
+    gitpod.v1.GetIntegrationResponse:
+      additionalProperties: false
+      properties:
+        integration:
+          $ref: '#/components/schemas/gitpod.v1.Integration'
+          title: integration
+      required:
+      - integration
+      title: GetIntegrationResponse
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
+      type: object
+    gitpod.v1.GetIntegrationDefinitionResponse:
+      additionalProperties: false
+      properties:
+        definition:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationDefinition'
+          title: definition
+      required:
+      - definition
+      title: GetIntegrationDefinitionResponse
+      type: object
+    gitpod.v1.DeleteIntegrationResponse:
+      additionalProperties: false
+      title: DeleteIntegrationResponse
+      type: object
+    gitpod.v1.UpdateIntegrationResponse:
+      additionalProperties: false
+      properties:
+        integration:
+          $ref: '#/components/schemas/gitpod.v1.Integration'
+          title: integration
+      required:
+      - integration
+      title: UpdateIntegrationResponse
+      type: object
+    gitpod.v1.UpdateIntegrationDefinitionResponse:
+      additionalProperties: false
+      properties:
+        definition:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationDefinition'
+          title: definition
+      required:
+      - definition
+      title: UpdateIntegrationDefinitionResponse
+      type: object
     gitpod.v1.ListIntegrationDefinitionsRequest:
       additionalProperties: false
       properties:
@@ -1052,24 +883,132 @@ components:
           title: pagination
       title: ListIntegrationDefinitionsRequest
       type: object
-    gitpod.v1.PaginationRequest:
+    gitpod.v1.ValidateIntegrationRequest:
       additionalProperties: false
       properties:
-        pageSize:
-          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
-          format: int32
-          maximum: 100
-          title: page_size
-          type: integer
-        token:
-          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
-          title: token
+        integrationId:
+          minLength: 1
+          title: integration_id
           type: string
-      title: PaginationRequest
+      title: ValidateIntegrationRequest
       type: object
-    gitpod.v1.DeleteIntegrationDefinitionResponse:
+    gitpod.v1.IntegrationMCPCapability:
       additionalProperties: false
-      title: DeleteIntegrationDefinitionResponse
+      description: IntegrationMCPCapability defines Model Context Protocol capability
+      properties:
+        url:
+          description: url is the remote server URL for the MCP server
+          title: url
+          type: string
+      title: IntegrationMCPCapability
+      type: object
+    gitpod.v1.IntegrationSourceCodeAccessCapability:
+      additionalProperties: false
+      description: IntegrationSourceCodeAccessCapability defines source code access capability Additional source code access configuration can be added here
+      title: IntegrationSourceCodeAccessCapability
+      type: object
+    gitpod.v1.IntegrationAuthentication:
+      additionalProperties: false
+      description: IntegrationAuthentication defines authentication requirements and options
+      properties:
+        apiKey:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationAPIKeyConfig'
+          description: api_key configuration if API key authentication is supported
+          title: api_key
+        oauth:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationOAuthConfig'
+          description: oauth configuration if OAuth authentication is supported
+          title: oauth
+        proprietaryApp:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationProprietaryAppConfig'
+          description: proprietary configuration if supported
+          title: proprietary_app
+        requiresAuth:
+          description: requires_auth indicates if authentication is required for this integration
+          title: requires_auth
+          type: boolean
+      title: IntegrationAuthentication
+      type: object
+    gitpod.v1.ValidateIntegrationResponse:
+      additionalProperties: false
+      properties:
+        checks:
+          description: "checks contains the result of every check performed.\n Passing checks have empty message and action_hint."
+          items:
+            $ref: '#/components/schemas/gitpod.v1.ValidationCheck'
+          title: checks
+          type: array
+        valid:
+          description: valid is true when all checks pass (convenience field).
+          title: valid
+          type: boolean
+      title: ValidateIntegrationResponse
+      type: object
+    gitpod.v1.IntegrationOAuthConfig:
+      additionalProperties: false
+      description: IntegrationOAuthConfig defines OAuth-specific configuration
+      properties:
+        authParams:
+          additionalProperties:
+            title: value
+            type: string
+          description: "auth_params are additional query parameters to include in the OAuth\n authorization URL. Use comma-separated values for multi-value params\n (e.g., \"search:read,chat:write\" for Slack's user_scope)."
+          title: auth_params
+          type: object
+        authUrl:
+          description: auth_url is the OAuth authorization endpoint URL
+          title: auth_url
+          type: string
+        clientId:
+          description: client_id is the OAuth client ID (optional if dynamic_registration is enabled)
+          title: client_id
+          type: string
+        clientSecret:
+          description: client_secret is the OAuth client secret (optional for public clients)
+          title: client_secret
+          type: string
+        dynamicRegistration:
+          description: "dynamic_registration enables RFC 7591 OAuth 2.0 Dynamic Client Registration.\n When enabled, client credentials are obtained automatically from the authorization\n server's registration endpoint (discovered via RFC 8414 metadata).\n When disabled (default), client_id and client_secret must be pre-configured."
+          title: dynamic_registration
+          type: boolean
+        redirectUrl:
+          description: redirect_url is the OAuth callback/redirect URL
+          title: redirect_url
+          type: string
+        scopes:
+          description: scopes are the OAuth scopes to request
+          items:
+            type: string
+          title: scopes
+          type: array
+        tokenUrl:
+          description: token_url is the OAuth token endpoint URL
+          title: token_url
+          type: string
+      title: IntegrationOAuthConfig
+      type: object
+    gitpod.v1.GetIntegrationRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: GetIntegrationRequest
+      type: object
+    gitpod.v1.IntegrationContextParsingCapability:
+      additionalProperties: false
+      description: IntegrationContextParsingCapability defines context parsing capability Additional context parsing configuration can be added here
+      title: IntegrationContextParsingCapability
+      type: object
+    gitpod.v1.GetIntegrationDefinitionRequest:
+      additionalProperties: false
+      properties:
+        id:
+          minLength: 1
+          title: id
+          type: string
+      title: GetIntegrationDefinitionRequest
       type: object
     gitpod.v1.IntegrationProprietaryAppConfig:
       additionalProperties: false
@@ -1117,6 +1056,67 @@ components:
           title: webhook_secret
           type: string
       title: IntegrationProprietaryAppConfig
+      type: object
+    gitpod.v1.CreateIntegrationDefinitionRequest:
+      additionalProperties: false
+      properties:
+        auth:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationAuthentication'
+          description: auth defines the authentication requirements for this integration
+          title: auth
+        capabilities:
+          $ref: '#/components/schemas/gitpod.v1.IntegrationCapabilities'
+          description: capabilities defines what this integration can do
+          title: capabilities
+        description:
+          description: description provides a human-readable description of the integration
+          title: description
+          type: string
+        experimental:
+          description: experimental indicates if this integration is experimental and requires feature flag
+          title: experimental
+          type: boolean
+        host:
+          description: host is the hostname for this integration (e.g., "linear.app")
+          title: host
+          type: string
+        iconUrl:
+          description: icon_url is the URL for this integration's icon
+          title: icon_url
+          type: string
+        name:
+          description: name is the human-readable name for this integration type
+          minLength: 1
+          title: name
+          type: string
+      title: CreateIntegrationDefinitionRequest
+      type: object
+    gitpod.v1.ListIntegrationsResponse:
+      additionalProperties: false
+      properties:
+        integrations:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Integration'
+          title: integrations
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+      required:
+      - pagination
+      title: ListIntegrationsResponse
+      type: object
+    gitpod.v1.ValidationCheck.Check:
+      enum:
+      - CHECK_UNSPECIFIED
+      - CHECK_APP_TOKEN
+      - CHECK_APP_INSTALLATION
+      title: Check
+      type: string
+    gitpod.v1.IntegrationAPIKeyConfig:
+      additionalProperties: false
+      description: IntegrationAPIKeyConfig defines API key authentication configuration Additional API key configuration can be added here
+      title: IntegrationAPIKeyConfig
       type: object
   securitySchemes:
     bearerAuth:

@@ -1474,145 +1474,72 @@ paths:
       - gitpod.v1.RunnerConfigurationService
 components:
   schemas:
-    gitpod.v1.GetEnvironmentClassResponse:
+    gitpod.v1.PaginationRequest:
       additionalProperties: false
       properties:
-        environmentClass:
-          $ref: '#/components/schemas/gitpod.v1.EnvironmentClass'
-          title: environment_class
-      title: GetEnvironmentClassResponse
+        pageSize:
+          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
+          format: int32
+          maximum: 100
+          title: page_size
+          type: integer
+        token:
+          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
+          title: token
+          type: string
+      title: PaginationRequest
       type: object
-    gitpod.v1.ListLLMIntegrationsRequest:
+    gitpod.v1.UpdateHostAuthenticationTokenResponse:
+      additionalProperties: false
+      title: UpdateHostAuthenticationTokenResponse
+      type: object
+    gitpod.v1.ListEnvironmentClassesRequest:
       additionalProperties: false
       properties:
         filter:
-          $ref: '#/components/schemas/gitpod.v1.ListLLMIntegrationsRequest.Filter'
+          $ref: '#/components/schemas/gitpod.v1.ListEnvironmentClassesRequest.Filter'
           title: filter
         pagination:
           $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: pagination contains the pagination options for listing scm integrations
+          description: pagination contains the pagination options for listing environment classes
           title: pagination
-      title: ListLLMIntegrationsRequest
+      title: ListEnvironmentClassesRequest
       type: object
-    gitpod.v1.UpdateLLMIntegrationResponse:
-      additionalProperties: false
-      title: UpdateLLMIntegrationResponse
-      type: object
-    gitpod.v1.GetHostAuthenticationTokenRequest:
+    gitpod.v1.Subject:
       additionalProperties: false
       properties:
         id:
+          description: id is the UUID of the subject
           format: uuid
           title: id
           type: string
-      title: GetHostAuthenticationTokenRequest
+        principal:
+          $ref: '#/components/schemas/gitpod.v1.Principal'
+          description: Principal is the principal of the subject
+          title: principal
+      title: Subject
       type: object
-    gitpod.v1.UpdateHostAuthenticationTokenRequest:
+    gitpod.v1.GetSCMIntegrationResponse:
       additionalProperties: false
       properties:
-        expiresAt:
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-          title: expires_at
-        id:
-          format: uuid
-          title: id
-          type: string
-        refreshToken:
-          title: refresh_token
-          type:
-          - string
-          - 'null'
-        scopes:
+        integration:
+          $ref: '#/components/schemas/gitpod.v1.SCMIntegration'
+          title: integration
+      title: GetSCMIntegrationResponse
+      type: object
+    gitpod.v1.ListEnvironmentClassesResponse:
+      additionalProperties: false
+      properties:
+        environmentClasses:
           items:
-            type: string
-          title: scopes
+            $ref: '#/components/schemas/gitpod.v1.EnvironmentClass'
+          title: environment_classes
           type: array
-        token:
-          minLength: 1
-          title: token
-          type:
-          - string
-          - 'null'
-      title: UpdateHostAuthenticationTokenRequest
-      type: object
-    gitpod.v1.RunnerConfigurationSchema.EnumField:
-      additionalProperties: false
-      properties:
-        default:
-          deprecated: true
-          description: deprecated, will be removed, use default_value instead
-          title: default
-          type: string
-        defaultValue:
-          $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.EnumField.Value'
-          title: default_value
-        possibleValues:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.EnumField.Value'
-          title: possible_values
-          type: array
-        values:
-          deprecated: true
-          description: deprecated, will be removed, use possible_values instead
-          items:
-            deprecated: true
-            type: string
-          title: values
-          type: array
-      title: EnumField
-      type: object
-    gitpod.v1.CreateSCMIntegrationResponse:
-      additionalProperties: false
-      properties:
-        id:
-          description: id is a uniquely generated identifier for the SCM integration
-          format: uuid
-          title: id
-          type: string
-      title: CreateSCMIntegrationResponse
-      type: object
-    gitpod.v1.CreateSCMIntegrationRequest:
-      additionalProperties: false
-      properties:
-        host:
-          title: host
-          type: string
-        issuerUrl:
-          description: issuer_url can be set to override the authentication provider URL, if it doesn't match the SCM host.
-          title: issuer_url
-          type:
-          - string
-          - 'null'
-        oauthClientId:
-          description: "oauth_client_id is the OAuth app's client ID, if OAuth is configured.\n If configured, oauth_plaintext_client_secret must also be set."
-          title: oauth_client_id
-          type:
-          - string
-          - 'null'
-        oauthPlaintextClientSecret:
-          description: "oauth_plaintext_client_secret is the OAuth app's client secret in clear text.\n This will first be encrypted with the runner's public key before being stored."
-          title: oauth_plaintext_client_secret
-          type:
-          - string
-          - 'null'
-        pat:
-          title: pat
-          type: boolean
-        runnerId:
-          format: uuid
-          title: runner_id
-          type: string
-        scmId:
-          description: scm_id references the scm_id in the runner's configuration schema that this integration is for
-          title: scm_id
-          type: string
-        virtualDirectory:
-          description: "virtual_directory is the virtual directory path for Azure DevOps Server (e.g., \"/tfs\").\n This field is only used for Azure DevOps Server SCM integrations and should be empty for other SCM types.\n Azure DevOps Server APIs work without collection when PAT scope is 'All accessible organizations'."
-          title: virtual_directory
-          type:
-          - string
-          - 'null'
-      title: CreateSCMIntegrationRequest
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing environment classes
+          title: pagination
+      title: ListEnvironmentClassesResponse
       type: object
     gitpod.v1.EnvironmentClass:
       additionalProperties: false
@@ -1652,6 +1579,36 @@ components:
       - runnerId
       title: EnvironmentClass
       type: object
+    google.protobuf.Timestamp:
+      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
+      format: date-time
+      type: string
+    gitpod.v1.ListHostAuthenticationTokensRequest.Filter:
+      additionalProperties: false
+      properties:
+        runnerId:
+          format: uuid
+          title: runner_id
+          type:
+          - string
+          - 'null'
+        subjectId:
+          description: Filter by subject (user or service account)
+          format: uuid
+          title: subject_id
+          type:
+          - string
+          - 'null'
+        userId:
+          deprecated: true
+          description: 'Deprecated: Use principal_id instead'
+          format: uuid
+          title: user_id
+          type:
+          - string
+          - 'null'
+      title: Filter
+      type: object
     gitpod.v1.CreateEnvironmentClassRequest:
       additionalProperties: false
       properties:
@@ -1675,6 +1632,149 @@ components:
           title: runner_id
           type: string
       title: CreateEnvironmentClassRequest
+      type: object
+    gitpod.v1.ListSCMIntegrationsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListSCMIntegrationsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing scm integrations
+          title: pagination
+      title: ListSCMIntegrationsRequest
+      type: object
+    gitpod.v1.CreateEnvironmentClassResponse:
+      additionalProperties: false
+      properties:
+        id:
+          title: id
+          type: string
+      title: CreateEnvironmentClassResponse
+      type: object
+    gitpod.v1.LLMIntegrationRequestHeader:
+      additionalProperties: false
+      description: "LLMIntegrationRequestHeader represents a custom header to be passed to LLM requests.\n The value field contains:\n - Plain text values in update requests (will be encrypted server-side).\n - Encrypted binary values on read requests (decrypt directly to get original value)."
+      properties:
+        key:
+          title: key
+          type: string
+        value:
+          format: byte
+          title: value
+          type: string
+      title: LLMIntegrationRequestHeader
+      type: object
+    gitpod.v1.ListLLMIntegrationsResponse:
+      additionalProperties: false
+      properties:
+        integrations:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.LLMIntegration'
+          title: integrations
+          type: array
+        llmManagedByOna:
+          description: llm_managed_by_ona indicates if LLM integrations are managed by Ona Intelligence.
+          title: llm_managed_by_ona
+          type: boolean
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing llm integrations
+          title: pagination
+      title: ListLLMIntegrationsResponse
+      type: object
+    gitpod.v1.CreateSCMIntegrationResponse:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is a uniquely generated identifier for the SCM integration
+          format: uuid
+          title: id
+          type: string
+      title: CreateSCMIntegrationResponse
+      type: object
+    gitpod.v1.ValidateRunnerConfigurationRequest:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - scmIntegration
+        required:
+        - environmentClass
+      - not:
+          anyOf:
+          - required:
+            - environmentClass
+        required:
+        - scmIntegration
+      properties:
+        environmentClass:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentClass'
+          title: environment_class
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+        scmIntegration:
+          $ref: '#/components/schemas/gitpod.v1.ValidateRunnerConfigurationRequest.ValidateSCMIntegration'
+          title: scm_integration
+      title: ValidateRunnerConfigurationRequest
+      type: object
+    gitpod.v1.RunnerConfigurationSchema.SCMConfigSchema:
+      additionalProperties: false
+      properties:
+        defaultHosts:
+          items:
+            type: string
+          title: default_hosts
+          type: array
+        name:
+          title: name
+          type: string
+        oauth:
+          $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.OAuth'
+          title: oauth
+        pat:
+          $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.PersonalAccessToken'
+          title: pat
+        scmId:
+          title: scm_id
+          type: string
+      title: SCMConfigSchema
+      type: object
+    gitpod.v1.UpdateSCMIntegrationResponse:
+      additionalProperties: false
+      title: UpdateSCMIntegrationResponse
+      type: object
+    gitpod.v1.GetRunnerConfigurationSchemaRequest:
+      additionalProperties: false
+      properties:
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+      title: GetRunnerConfigurationSchemaRequest
+      type: object
+    gitpod.v1.RunnerConfigurationSchema.DisplayField:
+      additionalProperties: false
+      properties:
+        default:
+          title: default
+          type: string
+      title: DisplayField
+      type: object
+    gitpod.v1.FieldValue:
+      additionalProperties: false
+      properties:
+        key:
+          title: key
+          type: string
+        value:
+          title: value
+          type: string
+      title: FieldValue
       type: object
     gitpod.v1.CreateHostAuthenticationTokenRequest:
       additionalProperties: false
@@ -1726,228 +1826,15 @@ components:
           type: string
       title: CreateHostAuthenticationTokenRequest
       type: object
-    gitpod.v1.LLMIntegration:
+    gitpod.v1.CreateLLMIntegrationResponse:
       additionalProperties: false
       properties:
-        encryptedApiKey:
-          description: encrypted_api_key is the LLM provider's API key encrypted with the runner's public key.
-          format: byte
-          title: encrypted_api_key
-          type: string
-        endpoint:
-          title: endpoint
-          type: string
         id:
-          description: id is the unique identifier of the LLM integration
-          title: id
-          type: string
-        maxTokens:
-          description: the maximum number of tokens to generate before stopping. 0 is a model default.
-          title: max_tokens
-          type: string
-        models:
-          description: models represents the supported LLM models for this integration
-          items:
-            $ref: '#/components/schemas/gitpod.v1.SupportedModel'
-          title: models
-          type: array
-        phase:
-          $ref: '#/components/schemas/gitpod.v1.LLMIntegrationPhase'
-          description: phase represents the current status/phase of the LLM integration
-          title: phase
-        phaseReason:
-          description: phase_reason provides explanation for the current phase (e.g., "insufficient funds", "user disabled")
-          title: phase_reason
-          type: string
-        requestHeaders:
-          description: request_headers contains optional headers for the LLM integration.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.LLMIntegrationRequestHeader'
-          title: request_headers
-          type: array
-        runnerId:
-          title: runner_id
-          type: string
-      title: LLMIntegration
-      type: object
-    gitpod.v1.SCMIntegration:
-      additionalProperties: false
-      properties:
-        host:
-          title: host
-          type: string
-        id:
-          description: id is the unique identifier of the SCM integration
-          title: id
-          type: string
-        oauth:
-          $ref: '#/components/schemas/gitpod.v1.SCMIntegrationOAuthConfig'
-          title: oauth
-        pat:
-          title: pat
-          type: boolean
-        runnerId:
-          title: runner_id
-          type: string
-        scmId:
-          description: scm_id references the scm_id in the runner's configuration schema that this integration is for
-          title: scm_id
-          type: string
-        virtualDirectory:
-          description: "virtual_directory is the virtual directory path for Azure DevOps Server (e.g., \"/tfs\").\n This field is only used for Azure DevOps Server SCM integrations and should be empty for other SCM types.\n Azure DevOps Server APIs work without collection when PAT scope is 'All accessible organizations'."
-          title: virtual_directory
-          type:
-          - string
-          - 'null'
-      title: SCMIntegration
-      type: object
-    gitpod.v1.UpdateHostAuthenticationTokenResponse:
-      additionalProperties: false
-      title: UpdateHostAuthenticationTokenResponse
-      type: object
-    gitpod.v1.PaginationRequest:
-      additionalProperties: false
-      properties:
-        pageSize:
-          description: "Page size is the maximum number of results to retrieve per page.\n Defaults to 25. Maximum 100."
-          format: int32
-          maximum: 100
-          title: page_size
-          type: integer
-        token:
-          description: "Token for the next set of results that was returned as next_token of a\n PaginationResponse"
-          title: token
-          type: string
-      title: PaginationRequest
-      type: object
-    gitpod.v1.FieldValue:
-      additionalProperties: false
-      properties:
-        key:
-          title: key
-          type: string
-        value:
-          title: value
-          type: string
-      title: FieldValue
-      type: object
-    gitpod.v1.ListLLMIntegrationsResponse:
-      additionalProperties: false
-      properties:
-        integrations:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.LLMIntegration'
-          title: integrations
-          type: array
-        llmManagedByOna:
-          description: llm_managed_by_ona indicates if LLM integrations are managed by Ona Intelligence.
-          title: llm_managed_by_ona
-          type: boolean
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          description: pagination contains the pagination options for listing llm integrations
-          title: pagination
-      title: ListLLMIntegrationsResponse
-      type: object
-    gitpod.v1.RunnerConfigurationSchema.StringField:
-      additionalProperties: false
-      properties:
-        default:
-          title: default
-          type: string
-        pattern:
-          title: pattern
-          type: string
-      title: StringField
-      type: object
-    gitpod.v1.RunnerConfigurationSchema.EnumField.Value:
-      additionalProperties: false
-      properties:
-        detail:
-          title: detail
-          type: string
-        subtitle:
-          title: subtitle
-          type: string
-        title:
-          title: title
-          type: string
-      title: Value
-      type: object
-    gitpod.v1.DeleteLLMIntegrationRequest:
-      additionalProperties: false
-      properties:
-        force:
-          description: "force skips dependency checks and deletes the integration even if it would\n leave no enabled integration for a model in use"
-          title: force
-          type: boolean
-        id:
+          description: id is a uniquely generated identifier for the LLM integration
           format: uuid
           title: id
           type: string
-      title: DeleteLLMIntegrationRequest
-      type: object
-    gitpod.v1.RunnerConfigurationSchema.IntField:
-      additionalProperties: false
-      properties:
-        default:
-          format: int32
-          title: default
-          type: integer
-        max:
-          format: int32
-          title: max
-          type: integer
-        min:
-          format: int32
-          title: min
-          type: integer
-      title: IntField
-      type: object
-    gitpod.v1.UpdateEnvironmentClassResponse:
-      additionalProperties: false
-      title: UpdateEnvironmentClassResponse
-      type: object
-    gitpod.v1.PaginationResponse:
-      additionalProperties: false
-      properties:
-        nextToken:
-          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
-          title: next_token
-          type: string
-      title: PaginationResponse
-      type: object
-    gitpod.v1.RunnerKind:
-      description: RunnerKind represents the kind of a runner
-      enum:
-      - RUNNER_KIND_UNSPECIFIED
-      - RUNNER_KIND_LOCAL
-      - RUNNER_KIND_REMOTE
-      - RUNNER_KIND_LOCAL_CONFIGURATION
-      title: RunnerKind
-      type: string
-    gitpod.v1.EnvironmentClassValidationResult:
-      additionalProperties: false
-      properties:
-        configurationErrors:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.FieldValidationError'
-          title: configuration_errors
-          type: array
-        descriptionError:
-          title: description_error
-          type:
-          - string
-          - 'null'
-        displayNameError:
-          title: display_name_error
-          type:
-          - string
-          - 'null'
-        valid:
-          title: valid
-          type: boolean
-      title: EnvironmentClassValidationResult
+      title: CreateLLMIntegrationResponse
       type: object
     gitpod.v1.HostAuthenticationToken:
       additionalProperties: false
@@ -1990,6 +1877,320 @@ components:
       required:
       - id
       title: HostAuthenticationToken
+      type: object
+    gitpod.v1.RunnerConfigurationSchema.EnumField.Value:
+      additionalProperties: false
+      properties:
+        detail:
+          title: detail
+          type: string
+        subtitle:
+          title: subtitle
+          type: string
+        title:
+          title: title
+          type: string
+      title: Value
+      type: object
+    gitpod.v1.DeleteLLMIntegrationResponse:
+      additionalProperties: false
+      title: DeleteLLMIntegrationResponse
+      type: object
+    gitpod.v1.ListEnvironmentClassesRequest.Filter:
+      additionalProperties: false
+      properties:
+        canCreateEnvironments:
+          description: "can_create_environments filters the response to only environment classes that can be used to create new environments\n by the caller. Unlike enabled, which indicates general availability, this ensures the caller only sees environment classes\n they are allowed to use."
+          title: can_create_environments
+          type:
+          - boolean
+          - 'null'
+        enabled:
+          description: "enabled filters the response to only enabled or disabled environment classes.\n If not set, all environment classes are returned."
+          title: enabled
+          type:
+          - boolean
+          - 'null'
+        runnerIds:
+          description: runner_ids filters the response to only EnvironmentClasses of these Runner IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: runner_ids
+          type: array
+        runnerKinds:
+          description: runner_kind filters the response to only environment classes from runners of these kinds.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerKind'
+          maxItems: 25
+          title: runner_kinds
+          type: array
+        runnerProviders:
+          description: runner_providers filters the response to only environment classes from runners of these providers.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerProvider'
+          maxItems: 25
+          title: runner_providers
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.GetLLMIntegrationResponse:
+      additionalProperties: false
+      properties:
+        integration:
+          $ref: '#/components/schemas/gitpod.v1.LLMIntegration'
+          title: integration
+      title: GetLLMIntegrationResponse
+      type: object
+    gitpod.v1.UpdateEnvironmentClassResponse:
+      additionalProperties: false
+      title: UpdateEnvironmentClassResponse
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
+      type: object
+    gitpod.v1.ListLLMIntegrationsRequest.Filter:
+      additionalProperties: false
+      properties:
+        runnerIds:
+          description: runner_ids filters the response to only LLM integrations of these Runner IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: runner_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.GetHostAuthenticationTokenResponse:
+      additionalProperties: false
+      properties:
+        token:
+          $ref: '#/components/schemas/gitpod.v1.HostAuthenticationToken'
+          title: token
+      required:
+      - token
+      title: GetHostAuthenticationTokenResponse
+      type: object
+    gitpod.v1.HostAuthenticationTokenSource:
+      enum:
+      - HOST_AUTHENTICATION_TOKEN_SOURCE_UNSPECIFIED
+      - HOST_AUTHENTICATION_TOKEN_SOURCE_OAUTH
+      - HOST_AUTHENTICATION_TOKEN_SOURCE_PAT
+      title: HostAuthenticationTokenSource
+      type: string
+    gitpod.v1.ValidateRunnerConfigurationRequest.ValidateSCMIntegration:
+      additionalProperties: false
+      oneOf:
+      - not:
+          anyOf:
+          - required:
+            - oauthPlaintextClientSecret
+        required:
+        - oauthEncryptedClientSecret
+      - not:
+          anyOf:
+          - required:
+            - oauthEncryptedClientSecret
+        required:
+        - oauthPlaintextClientSecret
+      properties:
+        host:
+          title: host
+          type: string
+        id:
+          description: id is the unique identifier of the SCM integration
+          title: id
+          type: string
+        issuerUrl:
+          description: issuer_url can be set to override the authentication provider URL, if it doesn't match the SCM host.
+          title: issuer_url
+          type:
+          - string
+          - 'null'
+        oauthClientId:
+          description: "oauth_client_id is the OAuth app's client ID, if OAuth is configured.\n If configured, oauth_client_secret must also be set."
+          title: oauth_client_id
+          type:
+          - string
+          - 'null'
+        oauthEncryptedClientSecret:
+          description: "oauth_encrypted_client_secret is the OAuth app's client secret encrypted with the runner's public key,\n if OAuth is configured.\n This can be used to e.g. validate an already encrypted client secret of an existing SCM integration."
+          format: byte
+          title: oauth_encrypted_client_secret
+          type: string
+        oauthPlaintextClientSecret:
+          description: "oauth_plaintext_client_secret is the OAuth app's client secret in clear text, if OAuth is configured.\n This can be set to validate any new client secret before it is encrypted and stored. This value will\n not be stored and get encrypted with the runner's public key before passing it to the runner."
+          title: oauth_plaintext_client_secret
+          type: string
+        pat:
+          title: pat
+          type: boolean
+        scmId:
+          description: scm_id references the scm_id in the runner's configuration schema that this integration is for
+          title: scm_id
+          type: string
+        virtualDirectory:
+          description: "virtual_directory is the virtual directory path for Azure DevOps Server (e.g., \"/tfs\").\n This field is only used for Azure DevOps Server SCM integrations and should be empty for other SCM types.\n Azure DevOps Server APIs work without collection when PAT scope is 'All accessible organizations'."
+          title: virtual_directory
+          type:
+          - string
+          - 'null'
+      title: ValidateSCMIntegration
+      type: object
+    gitpod.v1.UpdateSCMIntegrationRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+        issuerUrl:
+          description: issuer_url can be set to override the authentication provider URL, if it doesn't match the SCM host.
+          title: issuer_url
+          type:
+          - string
+          - 'null'
+        oauthClientId:
+          description: "oauth_client_id can be set to update the OAuth app's client ID.\n If an empty string is set, the OAuth configuration will be removed (regardless\n of whether a client secret is set), and any existing Host Authentication Tokens for the\n SCM integration's runner and host that were created using the OAuth app will be deleted.\n This might lead to users being unable to access their repositories until they re-authenticate."
+          title: oauth_client_id
+          type:
+          - string
+          - 'null'
+        oauthPlaintextClientSecret:
+          description: "oauth_plaintext_client_secret can be set to update the OAuth app's client secret.\n The cleartext secret will be encrypted with the runner's public key before being stored."
+          title: oauth_plaintext_client_secret
+          type:
+          - string
+          - 'null'
+        pat:
+          description: "pat can be set to enable or disable Personal Access Tokens support.\n When disabling PATs, any existing Host Authentication Tokens for the SCM integration's\n runner and host that were created using a PAT will be deleted. This might lead to users\n being unable to access their repositories until they re-authenticate."
+          title: pat
+          type:
+          - boolean
+          - 'null'
+        virtualDirectory:
+          description: "virtual_directory is the virtual directory path for Azure DevOps Server (e.g., \"/tfs\").\n This field is only used for Azure DevOps Server SCM integrations and should be empty for other SCM types.\n Azure DevOps Server APIs work without collection when PAT scope is 'All accessible organizations'."
+          title: virtual_directory
+          type:
+          - string
+          - 'null'
+      title: UpdateSCMIntegrationRequest
+      type: object
+    gitpod.v1.RunnerConfigurationSchema.StringField:
+      additionalProperties: false
+      properties:
+        default:
+          title: default
+          type: string
+        pattern:
+          title: pattern
+          type: string
+      title: StringField
+      type: object
+    gitpod.v1.ListSCMIntegrationsRequest.Filter:
+      additionalProperties: false
+      properties:
+        runnerIds:
+          description: runner_ids filters the response to only SCM integrations of these Runner IDs
+          items:
+            format: uuid
+            maxItems: 25
+            type: string
+          maxItems: 25
+          title: runner_ids
+          type: array
+      title: Filter
+      type: object
+    gitpod.v1.RunnerConfigurationSchema:
+      additionalProperties: false
+      properties:
+        environmentClasses:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.Field'
+          title: environment_classes
+          type: array
+        runnerConfig:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.Field'
+          title: runner_config
+          type: array
+        scm:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.SCMConfigSchema'
+          title: scm
+          type: array
+        version:
+          description: The schema version
+          title: version
+          type: string
+      title: RunnerConfigurationSchema
+      type: object
+    gitpod.v1.GetSCMIntegrationRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: GetSCMIntegrationRequest
+      type: object
+    gitpod.v1.RunnerConfigurationSchema.EnumField:
+      additionalProperties: false
+      properties:
+        default:
+          deprecated: true
+          description: deprecated, will be removed, use default_value instead
+          title: default
+          type: string
+        defaultValue:
+          $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.EnumField.Value'
+          title: default_value
+        possibleValues:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.EnumField.Value'
+          title: possible_values
+          type: array
+        values:
+          deprecated: true
+          description: deprecated, will be removed, use possible_values instead
+          items:
+            deprecated: true
+            type: string
+          title: values
+          type: array
+      title: EnumField
       type: object
     gitpod.v1.RunnerConfigurationSchema.Field:
       additionalProperties: false
@@ -2087,75 +2288,22 @@ components:
           title: string
       title: Field
       type: object
-    gitpod.v1.DeleteLLMIntegrationResponse:
+    gitpod.v1.GetEnvironmentClassResponse:
       additionalProperties: false
-      title: DeleteLLMIntegrationResponse
+      properties:
+        environmentClass:
+          $ref: '#/components/schemas/gitpod.v1.EnvironmentClass'
+          title: environment_class
+      title: GetEnvironmentClassResponse
       type: object
-    gitpod.v1.UpdateSCMIntegrationRequest:
+    gitpod.v1.DeleteSCMIntegrationRequest:
       additionalProperties: false
       properties:
         id:
           format: uuid
           title: id
           type: string
-        issuerUrl:
-          description: issuer_url can be set to override the authentication provider URL, if it doesn't match the SCM host.
-          title: issuer_url
-          type:
-          - string
-          - 'null'
-        oauthClientId:
-          description: "oauth_client_id can be set to update the OAuth app's client ID.\n If an empty string is set, the OAuth configuration will be removed (regardless\n of whether a client secret is set), and any existing Host Authentication Tokens for the\n SCM integration's runner and host that were created using the OAuth app will be deleted.\n This might lead to users being unable to access their repositories until they re-authenticate."
-          title: oauth_client_id
-          type:
-          - string
-          - 'null'
-        oauthPlaintextClientSecret:
-          description: "oauth_plaintext_client_secret can be set to update the OAuth app's client secret.\n The cleartext secret will be encrypted with the runner's public key before being stored."
-          title: oauth_plaintext_client_secret
-          type:
-          - string
-          - 'null'
-        pat:
-          description: "pat can be set to enable or disable Personal Access Tokens support.\n When disabling PATs, any existing Host Authentication Tokens for the SCM integration's\n runner and host that were created using a PAT will be deleted. This might lead to users\n being unable to access their repositories until they re-authenticate."
-          title: pat
-          type:
-          - boolean
-          - 'null'
-        virtualDirectory:
-          description: "virtual_directory is the virtual directory path for Azure DevOps Server (e.g., \"/tfs\").\n This field is only used for Azure DevOps Server SCM integrations and should be empty for other SCM types.\n Azure DevOps Server APIs work without collection when PAT scope is 'All accessible organizations'."
-          title: virtual_directory
-          type:
-          - string
-          - 'null'
-      title: UpdateSCMIntegrationRequest
-      type: object
-    gitpod.v1.RunnerConfigurationSchema.PersonalAccessToken:
-      additionalProperties: false
-      properties:
-        description:
-          description: description is a human-readable description of the PAT.
-          title: description
-          type: string
-        docsLink:
-          description: docs_link is a link to the documentation on how to create a PAT for this SCM system.
-          title: docs_link
-          type: string
-      title: PersonalAccessToken
-      type: object
-    gitpod.v1.ListEnvironmentClassesResponse:
-      additionalProperties: false
-      properties:
-        environmentClasses:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.EnvironmentClass'
-          title: environment_classes
-          type: array
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          description: pagination contains the pagination options for listing environment classes
-          title: pagination
-      title: ListEnvironmentClassesResponse
+      title: DeleteSCMIntegrationRequest
       type: object
     gitpod.v1.ListHostAuthenticationTokensRequest:
       additionalProperties: false
@@ -2168,212 +2316,27 @@ components:
           title: pagination
       title: ListHostAuthenticationTokensRequest
       type: object
-    gitpod.v1.UpdateSCMIntegrationResponse:
+    gitpod.v1.ListHostAuthenticationTokensResponse:
       additionalProperties: false
-      title: UpdateSCMIntegrationResponse
+      properties:
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          title: pagination
+        tokens:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.HostAuthenticationToken'
+          title: tokens
+          type: array
+      title: ListHostAuthenticationTokensResponse
       type: object
-    gitpod.v1.GetSCMIntegrationRequest:
+    gitpod.v1.GetHostAuthenticationTokenRequest:
       additionalProperties: false
       properties:
         id:
           format: uuid
           title: id
           type: string
-      title: GetSCMIntegrationRequest
-      type: object
-    gitpod.v1.ValidateRunnerConfigurationRequest:
-      additionalProperties: false
-      oneOf:
-      - not:
-          anyOf:
-          - required:
-            - scmIntegration
-        required:
-        - environmentClass
-      - not:
-          anyOf:
-          - required:
-            - environmentClass
-        required:
-        - scmIntegration
-      properties:
-        environmentClass:
-          $ref: '#/components/schemas/gitpod.v1.EnvironmentClass'
-          title: environment_class
-        runnerId:
-          format: uuid
-          title: runner_id
-          type: string
-        scmIntegration:
-          $ref: '#/components/schemas/gitpod.v1.ValidateRunnerConfigurationRequest.ValidateSCMIntegration'
-          title: scm_integration
-      title: ValidateRunnerConfigurationRequest
-      type: object
-    gitpod.v1.RunnerConfigurationSchema.BoolField:
-      additionalProperties: false
-      properties:
-        default:
-          title: default
-          type: boolean
-      title: BoolField
-      type: object
-    google.protobuf.Timestamp:
-      description: "A Timestamp represents a point in time independent of any time zone or local\n calendar, encoded as a count of seconds and fractions of seconds at\n nanosecond resolution. The count is relative to an epoch at UTC midnight on\n January 1, 1970, in the proleptic Gregorian calendar which extends the\n Gregorian calendar backwards to year one.\n\n All minutes are 60 seconds long. Leap seconds are \"smeared\" so that no leap\n second table is needed for interpretation, using a [24-hour linear\n smear](https://developers.google.com/time/smear).\n\n The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By\n restricting to that range, we ensure that we can convert to and from [RFC\n 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.\n\n # Examples\n\n Example 1: Compute Timestamp from POSIX `time()`.\n\n     Timestamp timestamp;\n     timestamp.set_seconds(time(NULL));\n     timestamp.set_nanos(0);\n\n Example 2: Compute Timestamp from POSIX `gettimeofday()`.\n\n     struct timeval tv;\n     gettimeofday(&tv, NULL);\n\n     Timestamp timestamp;\n     timestamp.set_seconds(tv.tv_sec);\n     timestamp.set_nanos(tv.tv_usec * 1000);\n\n Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.\n\n     FILETIME ft;\n     GetSystemTimeAsFileTime(&ft);\n     UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;\n\n     // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z\n     // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.\n     Timestamp timestamp;\n     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));\n     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));\n\n Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.\n\n     long millis = System.currentTimeMillis();\n\n     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)\n         .setNanos((int) ((millis % 1000) * 1000000)).build();\n\n Example 5: Compute Timestamp from Java `Instant.now()`.\n\n     Instant now = Instant.now();\n\n     Timestamp timestamp =\n         Timestamp.newBuilder().setSeconds(now.getEpochSecond())\n             .setNanos(now.getNano()).build();\n\n Example 6: Compute Timestamp from current time in Python.\n\n     timestamp = Timestamp()\n     timestamp.GetCurrentTime()\n\n # JSON Mapping\n\n In JSON format, the Timestamp type is encoded as a string in the\n [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the\n format is \"{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z\"\n where {year} is always expressed using four digits while {month}, {day},\n {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional\n seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),\n are optional. The \"Z\" suffix indicates the timezone (\"UTC\"); the timezone\n is required. A proto3 JSON serializer should always use UTC (as indicated by\n \"Z\") when printing the Timestamp type and a proto3 JSON parser should be\n able to accept both UTC and other timezones (as indicated by an offset).\n\n For example, \"2017-01-15T01:30:15.01Z\" encodes 15.01 seconds past\n 01:30 UTC on January 15, 2017.\n\n In JavaScript, one can convert a Date object to this format using the\n standard\n [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)\n method. In Python, a standard `datetime.datetime` object can be converted\n to this format using\n [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with\n the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use\n the Joda Time's [`ISODateTimeFormat.dateTime()`](\n http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()\n ) to obtain a formatter capable of generating timestamps in this format."
-      format: date-time
-      type: string
-    gitpod.v1.RunnerConfigurationSchema.SCMConfigSchema:
-      additionalProperties: false
-      properties:
-        defaultHosts:
-          items:
-            type: string
-          title: default_hosts
-          type: array
-        name:
-          title: name
-          type: string
-        oauth:
-          $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.OAuth'
-          title: oauth
-        pat:
-          $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.PersonalAccessToken'
-          title: pat
-        scmId:
-          title: scm_id
-          type: string
-      title: SCMConfigSchema
-      type: object
-    gitpod.v1.ListEnvironmentClassesRequest.Filter:
-      additionalProperties: false
-      properties:
-        canCreateEnvironments:
-          description: "can_create_environments filters the response to only environment classes that can be used to create new environments\n by the caller. Unlike enabled, which indicates general availability, this ensures the caller only sees environment classes\n they are allowed to use."
-          title: can_create_environments
-          type:
-          - boolean
-          - 'null'
-        enabled:
-          description: "enabled filters the response to only enabled or disabled environment classes.\n If not set, all environment classes are returned."
-          title: enabled
-          type:
-          - boolean
-          - 'null'
-        runnerIds:
-          description: runner_ids filters the response to only EnvironmentClasses of these Runner IDs
-          items:
-            format: uuid
-            maxItems: 25
-            type: string
-          maxItems: 25
-          title: runner_ids
-          type: array
-        runnerKinds:
-          description: runner_kind filters the response to only environment classes from runners of these kinds.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.RunnerKind'
-          maxItems: 25
-          title: runner_kinds
-          type: array
-        runnerProviders:
-          description: runner_providers filters the response to only environment classes from runners of these providers.
-          items:
-            $ref: '#/components/schemas/gitpod.v1.RunnerProvider'
-          maxItems: 25
-          title: runner_providers
-          type: array
-      title: Filter
-      type: object
-    gitpod.v1.CreateLLMIntegrationResponse:
-      additionalProperties: false
-      properties:
-        id:
-          description: id is a uniquely generated identifier for the LLM integration
-          format: uuid
-          title: id
-          type: string
-      title: CreateLLMIntegrationResponse
-      type: object
-    gitpod.v1.DeleteHostAuthenticationTokenResponse:
-      additionalProperties: false
-      title: DeleteHostAuthenticationTokenResponse
-      type: object
-    gitpod.v1.GetLLMIntegrationRequest:
-      additionalProperties: false
-      properties:
-        id:
-          format: uuid
-          title: id
-          type: string
-      title: GetLLMIntegrationRequest
-      type: object
-    gitpod.v1.RunnerProvider:
-      description: "RunnerProvider identifies the specific implementation type of a runner.\n Each provider maps to a specific kind of runner (local or remote), as\n specified below for each provider."
-      enum:
-      - RUNNER_PROVIDER_UNSPECIFIED
-      - RUNNER_PROVIDER_AWS_EC2
-      - RUNNER_PROVIDER_LINUX_HOST
-      - RUNNER_PROVIDER_DESKTOP_MAC
-      - RUNNER_PROVIDER_MANAGED
-      - RUNNER_PROVIDER_GCP
-      - RUNNER_PROVIDER_DEV_AGENT
-      title: RunnerProvider
-      type: string
-    gitpod.v1.ListHostAuthenticationTokensRequest.Filter:
-      additionalProperties: false
-      properties:
-        runnerId:
-          format: uuid
-          title: runner_id
-          type:
-          - string
-          - 'null'
-        subjectId:
-          description: Filter by subject (user or service account)
-          format: uuid
-          title: subject_id
-          type:
-          - string
-          - 'null'
-        userId:
-          deprecated: true
-          description: 'Deprecated: Use principal_id instead'
-          format: uuid
-          title: user_id
-          type:
-          - string
-          - 'null'
-      title: Filter
-      type: object
-    gitpod.v1.ListSCMIntegrationsRequest.Filter:
-      additionalProperties: false
-      properties:
-        runnerIds:
-          description: runner_ids filters the response to only SCM integrations of these Runner IDs
-          items:
-            format: uuid
-            maxItems: 25
-            type: string
-          maxItems: 25
-          title: runner_ids
-          type: array
-      title: Filter
-      type: object
-    gitpod.v1.RunnerConfigurationSchema.DisplayField:
-      additionalProperties: false
-      properties:
-        default:
-          title: default
-          type: string
-      title: DisplayField
-      type: object
-    gitpod.v1.DeleteHostAuthenticationTokenRequest:
-      additionalProperties: false
-      properties:
-        id:
-          format: uuid
-          title: id
-          type: string
-      title: DeleteHostAuthenticationTokenRequest
+      title: GetHostAuthenticationTokenRequest
       type: object
     gitpod.v1.GetRunnerConfigurationSchemaResponse:
       additionalProperties: false
@@ -2383,77 +2346,82 @@ components:
           title: schema
       title: GetRunnerConfigurationSchemaResponse
       type: object
-    gitpod.v1.RunnerConfigurationSchema.OAuth:
+    gitpod.v1.ListSCMIntegrationsResponse:
       additionalProperties: false
       properties:
-        callbackUrl:
-          description: callback_url is the URL the OAuth app will redirect to after the user has authenticated.
-          title: callback_url
-          type: string
-      title: OAuth
-      type: object
-    gitpod.v1.GetSCMIntegrationResponse:
-      additionalProperties: false
-      properties:
-        integration:
-          $ref: '#/components/schemas/gitpod.v1.SCMIntegration'
-          title: integration
-      title: GetSCMIntegrationResponse
-      type: object
-    gitpod.v1.DeleteSCMIntegrationResponse:
-      additionalProperties: false
-      title: DeleteSCMIntegrationResponse
-      type: object
-    gitpod.v1.Principal:
-      enum:
-      - PRINCIPAL_UNSPECIFIED
-      - PRINCIPAL_ACCOUNT
-      - PRINCIPAL_USER
-      - PRINCIPAL_RUNNER
-      - PRINCIPAL_ENVIRONMENT
-      - PRINCIPAL_SERVICE_ACCOUNT
-      - PRINCIPAL_RUNNER_MANAGER
-      title: Principal
-      type: string
-    gitpod.v1.FieldValidationError:
-      additionalProperties: false
-      properties:
-        error:
-          title: error
-          type: string
-        key:
-          title: key
-          type: string
-      title: FieldValidationError
-      type: object
-    gitpod.v1.LLMIntegrationPhase:
-      description: LLMIntegrationPhase represents the current status/phase of an LLM integration
-      enum:
-      - LLM_INTEGRATION_PHASE_UNSPECIFIED
-      - LLM_INTEGRATION_PHASE_AVAILABLE
-      - LLM_INTEGRATION_PHASE_UNAVAILABLE
-      - LLM_INTEGRATION_PHASE_DISABLED
-      title: LLMIntegrationPhase
-      type: string
-    gitpod.v1.GetLLMIntegrationResponse:
-      additionalProperties: false
-      properties:
-        integration:
-          $ref: '#/components/schemas/gitpod.v1.LLMIntegration'
-          title: integration
-      title: GetLLMIntegrationResponse
-      type: object
-    gitpod.v1.ListSCMIntegrationsRequest:
-      additionalProperties: false
-      properties:
-        filter:
-          $ref: '#/components/schemas/gitpod.v1.ListSCMIntegrationsRequest.Filter'
-          title: filter
+        integrations:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SCMIntegration'
+          title: integrations
+          type: array
         pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
           description: pagination contains the pagination options for listing scm integrations
           title: pagination
-      title: ListSCMIntegrationsRequest
+      title: ListSCMIntegrationsResponse
+      type: object
+    gitpod.v1.EnvironmentClassValidationResult:
+      additionalProperties: false
+      properties:
+        configurationErrors:
+          items:
+            $ref: '#/components/schemas/gitpod.v1.FieldValidationError'
+          title: configuration_errors
+          type: array
+        descriptionError:
+          title: description_error
+          type:
+          - string
+          - 'null'
+        displayNameError:
+          title: display_name_error
+          type:
+          - string
+          - 'null'
+        valid:
+          title: valid
+          type: boolean
+      title: EnvironmentClassValidationResult
+      type: object
+    gitpod.v1.RunnerKind:
+      description: RunnerKind represents the kind of a runner
+      enum:
+      - RUNNER_KIND_UNSPECIFIED
+      - RUNNER_KIND_LOCAL
+      - RUNNER_KIND_REMOTE
+      - RUNNER_KIND_LOCAL_CONFIGURATION
+      title: RunnerKind
+      type: string
+    gitpod.v1.SCMIntegration:
+      additionalProperties: false
+      properties:
+        host:
+          title: host
+          type: string
+        id:
+          description: id is the unique identifier of the SCM integration
+          title: id
+          type: string
+        oauth:
+          $ref: '#/components/schemas/gitpod.v1.SCMIntegrationOAuthConfig'
+          title: oauth
+        pat:
+          title: pat
+          type: boolean
+        runnerId:
+          title: runner_id
+          type: string
+        scmId:
+          description: scm_id references the scm_id in the runner's configuration schema that this integration is for
+          title: scm_id
+          type: string
+        virtualDirectory:
+          description: "virtual_directory is the virtual directory path for Azure DevOps Server (e.g., \"/tfs\").\n This field is only used for Azure DevOps Server SCM integrations and should be empty for other SCM types.\n Azure DevOps Server APIs work without collection when PAT scope is 'All accessible organizations'."
+          title: virtual_directory
+          type:
+          - string
+          - 'null'
+      title: SCMIntegration
       type: object
     gitpod.v1.ValidateRunnerConfigurationResponse:
       additionalProperties: false
@@ -2479,60 +2447,133 @@ components:
           title: scm_integration
       title: ValidateRunnerConfigurationResponse
       type: object
-    gitpod.v1.ListSCMIntegrationsResponse:
+    gitpod.v1.PaginationResponse:
       additionalProperties: false
       properties:
-        integrations:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.SCMIntegration'
-          title: integrations
-          type: array
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          description: pagination contains the pagination options for listing scm integrations
-          title: pagination
-      title: ListSCMIntegrationsResponse
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
       type: object
-    gitpod.v1.UpdateEnvironmentClassRequest:
+    gitpod.v1.DeleteSCMIntegrationResponse:
+      additionalProperties: false
+      title: DeleteSCMIntegrationResponse
+      type: object
+    gitpod.v1.GetEnvironmentClassRequest:
       additionalProperties: false
       properties:
-        description:
-          maxLength: 200
-          minLength: 3
-          title: description
-          type:
-          - string
-          - 'null'
-        displayName:
-          maxLength: 127
-          minLength: 3
-          title: display_name
-          type:
-          - string
-          - 'null'
-        enabled:
-          title: enabled
-          type:
-          - boolean
-          - 'null'
         environmentClassId:
           format: uuid
           title: environment_class_id
           type: string
-      title: UpdateEnvironmentClassRequest
+      title: GetEnvironmentClassRequest
       type: object
-    gitpod.v1.LLMIntegrationRequestHeader:
+    gitpod.v1.RunnerConfigurationSchema.IntField:
       additionalProperties: false
-      description: "LLMIntegrationRequestHeader represents a custom header to be passed to LLM requests.\n The value field contains:\n - Plain text values in update requests (will be encrypted server-side).\n - Encrypted binary values on read requests (decrypt directly to get original value)."
       properties:
+        default:
+          format: int32
+          title: default
+          type: integer
+        max:
+          format: int32
+          title: max
+          type: integer
+        min:
+          format: int32
+          title: min
+          type: integer
+      title: IntField
+      type: object
+    gitpod.v1.RunnerConfigurationSchema.OAuth:
+      additionalProperties: false
+      properties:
+        callbackUrl:
+          description: callback_url is the URL the OAuth app will redirect to after the user has authenticated.
+          title: callback_url
+          type: string
+      title: OAuth
+      type: object
+    gitpod.v1.ListLLMIntegrationsRequest:
+      additionalProperties: false
+      properties:
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListLLMIntegrationsRequest.Filter'
+          title: filter
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
+          description: pagination contains the pagination options for listing scm integrations
+          title: pagination
+      title: ListLLMIntegrationsRequest
+      type: object
+    gitpod.v1.RunnerConfigurationSchema.PersonalAccessToken:
+      additionalProperties: false
+      properties:
+        description:
+          description: description is a human-readable description of the PAT.
+          title: description
+          type: string
+        docsLink:
+          description: docs_link is a link to the documentation on how to create a PAT for this SCM system.
+          title: docs_link
+          type: string
+      title: PersonalAccessToken
+      type: object
+    gitpod.v1.LLMIntegration:
+      additionalProperties: false
+      properties:
+        encryptedApiKey:
+          description: encrypted_api_key is the LLM provider's API key encrypted with the runner's public key.
+          format: byte
+          title: encrypted_api_key
+          type: string
+        endpoint:
+          title: endpoint
+          type: string
+        id:
+          description: id is the unique identifier of the LLM integration
+          title: id
+          type: string
+        maxTokens:
+          description: the maximum number of tokens to generate before stopping. 0 is a model default.
+          title: max_tokens
+          type: string
+        models:
+          description: models represents the supported LLM models for this integration
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SupportedModel'
+          title: models
+          type: array
+        phase:
+          $ref: '#/components/schemas/gitpod.v1.LLMIntegrationPhase'
+          description: phase represents the current status/phase of the LLM integration
+          title: phase
+        phaseReason:
+          description: phase_reason provides explanation for the current phase (e.g., "insufficient funds", "user disabled")
+          title: phase_reason
+          type: string
+        requestHeaders:
+          description: request_headers contains optional headers for the LLM integration.
+          items:
+            $ref: '#/components/schemas/gitpod.v1.LLMIntegrationRequestHeader'
+          title: request_headers
+          type: array
+        runnerId:
+          title: runner_id
+          type: string
+      title: LLMIntegration
+      type: object
+    gitpod.v1.FieldValidationError:
+      additionalProperties: false
+      properties:
+        error:
+          title: error
+          type: string
         key:
           title: key
           type: string
-        value:
-          format: byte
-          title: value
-          type: string
-      title: LLMIntegrationRequestHeader
+      title: FieldValidationError
       type: object
     gitpod.v1.SupportedModel:
       enum:
@@ -2559,253 +2600,6 @@ components:
       - SUPPORTED_MODEL_OPENAI_O1_MINI
       title: SupportedModel
       type: string
-    gitpod.v1.GetEnvironmentClassRequest:
-      additionalProperties: false
-      properties:
-        environmentClassId:
-          format: uuid
-          title: environment_class_id
-          type: string
-      title: GetEnvironmentClassRequest
-      type: object
-    gitpod.v1.ListEnvironmentClassesRequest:
-      additionalProperties: false
-      properties:
-        filter:
-          $ref: '#/components/schemas/gitpod.v1.ListEnvironmentClassesRequest.Filter'
-          title: filter
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: pagination contains the pagination options for listing environment classes
-          title: pagination
-      title: ListEnvironmentClassesRequest
-      type: object
-    gitpod.v1.ListLLMIntegrationsRequest.Filter:
-      additionalProperties: false
-      properties:
-        runnerIds:
-          description: runner_ids filters the response to only LLM integrations of these Runner IDs
-          items:
-            format: uuid
-            maxItems: 25
-            type: string
-          maxItems: 25
-          title: runner_ids
-          type: array
-      title: Filter
-      type: object
-    gitpod.v1.RunnerConfigurationSchema:
-      additionalProperties: false
-      properties:
-        environmentClasses:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.Field'
-          title: environment_classes
-          type: array
-        runnerConfig:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.Field'
-          title: runner_config
-          type: array
-        scm:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.RunnerConfigurationSchema.SCMConfigSchema'
-          title: scm
-          type: array
-        version:
-          description: The schema version
-          title: version
-          type: string
-      title: RunnerConfigurationSchema
-      type: object
-    gitpod.v1.ValidateRunnerConfigurationRequest.ValidateSCMIntegration:
-      additionalProperties: false
-      oneOf:
-      - not:
-          anyOf:
-          - required:
-            - oauthPlaintextClientSecret
-        required:
-        - oauthEncryptedClientSecret
-      - not:
-          anyOf:
-          - required:
-            - oauthEncryptedClientSecret
-        required:
-        - oauthPlaintextClientSecret
-      properties:
-        host:
-          title: host
-          type: string
-        id:
-          description: id is the unique identifier of the SCM integration
-          title: id
-          type: string
-        issuerUrl:
-          description: issuer_url can be set to override the authentication provider URL, if it doesn't match the SCM host.
-          title: issuer_url
-          type:
-          - string
-          - 'null'
-        oauthClientId:
-          description: "oauth_client_id is the OAuth app's client ID, if OAuth is configured.\n If configured, oauth_client_secret must also be set."
-          title: oauth_client_id
-          type:
-          - string
-          - 'null'
-        oauthEncryptedClientSecret:
-          description: "oauth_encrypted_client_secret is the OAuth app's client secret encrypted with the runner's public key,\n if OAuth is configured.\n This can be used to e.g. validate an already encrypted client secret of an existing SCM integration."
-          format: byte
-          title: oauth_encrypted_client_secret
-          type: string
-        oauthPlaintextClientSecret:
-          description: "oauth_plaintext_client_secret is the OAuth app's client secret in clear text, if OAuth is configured.\n This can be set to validate any new client secret before it is encrypted and stored. This value will\n not be stored and get encrypted with the runner's public key before passing it to the runner."
-          title: oauth_plaintext_client_secret
-          type: string
-        pat:
-          title: pat
-          type: boolean
-        scmId:
-          description: scm_id references the scm_id in the runner's configuration schema that this integration is for
-          title: scm_id
-          type: string
-        virtualDirectory:
-          description: "virtual_directory is the virtual directory path for Azure DevOps Server (e.g., \"/tfs\").\n This field is only used for Azure DevOps Server SCM integrations and should be empty for other SCM types.\n Azure DevOps Server APIs work without collection when PAT scope is 'All accessible organizations'."
-          title: virtual_directory
-          type:
-          - string
-          - 'null'
-      title: ValidateSCMIntegration
-      type: object
-    gitpod.v1.GetHostAuthenticationTokenResponse:
-      additionalProperties: false
-      properties:
-        token:
-          $ref: '#/components/schemas/gitpod.v1.HostAuthenticationToken'
-          title: token
-      required:
-      - token
-      title: GetHostAuthenticationTokenResponse
-      type: object
-    connect.error:
-      additionalProperties: true
-      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
-      properties:
-        code:
-          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-          enum:
-          - canceled
-          - unknown
-          - invalid_argument
-          - deadline_exceeded
-          - not_found
-          - already_exists
-          - permission_denied
-          - resource_exhausted
-          - failed_precondition
-          - aborted
-          - out_of_range
-          - unimplemented
-          - internal
-          - unavailable
-          - data_loss
-          - unauthenticated
-          example:
-          - not_found
-          type: string
-        message:
-          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-          type: string
-      title: Connect Error
-      type: object
-    gitpod.v1.SCMIntegrationOAuthConfig:
-      additionalProperties: false
-      properties:
-        clientId:
-          description: client_id is the OAuth app's client ID in clear text.
-          title: client_id
-          type: string
-        encryptedClientSecret:
-          description: encrypted_client_secret is the OAuth app's secret encrypted with the runner's public key.
-          format: byte
-          title: encrypted_client_secret
-          type: string
-        issuerUrl:
-          description: "issuer_url is used to override the authentication provider URL, if it doesn't match the SCM host.\n\n +optional if not set, this account is owned by the installation."
-          title: issuer_url
-          type: string
-      title: SCMIntegrationOAuthConfig
-      type: object
-    gitpod.v1.Subject:
-      additionalProperties: false
-      properties:
-        id:
-          description: id is the UUID of the subject
-          format: uuid
-          title: id
-          type: string
-        principal:
-          $ref: '#/components/schemas/gitpod.v1.Principal'
-          description: Principal is the principal of the subject
-          title: principal
-      title: Subject
-      type: object
-    gitpod.v1.DeleteSCMIntegrationRequest:
-      additionalProperties: false
-      properties:
-        id:
-          format: uuid
-          title: id
-          type: string
-      title: DeleteSCMIntegrationRequest
-      type: object
-    gitpod.v1.HostAuthenticationTokenSource:
-      enum:
-      - HOST_AUTHENTICATION_TOKEN_SOURCE_UNSPECIFIED
-      - HOST_AUTHENTICATION_TOKEN_SOURCE_OAUTH
-      - HOST_AUTHENTICATION_TOKEN_SOURCE_PAT
-      title: HostAuthenticationTokenSource
-      type: string
-    gitpod.v1.CreateLLMIntegrationRequest:
-      additionalProperties: false
-      properties:
-        apiKey:
-          description: api_key is the LLM provider's API key.
-          title: api_key
-          type: string
-        endpoint:
-          title: endpoint
-          type: string
-        maxTokens:
-          description: "max_tokens is the maximum number of tokens to generate before stopping.\n If set to 0, the model's default will be used."
-          title: max_tokens
-          type: string
-        models:
-          description: models represents the LLM models this integration supports
-          items:
-            $ref: '#/components/schemas/gitpod.v1.SupportedModel'
-          minItems: 1
-          title: models
-          type: array
-        runnerId:
-          format: uuid
-          title: runner_id
-          type: string
-      title: CreateLLMIntegrationRequest
-      type: object
-    gitpod.v1.ListHostAuthenticationTokensResponse:
-      additionalProperties: false
-      properties:
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
-          title: pagination
-        tokens:
-          items:
-            $ref: '#/components/schemas/gitpod.v1.HostAuthenticationToken'
-          title: tokens
-          type: array
-      title: ListHostAuthenticationTokensResponse
-      type: object
     gitpod.v1.CreateHostAuthenticationTokenResponse:
       additionalProperties: false
       properties:
@@ -2815,6 +2609,19 @@ components:
       required:
       - token
       title: CreateHostAuthenticationTokenResponse
+      type: object
+    gitpod.v1.DeleteLLMIntegrationRequest:
+      additionalProperties: false
+      properties:
+        force:
+          description: "force skips dependency checks and deletes the integration even if it would\n leave no enabled integration for a model in use"
+          title: force
+          type: boolean
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: DeleteLLMIntegrationRequest
       type: object
     gitpod.v1.UpdateLLMIntegrationRequest:
       additionalProperties: false
@@ -2858,14 +2665,198 @@ components:
           type: array
       title: UpdateLLMIntegrationRequest
       type: object
-    gitpod.v1.GetRunnerConfigurationSchemaRequest:
+    gitpod.v1.UpdateHostAuthenticationTokenRequest:
       additionalProperties: false
       properties:
+        expiresAt:
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+          title: expires_at
+        id:
+          format: uuid
+          title: id
+          type: string
+        refreshToken:
+          title: refresh_token
+          type:
+          - string
+          - 'null'
+        scopes:
+          items:
+            type: string
+          title: scopes
+          type: array
+        token:
+          minLength: 1
+          title: token
+          type:
+          - string
+          - 'null'
+      title: UpdateHostAuthenticationTokenRequest
+      type: object
+    gitpod.v1.SCMIntegrationOAuthConfig:
+      additionalProperties: false
+      properties:
+        clientId:
+          description: client_id is the OAuth app's client ID in clear text.
+          title: client_id
+          type: string
+        encryptedClientSecret:
+          description: encrypted_client_secret is the OAuth app's secret encrypted with the runner's public key.
+          format: byte
+          title: encrypted_client_secret
+          type: string
+        issuerUrl:
+          description: "issuer_url is used to override the authentication provider URL, if it doesn't match the SCM host.\n\n +optional if not set, this account is owned by the installation."
+          title: issuer_url
+          type: string
+      title: SCMIntegrationOAuthConfig
+      type: object
+    gitpod.v1.DeleteHostAuthenticationTokenRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: DeleteHostAuthenticationTokenRequest
+      type: object
+    gitpod.v1.Principal:
+      enum:
+      - PRINCIPAL_UNSPECIFIED
+      - PRINCIPAL_ACCOUNT
+      - PRINCIPAL_USER
+      - PRINCIPAL_RUNNER
+      - PRINCIPAL_ENVIRONMENT
+      - PRINCIPAL_SERVICE_ACCOUNT
+      - PRINCIPAL_RUNNER_MANAGER
+      title: Principal
+      type: string
+    gitpod.v1.RunnerProvider:
+      description: "RunnerProvider identifies the specific implementation type of a runner.\n Each provider maps to a specific kind of runner (local or remote), as\n specified below for each provider."
+      enum:
+      - RUNNER_PROVIDER_UNSPECIFIED
+      - RUNNER_PROVIDER_AWS_EC2
+      - RUNNER_PROVIDER_LINUX_HOST
+      - RUNNER_PROVIDER_DESKTOP_MAC
+      - RUNNER_PROVIDER_MANAGED
+      - RUNNER_PROVIDER_GCP
+      - RUNNER_PROVIDER_DEV_AGENT
+      title: RunnerProvider
+      type: string
+    gitpod.v1.DeleteHostAuthenticationTokenResponse:
+      additionalProperties: false
+      title: DeleteHostAuthenticationTokenResponse
+      type: object
+    gitpod.v1.CreateSCMIntegrationRequest:
+      additionalProperties: false
+      properties:
+        host:
+          title: host
+          type: string
+        issuerUrl:
+          description: issuer_url can be set to override the authentication provider URL, if it doesn't match the SCM host.
+          title: issuer_url
+          type:
+          - string
+          - 'null'
+        oauthClientId:
+          description: "oauth_client_id is the OAuth app's client ID, if OAuth is configured.\n If configured, oauth_plaintext_client_secret must also be set."
+          title: oauth_client_id
+          type:
+          - string
+          - 'null'
+        oauthPlaintextClientSecret:
+          description: "oauth_plaintext_client_secret is the OAuth app's client secret in clear text.\n This will first be encrypted with the runner's public key before being stored."
+          title: oauth_plaintext_client_secret
+          type:
+          - string
+          - 'null'
+        pat:
+          title: pat
+          type: boolean
         runnerId:
           format: uuid
           title: runner_id
           type: string
-      title: GetRunnerConfigurationSchemaRequest
+        scmId:
+          description: scm_id references the scm_id in the runner's configuration schema that this integration is for
+          title: scm_id
+          type: string
+        virtualDirectory:
+          description: "virtual_directory is the virtual directory path for Azure DevOps Server (e.g., \"/tfs\").\n This field is only used for Azure DevOps Server SCM integrations and should be empty for other SCM types.\n Azure DevOps Server APIs work without collection when PAT scope is 'All accessible organizations'."
+          title: virtual_directory
+          type:
+          - string
+          - 'null'
+      title: CreateSCMIntegrationRequest
+      type: object
+    gitpod.v1.CreateLLMIntegrationRequest:
+      additionalProperties: false
+      properties:
+        apiKey:
+          description: api_key is the LLM provider's API key.
+          title: api_key
+          type: string
+        endpoint:
+          title: endpoint
+          type: string
+        maxTokens:
+          description: "max_tokens is the maximum number of tokens to generate before stopping.\n If set to 0, the model's default will be used."
+          title: max_tokens
+          type: string
+        models:
+          description: models represents the LLM models this integration supports
+          items:
+            $ref: '#/components/schemas/gitpod.v1.SupportedModel'
+          minItems: 1
+          title: models
+          type: array
+        runnerId:
+          format: uuid
+          title: runner_id
+          type: string
+      title: CreateLLMIntegrationRequest
+      type: object
+    gitpod.v1.UpdateLLMIntegrationResponse:
+      additionalProperties: false
+      title: UpdateLLMIntegrationResponse
+      type: object
+    gitpod.v1.UpdateEnvironmentClassRequest:
+      additionalProperties: false
+      properties:
+        description:
+          maxLength: 200
+          minLength: 3
+          title: description
+          type:
+          - string
+          - 'null'
+        displayName:
+          maxLength: 127
+          minLength: 3
+          title: display_name
+          type:
+          - string
+          - 'null'
+        enabled:
+          title: enabled
+          type:
+          - boolean
+          - 'null'
+        environmentClassId:
+          format: uuid
+          title: environment_class_id
+          type: string
+      title: UpdateEnvironmentClassRequest
+      type: object
+    gitpod.v1.GetLLMIntegrationRequest:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: id
+          type: string
+      title: GetLLMIntegrationRequest
       type: object
     gitpod.v1.SCMIntegrationValidationResult:
       additionalProperties: false
@@ -2895,13 +2886,22 @@ components:
           type: boolean
       title: SCMIntegrationValidationResult
       type: object
-    gitpod.v1.CreateEnvironmentClassResponse:
+    gitpod.v1.LLMIntegrationPhase:
+      description: LLMIntegrationPhase represents the current status/phase of an LLM integration
+      enum:
+      - LLM_INTEGRATION_PHASE_UNSPECIFIED
+      - LLM_INTEGRATION_PHASE_AVAILABLE
+      - LLM_INTEGRATION_PHASE_UNAVAILABLE
+      - LLM_INTEGRATION_PHASE_DISABLED
+      title: LLMIntegrationPhase
+      type: string
+    gitpod.v1.RunnerConfigurationSchema.BoolField:
       additionalProperties: false
       properties:
-        id:
-          title: id
-          type: string
-      title: CreateEnvironmentClassResponse
+        default:
+          title: default
+          type: boolean
+      title: BoolField
       type: object
   securitySchemes:
     bearerAuth:
