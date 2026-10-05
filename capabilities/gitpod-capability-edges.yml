@@ -1,0 +1,79 @@
+slug: gitpod
+provider: Gitpod
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: gitpod.v1.BillingService
+  spec_file: gitpod-gitpod-v1-billingservice-api-openapi.yml
+  capability_id: BC-4250
+  capability_id_l1: BC-4250
+  capability_name: Subscription Billing & Revenue Management
+  confidence: 0.85
+  evidence: BillingService provides billing and subscription management functionality — CreateSubscription,
+    CancelSubscription, InsertUsageEventsRequest, GetBillingRecord
+  reason: Usage event ingestion, subscription creation/cancellation, payment methods, coupons and credit
+    allocations are squarely Subscription Billing & Revenue Management; the surface spans metering, rating,
+    invoicing and payment so no single L2 is named.
+- tag: gitpod.v1.SecretService
+  spec_file: gitpod-gitpod-v1-secretservice-api-openapi.yml
+  capability_id: BC-4210.60
+  capability_id_l1: BC-4210
+  capability_name: Configuration & Secrets Management
+  confidence: 0.78
+  evidence: CreateSecret, GetSecretValue, UpdateSecretValue, schema gitpod.v1.SecretScope
+  reason: CRUD over scoped secret values consumed by development environments is runtime configuration
+    and secrets management; no other reading fits.
+- tag: gitpod.v1.EnvironmentService
+  spec_file: gitpod-gitpod-v1-environmentservice-api-openapi.yml
+  capability_id: BC-4210.20
+  capability_id_l1: BC-4210
+  capability_name: Environment Management
+  confidence: 0.75
+  evidence: POST /gitpod.v1.EnvironmentService/CreateEnvironment ... StartEnvironment ... CreateEnvironmentFromProject
+    ... ListEnvironmentClasses
+  reason: Provisioning and lifecycle control of ephemeral developer environments from git projects maps
+    to Environment Management ('provisioning and stewardship of non-production environments used for development').
+    Could also be read as Engineering Productivity Management (BC-4200.70).
+- tag: gitpod.v1.OrganizationService
+  spec_file: gitpod-gitpod-v1-organizationservice-api-openapi.yml
+  capability_id: BC-4230
+  capability_id_l1: BC-4230
+  capability_name: SaaS Tenant Management
+  confidence: 0.74
+  evidence: CreateOrganization, CreateOrganizationInvite, CreateSCIMConfiguration, CreateSSOConfiguration,
+    CreateCustomDomain, GetAnnouncementBanner
+  reason: An 'organization' is Gitpod's tenant construct; the surface creates/deletes organizations, invites
+    members, configures SSO/SCIM federation and custom domains — SaaS tenant lifecycle, configuration
+    and identity federation. Mixed across sub-capabilities so only the L1 is asserted.
+- tag: gitpod.v1.GroupService
+  spec_file: gitpod-gitpod-v1-groupservice-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: 'CreateMembership, CreateRoleAssignment, ListRoleAssignments, ShareResourceWithPrincipal (schemas:
+    gitpod.v1.Subject)'
+  reason: Operations manage groups, memberships, role assignments and resource sharing with principals
+    — i.e. access control administration, which realises Identity & Access Management rather than any
+    HR 'group' notion.
+- tag: gitpod.v1.AccountService
+  spec_file: gitpod-gitpod-v1-accountservice-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /gitpod.v1.AccountService/GetSSOLoginURL ... ListLoginProviders ... BlockAccount ...
+    DeleteAccount
+  reason: Account lifecycle (create/block/unblock/delete), SSO login URLs and login providers are identity
+    and access administration. Could alternatively be read as tenant identity federation (BC-4230.50);
+    IAM is the safer L2.
