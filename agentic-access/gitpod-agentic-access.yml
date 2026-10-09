@@ -1,16 +1,33 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/gitpod-environments-openapi.yml
+source: openapi/gitpod-gitpod-v1-accountservice-api-openapi.yml, openapi/gitpod-gitpod-v1-agentsecurityservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-agentservice-api-openapi.yml, openapi/gitpod-gitpod-v1-billingservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-editorservice-api-openapi.yml, openapi/gitpod-gitpod-v1-environmentautomationservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-environmentservice-api-openapi.yml, openapi/gitpod-gitpod-v1-errorsservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-eventservice-api-openapi.yml, openapi/gitpod-gitpod-v1-gatewayservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-groupservice-api-openapi.yml, openapi/gitpod-gitpod-v1-identityservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-insightsservice-api-openapi.yml, openapi/gitpod-gitpod-v1-integrationservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-notificationservice-api-openapi.yml, openapi/gitpod-gitpod-v1-onaintelligenceservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-organizationservice-api-openapi.yml, openapi/gitpod-gitpod-v1-prebuildservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-projectservice-api-openapi.yml, openapi/gitpod-gitpod-v1-runnerconfigurationservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-runnerinteractionservice-api-openapi.yml, openapi/gitpod-gitpod-v1-runnermanagerservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-runnerservice-api-openapi.yml, openapi/gitpod-gitpod-v1-secretservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-serviceaccountservice-api-openapi.yml, openapi/gitpod-gitpod-v1-sessionservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-teamservice-api-openapi.yml, openapi/gitpod-gitpod-v1-usageservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-userservice-api-openapi.yml, openapi/gitpod-gitpod-v1-webhookservice-api-openapi.yml,
+  openapi/gitpod-gitpod-v1-workflowservice-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 388
   by_action_class:
-    acting: 388
+    acting: 236
+    connected: 152
   by_consequence:
-    write: 377
-    physical: 6
+    write: 227
+    read: 152
+    physical: 4
     safety-critical: 5
   human_in_the_loop_required: 5
 operations:
@@ -66,18 +83,12 @@ operations:
   method: post
   operationId: gitpod.v1.AccountService.GetAccount
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AccountService/GetChatIdentityToken
   method: post
   operationId: gitpod.v1.AccountService.GetChatIdentityToken
@@ -114,18 +125,12 @@ operations:
   method: post
   operationId: gitpod.v1.AccountService.ListJoinableOrganizations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AccountService/ListLoginProviders
   method: post
   operationId: gitpod.v1.AccountService.ListLoginProviders
@@ -146,18 +151,12 @@ operations:
   method: post
   operationId: gitpod.v1.AccountService.ListSSOLogins
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AccountService/UnblockAccount
   method: post
   operationId: gitpod.v1.AccountService.UnblockAccount
@@ -354,50 +353,32 @@ operations:
   method: post
   operationId: gitpod.v1.AgentService.GetAgent
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AgentService/GetAgentExecution
   method: post
   operationId: gitpod.v1.AgentService.GetAgentExecution
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AgentService/GetPrompt
   method: post
   operationId: gitpod.v1.AgentService.GetPrompt
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AgentService/ImprovePromptForAgent
   method: post
   operationId: gitpod.v1.AgentService.ImprovePromptForAgent
@@ -418,66 +399,42 @@ operations:
   method: post
   operationId: gitpod.v1.AgentService.ListAgentExecutions
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AgentService/ListAgents
   method: post
   operationId: gitpod.v1.AgentService.ListAgents
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AgentService/ListMCPIntegrations
   method: post
   operationId: gitpod.v1.AgentService.ListMCPIntegrations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AgentService/ListPrompts
   method: post
   operationId: gitpod.v1.AgentService.ListPrompts
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.AgentService/ReportAgentExecutionOutputs
   method: post
   operationId: gitpod.v1.AgentService.ReportAgentExecutionOutputs
@@ -740,194 +697,122 @@ operations:
   method: post
   operationId: gitpod.v1.BillingService.GetAutoTopupSettings
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetBillingInfo
   method: post
   operationId: gitpod.v1.BillingService.GetBillingInfo
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetBillingRecord
   method: post
   operationId: gitpod.v1.BillingService.GetBillingRecord
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetCoupon
   method: post
   operationId: gitpod.v1.BillingService.GetCoupon
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetCreditConsumptionTimeSeries
   method: post
   operationId: gitpod.v1.BillingService.GetCreditConsumptionTimeSeries
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetCreditUsageExport
   method: post
   operationId: gitpod.v1.BillingService.GetCreditUsageExport
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetCreditUsageReport
   method: post
   operationId: gitpod.v1.BillingService.GetCreditUsageReport
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetCumulativeCreditUsage
   method: post
   operationId: gitpod.v1.BillingService.GetCumulativeCreditUsage
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetEnterpriseBillingInfo
   method: post
   operationId: gitpod.v1.BillingService.GetEnterpriseBillingInfo
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetStripePortalUrl
   method: post
   operationId: gitpod.v1.BillingService.GetStripePortalUrl
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetStripePublishableKey
   method: post
   operationId: gitpod.v1.BillingService.GetStripePublishableKey
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GetTeamCreditAllocation
   method: post
   operationId: gitpod.v1.BillingService.GetTeamCreditAllocation
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/GrantCredits
   method: post
   operationId: gitpod.v1.BillingService.GrantCredits
@@ -964,34 +849,22 @@ operations:
   method: post
   operationId: gitpod.v1.BillingService.ListCoupons
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/ListSubscriptions
   method: post
   operationId: gitpod.v1.BillingService.ListSubscriptions
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.BillingService/ReconcileBilling
   method: post
   operationId: gitpod.v1.BillingService.ReconcileBilling
@@ -1188,34 +1061,22 @@ operations:
   method: post
   operationId: gitpod.v1.EditorService.GetEditor
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EditorService/ListEditors
   method: post
   operationId: gitpod.v1.EditorService.ListEditors
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EditorService/ResolveEditorURL
   method: post
   operationId: gitpod.v1.EditorService.ResolveEditorURL
@@ -1300,98 +1161,62 @@ operations:
   method: post
   operationId: gitpod.v1.EnvironmentAutomationService.GetService
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EnvironmentAutomationService/GetTask
   method: post
   operationId: gitpod.v1.EnvironmentAutomationService.GetTask
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EnvironmentAutomationService/GetTaskExecution
   method: post
   operationId: gitpod.v1.EnvironmentAutomationService.GetTaskExecution
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EnvironmentAutomationService/ListServices
   method: post
   operationId: gitpod.v1.EnvironmentAutomationService.ListServices
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EnvironmentAutomationService/ListTaskExecutions
   method: post
   operationId: gitpod.v1.EnvironmentAutomationService.ListTaskExecutions
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EnvironmentAutomationService/ListTasks
   method: post
   operationId: gitpod.v1.EnvironmentAutomationService.ListTasks
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EnvironmentAutomationService/StartService
   method: post
   operationId: gitpod.v1.EnvironmentAutomationService.StartService
@@ -1636,50 +1461,32 @@ operations:
   method: post
   operationId: gitpod.v1.EnvironmentService.GetEnvironment
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EnvironmentService/ListEnvironmentClasses
   method: post
   operationId: gitpod.v1.EnvironmentService.ListEnvironmentClasses
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EnvironmentService/ListEnvironments
   method: post
   operationId: gitpod.v1.EnvironmentService.ListEnvironments
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EnvironmentService/MarkEnvironmentActive
   method: post
   operationId: gitpod.v1.EnvironmentService.MarkEnvironmentActive
@@ -1780,18 +1587,12 @@ operations:
   method: post
   operationId: gitpod.v1.EventService.ListAuditLogs
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.EventService/WatchEvents
   method: post
   operationId: gitpod.v1.EventService.WatchEvents
@@ -1812,18 +1613,12 @@ operations:
   method: post
   operationId: gitpod.v1.GatewayService.ListGateways
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.GroupService/CreateGroup
   method: post
   operationId: gitpod.v1.GroupService.CreateGroup
@@ -1928,86 +1723,52 @@ operations:
   method: post
   operationId: gitpod.v1.GroupService.GetGroup
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.GroupService/GetMembership
   method: post
   operationId: gitpod.v1.GroupService.GetMembership
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.GroupService/ListGroups
   method: post
   operationId: gitpod.v1.GroupService.ListGroups
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.GroupService/ListMemberships
   method: post
   operationId: gitpod.v1.GroupService.ListMemberships
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.GroupService/ListRoleAssignments
   method: post
   operationId: gitpod.v1.GroupService.ListRoleAssignments
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.GroupService/ShareResourceWithPrincipal
   method: post
   operationId: gitpod.v1.GroupService.ShareResourceWithPrincipal
@@ -2076,18 +1837,12 @@ operations:
   method: post
   operationId: gitpod.v1.IdentityService.GetAuthenticatedIdentity
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.IdentityService/GetIDToken
   method: post
   operationId: gitpod.v1.IdentityService.GetIDToken
@@ -2140,82 +1895,52 @@ operations:
   method: post
   operationId: gitpod.v1.InsightsService.GetAgentTraceStats
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.InsightsService/GetCoAuthorStats
   method: post
   operationId: gitpod.v1.InsightsService.GetCoAuthorStats
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.InsightsService/GetInsightsSummary
   method: post
   operationId: gitpod.v1.InsightsService.GetInsightsSummary
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.InsightsService/GetPrStatsSummary
   method: post
   operationId: gitpod.v1.InsightsService.GetPrStatsSummary
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.InsightsService/GetProjectInsightsStatus
   method: post
   operationId: gitpod.v1.InsightsService.GetProjectInsightsStatus
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.InsightsService/ReportAgentTrace
   method: post
   operationId: gitpod.v1.InsightsService.ReportAgentTrace
@@ -2332,66 +2057,42 @@ operations:
   method: post
   operationId: gitpod.v1.IntegrationService.GetIntegration
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.IntegrationService/GetIntegrationDefinition
   method: post
   operationId: gitpod.v1.IntegrationService.GetIntegrationDefinition
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.IntegrationService/ListIntegrationDefinitions
   method: post
   operationId: gitpod.v1.IntegrationService.ListIntegrationDefinitions
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.IntegrationService/ListIntegrations
   method: post
   operationId: gitpod.v1.IntegrationService.ListIntegrations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.IntegrationService/UpdateIntegration
   method: post
   operationId: gitpod.v1.IntegrationService.UpdateIntegration
@@ -2460,18 +2161,12 @@ operations:
   method: post
   operationId: gitpod.v1.NotificationService.ListNotifications
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.NotificationService/MarkNotificationsRead
   method: post
   operationId: gitpod.v1.NotificationService.MarkNotificationsRead
@@ -2540,50 +2235,32 @@ operations:
   method: post
   operationId: gitpod.v1.OnaIntelligenceService.GetOrganizationLLMConfiguration
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OnaIntelligenceService/GetOrganizationLLMUsage
   method: post
   operationId: gitpod.v1.OnaIntelligenceService.GetOrganizationLLMUsage
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OnaIntelligenceService/ListOrganizationLLMConfigurations
   method: post
   operationId: gitpod.v1.OnaIntelligenceService.ListOrganizationLLMConfigurations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OnaIntelligenceService/UpdateOrganizationLLMConfiguration
   method: post
   operationId: gitpod.v1.OnaIntelligenceService.UpdateOrganizationLLMConfiguration
@@ -2780,162 +2457,102 @@ operations:
   method: post
   operationId: gitpod.v1.OrganizationService.GetAnnouncementBanner
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/GetCustomDomain
   method: post
   operationId: gitpod.v1.OrganizationService.GetCustomDomain
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/GetDomainVerification
   method: post
   operationId: gitpod.v1.OrganizationService.GetDomainVerification
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/GetOIDCConfig
   method: post
   operationId: gitpod.v1.OrganizationService.GetOIDCConfig
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/GetOrganization
   method: post
   operationId: gitpod.v1.OrganizationService.GetOrganization
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/GetOrganizationInvite
   method: post
   operationId: gitpod.v1.OrganizationService.GetOrganizationInvite
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/GetOrganizationInviteSummary
   method: post
   operationId: gitpod.v1.OrganizationService.GetOrganizationInviteSummary
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/GetOrganizationPolicies
   method: post
   operationId: gitpod.v1.OrganizationService.GetOrganizationPolicies
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/GetSCIMConfiguration
   method: post
   operationId: gitpod.v1.OrganizationService.GetSCIMConfiguration
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/GetSSOConfiguration
   method: post
   operationId: gitpod.v1.OrganizationService.GetSSOConfiguration
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/JoinOrganization
   method: post
   operationId: gitpod.v1.OrganizationService.JoinOrganization
@@ -2972,66 +2589,42 @@ operations:
   method: post
   operationId: gitpod.v1.OrganizationService.ListDomainVerifications
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/ListMembers
   method: post
   operationId: gitpod.v1.OrganizationService.ListMembers
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/ListSCIMConfigurations
   method: post
   operationId: gitpod.v1.OrganizationService.ListSCIMConfigurations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/ListSSOConfigurations
   method: post
   operationId: gitpod.v1.OrganizationService.ListSSOConfigurations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.OrganizationService/RegenerateSCIMToken
   method: post
   operationId: gitpod.v1.OrganizationService.RegenerateSCIMToken
@@ -3324,66 +2917,42 @@ operations:
   method: post
   operationId: gitpod.v1.PrebuildService.GetPrebuild
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.PrebuildService/GetWarmPool
   method: post
   operationId: gitpod.v1.PrebuildService.GetWarmPool
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.PrebuildService/ListPrebuilds
   method: post
   operationId: gitpod.v1.PrebuildService.ListPrebuilds
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.PrebuildService/ListWarmPools
   method: post
   operationId: gitpod.v1.PrebuildService.ListWarmPools
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.PrebuildService/UpdateWarmPool
   method: post
   operationId: gitpod.v1.PrebuildService.UpdateWarmPool
@@ -3516,66 +3085,42 @@ operations:
   method: post
   operationId: gitpod.v1.ProjectService.GetProject
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.ProjectService/ListProjectEnvironmentClasses
   method: post
   operationId: gitpod.v1.ProjectService.ListProjectEnvironmentClasses
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.ProjectService/ListProjectPolicies
   method: post
   operationId: gitpod.v1.ProjectService.ListProjectPolicies
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.ProjectService/ListProjects
   method: post
   operationId: gitpod.v1.ProjectService.ListProjects
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.ProjectService/UpdateProject
   method: post
   operationId: gitpod.v1.ProjectService.UpdateProject
@@ -3756,18 +3301,12 @@ operations:
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.GetEnvironmentClass
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerConfigurationService/GetHostAuthenticationToken
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.GetHostAuthenticationToken
@@ -3788,66 +3327,42 @@ operations:
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.GetLLMIntegration
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerConfigurationService/GetRunnerConfigurationSchema
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.GetRunnerConfigurationSchema
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerConfigurationService/GetSCMIntegration
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.GetSCMIntegration
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerConfigurationService/ListEnvironmentClasses
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.ListEnvironmentClasses
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerConfigurationService/ListHostAuthenticationTokens
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.ListHostAuthenticationTokens
@@ -3868,34 +3383,22 @@ operations:
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.ListLLMIntegrations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerConfigurationService/ListSCMIntegrations
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.ListSCMIntegrations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerConfigurationService/UpdateEnvironmentClass
   method: post
   operationId: gitpod.v1.RunnerConfigurationService.UpdateEnvironmentClass
@@ -3996,274 +3499,172 @@ operations:
   method: post
   operationId: gitpod.v1.RunnerInteractionService.GetLatestVersion
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/GetManagedRunner
   method: post
   operationId: gitpod.v1.RunnerInteractionService.GetManagedRunner
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/GetRunnerAgentExecution
   method: post
   operationId: gitpod.v1.RunnerInteractionService.GetRunnerAgentExecution
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/GetRunnerConfiguration
   method: post
   operationId: gitpod.v1.RunnerInteractionService.GetRunnerConfiguration
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/GetRunnerEnvironment
   method: post
   operationId: gitpod.v1.RunnerInteractionService.GetRunnerEnvironment
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/GetRunnerEnvironmentSnapshot
   method: post
   operationId: gitpod.v1.RunnerInteractionService.GetRunnerEnvironmentSnapshot
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/GetRunnerLLMIntegration
   method: post
   operationId: gitpod.v1.RunnerInteractionService.GetRunnerLLMIntegration
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/GetRunnerWarmPool
   method: post
   operationId: gitpod.v1.RunnerInteractionService.GetRunnerWarmPool
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/ListManagedRunners
   method: post
   operationId: gitpod.v1.RunnerInteractionService.ListManagedRunners
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/ListRunnerAgentExecutions
   method: post
   operationId: gitpod.v1.RunnerInteractionService.ListRunnerAgentExecutions
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/ListRunnerEnvironmentClasses
   method: post
   operationId: gitpod.v1.RunnerInteractionService.ListRunnerEnvironmentClasses
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/ListRunnerEnvironmentSnapshots
   method: post
   operationId: gitpod.v1.RunnerInteractionService.ListRunnerEnvironmentSnapshots
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/ListRunnerEnvironments
   method: post
   operationId: gitpod.v1.RunnerInteractionService.ListRunnerEnvironments
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/ListRunnerIntegrations
   method: post
   operationId: gitpod.v1.RunnerInteractionService.ListRunnerIntegrations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/ListRunnerLLMIntegrations
   method: post
   operationId: gitpod.v1.RunnerInteractionService.ListRunnerLLMIntegrations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/ListRunnerSCMIntegrations
   method: post
   operationId: gitpod.v1.RunnerInteractionService.ListRunnerSCMIntegrations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/ListRunnerWarmPools
   method: post
   operationId: gitpod.v1.RunnerInteractionService.ListRunnerWarmPools
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerInteractionService/MarkRunnerActive
   method: post
   operationId: gitpod.v1.RunnerInteractionService.MarkRunnerActive
@@ -4510,50 +3911,32 @@ operations:
   method: post
   operationId: gitpod.v1.RunnerManagerService.GetRunnerManager
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerManagerService/ListAvailableRunnerManagers
   method: post
   operationId: gitpod.v1.RunnerManagerService.ListAvailableRunnerManagers
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerManagerService/ListRunnerManagers
   method: post
   operationId: gitpod.v1.RunnerManagerService.ListRunnerManagers
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerManagerService/UpdateRunnerManager
   method: post
   operationId: gitpod.v1.RunnerManagerService.UpdateRunnerManager
@@ -4702,66 +4085,42 @@ operations:
   method: post
   operationId: gitpod.v1.RunnerService.GetRunner
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerService/ListRunnerPolicies
   method: post
   operationId: gitpod.v1.RunnerService.ListRunnerPolicies
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerService/ListRunners
   method: post
   operationId: gitpod.v1.RunnerService.ListRunners
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerService/ListSCMOrganizations
   method: post
   operationId: gitpod.v1.RunnerService.ListSCMOrganizations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerService/ParseContextURL
   method: post
   operationId: gitpod.v1.RunnerService.ParseContextURL
@@ -4782,18 +4141,12 @@ operations:
   method: post
   operationId: gitpod.v1.RunnerService.SearchRepositories
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.RunnerService/UpdateRunner
   method: post
   operationId: gitpod.v1.RunnerService.UpdateRunner
@@ -4862,34 +4215,22 @@ operations:
   method: post
   operationId: gitpod.v1.SecretService.GetSecretValue
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.SecretService/ListSecrets
   method: post
   operationId: gitpod.v1.SecretService.ListSecrets
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.SecretService/UpdateSecretValue
   method: post
   operationId: gitpod.v1.SecretService.UpdateSecretValue
@@ -4990,18 +4331,12 @@ operations:
   method: post
   operationId: gitpod.v1.ServiceAccountService.GetServiceAccount
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.ServiceAccountService/GetServiceAccountToken
   method: post
   operationId: gitpod.v1.ServiceAccountService.GetServiceAccountToken
@@ -5038,18 +4373,12 @@ operations:
   method: post
   operationId: gitpod.v1.ServiceAccountService.ListServiceAccounts
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.ServiceAccountService/UpdateServiceAccount
   method: post
   operationId: gitpod.v1.ServiceAccountService.UpdateServiceAccount
@@ -5262,50 +4591,32 @@ operations:
   method: post
   operationId: gitpod.v1.TeamService.GetTeam
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.TeamService/ListTeamMembers
   method: post
   operationId: gitpod.v1.TeamService.ListTeamMembers
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.TeamService/ListTeams
   method: post
   operationId: gitpod.v1.TeamService.ListTeams
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.TeamService/RemoveTeamMember
   method: post
   operationId: gitpod.v1.TeamService.RemoveTeamMember
@@ -5342,178 +4653,112 @@ operations:
   method: post
   operationId: gitpod.v1.UsageService.GetActiveEnvironmentsCount
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetActiveEnvironmentsTimeSeries
   method: post
   operationId: gitpod.v1.UsageService.GetActiveEnvironmentsTimeSeries
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetActiveUsersCount
   method: post
   operationId: gitpod.v1.UsageService.GetActiveUsersCount
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetActiveUsersTimeSeries
   method: post
   operationId: gitpod.v1.UsageService.GetActiveUsersTimeSeries
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetAdoptionUsageSummary
   method: post
   operationId: gitpod.v1.UsageService.GetAdoptionUsageSummary
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetAgentTraceSummary
   method: post
   operationId: gitpod.v1.UsageService.GetAgentTraceSummary
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetAgentTraceTimeSeries
   method: post
   operationId: gitpod.v1.UsageService.GetAgentTraceTimeSeries
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetCoAuthorSummary
   method: post
   operationId: gitpod.v1.UsageService.GetCoAuthorSummary
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetCoAuthorTimeSeries
   method: post
   operationId: gitpod.v1.UsageService.GetCoAuthorTimeSeries
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetEnvironmentRuntime
   method: post
   operationId: gitpod.v1.UsageService.GetEnvironmentRuntime
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetEnvironmentRuntimeTimeSeries
   method: post
   operationId: gitpod.v1.UsageService.GetEnvironmentRuntimeTimeSeries
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetEnvironmentSessionsTimeSeries
   method: post
   operationId: gitpod.v1.UsageService.GetEnvironmentSessionsTimeSeries
@@ -5534,98 +4779,62 @@ operations:
   method: post
   operationId: gitpod.v1.UsageService.GetPrSummary
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetPrTimeSeries
   method: post
   operationId: gitpod.v1.UsageService.GetPrTimeSeries
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetTopActiveUsers
   method: post
   operationId: gitpod.v1.UsageService.GetTopActiveUsers
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetTopEnvironmentClasses
   method: post
   operationId: gitpod.v1.UsageService.GetTopEnvironmentClasses
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/GetTopProjects
   method: post
   operationId: gitpod.v1.UsageService.GetTopProjects
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UsageService/ListEnvironmentUsageRecords
   method: post
   operationId: gitpod.v1.UsageService.ListEnvironmentUsageRecords
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UserService/CreatePersonalAccessToken
   method: post
   operationId: gitpod.v1.UserService.CreatePersonalAccessToken
@@ -5694,34 +4903,22 @@ operations:
   method: post
   operationId: gitpod.v1.UserService.GetAuthenticatedUser
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UserService/GetDotfilesConfiguration
   method: post
   operationId: gitpod.v1.UserService.GetDotfilesConfiguration
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UserService/GetPersonalAccessToken
   method: post
   operationId: gitpod.v1.UserService.GetPersonalAccessToken
@@ -5742,34 +4939,22 @@ operations:
   method: post
   operationId: gitpod.v1.UserService.GetPreference
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UserService/GetUser
   method: post
   operationId: gitpod.v1.UserService.GetUser
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UserService/ListPersonalAccessTokens
   method: post
   operationId: gitpod.v1.UserService.ListPersonalAccessTokens
@@ -5790,18 +4975,12 @@ operations:
   method: post
   operationId: gitpod.v1.UserService.ListPreferences
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.UserService/SetDotfilesConfiguration
   method: post
   operationId: gitpod.v1.UserService.SetDotfilesConfiguration
@@ -5886,66 +5065,42 @@ operations:
   method: post
   operationId: gitpod.v1.WebhookService.GetWebhook
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WebhookService/GetWebhookSecret
   method: post
   operationId: gitpod.v1.WebhookService.GetWebhookSecret
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WebhookService/ListWebhookWorkflows
   method: post
   operationId: gitpod.v1.WebhookService.ListWebhookWorkflows
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WebhookService/ListWebhooks
   method: post
   operationId: gitpod.v1.WebhookService.ListWebhooks
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WebhookService/RotateWebhookSecret
   method: post
   operationId: gitpod.v1.WebhookService.RotateWebhookSecret
@@ -6046,146 +5201,92 @@ operations:
   method: post
   operationId: gitpod.v1.WorkflowService.GetWorkflow
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WorkflowService/GetWorkflowExecution
   method: post
   operationId: gitpod.v1.WorkflowService.GetWorkflowExecution
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WorkflowService/GetWorkflowExecutionAction
   method: post
   operationId: gitpod.v1.WorkflowService.GetWorkflowExecutionAction
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WorkflowService/GetWorkflowExecutionSummary
   method: post
   operationId: gitpod.v1.WorkflowService.GetWorkflowExecutionSummary
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WorkflowService/GetWorkflowWebhookSecret
   method: post
   operationId: gitpod.v1.WorkflowService.GetWorkflowWebhookSecret
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WorkflowService/ListWorkflowExecutionActions
   method: post
   operationId: gitpod.v1.WorkflowService.ListWorkflowExecutionActions
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WorkflowService/ListWorkflowExecutionOutputs
   method: post
   operationId: gitpod.v1.WorkflowService.ListWorkflowExecutionOutputs
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WorkflowService/ListWorkflowExecutions
   method: post
   operationId: gitpod.v1.WorkflowService.ListWorkflowExecutions
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WorkflowService/ListWorkflows
   method: post
   operationId: gitpod.v1.WorkflowService.ListWorkflows
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /gitpod.v1.WorkflowService/RotateWorkflowWebhookSecret
   method: post
   operationId: gitpod.v1.WorkflowService.RotateWorkflowWebhookSecret
