@@ -240,40 +240,47 @@ paths:
       - gitpod.v1.EditorService
 components:
   schemas:
-    gitpod.v1.GetEditorResponse:
+    gitpod.v1.ResolveEditorURLResponse:
       additionalProperties: false
       properties:
-        editor:
-          $ref: '#/components/schemas/gitpod.v1.Editor'
-          description: editor contains the editor
-          title: editor
-      required:
-      - editor
-      title: GetEditorResponse
-      type: object
-    gitpod.v1.ListEditorsRequest:
-      additionalProperties: false
-      properties:
-        filter:
-          $ref: '#/components/schemas/gitpod.v1.ListEditorsRequest.Filter'
-          description: filter contains the filter options for listing editors
-          title: filter
-        pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
-          description: pagination contains the pagination options for listing environments
-          title: pagination
-      title: ListEditorsRequest
-      type: object
-    gitpod.v1.GetEditorRequest:
-      additionalProperties: false
-      properties:
-        id:
-          description: id is the ID of the editor to get
-          title: id
+        url:
+          description: url is the resolved editor URL
+          title: url
           type: string
       required:
-      - id
-      title: GetEditorRequest
+      - url
+      title: ResolveEditorURLResponse
+      type: object
+    connect.error:
+      additionalProperties: true
+      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
+      properties:
+        code:
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          enum:
+          - canceled
+          - unknown
+          - invalid_argument
+          - deadline_exceeded
+          - not_found
+          - already_exists
+          - permission_denied
+          - resource_exhausted
+          - failed_precondition
+          - aborted
+          - out_of_range
+          - unimplemented
+          - internal
+          - unavailable
+          - data_loss
+          - unauthenticated
+          example:
+          - not_found
+          type: string
+        message:
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+          type: string
+      title: Connect Error
       type: object
     gitpod.v1.PaginationRequest:
       additionalProperties: false
@@ -328,53 +335,27 @@ components:
       - urlTemplate
       title: Editor
       type: object
-    connect.error:
-      additionalProperties: true
-      description: 'Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-representation'
-      properties:
-        code:
-          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-          enum:
-          - canceled
-          - unknown
-          - invalid_argument
-          - deadline_exceeded
-          - not_found
-          - already_exists
-          - permission_denied
-          - resource_exhausted
-          - failed_precondition
-          - aborted
-          - out_of_range
-          - unimplemented
-          - internal
-          - unavailable
-          - data_loss
-          - unauthenticated
-          example:
-          - not_found
-          type: string
-        message:
-          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-          type: string
-      title: Connect Error
-      type: object
-    gitpod.v1.ListEditorsResponse:
+    gitpod.v1.ListEditorsRequest:
       additionalProperties: false
       properties:
-        editors:
-          description: editors contains the list of editors
-          items:
-            $ref: '#/components/schemas/gitpod.v1.Editor'
-          title: editors
-          type: array
+        filter:
+          $ref: '#/components/schemas/gitpod.v1.ListEditorsRequest.Filter'
+          description: filter contains the filter options for listing editors
+          title: filter
         pagination:
-          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          $ref: '#/components/schemas/gitpod.v1.PaginationRequest'
           description: pagination contains the pagination options for listing environments
           title: pagination
-      required:
-      - editors
-      title: ListEditorsResponse
+      title: ListEditorsRequest
+      type: object
+    gitpod.v1.PaginationResponse:
+      additionalProperties: false
+      properties:
+        nextToken:
+          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
+          title: next_token
+          type: string
+      title: PaginationResponse
       type: object
     gitpod.v1.ResolveEditorURLRequest:
       additionalProperties: false
@@ -404,16 +385,22 @@ components:
       - organizationId
       title: ResolveEditorURLRequest
       type: object
-    gitpod.v1.ResolveEditorURLResponse:
+    gitpod.v1.ListEditorsResponse:
       additionalProperties: false
       properties:
-        url:
-          description: url is the resolved editor URL
-          title: url
-          type: string
+        editors:
+          description: editors contains the list of editors
+          items:
+            $ref: '#/components/schemas/gitpod.v1.Editor'
+          title: editors
+          type: array
+        pagination:
+          $ref: '#/components/schemas/gitpod.v1.PaginationResponse'
+          description: pagination contains the pagination options for listing environments
+          title: pagination
       required:
-      - url
-      title: ResolveEditorURLResponse
+      - editors
+      title: ListEditorsResponse
       type: object
     gitpod.v1.EditorVersion:
       additionalProperties: false
@@ -426,6 +413,28 @@ components:
       - version
       title: EditorVersion
       type: object
+    gitpod.v1.GetEditorResponse:
+      additionalProperties: false
+      properties:
+        editor:
+          $ref: '#/components/schemas/gitpod.v1.Editor'
+          description: editor contains the editor
+          title: editor
+      required:
+      - editor
+      title: GetEditorResponse
+      type: object
+    gitpod.v1.GetEditorRequest:
+      additionalProperties: false
+      properties:
+        id:
+          description: id is the ID of the editor to get
+          title: id
+          type: string
+      required:
+      - id
+      title: GetEditorRequest
+      type: object
     gitpod.v1.ListEditorsRequest.Filter:
       additionalProperties: false
       properties:
@@ -434,15 +443,6 @@ components:
           title: allowed_by_policy
           type: boolean
       title: Filter
-      type: object
-    gitpod.v1.PaginationResponse:
-      additionalProperties: false
-      properties:
-        nextToken:
-          description: "Token passed for retrieving the next set of results. Empty if there are no\n more results"
-          title: next_token
-          type: string
-      title: PaginationResponse
       type: object
   securitySchemes:
     bearerAuth:
